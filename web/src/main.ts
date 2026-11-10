@@ -530,7 +530,7 @@ function renderStopwatch(): void {
       where: config.chains[key].name,
       hop: h,
       chain: key,
-      time: ms !== undefined ? "+" + seconds(ms, Boolean(h?.precise && loop.feed?.precise)) : undefined,
+      time: ms !== undefined ? (h?.precise && loop.feed?.precise ? "+" : "") + seconds(ms, Boolean(h?.precise && loop.feed?.precise)) : undefined,
     });
   }
   rows.push({ label: "Both pools confirm back to Reactive", where: "Reactive Lasna", hop: loop.closed, chain: "lasna", time: loop.closed ? "loop closed" : undefined });
@@ -581,7 +581,7 @@ function renderStopwatch(): void {
     ),
     !loopDone(loop) && t0 !== undefined
       ? el("div", { class: "mark now", style: "left:" + Math.min(100, (live / span) * 100).toFixed(2) + "%" })
-      : undefined,
+      : "",
     el("div", { class: "track-scale" }, el("span", {}, "0 s"), el("span", {}, (span / 1000).toFixed(1) + " s")),
   );
 }

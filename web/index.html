@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Opening Bell</title>
+  <meta name="description" content="A tokenized stock that follows market hours on two chains, switched by Reactive Network in about two seconds. Ring the bell, then try to raid a pool.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">🔔</span>
+      <div>
+        <h1>Opening Bell</h1>
+        <p class="tag">A stock token that knows when the market is shut.</p>
+      </div>
+    </div>
+    <div class="top-right">
+      <span id="mode" class="mode" hidden>Local forks</span>
+      <button id="connect" type="button" class="connect">Connect wallet</button>
+    </div>
+  </header>
+
+  <p id="boot" class="boot">Loading the chains…</p>
+  <p id="offline" class="offline" hidden>Can't reach one of the networks right now. Retrying…</p>
+
+  <main id="app" hidden>
+    <section class="intro">
+      <p>A share of NVIDIA stops trading at 4pm. A token that tracks it does not, so every close, halt and overnight gap
+        hands free money to whoever trades the stale pool first. Here a <strong>Reactive</strong> contract watches the
+        exchange and switches pools on <strong>Base</strong> and <strong>Unichain</strong> into the right mode within
+        about two seconds. Each chain has two identical pools: one protected, one twin that ignores market hours.</p>
+      <ol class="how">
+        <li><b>1</b> Play the exchange: halt, close, or move the price.</li>
+        <li><b>2</b> Watch the stopwatch as both chains switch.</li>
+        <li><b>3</b> Play the villain: raid either pool and compare the loot.</li>
+      </ol>
+    </section>
+
+    <div class="grid">
+      <section class="panel exchange">
+        <h2>The exchange <small>NVDA/USD feed on Base Sepolia</small></h2>
+        <div class="quote">
+          <span id="market-status" class="pill">…</span>
+          <span id="market-price" class="price">—</span>
+          <span id="market-seq" class="seq"></span>
+        </div>
+        <div id="actions" class="actions"></div>
+        <p id="actions-note" class="note"></p>
+      </section>
+
+      <section class="panel stopwatch">
+        <h2>Stopwatch <small>every hop, with its transaction</small></h2>
+        <p id="headline" class="headline"></p>
+        <div id="track" class="track"></div>
+        <ol id="hops" class="hops"></ol>
+      </section>
+    </div>
+
+    <section class="panel">
+      <h2>The pools <small>raid with play money from your own wallet</small></h2>
+      <div id="venues" class="venues"></div>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <h2>Your moves</h2>
+        <ol id="history" class="history"></ol>
+      </section>
+      <section class="panel">
+        <h2>Honest limits</h2>
+        <ul class="limits">
+          <li>Prices replay real NVDA data; the feed is a demo contract, not a licensed exchange.</li>
+          <li>Reactive takes about two seconds. A bot trading in the same block as the news still wins that block; the
+            pools' wide band and high fee after hours make that race unprofitable.</li>
+          <li>Testnets only. Nothing here is real money.</li>
+        </ul>
+      </section>
+    </div>
+
+    <details class="panel contracts-box">
+      <summary>Contracts</summary>
+      <ul id="contracts" class="contracts"></ul>
+    </details>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
