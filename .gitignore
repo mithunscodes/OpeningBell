@@ -8,3 +8,5 @@ node_modules/
 deployments/rehearsal/
 broadcast/
 tools/node_modules/
+web/dist/
+web/node_modules/

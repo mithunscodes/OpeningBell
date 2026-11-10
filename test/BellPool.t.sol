@@ -316,6 +316,25 @@ abstract contract BellPoolBase is OmniTest, V4Fixture {
         assertApproxEqRel(vault.valueAt(113.4e18), _hodlValue(113.4e18), 1e9);
     }
 
+    function test_ARaidStartedWithTooLittleGasRevertsInsteadOfLookingBlocked() public {
+        _publish(MarketTypes.OPEN, 126e18);
+
+        // With too little gas the swap inside the raid would fail and be mistaken for a refusal.
+        vm.prank(player);
+        vm.expectRevert(Arena.NotEnoughGas.selector);
+        arena.raid{ gas: 700_000 }(TWIN);
+        assertEq(arena.blocked(TWIN), 0, "not counted as blocked");
+
+        // The minimum is enough for the costliest raid there is: the twin, with refill and reposition.
+        vm.prank(player);
+        uint256 gasBefore = gasleft();
+        int256 pnl = arena.raid{ gas: arena.MIN_RAID_GAS() + 10_000 }(TWIN);
+        uint256 used = gasBefore - gasleft();
+        assertGt(pnl, 0, "the raid went through");
+        assertLt(used, arena.MIN_RAID_GAS() * 9 / 10, "with room to spare");
+        emit log_named_uint("gas used by a twin raid", used);
+    }
+
     function test_ReopeningHigherWorksTheSameWay() public {
         _publish(MarketTypes.HALTED, START_PRICE);
         _publish(MarketTypes.OPEN, 161e18); // +15%

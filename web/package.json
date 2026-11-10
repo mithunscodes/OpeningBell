@@ -1,0 +1,17 @@
+{
+  "name": "opening-bell-web",
+  "private": true,
+  "type": "module",
+  "description": "The Opening Bell demo page: ring the bell, raid a pool, watch the stopwatch.",
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "viem": "2.57.17"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.0"
+  }
+}

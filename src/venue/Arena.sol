@@ -65,9 +65,16 @@ contract Arena is IUnlockCallback {
     error NotPoolManager();
     error NotSelf();
     error UnknownTarget();
+    error NotEnoughGas();
 
     /// @dev More than any pool in the demo can absorb. The price limit stops the swap long before this.
     int256 internal constant MAX_IN = 1e30;
+
+    /// @notice A raid must start with at least this much gas.
+    /// @dev The swap runs inside a try/catch, so a raid that runs out of gas in the swap would otherwise
+    ///      be reported as "blocked". A wallet's gas estimate cannot land below this line, and the
+    ///      costliest raid (twin pool, with refill and reposition) uses well under it.
+    uint256 public constant MIN_RAID_GAS = 750_000;
 
     IPoolManager public immutable POOL_MANAGER;
     IRefPrice public immutable PRICE_SOURCE;
@@ -124,6 +131,7 @@ contract Arena is IUnlockCallback {
     /// @notice Arbitrage one pool against the reference price, as far as it pays after fees.
     /// @return pnl The raider's profit in dollars (18 decimals). Zero if blocked or pointless.
     function raid(uint256 targetId) external returns (int256 pnl) {
+        if (gasleft() < MIN_RAID_GAS) revert NotEnoughGas();
         Target memory t = _targets[targetId];
         if (address(t.vault) == address(0)) revert UnknownTarget();
 
