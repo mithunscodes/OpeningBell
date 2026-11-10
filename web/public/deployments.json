@@ -1,0 +1,75 @@
+{
+  "mode": "testnet",
+  "repo": "",
+  "chains": {
+    "base": {
+      "id": 84532,
+      "rpc": "https://sepolia.base.org",
+      "name": "Base Sepolia",
+      "short": "Base",
+      "explorer": "https://sepolia.basescan.org",
+      "currency": "ETH"
+    },
+    "unichain": {
+      "id": 1301,
+      "rpc": "https://sepolia.unichain.org",
+      "name": "Unichain Sepolia",
+      "short": "Unichain",
+      "explorer": "https://sepolia.uniscan.xyz",
+      "currency": "ETH"
+    },
+    "lasna": {
+      "id": 5318007,
+      "rpc": "https://lasna-rpc.rnk.dev/",
+      "name": "Reactive Lasna",
+      "short": "Reactive",
+      "explorer": "https://lasna.reactscan.net",
+      "currency": "lREACT"
+    }
+  },
+  "origin": {
+    "block": 57104169,
+    "chainId": 84532,
+    "feed": "0x8ddc373617e2D83348fE72eAcF8C4ffB58e9C46E",
+    "stage": "0x5E61Ad5f07de8E8c6438036FC7315Ebf783c4Ba2"
+  },
+  "reactive": {
+    "block": 8029077,
+    "chainId": 5318007,
+    "conductor": "0x8ddc373617e2D83348fE72eAcF8C4ffB58e9C46E"
+  },
+  "venues": {
+    "base": {
+      "arena": "0x3D783C81828EB1718143C0e84375B8F680982F04",
+      "block": 57104451,
+      "callbackProxy": "0x476F44b11F5C942c58f4c8E3d0300E5710743585",
+      "chainId": 84532,
+      "dollars": "0x92cfB177c53a9AEd52B69EFd46758f94b2689eb7",
+      "guard": "0xac2b5Be3B5208D8f5bC91BEd7465da46954e2CEE",
+      "hook": "0x6E4b43f2B25851D0FAeDe788C41fc1B467e64880",
+      "poolId": "0x22cf971a715ea6e52d92ae09f7917b2bd2e62fea84c6bc0bbef316c9e45a0819",
+      "poolManager": "0x05E73354cFDd6745C338b50BcFDfA3Aa6fA03408",
+      "stock": "0xF462b2cA056d52E762F3434789fDe040FE2964Eb",
+      "twinHook": "0xaDfdDD5dbd661F7Fe68ab300a65911A9Fe958880",
+      "twinPoolId": "0xbaf719cb797624752a353e9d241857c796010b1efb8e2ef63ebaef2eb9edce32",
+      "twinVault": "0x669e4056B6798FDdbd1d5A9b8EcC72efC4b253eA",
+      "vault": "0xE5a33BfF43DDB8c1518B883A8662c245958cAAd5"
+    },
+    "unichain": {
+      "arena": "0xE5a33BfF43DDB8c1518B883A8662c245958cAAd5",
+      "block": 67490399,
+      "callbackProxy": "0x775c9B990ADe401060B78D0e98684eEf8d2466C1",
+      "chainId": 1301,
+      "dollars": "0x4E48EE5F6BC3d3E53b12A0cD1B7f5d7aDf8aa8B0",
+      "guard": "0x8ddc373617e2D83348fE72eAcF8C4ffB58e9C46E",
+      "hook": "0x2026BACF74615ca0c767b885C891067356E0C880",
+      "poolId": "0xd3732d4d1c47eadd9e215db391358d8ec536162398c430fa50afe2fd5a939f56",
+      "poolManager": "0x00B036B58a818B1BC34d502D3fE730Db729e62AC",
+      "stock": "0x5E61Ad5f07de8E8c6438036FC7315Ebf783c4Ba2",
+      "twinHook": "0xe98C04BA5f4D38497Fe2c780Fdfb63a5972D8880",
+      "twinPoolId": "0xe12086a1e4a19bd76ce0d79e5af88b9ffd9d6433ac972e9c0f5c9fd52dba6a13",
+      "twinVault": "0x2A46A3104B22a963881fdA6D9668f27752AD3F8d",
+      "vault": "0x513a29Ed7091BCF66490AcA9Dc04e52B3198142f"
+    }
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "started": "2026-11-10T20:35:48.112Z",
+  "local": false,
+  "moveBps": 100,
+  "timeoutMs": 60000,
+  "stats": {
+    "Exchange event → Base Sepolia pool switched": {
+      "n": 3,
+      "min": 1200,
+      "p50": 1400,
+      "p90": 2000,
+      "p99": 2000,
+      "max": 2000,
+      "mean": 1533.3333333333333
+    },
+    "Exchange event → Unichain Sepolia pool switched": {
+      "n": 3,
+      "min": 1600,
+      "p50": 2000,
+      "p90": 2200,
+      "p99": 2200,
+      "max": 2200,
+      "mean": 1933.3333333333333
+    },
+    "Reaction → both pools confirmed (Lasna blocks)": {
+      "n": 3,
+      "min": 2,
+      "p50": 2,
+      "p90": 2,
+      "p99": 2,
+      "max": 2,
+      "mean": 2
+    },
+    "Wall clock: tx sent → Base Sepolia switch seen": {
+      "n": 3,
+      "min": 2778,
+      "p50": 2819,
+      "p90": 2889,
+      "p99": 2889,
+      "max": 2889,
+      "mean": 2828.6666666666665
+    },
+    "Wall clock: tx sent → Unichain Sepolia switch seen": {
+      "n": 3,
+      "min": 3319,
+      "p50": 3997,
+      "p90": 4062,
+      "p99": 4062,
+      "max": 4062,
+      "mean": 3792.6666666666665
+    }
+  },
+  "loops": [
+    {
+      "action": "open +1%",
+      "seq": "1",
+      "origin": {
+        "block": "57105401",
+        "tx": "0xb76a578745515babbaafc8fb54e3b6830b5cb825afcf4cb4b5c16339f6bb6377",
+        "ms": 1794342949000,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57105411",
+          "tx": "0xaab0effe0de2d2ed76d32f00a3c317752578edaa1d35e81c22bda343ce68c72f",
+          "ms": 1794342951000,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67490523",
+          "tx": "0x12242c01185eb363a51f2ec966820b6de0764be260328ca67d225eb5e5ef34fd",
+          "ms": 1794342951000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 901,
+        "observed": 2185,
+        "base": 2819,
+        "unichain": 3997,
+        "closed": 4123
+      },
+      "observed": {
+        "block": "8029280",
+        "tx": "0x7def620d6dc0f030e980a59682812eef9f6a8c54ae773068813114aa7b83a2de"
+      },
+      "closed": {
+        "block": "8029282",
+        "tx": "0x222b9e68d11da29c56a052ce9846bb75b44db3fcc7adcc21235341fbadd6612d"
+      }
+    },
+    {
+      "action": "close",
+      "seq": "2",
+      "origin": {
+        "block": "57105435",
+        "tx": "0xc7bd7f0a98181f4317e691a9a75edd91650e5431441023d85878697c46fc3260",
+        "ms": 1794342955800,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57105442",
+          "tx": "0x170770d43c025659db20c1b65576d7466a116098f1a63b4d1a2e0f39593ea637",
+          "ms": 1794342957200,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67490530",
+          "tx": "0x93a87a1aa1b9f6db655ef83997959d702938fc7ded86146264f37a8b36f4bd5f",
+          "ms": 1794342958000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 1044,
+        "observed": 1805,
+        "base": 2889,
+        "unichain": 4062,
+        "closed": 4226
+      },
+      "observed": {
+        "block": "8029286",
+        "tx": "0x010a954ea7166f483475eae0450d6b397efff47a79ec5cfd8733044644944a68"
+      },
+      "closed": {
+        "block": "8029288",
+        "tx": "0x598bf7b4175df318a15087069c33b73ba239db3332af117cf328a7033ef6eda4"
+      }
+    },
+    {
+      "action": "open -1%",
+      "seq": "3",
+      "origin": {
+        "block": "57105468",
+        "tx": "0x439ed0de71c5281d36c96f3ae5ceb6ec3aaa0f3f2decb167e7a7a8603a96cfec",
+        "ms": 1794342962400,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57105474",
+          "tx": "0x65e532ea98d7cbc392e7ae9e88e209790f506073a84ba85c10624329beb495b3",
+          "ms": 1794342963600,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67490536",
+          "tx": "0x087dcabf7f2ecbbc7d8840b0e35d5c396dd3d2b754cc033d2c116894be0cc854",
+          "ms": 1794342964000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 996,
+        "observed": 1717,
+        "base": 2778,
+        "unichain": 3319,
+        "closed": 3482
+      },
+      "observed": {
+        "block": "8029292",
+        "tx": "0xf3c1cd6937fac07c51a26d7f34a5ca28245786efaf42e255b59b2f13eab7e51a"
+      },
+      "closed": {
+        "block": "8029294",
+        "tx": "0x18abee3d183c1a6bc22418d712db88ab50e0ccf1a968a3fd319b28745085f22c"
+      }
+    }
+  ]
+}
