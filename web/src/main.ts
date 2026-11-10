@@ -609,7 +609,7 @@ function poolCard(key: VenueKey, target: 0 | 1, view: PoolView): HTMLElement {
     el(
       "header",
       {},
-      el("h4", {}, isProtected ? "Protected by Opening Bell" : "Twin, no Opening Bell"),
+      el("h4", {}, isProtected ? "Protected by OpeningBell" : "Twin, no OpeningBell"),
       el("span", { class: "pool-status" }, statusText),
     ),
     el(

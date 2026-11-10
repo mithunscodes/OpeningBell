@@ -2,7 +2,7 @@
   "name": "opening-bell-tools",
   "private": true,
   "type": "module",
-  "description": "Off-chain tools for Opening Bell: loop stopwatch, latency benchmark, and a local rehearsal relayer.",
+  "description": "Off-chain tools for OpeningBell: loop stopwatch, latency benchmark, and a local rehearsal relayer.",
   "scripts": {
     "rehearse": "tsx src/rehearse.ts",
     "watch": "tsx src/watch.ts",

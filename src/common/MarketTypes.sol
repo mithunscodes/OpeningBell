@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.29;
 
-/// @notice Shared constants for the Opening Bell market state machine.
+/// @notice Shared constants for the OpeningBell market state machine.
 library MarketTypes {
     /// @dev The reference market is shut (overnight, weekend). The feed price is the last close.
     uint8 internal constant CLOSED = 0;
