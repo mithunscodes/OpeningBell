@@ -1,200 +1,27 @@
 /**
  * Rehearsal: the whole loop on local forks, before any testnet funds are spent.
  *
- * Three anvil instances fork Base Sepolia, Unichain Sepolia and Reactive Lasna. This script plays
- * the one part a fork cannot: the Reactive Network node. It watches the forks for events our
- * conductor subscribed to, hands each one to the real system contract (`trigger`, sent from the
- * network's own injection address), then delivers every callback the system contract asks for
- * through the real callback proxy on the destination fork (sent from the network's own operator).
- *
- * So the system contract, the proxies, the fee accounting and Uniswap v4 are all the deployed code.
- * Only the timing is fake, which is why latency is measured on the live networks instead.
- *
- *   anvil --fork-url https://sepolia.base.org     --port 8545
- *   anvil --fork-url https://sepolia.unichain.org --port 8546
- *   anvil --fork-url https://lasna-rpc.rnk.dev/   --port 8547
- *   DEPLOYMENTS_DIR=deployments/rehearsal BASE_RPC=http://127.0.0.1:8545 \
- *     UNICHAIN_RPC=http://127.0.0.1:8546 LASNA_RPC=http://127.0.0.1:8547 npm run rehearse
+ * `LocalNode` plays the Reactive Network node against the real system contract and callback
+ * proxies on the forks. This script plays a trading day on top and checks the outcome.
+ * Run it with ./rehearse.sh, which starts the forks and deploys everything first.
  */
-import {
-  createPublicClient,
-  createTestClient,
-  createWalletClient,
-  decodeAbiParameters,
-  decodeEventLog,
-  encodeAbiParameters,
-  http,
-  parseEther,
-  parseGwei,
-  type Address,
-  type Hex,
-  type Log,
-  type PublicClient,
-} from "viem";
+import { createTestClient, createWalletClient, decodeEventLog, http, parseEther, type Address } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { arenaAbi, conductorAbi, feedAbi, guardAbi, proxyAbi, stageAbi, STATUS, systemAbi, TOPIC, vaultAbi } from "./abi.js";
-import { chain, chainNameOf, deployments, MARKET_ID, SYSTEM, usd, type ChainName, type Venue, type VenueName } from "./config.js";
-
-/** Reactive Network's fixed sender for node-injected reactive transactions (SystemContract.INJ_ADDR). */
-const INJECTOR: Address = "0x038E06667e42782E571EaB20432b9237F9bD6B82";
-/** The account that delivers callbacks on Base Sepolia and Unichain Sepolia, read from past deliveries. */
-const OPERATOR: Address = "0xf7e866d726658f6c3f14b8ee537fe268a4d91ddb";
-/** Every reactive transaction is sent with this gas limit. */
-const REACT_GAS = 900_000n;
-const LASNA_GAS_PRICE = parseGwei("100");
-
-const CONFIG_V1 = [
-  {
-    type: "tuple",
-    components: [
-      { name: "chainId", type: "uint256" },
-      { name: "recipient", type: "address" },
-      { name: "gasLimit", type: "uint64" },
-      { name: "payload", type: "bytes" },
-    ],
-  },
-] as const;
+import { arenaAbi, conductorAbi, feedAbi, guardAbi, stageAbi, STATUS, systemAbi, vaultAbi } from "./abi.js";
+import { chain, deployments, MARKET_ID, SYSTEM, usd, type Venue, type VenueName } from "./config.js";
+import { LocalNode } from "./localnode.js";
 
 const d = deployments();
 const venues = Object.entries(d.venues).filter(([, v]) => v) as [VenueName, Venue][];
 
-// No caching and fast polling: the forks mine a block per transaction.
-const reader = (name: ChainName) =>
-  createPublicClient({ chain: chain(name), transport: http(), cacheTime: 0, pollingInterval: 50 });
-const clients = {
-  lasna: reader("lasna"),
-  base: reader("base"),
-  unichain: reader("unichain"),
-} satisfies Record<ChainName, PublicClient>;
-
-const test = (name: ChainName) => createTestClient({ chain: chain(name), mode: "anvil", transport: http() });
-const wallet = (name: ChainName, account: Address) =>
-  createWalletClient({ chain: chain(name), transport: http(), account });
+const node = new LocalNode(d, { log: (line) => console.log("    " + line) });
+const clients = node.clients;
+const stats = node.stats;
+const settle = () => node.settle();
 
 /** anvil's first built-in account. Its key is public; it only ever signs on the local forks. */
 const dev = privateKeyToAccount("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
 const player = privateKeyToAccount("0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d");
-
-const stats = { reactions: 0, reactGas: 0n, deliveries: 0, deliveryGas: 0n, failures: 0 };
-
-// -------------------------------------------------------------------------------------------------
-// The network's part
-// -------------------------------------------------------------------------------------------------
-
-const subscriptions: { chainName: ChainName; address: Address; topic0: Hex }[] = [
-  { chainName: "base", address: d.origin.feed, topic0: TOPIC.marketUpdate },
-  ...venues.map(([name, v]) => ({ chainName: name, address: v.guard, topic0: TOPIC.ack })),
-];
-
-const cursors = new Map<ChainName, bigint>();
-
-/** Collects new subscribed logs from the venue forks, oldest first per chain. */
-async function poll(): Promise<{ chainName: ChainName; log: Log }[]> {
-  const found: { chainName: ChainName; log: Log }[] = [];
-  for (const chainName of ["base", "unichain"] as const) {
-    const client = clients[chainName];
-    const latest = await client.getBlockNumber();
-    const from = (cursors.get(chainName) ?? latest) + 1n;
-    cursors.set(chainName, latest);
-    if (from > latest) continue;
-
-    const wanted = subscriptions.filter((s) => s.chainName === chainName);
-    if (wanted.length === 0) continue;
-    const logs = await client.getLogs({ address: wanted.map((s) => s.address), fromBlock: from, toBlock: latest });
-    for (const log of logs) {
-      if (wanted.some((s) => s.address.toLowerCase() === log.address.toLowerCase() && s.topic0 === log.topics[0])) {
-        found.push({ chainName, log });
-      }
-    }
-  }
-  return found;
-}
-
-/** What the node does with a matching log: one reactive transaction through the system contract. */
-async function react(chainName: ChainName, log: Log): Promise<void> {
-  const topic = (i: number) => (log.topics[i] ? BigInt(log.topics[i] as Hex) : 0n);
-  const record = {
-    chainId: BigInt(chain(chainName).id),
-    contractAddress: log.address,
-    topic0: topic(0),
-    topic1: topic(1),
-    topic2: topic(2),
-    topic3: topic(3),
-    data: log.data,
-    blockNumber: log.blockNumber ?? 0n,
-    opCode: BigInt(log.topics.length),
-    blockHash: BigInt(log.blockHash ?? "0x0"),
-    txHash: BigInt(log.transactionHash ?? "0x0"),
-    logIndex: BigInt(log.logIndex ?? 0),
-  };
-
-  const hash = await wallet("lasna", INJECTOR).writeContract({
-    address: SYSTEM,
-    abi: systemAbi,
-    functionName: "trigger",
-    args: [d.reactive.conductor, record],
-    gas: REACT_GAS,
-    gasPrice: LASNA_GAS_PRICE,
-  });
-  const receipt = await clients.lasna.waitForTransactionReceipt({ hash });
-  if (receipt.status !== "success") throw new Error("trigger reverted: " + hash);
-  stats.reactions += 1;
-  stats.reactGas += receipt.gasUsed;
-
-  for (const entry of receipt.logs) {
-    if (entry.address.toLowerCase() !== SYSTEM.toLowerCase()) continue;
-    const event = decodeEventLog({ abi: systemAbi, data: entry.data, topics: entry.topics });
-    if (event.eventName === "ReactiveContractReverted") throw new Error("react() reverted on the fork");
-    if (event.eventName === "CallbackRequest") {
-      await deliver(event.args.sender_, event.args.configuration_);
-    }
-  }
-}
-
-/** What the node does with a callback request: one transaction through the destination's proxy. */
-async function deliver(sender: Address, configuration: Hex): Promise<void> {
-  const [config] = decodeAbiParameters(CONFIG_V1, configuration);
-  const chainName = chainNameOf(config.chainId);
-  const venue = d.venues[chainName as VenueName];
-  if (!venue) throw new Error("callback for a chain with no venue: " + config.chainId);
-
-  // The node writes the requesting contract's address over the first argument of the payload.
-  const payload = (config.payload.slice(0, 10) + sender.slice(2).toLowerCase().padStart(64, "0") + config.payload.slice(74)) as Hex;
-  const injected = encodeAbiParameters(CONFIG_V1, [{ ...config, payload }]);
-
-  // Real deliveries use the requested gas limit as the transaction's gas limit.
-  const hash = await wallet(chainName, OPERATOR).writeContract({
-    address: venue.callbackProxy,
-    abi: proxyAbi,
-    functionName: "deliverCallback",
-    args: [0, injected],
-    gas: config.gasLimit,
-  });
-  const receipt = await clients[chainName].waitForTransactionReceipt({ hash });
-  if (receipt.status !== "success") throw new Error("deliverCallback reverted: " + hash);
-  stats.deliveries += 1;
-  stats.deliveryGas += receipt.gasUsed;
-
-  const failed = receipt.logs.some(
-    (entry) =>
-      entry.address.toLowerCase() === venue.callbackProxy.toLowerCase() &&
-      entry.topics[0] === TOPIC.callbackFailure,
-  );
-  if (failed) stats.failures += 1;
-  console.log(
-    "    callback on " + chain(chainName).name + ": " + receipt.gasUsed + " gas of " + config.gasLimit + (failed ? "  FAILED" : ""),
-  );
-}
-
-/** Runs the network until no subscribed log is left to process. */
-async function settle(): Promise<void> {
-  for (let round = 0; round < 12; round++) {
-    const batch = await poll();
-    if (batch.length === 0) return;
-    for (const { chainName, log } of batch) await react(chainName, log);
-  }
-  throw new Error("the loop did not settle");
-}
 
 // -------------------------------------------------------------------------------------------------
 // The scenario
@@ -288,15 +115,11 @@ function expect(condition: boolean, message: string): void {
 async function main(): Promise<void> {
   console.log("Rehearsing with the conductor at " + d.reactive.conductor + " and " + venues.length + " venue(s)");
 
-  // Let the forks send transactions as the network's own accounts.
-  await test("lasna").impersonateAccount({ address: INJECTOR });
-  await test("lasna").setBalance({ address: INJECTOR, value: parseEther("100") });
+  await node.prepare();
   for (const [name] of venues) {
-    await test(name).impersonateAccount({ address: OPERATOR });
-    await test(name).setBalance({ address: OPERATOR, value: parseEther("10") });
-    await test(name).setBalance({ address: player.address, value: parseEther("1") });
+    const test = createTestClient({ chain: chain(name), mode: "anvil", transport: http() });
+    await test.setBalance({ address: player.address, value: parseEther("1") });
   }
-  for (const name of ["base", "unichain"] as const) cursors.set(name, await clients[name].getBlockNumber());
 
   const reservesBefore = await clients.lasna.getBalance({ address: d.reactive.conductor });
 
