@@ -1,0 +1,7 @@
+out/
+cache/
+broadcast/*/31337/
+node_modules/
+.env
+.env.*
+!.env.example
