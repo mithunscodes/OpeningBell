@@ -6,7 +6,8 @@ import { MarketTypes, IRefPrice } from "../common/MarketTypes.sol";
 /// @title MarketFeed
 /// @notice Publishes the state of a reference market (for example a stock on its home exchange):
 ///         whether it is open, closed or halted, and the reference price.
-/// @dev On a testnet nobody publishes equity prices, so authorised publishers replay real market data.
+/// @dev On a testnet nobody publishes equity prices, so authorised publishers stand in for the exchange
+///      (in the demo, `DemoStage`; a replay of real market data could be another).
 ///      In production this contract is replaced by an existing on-chain equity feed; the only thing the
 ///      rest of the system depends on is the `MarketUpdate` event.
 contract MarketFeed is IRefPrice {

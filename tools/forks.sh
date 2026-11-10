@@ -11,6 +11,10 @@ export DEPLOYMENTS_DIR=deployments/rehearsal
 export BASE_RPC=http://127.0.0.1:8545
 export UNICHAIN_RPC=http://127.0.0.1:8546
 export LASNA_RPC=http://127.0.0.1:8547
+# Callbacks are paid from each guard's deposit at the delivery transaction's gas price. anvil adds a
+# 1 gwei tip by default, about 200 times Base Sepolia's real price (0.005 gwei), so the testnet
+# default of 0.002 ETH would only cover a handful of callbacks here. Fund the local guards more.
+export GUARD_FUNDING=${GUARD_FUNDING:-200000000000000000}
 
 LOGS=$(mktemp -d)
 PIDS=()

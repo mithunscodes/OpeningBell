@@ -11,6 +11,7 @@ export const stageAbi = parseAbi([
   "event Staged(address indexed by, uint8 status, int16 moveBps, uint256 price, uint64 seq)",
   "function act(uint8 status, int16 moveBps) returns (uint64)",
   "function availability() view returns (uint256 readyAt, uint256 leftToday)",
+  "function owner() view returns (address)",
 ]);
 
 export const guardAbi = parseAbi([
