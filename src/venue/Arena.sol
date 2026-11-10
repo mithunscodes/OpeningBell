@@ -32,6 +32,10 @@ contract Arena is IUnlockCallback {
         /// @dev After a raid, tell the vault to catch up with the market. This plays the part of a
         ///      liquidity manager who arrives after the raider.
         bool catchUpAfter;
+        /// @dev Before catching up, top the vault back up to these amounts with play money, so the
+        ///      next player finds a pool worth raiding. Zero means never refill.
+        uint256 refillStock;
+        uint256 refillDollars;
     }
 
     /// @param pnl Profit of the raider in dollars (18 decimals), valued at the reference price.
@@ -46,11 +50,14 @@ contract Arena is IUnlockCallback {
         uint256 refPrice
     );
 
-    /// @notice The pool refused to trade. `reason` is the raw revert data from the pool manager.
-    event RaidBlocked(address indexed player, uint256 indexed targetId, bytes reason);
+    /// @notice The pool refused to trade: the market is halted, or the pool has no market data yet.
+    event RaidBlocked(address indexed player, uint256 indexed targetId);
 
     /// @notice The pool's price was already where it should be: nothing to take.
     event RaidPointless(address indexed player, uint256 indexed targetId, uint256 poolPrice, uint256 refPrice);
+
+    /// @notice Play money was added to a raided vault so that it can be raided again.
+    event Refilled(uint256 indexed targetId, uint256 stock, uint256 dollars);
 
     event TargetSet(uint256 indexed targetId, PoolId poolId, address vault, bool catchUpAfter);
 
@@ -93,9 +100,16 @@ contract Arena is IUnlockCallback {
         owner = msg.sender;
     }
 
-    function setTarget(uint256 targetId, PoolKey calldata key, BellVault vault, bool catchUpAfter) external {
+    function setTarget(
+        uint256 targetId,
+        PoolKey calldata key,
+        BellVault vault,
+        bool catchUpAfter,
+        uint256 refillStock,
+        uint256 refillDollars
+    ) external {
         if (msg.sender != owner) revert NotOwner();
-        _targets[targetId] = Target(key, vault, catchUpAfter);
+        _targets[targetId] = Target(key, vault, catchUpAfter, refillStock, refillDollars);
         emit TargetSet(targetId, key.toId(), address(vault), catchUpAfter);
     }
 
@@ -114,30 +128,52 @@ contract Arena is IUnlockCallback {
         if (address(t.vault) == address(0)) revert UnknownTarget();
 
         uint256 refPrice = PRICE_SOURCE.priceOf(MARKET_ID);
+        (bool tradable, uint24 feePips) = BellHook(address(t.key.hooks)).quote(t.key.toId());
 
-        try this.attempt(targetId, refPrice) returns (
-            bool traded, bool soldStock, uint256 amountIn, uint256 amountOut, uint256 poolPriceBefore
-        ) {
-            if (!traded) {
-                emit RaidPointless(msg.sender, targetId, poolPriceBefore, refPrice);
-            } else {
-                // forge-lint: disable-start(unsafe-typecast)
-                pnl = soldStock
-                    ? int256(amountOut) - int256(amountIn * refPrice / 1e18)
-                    : int256(amountOut * refPrice / 1e18) - int256(amountIn);
-                // forge-lint: disable-end(unsafe-typecast)
-
-                loot[msg.sender] += pnl;
-                taken[targetId] += pnl;
-                ++raids[targetId];
-                emit Raid(msg.sender, targetId, soldStock, amountIn, amountOut, pnl, poolPriceBefore, refPrice);
-            }
-        } catch (bytes memory reason) {
+        if (!tradable) {
             ++blocked[targetId];
-            emit RaidBlocked(msg.sender, targetId, reason);
+            emit RaidBlocked(msg.sender, targetId);
+        } else {
+            // The swap runs in a separate call so that a refusal by the pool is reported, not bubbled up.
+            try this.attempt(targetId, refPrice, feePips) returns (
+                bool traded, bool soldStock, uint256 amountIn, uint256 amountOut, uint256 poolPriceBefore
+            ) {
+                if (!traded) {
+                    emit RaidPointless(msg.sender, targetId, poolPriceBefore, refPrice);
+                } else {
+                    // forge-lint: disable-start(unsafe-typecast)
+                    pnl = soldStock
+                        ? int256(amountOut) - int256(amountIn * refPrice / 1e18)
+                        : int256(amountOut * refPrice / 1e18) - int256(amountIn);
+                    // forge-lint: disable-end(unsafe-typecast)
+
+                    loot[msg.sender] += pnl;
+                    taken[targetId] += pnl;
+                    ++raids[targetId];
+                    emit Raid(msg.sender, targetId, soldStock, amountIn, amountOut, pnl, poolPriceBefore, refPrice);
+                }
+            } catch {
+                ++blocked[targetId];
+                emit RaidBlocked(msg.sender, targetId);
+            }
         }
 
-        if (t.catchUpAfter) t.vault.catchUp();
+        if (t.catchUpAfter) {
+            _refill(targetId, t);
+            t.vault.catchUp();
+        }
+    }
+
+    /// @dev A raided vault ends up holding only the token nobody wanted. Top up the other one.
+    function _refill(uint256 targetId, Target memory t) internal {
+        (uint256 stock, uint256 dollars) = t.vault.holdings();
+        uint256 addStock = stock < t.refillStock ? t.refillStock - stock : 0;
+        uint256 addDollars = dollars < t.refillDollars ? t.refillDollars - dollars : 0;
+        if (addStock == 0 && addDollars == 0) return;
+
+        if (addStock != 0) STOCK.mint(address(t.vault), addStock);
+        if (addDollars != 0) DOLLARS.mint(address(t.vault), addDollars);
+        emit Refilled(targetId, addStock, addDollars);
     }
 
     /// @notice What `raid()` would find right now: the pool's price, the reference price, and whether
@@ -154,26 +190,26 @@ contract Arena is IUnlockCallback {
         (tradable, feePips) = BellHook(address(t.key.hooks)).quote(t.key.toId());
     }
 
-    /// @dev Separate external call so that a refusal by the pool can be caught and reported.
-    function attempt(uint256 targetId, uint256 refPrice)
+    /// @dev Only callable by this contract, from `raid()`.
+    function attempt(uint256 targetId, uint256 refPrice, uint24 feePips)
         external
         returns (bool traded, bool soldStock, uint256 amountIn, uint256 amountOut, uint256 poolPriceBefore)
     {
         if (msg.sender != address(this)) revert NotSelf();
-        return abi.decode(POOL_MANAGER.unlock(abi.encode(targetId, refPrice)), (bool, bool, uint256, uint256, uint256));
+        return abi.decode(
+            POOL_MANAGER.unlock(abi.encode(targetId, refPrice, feePips)), (bool, bool, uint256, uint256, uint256)
+        );
     }
 
     /// @inheritdoc IUnlockCallback
     function unlockCallback(bytes calldata data) external returns (bytes memory) {
         if (msg.sender != address(POOL_MANAGER)) revert NotPoolManager();
-        (uint256 targetId, uint256 refPrice) = abi.decode(data, (uint256, uint256));
+        (uint256 targetId, uint256 refPrice, uint24 feePips) = abi.decode(data, (uint256, uint256, uint24));
 
         PoolKey memory k = _targets[targetId].key;
         bool stockIs0 = Currency.unwrap(k.currency0) == address(STOCK);
         uint160 sqrtBefore = _sqrtPrice(k);
         uint256 poolPrice = _stockPrice(k, sqrtBefore);
-
-        (, uint24 feePips) = BellHook(address(k.hooks)).quote(k.toId());
 
         // A trade pays only while the pool's price, after the fee, is still better than the real price.
         // Selling stock into an overpriced pool pays down to ref / (1 - fee); buying from an

@@ -5,3 +5,6 @@ node_modules/
 .env
 .env.*
 !.env.example
+deployments/rehearsal/
+broadcast/
+tools/node_modules/

@@ -43,7 +43,8 @@ abstract contract BellPoolBase is OmniTest, V4Fixture {
 
     bytes32 internal constant SWAP_SIG = keccak256("Swap(bytes32,address,int128,int128,uint160,uint128,int24,uint24)");
     bytes32 internal constant RAID_SIG = keccak256("Raid(address,uint256,bool,uint256,uint256,int256,uint256,uint256)");
-    bytes32 internal constant RAID_BLOCKED_SIG = keccak256("RaidBlocked(address,uint256,bytes)");
+    bytes32 internal constant REFILLED_SIG = keccak256("Refilled(uint256,uint256,uint256)");
+    bytes32 internal constant RAID_BLOCKED_SIG = keccak256("RaidBlocked(address,uint256)");
     bytes32 internal constant RAID_POINTLESS_SIG = keccak256("RaidPointless(address,uint256,uint256,uint256)");
     bytes32 internal constant LISTENER_FAILED_SIG = keccak256("ListenerFailed(bytes32,address,bytes)");
 
@@ -110,8 +111,8 @@ abstract contract BellPoolBase is OmniTest, V4Fixture {
         hook.registerPool(twinKey, BellHook.PoolConfig(NVDA, address(twinVault), true, OPEN_FEE, 0, 0));
 
         arena = new Arena(POOL_MANAGER, feed, NVDA, stock, dollars);
-        arena.setTarget(PROTECTED, poolKey, vault, false);
-        arena.setTarget(TWIN, twinKey, twinVault, true);
+        arena.setTarget(PROTECTED, poolKey, vault, false, 0, 0);
+        arena.setTarget(TWIN, twinKey, twinVault, true, START_STOCK, START_DOLLARS);
         stock.setMinter(address(arena), true);
         dollars.setMinter(address(arena), true);
         twinVault.setKeeper(address(arena));
@@ -224,18 +225,25 @@ abstract contract BellPoolBase is OmniTest, V4Fixture {
 
     function test_RaidDuringAHaltIsBlocked() public {
         _publish(MarketTypes.HALTED, START_PRICE);
-        // The news is bad: the stock will reopen 10% lower. The feed already knows.
+
+        assertEq(_raid(PROTECTED), 0);
+        assertEq(arena.blocked(PROTECTED), 1);
+        assertEq(_count(address(arena), RAID_BLOCKED_SIG), 1);
+    }
+
+    function test_BadNewsDuringAHaltCannotBeTradedOn() public {
+        _publish(MarketTypes.HALTED, START_PRICE);
+        // The news is bad: the stock will reopen 10% lower, and the feed already says so. The raider
+        // moves before the Reactive Network has delivered that second update.
         vm.prank(publisher);
         feed.publish(NVDA, MarketTypes.HALTED, 126e18, uint64(block.timestamp));
-        // The raider acts before the Reactive Network has delivered that second update.
 
         vm.prank(player);
         int256 pnl = arena.raid(PROTECTED);
 
-        assertEq(pnl, 0);
+        assertEq(pnl, 0, "the pool was already shut by the first update");
         assertEq(arena.blocked(PROTECTED), 1);
         _pump();
-        assertEq(_count(address(arena), RAID_BLOCKED_SIG), 1);
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -270,8 +278,11 @@ abstract contract BellPoolBase is OmniTest, V4Fixture {
         // 140,000 * (1 - 126 / 138.6) is about 12,700 dollars.
         assertApproxEqRel(uint256(pnl), 12_700e18, 0.02e18, "about 12,700 dollars");
 
-        // Every dollar the raider made came out of the twin (which kept the swap fee).
-        uint256 lost = before - twinVault.valueAt(126e18);
+        // Every dollar the raider made came out of the twin (which kept the swap fee). The arena then
+        // refilled the twin with play money, so that has to be taken out of the comparison.
+        Vm.Log memory refill = _last(address(arena), REFILLED_SIG);
+        (uint256 refillStock, uint256 refillDollars) = abi.decode(refill.data, (uint256, uint256));
+        uint256 lost = before + refillDollars + refillStock * 126 - twinVault.valueAt(126e18);
         assertApproxEqRel(lost, uint256(pnl), 0.01e18, "raider's gain is the twin's loss");
 
         assertEq(arena.loot(player), pnl);
@@ -281,6 +292,28 @@ abstract contract BellPoolBase is OmniTest, V4Fixture {
         // Afterwards the twin's manager catches up, too late.
         assertApproxEqRel(twinVault.poolPrice(), 126e18, 1e12);
         assertEq(_raid(TWIN), 0);
+    }
+
+    function test_TheTwinIsRefilledSoItCanBeRaidedAgain() public {
+        _publish(MarketTypes.OPEN, 126e18);
+        int256 first = _raid(TWIN);
+        assertGt(first, 0);
+
+        // After the raid the twin held almost no dollars. The arena topped it up and it caught up.
+        (uint256 stockHeld, uint256 dollarsHeld) = twinVault.holdings();
+        assertGe(stockHeld, START_STOCK);
+        assertApproxEqRel(dollarsHeld, START_DOLLARS, 0.001e18);
+        assertApproxEqRel(twinVault.poolPrice(), 126e18, 1e12);
+
+        _publish(MarketTypes.OPEN, 113.4e18);
+        int256 second = _raid(TWIN);
+        assertGt(second, 0, "raided again");
+        assertEq(arena.taken(TWIN), first + second);
+        assertEq(arena.raids(TWIN), 2);
+
+        // The protected vault was never refilled and never needed it.
+        assertEq(arena.taken(PROTECTED), 0);
+        assertApproxEqRel(vault.valueAt(113.4e18), _hodlValue(113.4e18), 1e9);
     }
 
     function test_ReopeningHigherWorksTheSameWay() public {
@@ -400,7 +433,7 @@ abstract contract BellPoolBase is OmniTest, V4Fixture {
         vm.expectRevert(Arena.NotPoolManager.selector);
         arena.unlockCallback("");
         vm.expectRevert(Arena.NotSelf.selector);
-        arena.attempt(0, 1e18);
+        arena.attempt(0, 1e18, 0);
         vm.stopPrank();
     }
 
