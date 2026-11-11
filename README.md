@@ -15,6 +15,14 @@ during a halt, wide and expensive after hours.
 
 Built for the Reactive Omni Buildathon, track **Every Second Counts**.
 
+Live on Base Sepolia, Unichain Sepolia and Reactive Lasna. In the first live run the Base pool
+switched **1.4 s** after the exchange event, the Unichain pool about **2 s** after, and **3 of 3**
+loops closed. See [Speed](#speed).
+
+<!-- TODO: demo link and video link go here once they exist:
+**[Play the demo](DEMO_LINK)** · **[Watch the video](VIDEO_LINK)**
+-->
+
 ## How it works
 
 ```mermaid
@@ -68,7 +76,7 @@ $12,613 from the twin on each chain and nothing from the protected pools. Exchan
 shared by everyone and rate-limited (one every 15 seconds, 100 a day), because each one costs the
 project testnet funds on Reactive Network.
 
-The demo page link and the live contract addresses will be added here after the testnet deployment.
+<!-- TODO: add the live demo link, and the live raid result with its transaction. -->
 
 ## Speed
 
@@ -82,8 +90,47 @@ on-chain records only:
 - **Reaction → both pools confirmed** is counted in Lasna blocks. Lasna's clock runs about a second
   behind the others, so it is never subtracted from another chain's clock.
 
-Results go to [`bench/RESULTS.md`](bench/RESULTS.md), and every loop's transaction hashes go to
-`bench/results/`. The live run has not happened yet; this section will carry its numbers.
+First live run, 10 November 2026, 3 market updates:
+
+| Hop | p50 | max | Clock |
+| --- | --- | --- | --- |
+| Exchange event → Base Sepolia pool switched | 1.40 s | 2.00 s | Base Sepolia block times in ms |
+| Exchange event → Unichain Sepolia pool switched | ≈2 s | ≈2 s | whole seconds (±1 s) |
+| Reaction → both pools confirmed | 2 Lasna blocks | 2 | Lasna blocks, about 1 s each |
+| Loops closed | 3 of 3 | | `LoopClosed` on Lasna |
+
+<!-- TODO (large benchmark): replace the table above with the big run: rounds, loops closed,
+p50 / p90 / max per hop, and the cost per update. -->
+
+Full results are in [`bench/RESULTS.md`](bench/RESULTS.md), and every loop's transaction hashes are
+in `bench/results/`.
+
+## Why Reactive
+
+- A keeper bot per chain is off-chain and trusted, has to be run and funded on every chain
+  separately, and leaves no on-chain proof that the chains agree.
+- A price oracle read on each swap fixes the price but not the mode: it does not halt swaps, widen
+  the band or move the liquidity away from the stale price.
+- With Reactive, one on-chain decision reaches every venue chain from a single reactive transaction,
+  and the confirmations come back to the same contract, which records `LoopClosed`.
+
+## Live contracts
+
+| Network | Contract | Address |
+| --- | --- | --- |
+| Base Sepolia | `MarketFeed` | `0x8ddc373617e2D83348fE72eAcF8C4ffB58e9C46E` |
+| Base Sepolia | `DemoStage` | `0x5E61Ad5f07de8E8c6438036FC7315Ebf783c4Ba2` |
+| Reactive Lasna | `BellReactive` | `0x8ddc373617e2D83348fE72eAcF8C4ffB58e9C46E` |
+| Base Sepolia | `BellGuard` | `0xac2b5Be3B5208D8f5bC91BEd7465da46954e2CEE` |
+| Base Sepolia | `BellHook` | `0x6E4b43f2B25851D0FAeDe788C41fc1B467e64880` |
+| Base Sepolia | `BellVault` | `0xE5a33BfF43DDB8c1518B883A8662c245958cAAd5` |
+| Base Sepolia | `Arena` | `0x3D783C81828EB1718143C0e84375B8F680982F04` |
+| Unichain Sepolia | `BellGuard` | `0x8ddc373617e2D83348fE72eAcF8C4ffB58e9C46E` |
+| Unichain Sepolia | `BellHook` | `0x2026BACF74615ca0c767b885C891067356E0C880` |
+| Unichain Sepolia | `BellVault` | `0x513a29Ed7091BCF66490AcA9Dc04e52B3198142f` |
+| Unichain Sepolia | `Arena` | `0xE5a33BfF43DDB8c1518B883A8662c245958cAAd5` |
+
+Twin pools, tokens and pool ids are in [`deployments/`](deployments/).
 
 ## Honest limits
 
