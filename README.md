@@ -15,9 +15,9 @@ during a halt, wide and expensive after hours.
 
 Built for the Reactive Omni Buildathon, track **Every Second Counts**.
 
-Live on Base Sepolia, Unichain Sepolia and Reactive Lasna. In the first live run the Base pool
-switched **1.4 s** after the exchange event, the Unichain pool about **2 s** after, and **3 of 3**
-loops closed. See [Speed](#speed).
+Live on Base Sepolia, Unichain Sepolia and Reactive Lasna. Over 230 market updates on the live
+testnets, the Base pool switched a median of **1.4 s** after the exchange event (2.4 s at worst), the
+Unichain pool about **2 s** after, and **230 of 230** loops closed. See [Speed](#speed).
 
 <!-- TODO: demo link and video link go here once they exist:
 **[Play the demo](DEMO_LINK)** · **[Watch the video](VIDEO_LINK)**
@@ -90,17 +90,17 @@ on-chain records only:
 - **Reaction → both pools confirmed** is counted in Lasna blocks. Lasna's clock runs about a second
   behind the others, so it is never subtracted from another chain's clock.
 
-First live run, 10 November 2026, 3 market updates:
+Live run, 12 November 2026: 200 market updates (67 halts, 67 resumes at a new price, 66 price
+moves while open). **200 of 200 loops closed.**
 
-| Hop | p50 | max | Clock |
-| --- | --- | --- | --- |
-| Exchange event → Base Sepolia pool switched | 1.40 s | 2.00 s | Base Sepolia block times in ms |
-| Exchange event → Unichain Sepolia pool switched | ≈2 s | ≈2 s | whole seconds (±1 s) |
-| Reaction → both pools confirmed | 2 Lasna blocks | 2 | Lasna blocks, about 1 s each |
-| Loops closed | 3 of 3 | | `LoopClosed` on Lasna |
+| Hop | p50 | p90 | max | min | Clock |
+| --- | --- | --- | --- | --- | --- |
+| Exchange event → Base Sepolia pool switched | **1.40 s** | 2.00 s | 2.40 s | 1.00 s | Base Sepolia block times in ms |
+| Exchange event → Unichain Sepolia pool switched | **≈2 s** | ≈3 s | ≈3 s | ≈1 s | whole seconds (±1 s) |
+| Reaction → both pools confirmed | 2 Lasna blocks | 2 | 3 | 2 | Lasna blocks, about 1 s each |
 
-<!-- TODO (large benchmark): replace the table above with the big run: rounds, loops closed,
-p50 / p90 / max per hop, and the cost per update. -->
+A second run of 30 updates added the closing bell and the next day's open (6 of each, which the
+first run's cycle skipped): Base p50 1.60 s, max 2.00 s, and 30 of 30 loops closed.
 
 Full results are in [`bench/RESULTS.md`](bench/RESULTS.md), and every loop's transaction hashes are
 in `bench/results/`.
@@ -190,12 +190,12 @@ DEPLOYER_PRIVATE_KEY=0x... npx tsx src/bench.ts --rounds 100 # timed benchmark
 
 ## Costs
 
-Measured on forks of the live networks:
+Measured over the live 200-update run:
 
-- About 0.016 lREACT per reactive transaction at Lasna's 100 gwei gas price. One market update is
-  three reactive transactions (the update and two confirmations), about 0.05 lREACT.
-- Callbacks on Base Sepolia and Unichain Sepolia are paid from each guard's deposit with the callback
-  proxy. Each callback uses 200k to 375k gas, a few millionths of an ETH at current testnet gas prices.
+- 0.046 lREACT per market update on Lasna, at its 100 gwei gas price. One update is three reactive
+  transactions: the update itself and the two confirmations.
+- Each guard pays for its own callbacks through the callback proxy: about 0.0000022 ETH per update on
+  Base Sepolia and 0.0000005 ETH on Unichain Sepolia at current testnet gas prices.
 
 ## Built with
 

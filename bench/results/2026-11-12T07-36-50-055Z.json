@@ -1,0 +1,1225 @@
+{
+  "started": "2026-11-12T07:36:50.055Z",
+  "local": false,
+  "moveBps": 100,
+  "timeoutMs": 60000,
+  "stats": {
+    "Exchange event → Base Sepolia pool switched": {
+      "n": 30,
+      "min": 800,
+      "p50": 1600,
+      "p90": 2000,
+      "p99": 2000,
+      "max": 2000,
+      "mean": 1540
+    },
+    "Exchange event → Unichain Sepolia pool switched": {
+      "n": 30,
+      "min": 1600,
+      "p50": 2200,
+      "p90": 2600,
+      "p99": 2800,
+      "max": 2800,
+      "mean": 2153.3333333333335
+    },
+    "Reaction → both pools confirmed (Lasna blocks)": {
+      "n": 30,
+      "min": 2,
+      "p50": 2,
+      "p90": 2,
+      "p99": 3,
+      "max": 3,
+      "mean": 2.033333333333333
+    },
+    "Wall clock: tx sent → Base Sepolia switch seen": {
+      "n": 30,
+      "min": 1897,
+      "p50": 2674,
+      "p90": 3205,
+      "p99": 3427,
+      "max": 3427,
+      "mean": 2806.4666666666667
+    },
+    "Wall clock: tx sent → Unichain Sepolia switch seen": {
+      "n": 30,
+      "min": 3587,
+      "p50": 4283,
+      "p90": 4986,
+      "p99": 5531,
+      "max": 5531,
+      "mean": 4394.966666666666
+    }
+  },
+  "loops": [
+    {
+      "action": "halt",
+      "seq": "204",
+      "origin": {
+        "block": "57735710",
+        "tx": "0x7f1b7878b989d25cc1b2b280531310cc6545850be31cdc981959204642237c8d",
+        "ms": 1794469010800,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57735717",
+          "tx": "0xe4b40743a9f17ada185302602b8db3f01ac8a4eb9c7b3d5d39aa27cd34beefe0",
+          "ms": 1794469012200,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616585",
+          "tx": "0x8d695add845b4bef454357d41b6484de6b32367562c116439a4acb62abf66bc0",
+          "ms": 1794469013000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 780,
+        "observed": 1525,
+        "base": 2136,
+        "closed": 3380,
+        "unichain": 3816
+      },
+      "observed": {
+        "block": "8147979",
+        "tx": "0x886938a5561f12f487fcd62c283e4d467e8b4dea9f8a28d34c18ed529990f18c"
+      },
+      "closed": {
+        "block": "8147981",
+        "tx": "0x2378c2fc301ebf5fa7a035168997cde17aa0d0c1b9e4f88c808659e79d7f7458"
+      }
+    },
+    {
+      "action": "resume -1%",
+      "seq": "205",
+      "origin": {
+        "block": "57735745",
+        "tx": "0x5bcd5da79be1a4e094b5bd46fc2bfc8802e7bf2576bf7a19b2e99691fef33f3a",
+        "ms": 1794469017800,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57735754",
+          "tx": "0x2af51083b1749cc6c48c45d503df8c2cd16daeacfe33f8b50391a0b05f1ee2cf",
+          "ms": 1794469019600,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616592",
+          "tx": "0xcae89b288602e8e8bec7b06bc1862b015098830a67e78ab13fe3ec79401f38f9",
+          "ms": 1794469020000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 803,
+        "observed": 2102,
+        "base": 3105,
+        "closed": 4389,
+        "unichain": 4824
+      },
+      "observed": {
+        "block": "8147986",
+        "tx": "0x9cd6a2102e705308613d7a0abb8d5a3cee6aec4585e5ecb9ee6aa49675300ce8"
+      },
+      "closed": {
+        "block": "8147988",
+        "tx": "0x0486b1c0ac9b2d90245407e5bdaa4db728d63f1bab797764256bb9b7412f588b"
+      }
+    },
+    {
+      "action": "close",
+      "seq": "206",
+      "origin": {
+        "block": "57735782",
+        "tx": "0x5fb8c0815d2621810c599f1de3ac9edbb7735b39d49ee960bb58addae2b2024c",
+        "ms": 1794469025200,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57735792",
+          "tx": "0xfe6c085a2ceec12e303177306b360c7660fd0dd5c64ad2d15d7c5d50bb435598",
+          "ms": 1794469027200,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616600",
+          "tx": "0x4d5f93ae9a977020a8ada5f3544a18e8e9081829de3da4ad8f5cac2dcf4b81ce",
+          "ms": 1794469028000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 900,
+        "observed": 2190,
+        "base": 3277,
+        "closed": 4554,
+        "unichain": 4986
+      },
+      "observed": {
+        "block": "8147993",
+        "tx": "0xedb35dc6582236d0b658fbbbd4a352ee87ec09a08f996571fbc3a7a7f49a9d5c"
+      },
+      "closed": {
+        "block": "8147995",
+        "tx": "0x667b0f637013e1dbfecab2e88b17e29172abecf5a040d9673ba7d5dcb595fb9f"
+      }
+    },
+    {
+      "action": "open +1%",
+      "seq": "207",
+      "origin": {
+        "block": "57735819",
+        "tx": "0x72330361941cabe57b705f72003c611cdd637af0bd3738736145371f36c0daaf",
+        "ms": 1794469032600,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57735829",
+          "tx": "0xba5cadf5b6b1ce3b5104e826f19baa1668a56bcf17d2d12c5c5e8df484d2c518",
+          "ms": 1794469034600,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616607",
+          "tx": "0x5561f66600c2696041e8753cb25f7546f5ec77352b0b56ccc11dddd707892290",
+          "ms": 1794469035000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 808,
+        "observed": 2096,
+        "base": 3057,
+        "unichain": 4169,
+        "closed": 4323
+      },
+      "observed": {
+        "block": "8148000",
+        "tx": "0xe2070b00c7d775746a676e7e21f451c7190c1814595947d530e153b034b45ade"
+      },
+      "closed": {
+        "block": "8148002",
+        "tx": "0x761737408925b636748413202edb12aa79b3be5fadeb7efb434e320ebe6aede5"
+      }
+    },
+    {
+      "action": "move +1%",
+      "seq": "208",
+      "origin": {
+        "block": "57735853",
+        "tx": "0x8c9f6eea35cbd7802e27fe47299039c0b2a009da40c8871b38ee2d39c4a54fbb",
+        "ms": 1794469039400,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57735862",
+          "tx": "0x6ea5a9596642b0c987cfc5d47f17b88c7c97d4f0272de1d87285baa0fc7213fe",
+          "ms": 1794469041200,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616614",
+          "tx": "0xe3f4a83c07ae8f1afe3071c3e4dcb32236bb633f9a277b1a1ba9ba0dbf4e2cc8",
+          "ms": 1794469042000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 828,
+        "observed": 2114,
+        "base": 3139,
+        "closed": 4380,
+        "unichain": 5251
+      },
+      "observed": {
+        "block": "8148006",
+        "tx": "0x6088758ef5a7ecd9c830eef06acd3dfa448f47a93971d0707f925ea38fc15c12"
+      },
+      "closed": {
+        "block": "8148008",
+        "tx": "0x1424b29abb7c54a825a789f8e07262e3b18fdbb8ce2a06171d008ea725364ba4"
+      }
+    },
+    {
+      "action": "halt",
+      "seq": "209",
+      "origin": {
+        "block": "57735892",
+        "tx": "0x80c8a7b9b4f763199ad3f1cec0776655de91b661a37b81809a5950a2a55dc412",
+        "ms": 1794469047200,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57735899",
+          "tx": "0x1c08b5da2245be5b0dc55c3354702777f88564ac33eb507a4e13a9e076f015fe",
+          "ms": 1794469048600,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616621",
+          "tx": "0xdde60ac472f790d0107fb8c15671e2c84800b061473c2dde8c332d699f4d0bfa",
+          "ms": 1794469049000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 898,
+        "observed": 1635,
+        "base": 2674,
+        "closed": 3915,
+        "unichain": 4350
+      },
+      "observed": {
+        "block": "8148013",
+        "tx": "0x611b318adbf7e23c19111aa92a734c6c978ef9ea3380439b8e3e37112634f862"
+      },
+      "closed": {
+        "block": "8148015",
+        "tx": "0x4815f6ccbee18317cc1014ed5104399a5e2046c4c9eb8b4d1801f23d5bb8a6bd"
+      }
+    },
+    {
+      "action": "resume -1%",
+      "seq": "210",
+      "origin": {
+        "block": "57735926",
+        "tx": "0xde27d693974286b0bf33b7209a0268a26f1d97103f5288b715f5483a856fd031",
+        "ms": 1794469054000,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57735932",
+          "tx": "0xab2b57da9ca81ac5b7e1e460cbc28cfafe421f3de2c8673e6ddeb4b98f6e3c09",
+          "ms": 1794469055200,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616628",
+          "tx": "0x779e6cd2fbeb37caab8bc855d369c14d9552d24e376bafc38add86a6446f9549",
+          "ms": 1794469056000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 807,
+        "observed": 1546,
+        "base": 2543,
+        "closed": 3786,
+        "unichain": 4218
+      },
+      "observed": {
+        "block": "8148019",
+        "tx": "0x8e777058bb270cb6b15c2b366169b1c2865f2141e794432296d4e0b30c3c04a1"
+      },
+      "closed": {
+        "block": "8148021",
+        "tx": "0xda9766390fab0739c06747792b99565551290e60356ced813ebc98824cbb516e"
+      }
+    },
+    {
+      "action": "close",
+      "seq": "211",
+      "origin": {
+        "block": "57735960",
+        "tx": "0x454da89762d1b28a774276d1454daf2d0b026bfcbb07a8fc9042c04b3a77fc4a",
+        "ms": 1794469060800,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57735969",
+          "tx": "0xa49ff8c9b51c8d554045bb5fd7b912044a0f26166ff2f3e92e40aa79f148503a",
+          "ms": 1794469062600,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616635",
+          "tx": "0x1b62deb3561dd965a59ec730fcd0655b22c0c5580e81948327d6e7e58c1944ea",
+          "ms": 1794469063000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 831,
+        "observed": 2117,
+        "base": 3164,
+        "unichain": 4285,
+        "closed": 4439
+      },
+      "observed": {
+        "block": "8148026",
+        "tx": "0x53ea0f6745949d65a1d840e9f502466cc0f62da64455543a1499cbe94114c8ab"
+      },
+      "closed": {
+        "block": "8148028",
+        "tx": "0xa0de780fba0bf5b7706cf932f05955616cdc462c7914ca21572eafc56e2f8a6e"
+      }
+    },
+    {
+      "action": "open +1%",
+      "seq": "212",
+      "origin": {
+        "block": "57735996",
+        "tx": "0x64dc0be8368bb98273338726a335413007a7c2d062072b99307c624c848e560b",
+        "ms": 1794469068000,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736001",
+          "tx": "0x0fb4570b618ad60edd190560ccf38babf7c33d4c4700d417ee09ffe70d2e1881",
+          "ms": 1794469069000,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616642",
+          "tx": "0xca03232e43e4c26d29996dc9e7133f76b716d63d6652848366e06914b03e27d5",
+          "ms": 1794469070000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 807,
+        "observed": 1549,
+        "base": 2574,
+        "closed": 3266,
+        "unichain": 3699
+      },
+      "observed": {
+        "block": "8148032",
+        "tx": "0xcd27b2b8a9ecdf7216d3eb8624804186ee72af5c0a0c4f0ca8bd2db1937ab4f9"
+      },
+      "closed": {
+        "block": "8148034",
+        "tx": "0xf3a200378cc142daa71b92f66bf3cfcec73e575745e704db25bbed35b6a68fa9"
+      }
+    },
+    {
+      "action": "move -1%",
+      "seq": "213",
+      "origin": {
+        "block": "57736027",
+        "tx": "0x1da8c884fb439dee7363af5eca44a243d0d553bce0621bd89c4dbb4551a3202f",
+        "ms": 1794469074200,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736033",
+          "tx": "0xb485d093deafc01370b83fe08ecb5b82439035d8a85ad4341f0e0253f872b3ab",
+          "ms": 1794469075400,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616648",
+          "tx": "0x415a65d0122d84553138749577b0c6475fb8a3fa69c1e42013b91cd8b8782d40",
+          "ms": 1794469076000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 852,
+        "observed": 1589,
+        "base": 2579,
+        "unichain": 3669,
+        "closed": 3823
+      },
+      "observed": {
+        "block": "8148038",
+        "tx": "0x71369d6ed2249a17be1f137695efd093b5d1c46c7001eea0facfe7189c8222f0"
+      },
+      "closed": {
+        "block": "8148040",
+        "tx": "0x3c1c039ae279926f4abffd718479713028df32c13073511dc86e368b6720edda"
+      }
+    },
+    {
+      "action": "halt",
+      "seq": "214",
+      "origin": {
+        "block": "57736058",
+        "tx": "0xcf7d89d10e1b78374d7c30ef7a7ba53bdefb18d17e2a60516768e1c13d3c7e75",
+        "ms": 1794469080400,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736064",
+          "tx": "0x486f747293590e2855564f182bb3a2fe7c52da4a88e39cb990644b82fd0bd3df",
+          "ms": 1794469081600,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616654",
+          "tx": "0x8ec531f18ea6adb24e4056cb21d3aabe730c114d6d987f97ae897689e735d7d9",
+          "ms": 1794469082000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 833,
+        "observed": 1571,
+        "base": 2563,
+        "closed": 3803,
+        "unichain": 4236
+      },
+      "observed": {
+        "block": "8148044",
+        "tx": "0xf9b6a0b07421fb666166df178ec7bbb8e89f1a48a69032cc9901a41c6f3a920a"
+      },
+      "closed": {
+        "block": "8148046",
+        "tx": "0x18caff8f2584175566617b211bb319f59131e084cdbced496b9f071b9e045fea"
+      }
+    },
+    {
+      "action": "resume +1%",
+      "seq": "215",
+      "origin": {
+        "block": "57736092",
+        "tx": "0xa969384f5dbdf286dabf9beabe5bdf04736bb2e704cfaa569bdc0e833b1d83a2",
+        "ms": 1794469087200,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736102",
+          "tx": "0xb65f30536676b0538391109c48f0c6fecf33b95eb2d63872187c683985fd2be7",
+          "ms": 1794469089200,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616662",
+          "tx": "0x2344183a599753f2003bef032111ba145475b1c9f19ff46ad3b75c17a44f2208",
+          "ms": 1794469090000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 816,
+        "observed": 2143,
+        "base": 3118,
+        "closed": 4360,
+        "unichain": 5228
+      },
+      "observed": {
+        "block": "8148051",
+        "tx": "0xed3656c5ef0ac175e9268670e7f0eb3876497e034a6663c6b563ebd708eb5ed7"
+      },
+      "closed": {
+        "block": "8148053",
+        "tx": "0x3eaf4e27984c5c5b686ef437c1167126da66780abcee89ea71e376471423a3ff"
+      }
+    },
+    {
+      "action": "close",
+      "seq": "216",
+      "origin": {
+        "block": "57736131",
+        "tx": "0x5e966e69c2b519a681702e92dcab0906ce4c36d568ad9306a28f54c0581745d0",
+        "ms": 1794469095000,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736139",
+          "tx": "0x7a2497eced1c9fde9e03d93f94676d26b446978efa377e0fbbfb79558adfe462",
+          "ms": 1794469096600,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616669",
+          "tx": "0x43c472f028aed6b17b1e7a779a6af38fa5a63aff49ab3e5ec027ecce3570757d",
+          "ms": 1794469097000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 853,
+        "observed": 2176,
+        "base": 3201,
+        "unichain": 4333,
+        "closed": 4444
+      },
+      "observed": {
+        "block": "8148058",
+        "tx": "0xfbb88c267607c359ab2f4d41a7bf573b03839bde90a6740af6c938169d664566"
+      },
+      "closed": {
+        "block": "8148060",
+        "tx": "0xd9d29c55abdf95159ee765b7aebe654e01c4e2583803e7af27036e33988c0cdc"
+      }
+    },
+    {
+      "action": "open -1%",
+      "seq": "217",
+      "origin": {
+        "block": "57736165",
+        "tx": "0xddf6cf800fcbac42d1415506854a333cd4ffb0ffa54b2267280b92896000369e",
+        "ms": 1794469101800,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736171",
+          "tx": "0x31ff2793bb7625c3935c7590ebe67eb64b30e189e563c62129a658e67c93e263",
+          "ms": 1794469103000,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616676",
+          "tx": "0xce6ff83627a2ee1c0866ff136629decfbc7d61d33894b7ed6ccdaf22009656c3",
+          "ms": 1794469104000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 799,
+        "observed": 1560,
+        "base": 2538,
+        "closed": 3820,
+        "unichain": 4693
+      },
+      "observed": {
+        "block": "8148064",
+        "tx": "0x0df6023059c9911b2e343d54a4970b05cf8fc8f9a74cd6be31fb7a6d983abdea"
+      },
+      "closed": {
+        "block": "8148066",
+        "tx": "0x6dd5df4feb66455971a1e54c3e696a6947c97098bd960efc664c9b7046f2c847"
+      }
+    },
+    {
+      "action": "move +1%",
+      "seq": "218",
+      "origin": {
+        "block": "57736201",
+        "tx": "0x4073dc2f72a668ee2c0e44b1024d043de4e45fd847738682eb5454a98852fa3d",
+        "ms": 1794469109000,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736208",
+          "tx": "0x367d214b725fba4cfa8810a73dc804aaa7d8c9c0c30372f23a1fd34d575c2b9f",
+          "ms": 1794469110400,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616683",
+          "tx": "0x68fd2ad6f161a25b8a0b78e2b2faeeb3be9d7c95980b43d0064bdd40c8845104",
+          "ms": 1794469111000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 856,
+        "observed": 1593,
+        "base": 2568,
+        "closed": 3808,
+        "unichain": 4239
+      },
+      "observed": {
+        "block": "8148071",
+        "tx": "0xbbb16ccd1f2f7b9db36bb5f81d82937fcf843c3e9f51b75b8ee3e8608f3a256b"
+      },
+      "closed": {
+        "block": "8148073",
+        "tx": "0xca928d4a51731b12bbab628f76a8983b1606bfb47ea0559b5338a81355b9dd1c"
+      }
+    },
+    {
+      "action": "halt",
+      "seq": "219",
+      "origin": {
+        "block": "57736236",
+        "tx": "0xa25963dbeb309977b71a00243df348dcf608cc590b261980a8e07e89e40d0c04",
+        "ms": 1794469116000,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736245",
+          "tx": "0x26c36baa5711a23676ab82e66c51d4d05f5cecec420f43a3be04fdd58883af9d",
+          "ms": 1794469117800,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616690",
+          "tx": "0xa05944f9bab94ae89728f2e3b0e1ca68fa460204a4e308e1a0d1bb2f4dc40258",
+          "ms": 1794469118000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 942,
+        "observed": 2270,
+        "base": 3205,
+        "closed": 4488,
+        "unichain": 4922
+      },
+      "observed": {
+        "block": "8148078",
+        "tx": "0x19e4b4a25e79a113042335a864900afac8a7a342827fe4a4571b7e12448a68de"
+      },
+      "closed": {
+        "block": "8148080",
+        "tx": "0x1d917a82c2ff93931ff85680aa25d68d40bf0764f58aa7f2efb919b38b03259f"
+      }
+    },
+    {
+      "action": "resume -1%",
+      "seq": "220",
+      "origin": {
+        "block": "57736272",
+        "tx": "0x274e4f06bed895d6975e916d656914992667dc8ff9c80e4d1cb7228810989892",
+        "ms": 1794469123200,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736282",
+          "tx": "0xf62b822f7389b7213d7acddbd1f5e47c9630d75dfa9d9241980d1ccc0d6afbef",
+          "ms": 1794469125200,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616698",
+          "tx": "0xc8ccf679a840e367a6146d3d92fbf8c81664da0142973ba338bd0d70cb527ef7",
+          "ms": 1794469126000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 790,
+        "observed": 2117,
+        "base": 3183,
+        "closed": 4461,
+        "unichain": 4896
+      },
+      "observed": {
+        "block": "8148085",
+        "tx": "0x67298f7e5f1c7e46f43c39bdd8276a84c2f15571fb8ef39566415ba1f738cfd3"
+      },
+      "closed": {
+        "block": "8148087",
+        "tx": "0xb962553d4e594a3a7ff9f6e987de9f39ff541c8d8a61178f041fd82bcefe3086"
+      }
+    },
+    {
+      "action": "close",
+      "seq": "221",
+      "origin": {
+        "block": "57736309",
+        "tx": "0x384551ce45fd95ccad11f064b9a85d1a0b77085db5852d37673c6d14afdf7fa7",
+        "ms": 1794469130600,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736319",
+          "tx": "0x4789c6ddeaf469b61e2912d4fcb04f577076d27d515d70ff25f5c5fd15200234",
+          "ms": 1794469132600,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616705",
+          "tx": "0x8290f5c05c95825c0100a5a91ccd20b5c11b8550ef1a33559f79863a888cab56",
+          "ms": 1794469133000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 785,
+        "observed": 2111,
+        "base": 3073,
+        "closed": 4315,
+        "unichain": 4751
+      },
+      "observed": {
+        "block": "8148092",
+        "tx": "0xddc963d006e89b52b807c2fa27795f0328b5b8812685013c7fffa5fc6ba6df54"
+      },
+      "closed": {
+        "block": "8148094",
+        "tx": "0x886f7a606d79ba3ab6c0b642e74cdd2aa55f2f4b5eb18b6ef4ece4cd9e759603"
+      }
+    },
+    {
+      "action": "open +1%",
+      "seq": "222",
+      "origin": {
+        "block": "57736346",
+        "tx": "0x15a12a27a6aa59cc80feb7466a8ad0b433b9f1bf97a022125bf5726d8d392715",
+        "ms": 1794469138000,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736351",
+          "tx": "0x42e931718666c42ff4fed4418ee333294ca56b9ba29f38105a849574a5b3bb3d",
+          "ms": 1794469139000,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616712",
+          "tx": "0xffcd15866f3c253d341f24cacdce56fcb15b581a5de3095ab88b02c65c380f28",
+          "ms": 1794469140000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 815,
+        "observed": 1552,
+        "base": 2637,
+        "closed": 3329,
+        "unichain": 4192
+      },
+      "observed": {
+        "block": "8148098",
+        "tx": "0xb30233f2f02c87f624b826deff0d89588da91405172307940a53bd6646664995"
+      },
+      "closed": {
+        "block": "8148100",
+        "tx": "0xdfdf410bcd672822b8f8efb1f0559179346720f47d32277834a79d0928de6f9f"
+      }
+    },
+    {
+      "action": "move -1%",
+      "seq": "223",
+      "origin": {
+        "block": "57736381",
+        "tx": "0x9aaf25b196afe10e048c1c1a9166eb572091f199b4e78c2152620a41cc88d849",
+        "ms": 1794469145000,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736388",
+          "tx": "0xd9b840c36759616ddafe7eeee8b07e7c5463e35b43d5f449427fbbda24dbaacb",
+          "ms": 1794469146400,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616719",
+          "tx": "0xb519b4c6ca00d4dd37c99b4a8b94bf3c4446bdd28d0a4221674e916802177f64",
+          "ms": 1794469147000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 757,
+        "observed": 1495,
+        "base": 2546,
+        "closed": 3822,
+        "unichain": 4257
+      },
+      "observed": {
+        "block": "8148105",
+        "tx": "0x59b4616ac51cb18cb8815f27a856cbdc3a1b981ba2b1df73b2ec1b0832979e48"
+      },
+      "closed": {
+        "block": "8148107",
+        "tx": "0x2e9c6ca84736f8ca62688a11b01183758874b2b4afee162a1dfb818b01247446"
+      }
+    },
+    {
+      "action": "halt",
+      "seq": "224",
+      "origin": {
+        "block": "57736415",
+        "tx": "0x07cf0e66ee0d3f5b665098d7d4a0032f1b907d386b3459b21710701454b46473",
+        "ms": 1794469151800,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736420",
+          "tx": "0xff50992f6513fb4c8f1a9ae34b4abfa21e1a19f556debc64d81d0bdb50899f5d",
+          "ms": 1794469152800,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616726",
+          "tx": "0x9f5f7dd61fe7c218ad55819f24b8ca0cd760dd46c8af6f72b6d8078fbe51d306",
+          "ms": 1794469154000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 831,
+        "observed": 1018,
+        "base": 2003,
+        "closed": 4378,
+        "unichain": 4814
+      },
+      "observed": {
+        "block": "8148111",
+        "tx": "0x0e4a919de3658c3a93a2b8fbe4cd1cf94d434b491a6cddedf5404d6a3cd21467"
+      },
+      "closed": {
+        "block": "8148114",
+        "tx": "0x256f28c4d3ff7c11279e0b4b01319f98273d84d03cfded8848f71272b7982197"
+      }
+    },
+    {
+      "action": "resume +1%",
+      "seq": "225",
+      "origin": {
+        "block": "57736453",
+        "tx": "0xf5784cc43729ddacd9a598841437f59f0b8a60250ddfca7d6e9af332bfd167fc",
+        "ms": 1794469159400,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736463",
+          "tx": "0x5343eb72b0ddb5115564bcf21f58f78dcbf28f440ff913e7b7336cd526815116",
+          "ms": 1794469161400,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616734",
+          "tx": "0x2e350c5fea8109546d3f218bdae7a4eb4ab9718d31c3a2acd6fe728c69805507",
+          "ms": 1794469162000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 1077,
+        "observed": 2362,
+        "base": 3427,
+        "closed": 4665,
+        "unichain": 5531
+      },
+      "observed": {
+        "block": "8148119",
+        "tx": "0xed8b3b44bda6eb43fb2d13f6da1ede90ed5e7be8035ed3dc894074a4278a188f"
+      },
+      "closed": {
+        "block": "8148121",
+        "tx": "0xb77ebf4520dfdcbbf741b7c116fdbb0d96eeca3b0225d5c66361bc9fc9978f32"
+      }
+    },
+    {
+      "action": "close",
+      "seq": "226",
+      "origin": {
+        "block": "57736493",
+        "tx": "0xab2d5617565201b7145bd77b1ba3a43cae4ac646c9ce42440e88f16d2b775c06",
+        "ms": 1794469167400,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736500",
+          "tx": "0xc21117dc5912960ae93e789a3f441f9636eb27f20e03541ce7452f77697c5b38",
+          "ms": 1794469168800,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616741",
+          "tx": "0x71cb40e6d3ae45f5be7924e159577ef2cd2521bdb0da73988b18f69355ba3bba",
+          "ms": 1794469169000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 808,
+        "observed": 1552,
+        "base": 2578,
+        "unichain": 3707,
+        "closed": 3825
+      },
+      "observed": {
+        "block": "8148126",
+        "tx": "0xbbbf7bbc23dd5cc9b72626c498f243ba0a9189fff23d10271f694ad2fcbd1ab4"
+      },
+      "closed": {
+        "block": "8148128",
+        "tx": "0xba09162d36cafd9d0021d5ac449ceacde0c60f07967933f1f6ce572a1e0456ac"
+      }
+    },
+    {
+      "action": "open -1%",
+      "seq": "227",
+      "origin": {
+        "block": "57736524",
+        "tx": "0x570bfe6026c133d8cd6504b7190f4e16d9e60b0f36d56dbc742f647e5333d028",
+        "ms": 1794469173600,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736531",
+          "tx": "0x285f731afb9663349a1cac3b3abc3e92cc00a27e5123a17613fa1f34e49bb05f",
+          "ms": 1794469175000,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616748",
+          "tx": "0x7e6c7cc2cd7dd2d3edf812090d9b7f3d4d2b140e14008e29f694c25dbd81edec",
+          "ms": 1794469176000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 802,
+        "observed": 1583,
+        "base": 2569,
+        "closed": 3852,
+        "unichain": 4283
+      },
+      "observed": {
+        "block": "8148132",
+        "tx": "0x35003faedc26338e1e9f93a3ef8035c0fd74ef86d525e50746227df72aee2fb2"
+      },
+      "closed": {
+        "block": "8148134",
+        "tx": "0xcfe2faac5c679a8af3bc9fe8c789cb784893f54ce5e46cbb3c651096c5b4c888"
+      }
+    },
+    {
+      "action": "move +1%",
+      "seq": "228",
+      "origin": {
+        "block": "57736558",
+        "tx": "0x05fd7833568a67167f9a3efc5598d5b686de9fcd55132412ab5be9b11cf274a8",
+        "ms": 1794469180400,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736562",
+          "tx": "0x3d6e753e0c92cfa929478fced551a103ad8a7659b626ad9044b42a468b681ab7",
+          "ms": 1794469181200,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616754",
+          "tx": "0xbe2fa311878230e1221e2eb1b8f3f4bf153d0ca7be022a5ba9dc181b08705db3",
+          "ms": 1794469182000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 777,
+        "observed": 924,
+        "base": 1897,
+        "closed": 3177,
+        "unichain": 3614
+      },
+      "observed": {
+        "block": "8148138",
+        "tx": "0x72d57c839a6a11f202f10d728876e18b106edeb79056303c7b56d1d743d9ecb3"
+      },
+      "closed": {
+        "block": "8148140",
+        "tx": "0x621fa8e828488de9dd5b786bf0936bb2fe08b0b00534a7ded64dcb451f5c3dc6"
+      }
+    },
+    {
+      "action": "halt",
+      "seq": "229",
+      "origin": {
+        "block": "57736592",
+        "tx": "0x89bf7d168018191acd76f91f53f11b46728b574b2caba32197d68caf44ebf2f3",
+        "ms": 1794469187200,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736600",
+          "tx": "0x35850353662b180bbcb66248ff4471da1fcac55b1ab8839f147cf1f64acbf258",
+          "ms": 1794469188800,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616761",
+          "tx": "0xf2b556631ce643fd48e6c47a6356fdef96a729ee375bdbf7fcdbebdaa6385059",
+          "ms": 1794469189000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 876,
+        "observed": 2201,
+        "base": 3287,
+        "unichain": 3830,
+        "closed": 3985
+      },
+      "observed": {
+        "block": "8148145",
+        "tx": "0x2a24bd175f2c11bb826275fe13cd78a6ec62470a3ff42c943e75461ea0074efd"
+      },
+      "closed": {
+        "block": "8148147",
+        "tx": "0x65de6dd7d8a8a262e5fd98ad2fc022f8516cee370cd5f405d8a467213616fdf7"
+      }
+    },
+    {
+      "action": "resume -1%",
+      "seq": "230",
+      "origin": {
+        "block": "57736623",
+        "tx": "0x0ab6ef717bd18338ee662d4a4da88242c3ffaa32c605ed8727bc6bc2a48e8911",
+        "ms": 1794469193400,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736632",
+          "tx": "0x7d0f1e10a7af3b01fdd70226594e69daa47eed1b01a437a1c228e8e9151e2928",
+          "ms": 1794469195200,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616768",
+          "tx": "0x64697687b101ee3d5c41c7be700c8f167134cccae690d55ca43bd534cf837a82",
+          "ms": 1794469196000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 820,
+        "observed": 2112,
+        "base": 3071,
+        "closed": 4363,
+        "unichain": 4797
+      },
+      "observed": {
+        "block": "8148151",
+        "tx": "0x318d4abc8189aca63c63f665d9c36ad84a392d9052bdd5c5271db45806d158f9"
+      },
+      "closed": {
+        "block": "8148153",
+        "tx": "0x038711d1c646b085a99e5fc1b7b107a905a6aea188ba019c77ba14ed0f1bac6c"
+      }
+    },
+    {
+      "action": "close",
+      "seq": "231",
+      "origin": {
+        "block": "57736660",
+        "tx": "0x8b21158fcdd9ed2bb2931a9056b5477e033a1103cb7ccaf5952e028c1f4fe791",
+        "ms": 1794469200800,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736669",
+          "tx": "0x12cd25b2fa7e1c7091a66b52878421b3babeb905c9e2e863cd285352e1116835",
+          "ms": 1794469202600,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616775",
+          "tx": "0xdf5a038744d811f6aa17aba4a4b31b131553017b024b3056dc30d3e3a9ed4878",
+          "ms": 1794469203000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 818,
+        "observed": 2151,
+        "base": 3178,
+        "unichain": 4182,
+        "closed": 4321
+      },
+      "observed": {
+        "block": "8148158",
+        "tx": "0xc1e3ab2888a7b71871050b0c6e91a73897d971c71eefdab895071c1e6c78f9ff"
+      },
+      "closed": {
+        "block": "8148160",
+        "tx": "0xd63ad7ae8db2357918abef9ec4e1437afc96b1d16930ba294109cef2a3094c10"
+      }
+    },
+    {
+      "action": "open +1%",
+      "seq": "232",
+      "origin": {
+        "block": "57736693",
+        "tx": "0x524aa676ed4c6c4bdece37399f96cc608285b1dccd73130ac105efead68850e1",
+        "ms": 1794469207400,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736701",
+          "tx": "0xcd0f41a80f6371ffaf91659adb19c2f8bf4fdc1d3bfe4d835120f2abed479463",
+          "ms": 1794469209000,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616781",
+          "tx": "0x731aa3863c33fcd7441cdd022981fa187d55a0160dfdac3e4fe590dfa0ac292f",
+          "ms": 1794469209000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 798,
+        "observed": 1511,
+        "base": 2488,
+        "unichain": 3587,
+        "closed": 3690
+      },
+      "observed": {
+        "block": "8148164",
+        "tx": "0x834ce19ead8dd6e51b5fc819da8ab8ce8cb6f5bae05fa53c2fabc0898b32cd66"
+      },
+      "closed": {
+        "block": "8148166",
+        "tx": "0x972a108fbb81e7f277b8dff9aae39a642bf53f8706ead8eee5e1613aac6a7839"
+      }
+    },
+    {
+      "action": "move -1%",
+      "seq": "233",
+      "origin": {
+        "block": "57736725",
+        "tx": "0xdebcad5c8a8d5285a743b8b4507bd3174f4dce1ebbc0ae549837973a2363ea5b",
+        "ms": 1794469213800,
+        "precise": true
+      },
+      "applied": {
+        "base": {
+          "block": "57736733",
+          "tx": "0x76c25805e31ed6aadfccf2072234c217d7547afa6d009dda8a0491c2129662f5",
+          "ms": 1794469215400,
+          "precise": true
+        },
+        "unichain": {
+          "block": "67616788",
+          "tx": "0xf7514183bc391acffde498837b798fad1675631a80673c8e041da75b3e7873c5",
+          "ms": 1794469216000,
+          "precise": false
+        }
+      },
+      "seen": {
+        "origin": 901,
+        "observed": 2185,
+        "base": 2816,
+        "closed": 4060,
+        "unichain": 4490
+      },
+      "observed": {
+        "block": "8148170",
+        "tx": "0x086c7fe07aaf93e22c416f9bbf5d37ec4bb1bb77c053a5ef2dfaaba3957f3fbb"
+      },
+      "closed": {
+        "block": "8148172",
+        "tx": "0x6229b72992f7e76a6505a02e5d1470b5f14dcba6da9b954b20f69d6ceb50014a"
+      }
+    }
+  ]
+}

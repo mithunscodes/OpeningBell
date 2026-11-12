@@ -73,12 +73,15 @@ interface Action {
 /**
  * Cycles through the moments that matter (halt, close, reopen at a new price, a move while open)
  * and always moves the price back towards where it started, so a long run does not drift.
+ * The choice among halt, close and move is counted separately from the round number: every halt
+ * and close is followed by a reopen, so picking by round number would never reach "close".
  */
-function nextAction(status: number, price: bigint, startPrice: bigint, i: number): Action {
+let openTurns = 0;
+function nextAction(status: number, price: bigint, startPrice: bigint): Action {
   const towardsStart = price === 0n || startPrice === 0n || price < startPrice ? moveBps : -moveBps;
   const pct = (towardsStart > 0 ? "+" : "") + towardsStart / 100 + "%";
   if (status === OPEN) {
-    const pick = i % 3;
+    const pick = openTurns++ % 3;
     if (pick === 0) return { label: "halt", status: HALTED, move: 0 };
     if (pick === 1) return { label: "close", status: CLOSED, move: 0 };
     return { label: "move " + pct, status: OPEN, move: towardsStart };
@@ -168,6 +171,23 @@ function line(i: number, action: Action, loop: LoopRecord): string {
 // Report
 // -------------------------------------------------------------------------------------------------
 
+/** What the run actually played, counted from the actions: "67 halts, 67 resumes after a halt, ...". */
+function mix(loops: { action: Action }[]): string {
+  const names: Record<string, string> = {
+    halt: "halts",
+    resume: "resumes after a halt at a new price",
+    close: "closing bells",
+    open: "opens at a new price",
+    move: "price moves while open",
+  };
+  const counts = new Map<string, number>();
+  for (const { action } of loops) {
+    const kind = action.label.split(" ")[0];
+    counts.set(kind, (counts.get(kind) ?? 0) + 1);
+  }
+  return [...counts].map(([kind, n]) => n + " " + (names[kind] ?? kind)).join(", ");
+}
+
 function report(loops: { action: Action; loop: LoopRecord }[], started: Date): { text: string; json: unknown } {
   const done = loops.filter((l) => isDone(l.loop, venues));
   const rows: string[] = [];
@@ -207,8 +227,8 @@ function report(loops: { action: Action; loop: LoopRecord }[], started: Date): {
   const text = [
     "# Loop latency" + (local ? " (local forks, not meaningful)" : " on the live testnets"),
     "",
-    "Run started " + started.toISOString() + ". " + loops.length + " market updates, cycling through halt, close, reopen and",
-    "price moves of " + moveBps / 100 + "%. " + done.length + " of " + loops.length + " loops finished within " + timeoutMs / 1000 + " s.",
+    "Run started " + started.toISOString() + ". " + loops.length + " market updates: " + mix(loops) + ".",
+    "Price moves are " + moveBps / 100 + "%. " + done.length + " of " + loops.length + " loops finished within " + timeoutMs / 1000 + " s.",
     "",
     "| Hop | p50 | p90 | max | min | n | Clock |",
     "| --- | --- | --- | --- | --- | --- | --- |",
@@ -274,7 +294,7 @@ const save = () => {
 for (let i = 0; i < rounds; i++) {
   const market = await readMarket();
   if (!startPrice && market.price > 0n) startPrice = market.price;
-  const action = nextAction(market.seq === 0n ? CLOSED : market.status, market.price, startPrice, i);
+  const action = nextAction(market.seq === 0n ? CLOSED : market.status, market.price, startPrice);
   let loop: LoopRecord;
   try {
     loop = await play(action);
