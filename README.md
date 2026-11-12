@@ -19,9 +19,9 @@ Live on Base Sepolia, Unichain Sepolia and Reactive Lasna. Over 230 market updat
 testnets, the Base pool switched a median of **1.4 s** after the exchange event (2.4 s at worst), the
 Unichain pool about **2 s** after, and **230 of 230** loops closed. See [Speed](#speed).
 
-**[Play the demo](https://mithunscodes.github.io/OpeningBell/)** with any wallet and a little test ETH.
-
-<!-- TODO: add the video link here once it exists: **[Watch the video](VIDEO_LINK)** -->
+<!-- TODO: add the demo and video links here once they exist:
+**[Play the demo](DEMO_LINK)** with any wallet and a little test ETH · **[Watch the video](VIDEO_LINK)**
+-->
 
 ## How it works
 
@@ -159,7 +159,7 @@ Twin pools, tokens and pool ids are in [`deployments/`](deployments/).
 | `script/` | Deployment scripts, the same ones the local rehearsal uses |
 | `test/` | Foundry tests, with a local simulator of Reactive Omni and the real Uniswap v4 PoolManager bytecode from Base Sepolia |
 | `tools/` | Fork rehearsal, latency benchmark, loop watcher, and a local relay for trying the demo offline |
-| `web/` | The demo page, published to GitHub Pages by `.github/workflows/pages.yml` |
+| `web/` | The demo page, a static build that Vercel deploys using `vercel.json` |
 
 ## Build, test and run
 

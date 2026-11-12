@@ -3,6 +3,7 @@
 //   node build.mjs --watch  rebuild on change
 import { build, context } from "esbuild";
 import { cpSync, existsSync, mkdirSync } from "node:fs";
+import { resolve } from "node:path";
 
 const watch = process.argv.includes("--watch");
 mkdirSync("dist", { recursive: true });
@@ -15,6 +16,8 @@ const copyStatic = () => {
 const options = {
   entryPoints: ["src/main.ts"],
   bundle: true,
+  // The page imports the contract ABIs from ../tools/src; this lets that file find viem here.
+  nodePaths: [resolve("node_modules")],
   format: "esm",
   target: "es2022",
   minify: !watch,
