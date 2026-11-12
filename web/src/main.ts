@@ -44,6 +44,8 @@ const HALTED = 2;
 interface Market {
   status: number;
   seq: bigint;
+  /** Base Sepolia block time of the update, in seconds. */
+  sourceTime: bigint;
   price: bigint;
 }
 
@@ -79,6 +81,15 @@ interface Loop {
   applied: Partial<Record<VenueKey, Hop>>;
   closed?: Hop;
   seenAt: number;
+  /**
+   * How old the update already was when this page first saw it, on Base's clock. An update that is
+   * older than `LIVE_WINDOW_MS` is shown as history: public RPCs only search a short stretch of
+   * blocks for events, so its transactions are not looked up.
+   */
+  ageMs: number;
+  old: boolean;
+  /** Where the next event search starts on each chain. */
+  cursor: Partial<Record<ChainKey, bigint>>;
 }
 
 interface LogEntry {
@@ -100,8 +111,20 @@ let stageReadyAt = 0;
 let stageLeft = 0n;
 let busy = false;
 const history: LogEntry[] = [];
-/** Lowest block each chain's event searches start from. Set at start-up to a recent window. */
-const scanFrom: Partial<Record<ChainKey, bigint>> = {};
+/** Latest block seen on each chain. */
+const heads: Partial<Record<ChainKey, bigint>> = {};
+
+/**
+ * The public RPCs cap how many blocks one event search may cover: 200 on Base Sepolia (40 seconds),
+ * 1000 on Unichain Sepolia, a few thousand on Lasna. Searches stay under these and slide forward.
+ */
+const MAX_RANGE: Record<ChainKey, bigint> = { base: 190n, unichain: 900n, lasna: 2000n };
+const BLOCK_MS: Record<ChainKey, number> = { base: 200, unichain: 1000, lasna: 1000 };
+const RAID_GAS = 1_200_000n;
+/** An update older than this when the page first sees it is not timed. Keeps Base's first search under its cap. */
+const LIVE_WINDOW_MS = 20_000;
+/** How far before the update the first search starts, to allow for clocks that disagree. */
+const SEARCH_MARGIN_MS = 15_000;
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 const eth = (window as unknown as { ethereum?: Eip1193 }).ethereum;
@@ -116,13 +139,13 @@ interface Eip1193 {
 // -------------------------------------------------------------------------------------------------
 
 async function readMarket(): Promise<Market> {
-  const [status, seq, , price] = await clients.base.readContract({
+  const [status, seq, sourceTime, price] = await clients.base.readContract({
     address: config.origin.feed,
     abi: feedAbi,
     functionName: "markets",
     args: [MARKET_ID],
   });
-  return { status, seq, price };
+  return { status, seq, sourceTime, price };
 }
 
 async function readVenue(key: VenueKey): Promise<VenueView | undefined> {
@@ -162,36 +185,54 @@ async function readStage(): Promise<void> {
   stageLeft = left;
 }
 
+/** The stretch of blocks to search on a chain for a loop's events on this pass, kept under the RPC's cap. */
+function searchWindow(loop: Loop, key: ChainKey): { fromBlock: bigint; toBlock: bigint; full: boolean } | undefined {
+  const fromBlock = loop.cursor[key];
+  const head = heads[key];
+  if (fromBlock === undefined || head === undefined || head < fromBlock) return undefined;
+  const cap = config.mode === "local" ? head : fromBlock + MAX_RANGE[key];
+  return head > cap ? { fromBlock, toBlock: cap, full: true } : { fromBlock, toBlock: head, full: false };
+}
+
 /** Fills in whatever hops of a loop have landed since the last look. */
 async function advance(loop: Loop): Promise<void> {
-  const jobs: Promise<void>[] = [];
+  if (loop.old) return;
+  const windows: Partial<Record<ChainKey, ReturnType<typeof searchWindow>>> = {};
+  for (const key of ["base", "unichain", "lasna"] as const) windows[key] = searchWindow(loop, key);
+  const jobs: { key: ChainKey; run: Promise<void> }[] = [];
 
-  if (!loop.feed) {
-    jobs.push(
-      (async () => {
+  const base = windows.base;
+  if (!loop.feed && base) {
+    jobs.push({
+      key: "base",
+      run: (async () => {
         const logs = await clients.base.getContractEvents({
           address: config.origin.feed,
           abi: feedAbi,
           eventName: "MarketUpdate",
           args: { marketId: MARKET_ID },
-          fromBlock: scanFrom.base,
+          fromBlock: base.fromBlock,
+          toBlock: base.toBlock,
         });
         const log = logs.find((l) => l.args.seq === loop.seq);
         if (log) loop.feed = await hop(clients.base, log.blockNumber, log.transactionHash);
       })(),
-    );
+    });
   }
 
-  if (!loop.observed || !loop.closed) {
-    jobs.push(
-      (async () => {
+  const lasna = windows.lasna;
+  if ((!loop.observed || !loop.closed) && lasna) {
+    jobs.push({
+      key: "lasna",
+      run: (async () => {
         const find = async (eventName: "Observed" | "LoopClosed") => {
           const logs = await clients.lasna.getContractEvents({
             address: config.reactive.conductor,
             abi: conductorAbi,
             eventName,
             args: { marketId: MARKET_ID, seq: loop.seq },
-            fromBlock: scanFrom.lasna,
+            fromBlock: lasna.fromBlock,
+            toBlock: lasna.toBlock,
           });
           return logs[0];
         };
@@ -204,28 +245,40 @@ async function advance(loop: Loop): Promise<void> {
           if (log) loop.closed = { block: log.blockNumber, tx: log.transactionHash };
         }
       })(),
-    );
+    });
   }
 
   for (const key of VENUES) {
     const v = config.venues[key];
-    if (!v || loop.applied[key]) continue;
-    jobs.push(
-      (async () => {
+    const window = windows[key];
+    if (!v || loop.applied[key] || !window) continue;
+    jobs.push({
+      key,
+      run: (async () => {
         const logs = await clients[key].getContractEvents({
           address: v.guard,
           abi: guardAbi,
           eventName: "Applied",
           args: { marketId: MARKET_ID, seq: loop.seq },
-          fromBlock: scanFrom[key],
+          fromBlock: window.fromBlock,
+          toBlock: window.toBlock,
         });
         const log = logs[0];
         if (log) loop.applied[key] = await hop(clients[key], log.blockNumber, log.transactionHash);
       })(),
-    );
+    });
   }
 
-  await Promise.all(jobs);
+  // A failed read (rate limit, timeout) is retried on the next pass. A chain whose stretch was
+  // searched in full without trouble moves on to the next stretch, with a small overlap.
+  const results = await Promise.allSettled(jobs.map((j) => j.run));
+  const failed = new Set(jobs.filter((_, i) => results[i].status === "rejected").map((j) => j.key));
+  for (const key of ["base", "unichain", "lasna"] as const) {
+    const window = windows[key];
+    if (window?.full && !failed.has(key)) loop.cursor[key] = window.toBlock - 5n;
+  }
+  const firstError = results.find((r) => r.status === "rejected");
+  if (firstError) console.warn((firstError as PromiseRejectedResult).reason);
 }
 
 async function hop(client: PublicClient, block: bigint, tx: Hash): Promise<Hop> {
@@ -237,8 +290,25 @@ function loopDone(loop: Loop): boolean {
   return Boolean(loop.feed && loop.observed && loop.closed && VENUES.every((k) => !config.venues[k] || loop.applied[k]));
 }
 
+/** The block each chain's deployment went in at, below which no search needs to go. */
+function deployedAt(key: ChainKey): bigint {
+  if (key === "lasna") return BigInt(config.reactive.block);
+  if (key === "base") return BigInt(config.origin.block);
+  return BigInt(config.venues[key]?.block ?? 0);
+}
+
 async function refresh(): Promise<void> {
-  const [m, ...views] = await Promise.all([readMarket(), ...VENUES.map(readVenue), readStage()]);
+  const [m, baseHead, unichainHead, lasnaHead, ...views] = await Promise.all([
+    readMarket(),
+    clients.base.getBlock({ blockTag: "latest" }),
+    clients.unichain.getBlockNumber(),
+    clients.lasna.getBlockNumber(),
+    ...VENUES.map(readVenue),
+    readStage(),
+  ]);
+  heads.base = baseHead.number;
+  heads.unichain = unichainHead;
+  heads.lasna = lasnaHead;
   VENUES.forEach((key, i) => {
     const view = views[i];
     if (view) venues[key] = view;
@@ -246,7 +316,16 @@ async function refresh(): Promise<void> {
 
   if (!market || m.seq !== market.seq) {
     if (m.seq > 0n && !loops.has(m.seq)) {
-      const loop: Loop = { seq: m.seq, status: m.status, price: m.price, applied: {}, seenAt: Date.now() };
+      // Both times are Base's own, so the player's clock does not matter.
+      const ageMs = Math.max(0, Number(baseHead.timestamp - m.sourceTime) * 1000);
+      const old = ageMs > LIVE_WINDOW_MS;
+      const cursor: Loop["cursor"] = {};
+      for (const key of ["base", "unichain", "lasna"] as const) {
+        const back = BigInt(Math.ceil((ageMs + SEARCH_MARGIN_MS) / BLOCK_MS[key]));
+        const head = heads[key]!;
+        cursor[key] = head - back > deployedAt(key) ? head - back : deployedAt(key);
+      }
+      const loop: Loop = { seq: m.seq, status: m.status, price: m.price, applied: {}, seenAt: Date.now(), ageMs, old, cursor };
       loops.set(m.seq, loop);
       latestLoop = loop;
     }
@@ -304,6 +383,8 @@ type Write = {
   abi: typeof stageAbi | typeof arenaAbi;
   functionName: string;
   args: readonly unknown[];
+  /** Fixed gas limit, for calls whose wallet estimate could land too low. */
+  gas?: bigint;
 };
 
 /** Simulates first (so reverts come back readable), then sends from the player's wallet. */
@@ -321,7 +402,7 @@ async function send(write: Write): Promise<TransactionReceipt> {
     args: write.args as [bigint],
   });
   const wallet = createWalletClient({ chain: toChain(config.chains[write.key]), transport: custom(eth), account: from });
-  const hash = await wallet.writeContract(request);
+  const hash = await wallet.writeContract(write.gas ? { ...request, gas: write.gas } : request);
   return client.waitForTransactionReceipt({ hash });
 }
 
@@ -393,7 +474,9 @@ async function raid(key: VenueKey, target: 0 | 1): Promise<void> {
   const pending = latestLoop && !latestLoop.applied[key];
   const name = (target === 0 ? "protected pool" : "unprotected twin") + " on " + config.chains[key].short;
   try {
-    const receipt = await send({ key, address: v.arena, abi: arenaAbi, functionName: "raid", args: [BigInt(target)] });
+    // The arena refuses a raid that arrives with too little gas, so the limit is set here rather than
+    // left to the wallet's estimate. Unused gas is not charged.
+    const receipt = await send({ key, address: v.arena, abi: arenaAbi, functionName: "raid", args: [BigInt(target)], gas: RAID_GAS });
     let text = "Raid on the " + name + ": nothing happened.";
     let tone: LogEntry["tone"] = "neutral";
     for (const entry of receipt.logs) {
@@ -450,6 +533,19 @@ function link(chain: ChainKey, tx: string, text = "tx"): HTMLAnchorElement {
   return el("a", { href: explorerTx(config.chains[chain], tx), target: "_blank", rel: "noopener" }, text);
 }
 
+/**
+ * What was last drawn into each part of the page. A part is only rebuilt when what it shows has
+ * changed: the page redraws many times a second, and a button that is replaced between the press
+ * and the release of a click never hears the click.
+ */
+const drawn = new Map<string, string>();
+function changed(part: string, state: unknown): boolean {
+  const key = JSON.stringify(state, (_, v) => (typeof v === "bigint" ? v.toString() : v));
+  if (drawn.get(part) === key) return false;
+  drawn.set(part, key);
+  return true;
+}
+
 function render(): void {
   renderWallet();
   renderExchange();
@@ -479,18 +575,19 @@ function renderExchange(): void {
   $("market-seq").textContent = market.seq === 0n ? "" : "update #" + market.seq;
 
   const actions = $("actions");
-  actions.replaceChildren();
   const now = Date.now();
   const wait = Math.max(0, Math.ceil((stageReadyAt - now) / 1000));
   const list = ACTIONS[status === -1 ? CLOSED : status] ?? [];
-  for (const a of list) {
+  const blocked = busy || wait > 0 || stageLeft === 0n;
+  if (changed("actions", [status, blocked])) actions.replaceChildren();
+  for (const a of actions.childElementCount === 0 ? list : []) {
     const button = el(
       "button",
       { class: "action " + a.tone, type: "button" },
       el("span", { class: "action-label" }, a.label),
       el("span", { class: "action-hint" }, a.hint),
     );
-    button.disabled = busy || wait > 0 || stageLeft === 0n;
+    button.disabled = blocked;
     button.addEventListener("click", () => act(a.status, a.move, a.label));
     actions.append(button);
   }
@@ -506,12 +603,20 @@ function renderStopwatch(): void {
   const box = $("hops");
   const loop = latestLoop;
   if (!loop) {
-    box.replaceChildren(el("p", { class: "muted" }, "Press a button on the exchange to start the clock."));
-    $("headline").textContent = "";
-    $("track").replaceChildren();
+    if (changed("hops", "none")) {
+      box.replaceChildren(el("p", { class: "muted" }, "Press a button on the exchange to start the clock."));
+      $("headline").textContent = "";
+      $("track").replaceChildren();
+    }
     return;
   }
 
+  if (loop.old) {
+    renderSettled(loop);
+    return;
+  }
+
+  $("track").hidden = false;
   const t0 = loop.feed?.ms;
   const elapsed = (h?: Hop) => (h?.ms !== undefined && t0 !== undefined ? h.ms - t0 : undefined);
   const live = Date.now() - (t0 ?? loop.seenAt);
@@ -535,18 +640,21 @@ function renderStopwatch(): void {
   }
   rows.push({ label: "Both pools confirm back to Reactive", where: "Reactive Lasna", hop: loop.closed, chain: "lasna", time: loop.closed ? "loop closed" : undefined });
 
-  box.replaceChildren(
-    ...rows.map((r) =>
-      el(
-        "li",
-        { class: r.hop ? "done" : "waiting" },
-        el("span", { class: "dot" }),
-        el("span", { class: "hop-label" }, r.label, el("small", {}, r.where)),
-        el("span", { class: "hop-time" }, r.time ?? (live < 60_000 ? "…" : "not seen")),
-        r.hop ? link(r.chain, r.hop.tx) : el("span", { class: "tx-placeholder" }),
+  const shown = rows.map((r) => ({ ...r, time: r.time ?? (live < 60_000 ? "…" : "not seen") }));
+  if (changed("hops", shown.map((r) => [r.label, r.time, r.hop?.tx]))) {
+    box.replaceChildren(
+      ...shown.map((r) =>
+        el(
+          "li",
+          { class: r.hop ? "done" : "waiting" },
+          el("span", { class: "dot" }),
+          el("span", { class: "hop-label" }, r.label, el("small", {}, r.where)),
+          el("span", { class: "hop-time" }, r.time),
+          r.hop ? link(r.chain, r.hop.tx) : el("span", { class: "tx-placeholder" }),
+        ),
       ),
-    ),
-  );
+    );
+  }
 
   const base = elapsed(loop.applied.base);
   const headline = $("headline");
@@ -584,6 +692,41 @@ function renderStopwatch(): void {
       : "",
     el("div", { class: "track-scale" }, el("span", {}, "0 s"), el("span", {}, (span / 1000).toFixed(1) + " s")),
   );
+}
+
+function ago(ms: number): string {
+  const s = Math.round(ms / 1000);
+  if (s < 90) return s + " seconds";
+  if (s < 90 * 60) return Math.round(s / 60) + " minutes";
+  if (s < 36 * 3600) return Math.round(s / 3600) + " hours";
+  return Math.round(s / 86400) + " days";
+}
+
+/** An update that landed before this page was watching: no timings, only whether each chain has it. */
+function renderSettled(loop: Loop): void {
+  const states = VENUES.filter((key) => config.venues[key]).map((key) => {
+    const view = venues[key];
+    return { key, text: view === undefined ? "…" : view.guardSeq >= loop.seq ? "in sync" : "behind" };
+  });
+  if (changed("hops", ["settled", loop.seq, states])) {
+    $("hops").replaceChildren(
+      ...states.map(({ key, text }) =>
+        el(
+          "li",
+          { class: text === "in sync" ? "done" : "waiting" },
+          el("span", { class: "dot" }),
+          el("span", { class: "hop-label" }, "Pool on " + config.chains[key].short, el("small", {}, config.chains[key].name)),
+          el("span", { class: "hop-time" }, text),
+          el("span", { class: "tx-placeholder" }),
+        ),
+      ),
+    );
+  }
+  $("headline").textContent =
+    "Update #" + loop.seq + " landed " + ago(loop.ageMs + (Date.now() - loop.seenAt)) +
+    " ago, before this page was watching. Press an exchange button to time a fresh one.";
+  $("track").replaceChildren();
+  $("track").hidden = true;
 }
 
 function poolCard(key: VenueKey, target: 0 | 1, view: PoolView): HTMLElement {
@@ -637,6 +780,7 @@ function poolCard(key: VenueKey, target: 0 | 1, view: PoolView): HTMLElement {
 
 function renderPools(): void {
   const box = $("venues");
+  if (!changed("pools", [venues, busy, account])) return;
   box.replaceChildren(
     ...VENUES.filter((k) => config.venues[k]).map((key) => {
       const view = venues[key];
@@ -659,6 +803,7 @@ function renderPools(): void {
 
 function renderHistory(): void {
   const box = $("history");
+  if (!changed("history", [history.length, history[0]?.at])) return;
   if (history.length === 0) {
     box.replaceChildren(el("li", { class: "muted" }, "Your moves will show up here."));
     return;
@@ -733,18 +878,6 @@ async function main(): Promise<void> {
   clients = makeClients(config);
   document.body.dataset.mode = config.mode;
   if (config.mode === "local") $("mode").hidden = false;
-
-  // Search only a recent window for loop events: about 5 minutes on Base, 25 on Unichain and Lasna.
-  const [b, u, l] = await Promise.all([
-    clients.base.getBlockNumber(),
-    clients.unichain.getBlockNumber(),
-    clients.lasna.getBlockNumber(),
-  ]);
-  const floor = (latest: bigint, window: bigint, deployed: number) =>
-    latest - window > BigInt(deployed) ? latest - window : BigInt(deployed);
-  scanFrom.base = floor(b, 1500n, config.origin.block);
-  scanFrom.unichain = floor(u, 1500n, config.venues.unichain?.block ?? 0);
-  scanFrom.lasna = floor(l, 1500n, config.reactive.block);
 
   $("connect").addEventListener("click", () => connect().catch((e) => toast(explain(e), "bad")));
   eth?.on?.("accountsChanged", (accounts) => {

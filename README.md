@@ -19,9 +19,9 @@ Live on Base Sepolia, Unichain Sepolia and Reactive Lasna. Over 230 market updat
 testnets, the Base pool switched a median of **1.4 s** after the exchange event (2.4 s at worst), the
 Unichain pool about **2 s** after, and **230 of 230** loops closed. See [Speed](#speed).
 
-<!-- TODO: demo link and video link go here once they exist:
-**[Play the demo](DEMO_LINK)** · **[Watch the video](VIDEO_LINK)**
--->
+**[Play the demo](https://mithunscodes.github.io/OpeningBell/)** with any wallet and a little test ETH.
+
+<!-- TODO: add the video link here once it exists: **[Watch the video](VIDEO_LINK)** -->
 
 ## How it works
 
@@ -71,12 +71,19 @@ OpeningBell. The other, the *twin*, ignores market hours, as most pools do today
    against the pool until the pool's price matches the real one and keeps the difference. It uses
    play money minted for the occasion, so any wallet can play with no tokens or approvals.
 
-On local forks of the three networks, a halt followed by a reopen 10% lower let a raider take
-$12,613 from the twin on each chain and nothing from the protected pools. Exchange actions are
-shared by everyone and rate-limited (one every 15 seconds, 100 a day), because each one costs the
-project testnet funds on Reactive Network.
+Live on the testnets on 12 November 2026, played from a fresh wallet through the demo page: trading
+was halted at $138.94 and resumed 10% lower at $125.05. The twins were still quoting $140.00, and one
+raid took **$13,577.95 from the twin on each chain**. The same raid on the protected pools found
+nothing to take: they were already at the new price.
 
-<!-- TODO: add the live demo link, and the live raid result with its transaction. -->
+| | Base Sepolia | Unichain Sepolia |
+| --- | --- | --- |
+| Raid on the twin | [$13,577.95 taken](https://sepolia.basescan.org/tx/0x2112a21b98413ae139ba3c950a3d9381c2b616488c2d7c5a262dfa28cd2261f3) | [$13,577.95 taken](https://sepolia.uniscan.xyz/tx/0xb5c157087eca20fa340441d9788ce2cf3a7fbcf06fd59a689ab2681eea9ad2f7) |
+| Raid on the protected pool | [nothing to take](https://sepolia.basescan.org/tx/0x7b2db110a9cb6c785443b0d1692a91df873b4080ee8d1362e6ecde830ec15fb5) | [nothing to take](https://sepolia.uniscan.xyz/tx/0x80e6ee85f48695e2badffa3ef01568500dcc725bcdc5e870c16fa56bfb870656) |
+
+Exchange actions are shared by everyone and rate-limited (one every 15 seconds, 100 a day), because
+each one costs the project testnet funds on Reactive Network. Playing needs a little test ETH for gas
+on Base Sepolia or Unichain Sepolia, for example from the [Superchain faucet](https://app.optimism.io/faucet).
 
 ## Speed
 
@@ -152,7 +159,7 @@ Twin pools, tokens and pool ids are in [`deployments/`](deployments/).
 | `script/` | Deployment scripts, the same ones the local rehearsal uses |
 | `test/` | Foundry tests, with a local simulator of Reactive Omni and the real Uniswap v4 PoolManager bytecode from Base Sepolia |
 | `tools/` | Fork rehearsal, latency benchmark, loop watcher, and a local relay for trying the demo offline |
-| `web/` | The demo page |
+| `web/` | The demo page, published to GitHub Pages by `.github/workflows/pages.yml` |
 
 ## Build, test and run
 
