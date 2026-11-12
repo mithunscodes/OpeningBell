@@ -19,9 +19,9 @@ Live on Base Sepolia, Unichain Sepolia and Reactive Lasna. Over 230 market updat
 testnets, the Base pool switched a median of **1.4 s** after the exchange event (2.4 s at worst), the
 Unichain pool about **2 s** after, and **230 of 230** loops closed. See [Speed](#speed).
 
-<!-- TODO: add the demo and video links here once they exist:
-**[Play the demo](DEMO_LINK)** with any wallet and a little test ETH · **[Watch the video](VIDEO_LINK)**
--->
+**[Play the demo](https://openingbell-two.vercel.app)** with any wallet and a little test ETH.
+
+<!-- TODO: add the video link here once it exists: **[Watch the video](VIDEO_LINK)** -->
 
 ## How it works
 
