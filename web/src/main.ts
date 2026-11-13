@@ -108,6 +108,7 @@ let latestLoop: Loop | undefined;
 let account: Address | undefined;
 let stageReadyAt = 0;
 let stageLeft = 0n;
+let stageOwner: Address | undefined;
 let busy = false;
 /** What the Reactive contract itself reports: the last update it saw, and whether every chain confirmed it. */
 let conductor: { seq: bigint; inSync: boolean } | undefined;
@@ -389,6 +390,22 @@ async function ensureChain(key: ChainKey): Promise<void> {
   }
 }
 
+/** True for a wallet's "this page is not allowed to do that" answer (EIP-1193 code 4100). */
+function unauthorized(error: unknown): boolean {
+  const is = (e: unknown) => (e as { code?: number } | null)?.code === 4100;
+  return error instanceof BaseError ? Boolean(error.walk(is)) : is(error);
+}
+
+/** Asks the wallet to connect this page again, which also renews the networks it may use. */
+async function reauthorize(): Promise<Address | undefined> {
+  if (!eth) return undefined;
+  await eth.request({ method: "wallet_requestPermissions", params: [{ eth_accounts: {} }] });
+  const accounts = (await eth.request({ method: "eth_accounts" })) as Address[];
+  account = accounts[0];
+  render();
+  return account;
+}
+
 type Write = {
   key: ChainKey;
   address: Address;
@@ -401,8 +418,27 @@ type Write = {
 
 /** Simulates first (so reverts come back readable), then sends from the player's wallet. */
 async function send(write: Write): Promise<TransactionReceipt> {
-  const from = account ?? (await connect());
-  if (!from || !eth) throw new Error("connect a wallet first");
+  try {
+    return await sendOnce(write);
+  } catch (error) {
+    // The wallet no longer lets this page use the account or the network (it happens after the
+    // account or the site's networks were changed in the wallet). Ask once, then try again.
+    if (!unauthorized(error)) throw error;
+    await reauthorize();
+    return sendOnce(write);
+  }
+}
+
+async function sendOnce(write: Write): Promise<TransactionReceipt> {
+  if (!eth) throw new Error("connect a wallet first");
+  // The wallet's own answer wins over what the page remembers: the player may have changed accounts.
+  const allowed = account ? ((await eth.request({ method: "eth_accounts" })) as Address[]) : [];
+  if (allowed.length > 0 && !allowed.some((a) => a.toLowerCase() === account?.toLowerCase())) {
+    account = allowed[0];
+    render();
+  }
+  const from = allowed.length > 0 ? account : await connect();
+  if (!from) throw new Error("connect a wallet first");
   await ensureChain(write.key);
 
   const client = clients[write.key];
@@ -419,10 +455,19 @@ async function send(write: Write): Promise<TransactionReceipt> {
   });
   const wallet = createWalletClient({ chain: toChain(config.chains[write.key]), transport: custom(eth), account: from });
   const hash = await wallet.writeContract(write.gas ? { ...request, gas: write.gas } : request);
-  return client.waitForTransactionReceipt({ hash });
+  // The transaction is out. A public RPC that stumbles while we wait must not read as a failure.
+  for (let attempt = 0; ; attempt++) {
+    try {
+      return await client.waitForTransactionReceipt({ hash });
+    } catch (error) {
+      if (attempt >= 3) throw error;
+      await new Promise((r) => setTimeout(r, 1500));
+    }
+  }
 }
 
 function explain(error: unknown): string {
+  if (unauthorized(error)) return "Your wallet has not allowed this page to use that account or network. Disconnect this site in your wallet, then press Connect wallet again.";
   if (error instanceof BaseError) {
     if (error.walk((e) => e instanceof UserRejectedRequestError)) return "You cancelled the transaction.";
     const revert = error.walk((e) => e instanceof ContractFunctionRevertedError);
@@ -478,7 +523,7 @@ async function act(status: number, move: number, label: string): Promise<void> {
       args: [status, move],
     });
     note(label + ". Reactive is on it.", "neutral", "base", receipt.transactionHash);
-    await refresh();
+    await refresh().catch((e) => console.warn(e));
   } catch (error) {
     toast(explain(error), "bad");
   } finally {
@@ -524,7 +569,7 @@ async function raid(key: VenueKey, target: 0 | 1): Promise<void> {
     }
     note(text, tone, key, receipt.transactionHash);
     toast(text, tone === "bad" ? "warn" : tone === "good" ? "good" : "neutral");
-    await refresh();
+    await refresh().catch((e) => console.warn(e));
   } catch (error) {
     toast(explain(error), "bad");
   } finally {
@@ -616,7 +661,9 @@ function renderExchange(): void {
       ? "The exchange has used up today's actions."
       : wait > 0
         ? "Next action in " + wait + " s."
-        : stageLeft + " actions left today.";
+        : account && stageOwner && account.toLowerCase() === stageOwner.toLowerCase()
+          ? "Owner account: no daily limit."
+          : stageLeft + " actions left today.";
 }
 
 // --- The stopwatch -------------------------------------------------------------------------------
@@ -961,14 +1008,23 @@ async function loadRecorded(): Promise<void> {
   renderProof();
   renderStopwatch();
   // A visitor who arrives between updates sees one typical recorded loop play, clearly marked as a replay.
-  window.setTimeout(() => {
-    if (autoplayed || replay || !latestLoop?.old) return;
+  // It waits until the tab is actually being looked at, and until no live loop holds the stopwatch.
+  let seenFor = 0;
+  const timer = window.setInterval(() => {
+    if (autoplayed || replay) return window.clearInterval(timer);
+    const live = latestLoop;
+    const liveNow = live && !live.old && Date.now() - live.seenAt < 60_000;
+    if (document.visibilityState !== "visible" || liveNow) return void (seenFor = 0);
+    seenFor += 300;
+    if (seenFor < 1500) return;
+    window.clearInterval(timer);
     autoplayed = true;
     const done = replayable();
+    if (done.length === 0) return;
     const mid = Math.round(median(done.map((r) => r.baseMs!)) / BIN_MS) * BIN_MS;
     const typical = done.filter((r) => Math.round(r.baseMs! / BIN_MS) * BIN_MS === mid);
     startReplay(typical[Math.floor(Math.random() * typical.length)]);
-  }, 900);
+  }, 300);
 }
 
 // --- The three steps ---------------------------------------------------------------------------------
@@ -1168,10 +1224,19 @@ async function main(): Promise<void> {
       console.warn(error);
       $("offline").hidden = false;
     }
-    window.setTimeout(tick, config.mode === "local" ? 700 : 1200);
+    // While a live loop is being timed the page looks more often, so the clock stops close to the real landing.
+    const timing = latestLoop && !latestLoop.old && !loopDone(latestLoop) && Date.now() - latestLoop.seenAt < 30_000;
+    window.setTimeout(tick, timing ? 400 : config.mode === "local" ? 700 : 1200);
   };
   await tick();
   void loadRecorded();
+  clients.base
+    .readContract({ address: config.origin.stage, abi: stageAbi, functionName: "owner" })
+    .then((owner) => {
+      stageOwner = owner;
+      render();
+    })
+    .catch(() => undefined);
   // Keep the live counters moving between reads.
   window.setInterval(() => {
     renderStopwatch();
