@@ -3,21 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#000000">
   <title>OpeningBell</title>
   <meta name="description" content="A tokenized stock that follows market hours on two chains, switched by Reactive Network in about two seconds. Ring the bell, then try to raid a pool.">
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="top">
-    <div class="brand">
-      <span class="logo" aria-hidden="true">🔔</span>
-      <div>
-        <h1>OpeningBell</h1>
-        <p class="tag">A stock token that knows when the market is shut.</p>
-      </div>
-    </div>
+    <a class="brand" href="./" aria-label="OpeningBell">
+      <img class="logo" src="logo.svg" alt="" width="40" height="40">
+      <span class="wordmark">OpeningBell</span>
+    </a>
     <div class="top-right">
       <span id="mode" class="mode" hidden>Local forks</span>
+      <a class="top-link" href="https://github.com/mithunscodes/OpeningBell" target="_blank" rel="noopener">GitHub</a>
       <button id="connect" type="button" class="connect">Connect wallet</button>
     </div>
   </header>
@@ -26,54 +27,113 @@
   <p id="offline" class="offline" hidden>Can't reach one of the networks right now. Retrying…</p>
 
   <main id="app" hidden>
-    <section class="intro">
-      <p>A share of NVIDIA stops trading at 4pm. A token that tracks it does not, so every close, halt and overnight gap
-        hands free money to whoever trades the stale pool first. Here a <strong>Reactive</strong> contract watches the
-        exchange and switches pools on <strong>Base</strong> and <strong>Unichain</strong> into the right mode within
-        about two seconds. Each chain has two identical pools: one protected, one twin that ignores market hours.</p>
-      <ol class="how">
-        <li><b>1</b> Play the exchange: halt, close, or move the price.</li>
-        <li><b>2</b> Watch the stopwatch as both chains switch.</li>
-        <li><b>3</b> Play the villain: raid either pool and compare the loot.</li>
-      </ol>
+    <section class="hero">
+      <div class="pitch">
+        <h1>A stock token that knows when the market is shut.</h1>
+        <p>NVIDIA stops trading at 4pm. Its token never does. One <strong>Reactive</strong> contract switches its
+          pools on <strong>Base</strong> and <strong>Unichain</strong> in about two seconds.</p>
+      </div>
+
+      <aside class="proof" aria-labelledby="proof-title">
+        <h2 id="proof-title">Measured on live testnets</h2>
+        <dl class="tiles">
+          <div><dt>Loops closed</dt><dd id="proof-count">230 of 230</dd></div>
+          <div><dt>Base, median</dt><dd id="proof-base">1.4 s</dd></div>
+          <div><dt>Unichain, median</dt><dd id="proof-unichain">≈ 2 s</dd></div>
+        </dl>
+        <div id="hist" class="hist" role="group" aria-label="How long each recorded loop took to switch the Base pool"></div>
+        <p class="proof-note">Exchange event to Base pool switched.
+          <span id="hist-hint" hidden>Click a bar to replay a loop.</span>
+          <a href="https://github.com/mithunscodes/OpeningBell/blob/main/bench/RESULTS.md" target="_blank" rel="noopener">Method</a></p>
+      </aside>
     </section>
 
-    <div class="grid">
-      <section class="panel exchange">
-        <h2>The exchange <small>NVDA/USD feed on Base Sepolia</small></h2>
-        <div class="quote">
-          <span id="market-status" class="pill">…</span>
-          <span id="market-price" class="price">—</span>
-          <span id="market-seq" class="seq"></span>
+    <div class="stage">
+      <section class="panel exchange" id="step-1">
+        <h2><span class="step">1</span>Play the exchange <span class="cue">your move</span></h2>
+        <div class="board">
+          <div class="board-top">
+            <span class="ticker">NVDA<small>/USD</small></span>
+            <span id="market-status" class="pill">…</span>
+          </div>
+          <div id="market-price" class="price">—</div>
+          <div class="board-foot">
+            <span id="market-seq" class="seq"></span>
+          </div>
         </div>
         <div id="actions" class="actions"></div>
         <p id="actions-note" class="note"></p>
       </section>
 
-      <section class="panel stopwatch">
-        <h2>Stopwatch <small>every hop, with its transaction</small></h2>
-        <p id="headline" class="headline"></p>
-        <div id="track" class="track"></div>
-        <ol id="hops" class="hops"></ol>
+      <section class="panel stopwatch" id="step-2">
+        <h2><span class="step">2</span>Watch the clock <span class="cue">running</span>
+          <span id="watch-tag" class="tag" hidden></span></h2>
+        <div class="clock">
+          <div class="clock-face"><span id="clock" class="clock-num">—</span><span class="clock-unit">s</span></div>
+          <p id="headline" class="headline"></p>
+        </div>
+
+        <div id="route" class="route">
+          <div class="node" data-stage="feed">
+            <span class="node-dot"></span>
+            <span class="node-name">Exchange</span>
+            <span class="node-value">—</span>
+            <span class="node-tx"></span>
+          </div>
+          <div class="wire" data-wire="w1"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path data-leg="observed" d="M0 50 H100"/></svg></div>
+          <div class="node" data-stage="observed">
+            <span class="node-dot"></span>
+            <span class="node-name">Reactive</span>
+            <span class="node-value">—</span>
+            <span class="node-tx"></span>
+          </div>
+          <div class="wire" data-wire="w2"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path data-leg="base" d="M0 50 H50 V25 H100"/><path data-leg="unichain" d="M0 50 H50 V75 H100"/></svg></div>
+          <div class="node" data-stage="base">
+            <span class="node-dot"></span>
+            <span class="node-name">Base pool</span>
+            <span class="node-value">—</span>
+            <span class="node-tx"></span>
+          </div>
+          <div class="node" data-stage="unichain">
+            <span class="node-dot"></span>
+            <span class="node-name">Unichain pool</span>
+            <span class="node-value">—</span>
+            <span class="node-tx"></span>
+          </div>
+          <div class="wire" data-wire="w3"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path data-leg="closed" d="M0 25 H50 V50 H100"/><path data-leg="closed" d="M0 75 H50 V50 H100"/></svg></div>
+          <div class="node" data-stage="closed">
+            <span class="node-dot"></span>
+            <span class="node-name">Confirmed</span>
+            <span class="node-value">—</span>
+            <span class="node-tx"></span>
+          </div>
+        </div>
+
+        <div class="watch-foot">
+          <p id="watch-note" class="note"></p>
+          <button id="replay" type="button" class="ghost" hidden>Replay a recorded loop</button>
+        </div>
       </section>
     </div>
 
-    <section class="panel">
-      <h2>The pools <small>raid with play money from your own wallet</small></h2>
+    <section class="panel pools" id="step-3">
+      <h2><span class="step">3</span>Raid the pools <span class="cue">your move</span></h2>
       <div id="venues" class="venues"></div>
     </section>
 
-    <div class="grid">
-      <section class="panel">
+    <div class="grid" id="lower">
+      <section class="panel" id="moves" hidden>
         <h2>Your moves</h2>
         <ol id="history" class="history"></ol>
       </section>
       <section class="panel">
         <h2>Honest limits</h2>
         <ul class="limits">
-          <li>Prices start at $140 and move when someone presses an exchange button. The feed is a demo contract, not a licensed exchange.</li>
-          <li>Reactive takes about two seconds. A bot trading in the same block as the news still wins that block; the
-            pools' wide band and high fee after hours make that race unprofitable.</li>
+          <li>The price feed is a demo contract, not a licensed exchange.</li>
+          <li>Two seconds is not zero. A bot in the same block as the news still wins that block.</li>
           <li>Testnets only. Nothing here is real money.</li>
         </ul>
       </section>
@@ -86,8 +146,7 @@
 
     <footer class="foot">
       <a href="https://github.com/mithunscodes/OpeningBell" target="_blank" rel="noopener">Code and benchmark on GitHub</a>
-      <span>Playing needs a little test ETH for gas on Base Sepolia or Unichain Sepolia.
-        <a href="https://app.optimism.io/faucet" target="_blank" rel="noopener">Get some from the Superchain faucet</a>.</span>
+      <a href="https://app.optimism.io/faucet" target="_blank" rel="noopener">Need test ETH? Superchain faucet</a>
     </footer>
   </main>
 

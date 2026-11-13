@@ -25,7 +25,6 @@ import {
   seconds,
   toChain,
   usd,
-  usdShort,
   type ChainKey,
   type Clients,
   type Config,
@@ -110,6 +109,8 @@ let account: Address | undefined;
 let stageReadyAt = 0;
 let stageLeft = 0n;
 let busy = false;
+/** What the Reactive contract itself reports: the last update it saw, and whether every chain confirmed it. */
+let conductor: { seq: bigint; inSync: boolean } | undefined;
 const history: LogEntry[] = [];
 /** Latest block seen on each chain. */
 const heads: Partial<Record<ChainKey, bigint>> = {};
@@ -183,6 +184,14 @@ async function readStage(): Promise<void> {
   });
   stageReadyAt = Number(readyAt) * 1000;
   stageLeft = left;
+}
+
+async function readConductor(): Promise<void> {
+  const [state, inSync] = await Promise.all([
+    clients.lasna.readContract({ address: config.reactive.conductor, abi: conductorAbi, functionName: "markets", args: [MARKET_ID] }),
+    clients.lasna.readContract({ address: config.reactive.conductor, abi: conductorAbi, functionName: "inSync", args: [MARKET_ID] }),
+  ]);
+  conductor = { seq: state[1], inSync };
 }
 
 /** The stretch of blocks to search on a chain for a loop's events on this pass, kept under the RPC's cap. */
@@ -305,6 +314,8 @@ async function refresh(): Promise<void> {
     clients.lasna.getBlockNumber(),
     ...VENUES.map(readVenue),
     readStage(),
+    // Only the settled view uses this, so a failed read is not worth failing the whole pass for.
+    readConductor().catch(() => undefined),
   ]);
   heads.base = baseHead.number;
   heads.unichain = unichainHead;
@@ -328,6 +339,7 @@ async function refresh(): Promise<void> {
       const loop: Loop = { seq: m.seq, status: m.status, price: m.price, applied: {}, seenAt: Date.now(), ageMs, old, cursor };
       loops.set(m.seq, loop);
       latestLoop = loop;
+      if (!old) replay = undefined; // a live loop takes the stopwatch back from a replay
     }
   }
   market = m;
@@ -394,6 +406,10 @@ async function send(write: Write): Promise<TransactionReceipt> {
   await ensureChain(write.key);
 
   const client = clients[write.key];
+  // Wallets word this failure in many ways, so it is checked here and said plainly.
+  if ((await client.getBalance({ address: from })) === 0n) {
+    throw new Error("Your wallet has no test ETH on " + config.chains[write.key].name + " to pay gas. The faucet link is at the bottom of the page.");
+  }
   const { request } = await client.simulateContract({
     account: from,
     address: write.address,
@@ -420,7 +436,12 @@ function explain(error: unknown): string {
     if (/insufficient funds/i.test(error.message)) return "Your wallet needs a little test ETH on this network to pay gas.";
     return error.shortMessage;
   }
-  return error instanceof Error ? error.message : String(error);
+  // Wallets answer a refused request with a plain object, not an Error.
+  const raw = error as { code?: number; message?: unknown } | null;
+  if (raw?.code === 4001) return "You cancelled the request in your wallet.";
+  if (raw?.code === -32002) return "Your wallet already has a request waiting. Open it to answer.";
+  if (error instanceof Error) return error.message;
+  return typeof raw?.message === "string" ? raw.message : String(error);
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -446,6 +467,7 @@ const ACTIONS: Record<number, { label: string; hint: string; status: number; mov
 async function act(status: number, move: number, label: string): Promise<void> {
   if (busy) return;
   busy = true;
+  replay = undefined;
   render();
   try {
     const receipt = await send({
@@ -552,6 +574,7 @@ function render(): void {
   renderStopwatch();
   renderPools();
   renderHistory();
+  renderSteps();
 }
 
 function renderWallet(): void {
@@ -571,6 +594,7 @@ function renderExchange(): void {
   const pill = $("market-status");
   pill.textContent = status === -1 ? "Not started" : STATUS_NAMES[status];
   pill.dataset.status = String(status);
+  document.body.dataset.status = String(status);
   $("market-price").textContent = market.seq === 0n ? "—" : usd(market.price);
   $("market-seq").textContent = market.seq === 0n ? "" : "update #" + market.seq;
 
@@ -581,117 +605,204 @@ function renderExchange(): void {
   const blocked = busy || wait > 0 || stageLeft === 0n;
   if (changed("actions", [status, blocked])) actions.replaceChildren();
   for (const a of actions.childElementCount === 0 ? list : []) {
-    const button = el(
-      "button",
-      { class: "action " + a.tone, type: "button" },
-      el("span", { class: "action-label" }, a.label),
-      el("span", { class: "action-hint" }, a.hint),
-    );
+    const button = el("button", { class: "action " + a.tone, type: "button", title: a.hint }, el("span", { class: "action-label" }, a.label));
     button.disabled = blocked;
     button.addEventListener("click", () => act(a.status, a.move, a.label));
     actions.append(button);
   }
-  $("actions-note").textContent =
-    stageLeft === 0n
+  $("actions-note").textContent = !eth
+    ? "No wallet here, so watch only. Replay a recorded loop instead."
+    : stageLeft === 0n
       ? "The exchange has used up today's actions."
       : wait > 0
-        ? "Next action in " + wait + " s (shared by everyone, to keep the demo's test funds alive)."
-        : "Anyone can play the exchange. " + stageLeft + " actions left today.";
+        ? "Next action in " + wait + " s."
+        : stageLeft + " actions left today.";
 }
 
-function renderStopwatch(): void {
-  const box = $("hops");
-  const loop = latestLoop;
-  if (!loop) {
-    if (changed("hops", "none")) {
-      box.replaceChildren(el("p", { class: "muted" }, "Press a button on the exchange to start the clock."));
-      $("headline").textContent = "";
-      $("track").replaceChildren();
-    }
-    return;
-  }
+// --- The stopwatch -------------------------------------------------------------------------------
 
-  if (loop.old) {
-    renderSettled(loop);
-    return;
-  }
+type StageKey = "feed" | "observed" | "base" | "unichain" | "closed";
+type StageState = "idle" | "waiting" | "done" | "behind";
+interface StageView {
+  state: StageState;
+  value: string;
+  chain: ChainKey;
+  tx?: Hash;
+}
+interface WatchView {
+  kind: "none" | "settled" | "live" | "replay";
+  /** The big number, and whether it is still running. */
+  clock: string;
+  clockState: "idle" | "ticking" | "done";
+  headline: (Node | string)[];
+  tag: string;
+  note: string;
+  stages: Record<StageKey, StageView>;
+}
 
-  $("track").hidden = false;
+const STAGE_CHAIN: Record<StageKey, ChainKey> = { feed: "base", observed: "lasna", base: "base", unichain: "unichain", closed: "lasna" };
+
+function blankStages(): Record<StageKey, StageView> {
+  const stage = (key: StageKey): StageView => ({ state: "idle", value: "—", chain: STAGE_CHAIN[key] });
+  return { feed: stage("feed"), observed: stage("observed"), base: stage("base"), unichain: stage("unichain"), closed: stage("closed") };
+}
+
+/** A loop being timed, live or replayed: each hop lights up as it lands. */
+function timedView(loop: Loop, live: number, kind: "live" | "replay"): WatchView {
   const t0 = loop.feed?.ms;
   const elapsed = (h?: Hop) => (h?.ms !== undefined && t0 !== undefined ? h.ms - t0 : undefined);
-  const live = Date.now() - (t0 ?? loop.seenAt);
-
-  type Row = { label: string; where: string; hop?: Hop; chain: ChainKey; time?: string };
-  const rows: Row[] = [
-    { label: "Exchange publishes " + STATUS_NAMES[loop.status].toLowerCase() + " at " + usd(loop.price), where: "Base Sepolia", hop: loop.feed, chain: "base", time: loop.feed ? "0.00 s" : undefined },
-    { label: "Reactive Network reacts and sends both updates", where: "Reactive Lasna", hop: loop.observed, chain: "lasna", time: loop.observed ? "block " + loop.observed.block : undefined },
-  ];
-  for (const key of VENUES) {
-    if (!config.venues[key]) continue;
+  const stages = blankStages();
+  const hops: Record<StageKey, Hop | undefined> = {
+    feed: loop.feed,
+    observed: loop.observed,
+    base: loop.applied.base,
+    unichain: loop.applied.unichain,
+    closed: loop.closed,
+  };
+  const landed = (key: StageKey) => Boolean(hops[key]);
+  const venuesIn = VENUES.filter((k) => config.venues[k]);
+  // The signal has reached a stage once the stage before it has landed. Hops are looked up on three
+  // chains at once and can be found out of order, so a later stage landing counts as well.
+  const reached: Record<StageKey, boolean> = {
+    feed: true,
+    observed: landed("feed") || landed("observed") || venuesIn.some(landed) || landed("closed"),
+    base: landed("observed") || venuesIn.some(landed) || landed("closed"),
+    unichain: landed("observed") || venuesIn.some(landed) || landed("closed"),
+    closed: venuesIn.every(landed) || landed("closed"),
+  };
+  const values: Record<StageKey, string | undefined> = {
+    feed: loop.feed ? "0.00 s" : undefined,
+    observed: loop.observed ? "reacted" : undefined,
+    base: undefined,
+    unichain: undefined,
+    closed: loop.closed ? "loop closed" : undefined,
+  };
+  for (const key of venuesIn) {
     const h = loop.applied[key];
     const ms = elapsed(h);
-    rows.push({
-      label: "Pool on " + config.chains[key].short + " switches",
-      where: config.chains[key].name,
-      hop: h,
-      chain: key,
-      time: ms !== undefined ? (h?.precise && loop.feed?.precise ? "+" : "") + seconds(ms, Boolean(h?.precise && loop.feed?.precise)) : undefined,
-    });
+    const precise = Boolean(h?.precise && loop.feed?.precise);
+    if (ms !== undefined) values[key] = (precise ? "+" : "") + seconds(ms, precise);
   }
-  rows.push({ label: "Both pools confirm back to Reactive", where: "Reactive Lasna", hop: loop.closed, chain: "lasna", time: loop.closed ? "loop closed" : undefined });
-
-  const shown = rows.map((r) => ({ ...r, time: r.time ?? (live < 60_000 ? "…" : "not seen") }));
-  if (changed("hops", shown.map((r) => [r.label, r.time, r.hop?.tx]))) {
-    box.replaceChildren(
-      ...shown.map((r) =>
-        el(
-          "li",
-          { class: r.hop ? "done" : "waiting" },
-          el("span", { class: "dot" }),
-          el("span", { class: "hop-label" }, r.label, el("small", {}, r.where)),
-          el("span", { class: "hop-time" }, r.time),
-          r.hop ? link(r.chain, r.hop.tx) : el("span", { class: "tx-placeholder" }),
-        ),
-      ),
-    );
+  for (const key of Object.keys(stages) as StageKey[]) {
+    const hop = hops[key];
+    stages[key] = hop
+      ? { state: "done", value: values[key] ?? "landed", chain: STAGE_CHAIN[key], tx: hop.tx }
+      : live > 60_000
+        ? { state: "behind", value: "not seen", chain: STAGE_CHAIN[key] }
+        : { state: reached[key] ? "waiting" : "idle", value: reached[key] ? "…" : "—", chain: STAGE_CHAIN[key] };
   }
 
   const base = elapsed(loop.applied.base);
-  const headline = $("headline");
-  if (base !== undefined && loop.applied.base?.precise && loop.feed?.precise) {
-    headline.replaceChildren(
-      el("strong", {}, (base / 1000).toFixed(2) + " s"),
-      " from the exchange event to the Base pool switching, both on Base's own millisecond clock.",
-    );
-  } else if (base !== undefined) {
-    headline.replaceChildren(el("strong", {}, seconds(base, false)), " from the exchange event to the Base pool switching.");
-  } else {
-    headline.replaceChildren(el("strong", { class: "ticking" }, (Math.max(0, live) / 1000).toFixed(1) + " s"), " and counting…");
+  const precise = Boolean(loop.applied.base?.precise && loop.feed?.precise);
+  return {
+    kind,
+    clock: base === undefined ? (Math.max(0, live) / 1000).toFixed(1) : precise ? (base / 1000).toFixed(2) : "≈ " + Math.max(0, Math.round(base / 1000)),
+    clockState: base === undefined ? "ticking" : "done",
+    headline: base === undefined ? ["and counting…"] : ["exchange event to ", el("b", {}, "Base pool switched")],
+    tag: (kind === "live" ? "Live" : "Replay") + " · update #" + loop.seq,
+    note: kind === "live" ? "Timed from block timestamps." : "",
+    stages,
+  };
+}
+
+/** An update that landed before this page was watching: no timings, only whether each chain has it. */
+function settledView(loop: Loop): WatchView {
+  const stages = blankStages();
+  stages.feed = { state: "done", value: "update #" + loop.seq, chain: "base" };
+  if (conductor) {
+    const saw = conductor.seq >= loop.seq;
+    stages.observed = { state: saw ? "done" : "behind", value: saw ? "in sync" : "behind", chain: "lasna" };
+    const closed = saw && conductor.inSync;
+    stages.closed = { state: closed ? "done" : "waiting", value: closed ? "loop closed" : "…", chain: "lasna" };
+  }
+  for (const key of VENUES) {
+    const view = venues[key];
+    if (!config.venues[key] || !view) continue;
+    const ok = view.guardSeq >= loop.seq;
+    stages[key] = { state: ok ? "done" : "behind", value: ok ? "in sync" : "behind", chain: key };
+  }
+  return {
+    kind: "settled",
+    clock: "—",
+    clockState: "idle",
+    headline: ["Press an exchange button to start the clock."],
+    tag: "",
+    note: "Update #" + loop.seq + " landed " + ago(loop.ageMs + (Date.now() - loop.seenAt)) + " ago.",
+    stages,
+  };
+}
+
+function watchView(): WatchView {
+  if (replay) {
+    const { loop, live } = replayLoop(replay, Date.now());
+    const view = timedView(loop, live, "replay");
+    const r = replay.loop;
+    view.note = "Replay of update #" + r.seq + ", recorded " + recordedDate(r.at) + ".";
+    return view;
+  }
+  const loop = latestLoop;
+  if (!loop) {
+    return {
+      kind: "none",
+      clock: "—",
+      clockState: "idle",
+      headline: ["Press an exchange button to start the clock."],
+      tag: "",
+      note: "",
+      stages: blankStages(),
+    };
+  }
+  return loop.old ? settledView(loop) : timedView(loop, Date.now() - (loop.feed?.ms ?? loop.seenAt), "live");
+}
+
+function renderStopwatch(): void {
+  const view = watchView();
+
+  const clock = $("clock");
+  if (clock.textContent !== view.clock) clock.textContent = view.clock;
+  (clock.closest(".clock") as HTMLElement).dataset.state = view.clockState;
+  if (changed("headline", [view.kind, view.clockState, view.headline.map((p) => (typeof p === "string" ? p : p.textContent))])) {
+    $("headline").replaceChildren(...view.headline);
+  }
+  const tag = $("watch-tag");
+  if (changed("watch-tag", [view.kind, view.tag])) {
+    tag.hidden = view.tag === "";
+    tag.textContent = view.tag;
+    tag.dataset.kind = view.kind;
+  }
+  if ($("watch-note").textContent !== view.note) $("watch-note").textContent = view.note;
+
+  const button = $<HTMLButtonElement>("replay");
+  const canReplay = replayable().length > 0 && view.kind !== "live";
+  if (changed("replay", [canReplay, view.kind])) {
+    button.hidden = !canReplay;
+    button.textContent = view.kind === "replay" ? "Replay another" : "Replay a loop";
   }
 
-  // The track: where each pool's switch landed, on one scale.
-  const marks: { key: VenueKey; ms: number }[] = [];
-  for (const key of VENUES) {
-    const ms = elapsed(loop.applied[key]);
-    if (ms !== undefined) marks.push({ key, ms });
+  const route = $("route");
+  for (const key of Object.keys(view.stages) as StageKey[]) {
+    const stage = view.stages[key];
+    const node = route.querySelector<HTMLElement>('.node[data-stage="' + key + '"]');
+    if (!node) continue;
+    if (key !== "feed" && key !== "observed" && key !== "closed") node.hidden = !config.venues[key];
+    if (changed("stage-" + key, stage)) {
+      const was = node.dataset.state;
+      node.dataset.state = stage.state;
+      node.querySelector(".node-value")!.textContent = stage.value;
+      node.querySelector(".node-tx")!.replaceChildren(stage.tx ? link(stage.chain, stage.tx, "tx ↗") : "");
+      if (was === "waiting" && stage.state === "done") {
+        node.classList.remove("landed");
+        void node.offsetWidth;
+        node.classList.add("landed");
+      }
+    }
+    // The wire into a stage runs while the signal is on its way and stays lit once it has landed.
+    const leg = stage.state === "done" ? "done" : stage.state === "waiting" && key !== "feed" ? "waiting" : "idle";
+    for (const path of route.querySelectorAll<SVGPathElement>('path[data-leg="' + key + '"]')) {
+      if (path.dataset.state !== leg) path.dataset.state = leg;
+      path.style.display = node.hidden ? "none" : "";
+    }
   }
-  const span = Math.max(3000, ...marks.map((m) => m.ms + 500), loopDone(loop) ? 0 : live + 500);
-  const track = $("track");
-  track.replaceChildren(
-    el("div", { class: "track-line" }),
-    el("div", { class: "mark origin", style: "left:0%" }, el("span", {}, "event")),
-    ...marks.map((m) =>
-      el(
-        "div",
-        { class: "mark " + m.key, style: "left:" + Math.min(100, (m.ms / span) * 100).toFixed(2) + "%" },
-        el("span", {}, config.chains[m.key].short),
-      ),
-    ),
-    !loopDone(loop) && t0 !== undefined
-      ? el("div", { class: "mark now", style: "left:" + Math.min(100, (live / span) * 100).toFixed(2) + "%" })
-      : "",
-    el("div", { class: "track-scale" }, el("span", {}, "0 s"), el("span", {}, (span / 1000).toFixed(1) + " s")),
-  );
 }
 
 function ago(ms: number): string {
@@ -702,47 +813,199 @@ function ago(ms: number): string {
   return Math.round(s / 86400) + " days";
 }
 
-/** An update that landed before this page was watching: no timings, only whether each chain has it. */
-function renderSettled(loop: Loop): void {
-  const states = VENUES.filter((key) => config.venues[key]).map((key) => {
-    const view = venues[key];
-    return { key, text: view === undefined ? "…" : view.guardSeq >= loop.seq ? "in sync" : "behind" };
-  });
-  if (changed("hops", ["settled", loop.seq, states])) {
-    $("hops").replaceChildren(
-      ...states.map(({ key, text }) =>
-        el(
-          "li",
-          { class: text === "in sync" ? "done" : "waiting" },
-          el("span", { class: "dot" }),
-          el("span", { class: "hop-label" }, "Pool on " + config.chains[key].short, el("small", {}, config.chains[key].name)),
-          el("span", { class: "hop-time" }, text),
-          el("span", { class: "tx-placeholder" }),
-        ),
-      ),
-    );
-  }
-  $("headline").textContent =
-    "Update #" + loop.seq + " landed " + ago(loop.ageMs + (Date.now() - loop.seenAt)) +
-    " ago, before this page was watching. Press an exchange button to time a fresh one.";
-  $("track").replaceChildren();
-  $("track").hidden = true;
+// --- Recorded loops: the benchmark, drawn and replayable -------------------------------------------
+
+/** One loop from the benchmark runs in bench/results, as web/build.mjs writes it to loops.json. */
+interface Recorded {
+  seq: number;
+  action: string;
+  /** Base block time of the exchange event, in ms. */
+  at: number;
+  feed?: Hash;
+  observed?: Hash;
+  observedBlock?: number;
+  base?: Hash;
+  baseMs?: number;
+  unichain?: Hash;
+  unichainMs?: number;
+  closed?: Hash;
+  closedBlock?: number;
+  sawObserved?: number;
+  sawClosed?: number;
+}
+interface Replay {
+  loop: Recorded;
+  startedAt: number;
+  /** When each hop lights up, in ms after the start. */
+  at: { observed: number; base: number; unichain: number; closed: number };
 }
 
-function poolCard(key: VenueKey, target: 0 | 1, view: PoolView): HTMLElement {
+let recorded: Recorded[] = [];
+let replay: Replay | undefined;
+let autoplayed = false;
+const BIN_MS = 200;
+
+function replayable(): Recorded[] {
+  return recorded.filter((r) => r.feed && r.observed && r.base && r.unichain && r.closed && r.baseMs !== undefined && r.unichainMs !== undefined);
+}
+
+function recordedDate(ms: number): string {
+  return new Date(ms).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+}
+
+function statusOf(action: string): number {
+  if (action.startsWith("halt")) return HALTED;
+  if (action.startsWith("close")) return CLOSED;
+  return OPEN;
+}
+
+function startReplay(loop?: Recorded): void {
+  // A loop that is being timed live keeps the stopwatch until it has closed.
+  const live = latestLoop;
+  if (live && !live.old && !loopDone(live) && Date.now() - live.seenAt < 60_000) return;
+  const pool = replayable();
+  const r = loop ?? pool[Math.floor(Math.random() * pool.length)];
+  if (!r) return;
+  const base = r.baseMs!;
+  const unichain = r.unichainMs!;
+  // The two pool hops play back at their real block times. Lasna blocks carry no millisecond time,
+  // so the Reactive hops are paced by when the benchmark saw them, kept in their true order.
+  const first = Math.min(base, unichain);
+  const observed = Math.max(150, Math.min(r.sawObserved ?? first / 2, first - 250));
+  const closed = Math.max(r.sawClosed ?? 0, Math.max(base, unichain) + 400);
+  replay = { loop: r, startedAt: Date.now(), at: { observed, base, unichain, closed } };
+  renderStopwatch();
+  renderSteps();
+  renderProof();
+}
+
+function replayLoop(play: Replay, now: number): { loop: Loop; live: number } {
+  const r = play.loop;
+  const since = now - play.startedAt;
+  const loop: Loop = { seq: BigInt(r.seq), status: statusOf(r.action), price: 0n, applied: {}, seenAt: play.startedAt, ageMs: 0, old: false, cursor: {} };
+  loop.feed = { block: 0n, tx: r.feed!, ms: r.at, precise: true };
+  if (since >= play.at.observed) loop.observed = { block: BigInt(r.observedBlock ?? 0), tx: r.observed! };
+  if (since >= play.at.base) loop.applied.base = { block: 0n, tx: r.base!, ms: r.at + r.baseMs!, precise: true };
+  if (since >= play.at.unichain) loop.applied.unichain = { block: 0n, tx: r.unichain!, ms: r.at + r.unichainMs!, precise: false };
+  if (since >= play.at.closed) loop.closed = { block: BigInt(r.closedBlock ?? 0), tx: r.closed! };
+  return { loop, live: since };
+}
+
+function median(values: number[]): number {
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = sorted.length >> 1;
+  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+}
+
+/** The numbers and the histogram at the top of the page, straight from the recorded loops. */
+function renderProof(): void {
+  const done = replayable();
+  if (done.length === 0) return;
+  const playing = replay ? Math.round(replay.loop.baseMs! / BIN_MS) * BIN_MS : undefined;
+  if (!changed("proof", [recorded.length, done.length, playing])) return;
+
+  const mid = median(done.map((r) => r.baseMs!));
+  $("proof-count").textContent = done.length + " of " + recorded.length;
+  $("proof-base").textContent = (mid / 1000).toFixed(1) + " s";
+  $("proof-unichain").textContent = "≈ " + Math.round(median(done.map((r) => r.unichainMs!)) / 1000) + " s";
+  $("hist-hint").hidden = false;
+
+  const bins = new Map<number, Recorded[]>();
+  for (const r of done) {
+    const bin = Math.round(r.baseMs! / BIN_MS) * BIN_MS;
+    bins.set(bin, [...(bins.get(bin) ?? []), r]);
+  }
+  const keys = [...bins.keys()];
+  const from = Math.min(...keys);
+  const to = Math.max(...keys);
+  const tallest = Math.max(...[...bins.values()].map((b) => b.length));
+  const medianBin = Math.round(mid / BIN_MS) * BIN_MS;
+  const columns: HTMLElement[] = [];
+  for (let bin = from; bin <= to; bin += BIN_MS) {
+    const loopsIn = bins.get(bin) ?? [];
+    const label = (bin / 1000).toFixed(1) + " s";
+    const count = loopsIn.length;
+    const column = el(
+      count ? "button" : "div",
+      {
+        class: "bin" + (bin === medianBin ? " median" : "") + (bin === playing ? " on" : ""),
+        ...(count ? { type: "button", "data-tip": count + (count === 1 ? " loop" : " loops") + " took " + label + ". Click to replay one.", "aria-label": count + " of " + done.length + " loops took " + label + ". Replay one." } : {}),
+      },
+      el(
+        "span",
+        { class: "bin-col", style: "height:" + ((count / tallest) * 100).toFixed(1) + "%" },
+        count ? el("span", { class: "bin-count" }, String(count)) : undefined,
+        count ? el("span", { class: "bin-bar", style: "height:100%" }) : undefined,
+      ),
+      el("span", { class: "bin-label" }, (bin / 1000).toFixed(1), el("i", {}, " s")),
+    );
+    if (count) {
+      column.addEventListener("click", () => {
+        startReplay(loopsIn[Math.floor(Math.random() * loopsIn.length)]);
+        $("step-2").scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+    }
+    columns.push(column);
+  }
+  $("hist").replaceChildren(...columns);
+}
+
+async function loadRecorded(): Promise<void> {
+  try {
+    const response = await fetch("loops.json");
+    if (!response.ok) return;
+    recorded = (await response.json()) as Recorded[];
+  } catch {
+    return; // The page works without the recording; it only loses the replay and the histogram.
+  }
+  renderProof();
+  renderStopwatch();
+  // A visitor who arrives between updates sees one typical recorded loop play, clearly marked as a replay.
+  window.setTimeout(() => {
+    if (autoplayed || replay || !latestLoop?.old) return;
+    autoplayed = true;
+    const done = replayable();
+    const mid = Math.round(median(done.map((r) => r.baseMs!)) / BIN_MS) * BIN_MS;
+    const typical = done.filter((r) => Math.round(r.baseMs! / BIN_MS) * BIN_MS === mid);
+    startReplay(typical[Math.floor(Math.random() * typical.length)]);
+  }, 900);
+}
+
+// --- The three steps ---------------------------------------------------------------------------------
+
+function isStale(view: PoolView): boolean {
+  return view.tradable && Math.abs(gapPct(view.poolPrice, view.refPrice)) >= 0.5;
+}
+
+/** Which step the page points at: the clock while a loop runs, the pools while one is stale, else the exchange. */
+function currentStep(): 1 | 2 | 3 {
+  if (replay && Date.now() - replay.startedAt < replay.at.closed + 400) return 2;
+  const loop = latestLoop;
+  if (loop && !loop.old && !loopDone(loop) && Date.now() - loop.seenAt < 60_000) return 2;
+  const stale = VENUES.some((key) => {
+    const view = venues[key];
+    return view !== undefined && (isStale(view.twin) || isStale(view.protected));
+  });
+  return stale ? 3 : 1;
+}
+
+function renderSteps(): void {
+  const step = currentStep();
+  if (!changed("step", step)) return;
+  for (const n of [1, 2, 3]) $("step-" + n).classList.toggle("lit", n === step);
+}
+
+// --- The pools ------------------------------------------------------------------------------------------
+
+function poolCard(key: VenueKey, target: 0 | 1, view: PoolView, afterHours: boolean): HTMLElement {
   const isProtected = target === 0;
   const gap = gapPct(view.poolPrice, view.refPrice);
-  const stale = Math.abs(gap) >= 0.5;
-  const state = !view.tradable ? "halted" : stale ? "stale" : "fine";
-  const statusText = !view.tradable
-    ? "Halted: swaps refused"
-    : "Trading · fee " + (view.feePips / 10_000).toFixed(2).replace(/\.?0+$/, "") + "%";
+  const state = !view.tradable ? "halted" : isStale(view) ? "stale" : "fine";
+  const fee = (view.feePips / 10_000).toFixed(2).replace(/\.?0+$/, "") + "%";
+  const statusText = !view.tradable ? "Halted" : isProtected && afterHours ? "After hours · " + fee + " fee" : "Trading";
+  const lost = view.taken > 0n ? view.taken : 0n;
 
-  const button = el(
-    "button",
-    { class: "raid", type: "button" },
-    isProtected ? "Raid the protected pool" : "Raid the twin",
-  );
+  const button = el("button", { class: "raid", type: "button", "aria-label": isProtected ? "Raid the protected pool" : "Raid the twin" }, "Raid");
   button.disabled = busy;
   button.addEventListener("click", () => raid(key, target));
 
@@ -752,14 +1015,19 @@ function poolCard(key: VenueKey, target: 0 | 1, view: PoolView): HTMLElement {
     el(
       "header",
       {},
-      el("h4", {}, isProtected ? "Protected by OpeningBell" : "Twin, no OpeningBell"),
+      el("h4", {}, isProtected ? "Protected" : "Unprotected twin"),
       el("span", { class: "pool-status" }, statusText),
+    ),
+    el(
+      "div",
+      { class: "lost" },
+      el("span", {}, "Lost to raiders"),
+      el("strong", { class: lost === 0n ? "zero" : "" }, usd(lost, 0)),
     ),
     el(
       "dl",
       {},
       el("div", {}, el("dt", {}, "Pool price"), el("dd", {}, usd(view.poolPrice))),
-      el("div", {}, el("dt", {}, "Real price"), el("dd", {}, usd(view.refPrice))),
       el(
         "div",
         { class: "gap" },
@@ -768,13 +1036,6 @@ function poolCard(key: VenueKey, target: 0 | 1, view: PoolView): HTMLElement {
       ),
     ),
     button,
-    el(
-      "p",
-      { class: "taken" },
-      "Raiders have taken ",
-      el("strong", {}, usdShort(view.taken > 0n ? view.taken : 0n)),
-      " from this pool",
-    ),
   );
 }
 
@@ -787,15 +1048,16 @@ function renderPools(): void {
       const info = config.chains[key];
       return el(
         "section",
-        { class: "venue" },
+        { class: "venue", "data-chain": key },
         el(
           "header",
           {},
           el("h3", {}, info.name),
-          view && account ? el("span", { class: "loot" }, "Your loot here: " + usd(view.loot)) : undefined,
+          view && account ? el("span", { class: "loot" }, "Your loot ", el("b", {}, usd(view.loot))) : undefined,
         ),
-        view ? poolCard(key, 0, view.protected) : el("p", { class: "muted" }, "Loading…"),
-        view ? poolCard(key, 1, view.twin) : undefined,
+        view
+          ? el("div", { class: "duel" }, poolCard(key, 0, view.protected, view.guardStatus === CLOSED), poolCard(key, 1, view.twin, false))
+          : el("p", { class: "muted" }, "Loading…"),
       );
     }),
   );
@@ -804,10 +1066,10 @@ function renderPools(): void {
 function renderHistory(): void {
   const box = $("history");
   if (!changed("history", [history.length, history[0]?.at])) return;
-  if (history.length === 0) {
-    box.replaceChildren(el("li", { class: "muted" }, "Your moves will show up here."));
-    return;
-  }
+  // The list only takes up room once there is a move to show.
+  $("moves").hidden = history.length === 0;
+  $("lower").classList.toggle("solo", history.length === 0);
+  if (history.length === 0) return;
   box.replaceChildren(
     ...history.slice(0, 8).map((h) =>
       el(
@@ -884,7 +1146,16 @@ async function main(): Promise<void> {
     account = (accounts as Address[])[0];
     render();
   });
+  // A wallet that already trusts this page reconnects without asking again.
+  eth
+    ?.request({ method: "eth_accounts" })
+    .then((accounts) => {
+      account ??= (accounts as Address[])[0];
+      render();
+    })
+    .catch(() => undefined);
 
+  $("replay").addEventListener("click", () => startReplay());
   renderContracts();
   $("boot").hidden = true;
   $("app").hidden = false;
@@ -900,10 +1171,12 @@ async function main(): Promise<void> {
     window.setTimeout(tick, config.mode === "local" ? 700 : 1200);
   };
   await tick();
+  void loadRecorded();
   // Keep the live counters moving between reads.
   window.setInterval(() => {
     renderStopwatch();
     renderExchange();
+    renderSteps();
   }, 100);
 }
 

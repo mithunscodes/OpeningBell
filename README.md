@@ -71,6 +71,9 @@ OpeningBell. The other, the *twin*, ignores market hours, as most pools do today
    against the pool until the pool's price matches the real one and keeps the difference. It uses
    play money minted for the occasion, so any wallet can play with no tokens or approvals.
 
+No wallet? The chart at the top of the page holds every loop of the benchmark below. Click a bar and
+one of those loops replays on the stopwatch, with a link to each of its real transactions.
+
 Live on the testnets on 12 November 2026, played from a fresh wallet through the demo page: trading
 was halted at $138.94 and resumed 10% lower at $125.05. The twins were still quoting $140.00, and one
 raid took **$13,577.95 from the twin on each chain**. The same raid on the protected pools found
