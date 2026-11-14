@@ -1108,7 +1108,7 @@ function renderPools(): void {
         el(
           "header",
           {},
-          el("h3", {}, info.name),
+          el("h3", {}, info.short, el("span", { class: "chain-sub" }, info.name + " · separate chain")),
           view && account ? el("span", { class: "loot" }, "Your loot ", el("b", {}, usd(view.loot))) : undefined,
         ),
         view

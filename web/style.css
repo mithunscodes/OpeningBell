@@ -190,7 +190,11 @@ h2 small { flex-basis: 100%; }
 
 /* Step 3: the pools, protected against twin */
 .venues { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 20px 24px; }
-.venue > header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; gap: 8px; flex-wrap: wrap; }
+.venue { border: 1.5px solid color-mix(in srgb, var(--chain) 70%, transparent); border-radius: 16px; padding: 14px 16px 16px; background: color-mix(in srgb, var(--chain) 6%, transparent); }
+.venue > header { display: flex; justify-content: space-between; align-items: center; margin: -14px -16px 14px; padding: 12px 16px; gap: 8px; flex-wrap: wrap; border-bottom: 1px solid color-mix(in srgb, var(--chain) 35%, transparent); background: color-mix(in srgb, var(--chain) 14%, transparent); border-radius: 15px 15px 0 0; }
+.venue h3 { font-size: 20px; color: var(--chain); }
+.venue h3::before { width: 12px; height: 12px; border-radius: 4px; }
+.chain-sub { font: 500 12px/1 var(--sans); color: var(--muted); margin-left: 4px; }
 h3 { font-size: 15px; display: flex; align-items: center; gap: 8px; }
 h3::before { content: ""; width: 9px; height: 9px; border-radius: 3px; background: var(--chain, var(--muted)); }
 .venue[data-chain="base"] { --chain: #4f8cff; }
