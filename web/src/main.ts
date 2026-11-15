@@ -12,7 +12,7 @@ import {
   ContractFunctionRevertedError,
   UserRejectedRequestError,
 } from "viem";
-import { arenaAbi, conductorAbi, feedAbi, guardAbi, stageAbi } from "../../tools/src/abi.ts";
+import { arenaAbi, conductorAbi, feedAbi, guardAbi, stageAbi, watchdogAbi } from "../../tools/src/abi.ts";
 import {
   MARKET_ID,
   VENUES,
@@ -78,6 +78,8 @@ interface Loop {
   feed?: Hop;
   observed?: Hop;
   applied: Partial<Record<VenueKey, Hop>>;
+  /** Venues the watchdog had the Reactive contract send to a second time, because they had not confirmed. */
+  retried: Partial<Record<VenueKey, Hop>>;
   closed?: Hop;
   seenAt: number;
   /**
@@ -195,6 +197,17 @@ async function readConductor(): Promise<void> {
   conductor = { seq: state[1], inSync };
 }
 
+const venueKeys = new Map<bigint, VenueKey | undefined>();
+
+/** Which chain the Reactive contract's venue number `id` is. Read once and remembered. */
+async function venueKey(id: bigint): Promise<VenueKey | undefined> {
+  if (!venueKeys.has(id)) {
+    const venue = await clients.lasna.readContract({ address: config.reactive.conductor, abi: conductorAbi, functionName: "venue", args: [id] });
+    venueKeys.set(id, VENUES.find((k) => config.venues[k]?.chainId === Number(venue.chainId)));
+  }
+  return venueKeys.get(id);
+}
+
 /** The stretch of blocks to search on a chain for a loop's events on this pass, kept under the RPC's cap. */
 function searchWindow(loop: Loop, key: ChainKey): { fromBlock: bigint; toBlock: bigint; full: boolean } | undefined {
   const fromBlock = loop.cursor[key];
@@ -249,6 +262,22 @@ async function advance(loop: Loop): Promise<void> {
         if (!loop.observed) {
           const log = await find("Observed");
           if (log) loop.observed = { block: log.blockNumber, tx: log.transactionHash };
+        }
+        // Looked up before `LoopClosed`, so a re-send is never missed by a loop that closes in the same pass.
+        const watchdog = config.reactive.watchdog;
+        if (watchdog && loop.observed && !loop.closed) {
+          const logs = await clients.lasna.getContractEvents({
+            address: watchdog,
+            abi: watchdogAbi,
+            eventName: "Retried",
+            args: { marketId: MARKET_ID, seq: loop.seq },
+            fromBlock: lasna.fromBlock,
+            toBlock: lasna.toBlock,
+          });
+          for (const log of logs) {
+            const key = log.args.venueId === undefined ? undefined : await venueKey(log.args.venueId);
+            if (key && !loop.retried[key]) loop.retried[key] = { block: log.blockNumber, tx: log.transactionHash };
+          }
         }
         if (loop.observed && !loop.closed) {
           const log = await find("LoopClosed");
@@ -337,7 +366,7 @@ async function refresh(): Promise<void> {
         const head = heads[key]!;
         cursor[key] = head - back > deployedAt(key) ? head - back : deployedAt(key);
       }
-      const loop: Loop = { seq: m.seq, status: m.status, price: m.price, applied: {}, seenAt: Date.now(), ageMs, old, cursor };
+      const loop: Loop = { seq: m.seq, status: m.status, price: m.price, applied: {}, retried: {}, seenAt: Date.now(), ageMs, old, cursor };
       loops.set(m.seq, loop);
       latestLoop = loop;
       if (!old) replay = undefined; // a live loop takes the stopwatch back from a replay
@@ -675,6 +704,8 @@ interface StageView {
   value: string;
   chain: ChainKey;
   tx?: Hash;
+  /** The watchdog had this venue sent the update a second time. */
+  retried?: boolean;
 }
 interface WatchView {
   kind: "none" | "settled" | "live" | "replay";
@@ -738,6 +769,11 @@ function timedView(loop: Loop, live: number, kind: "live" | "replay"): WatchView
         ? { state: "behind", value: "not seen", chain: STAGE_CHAIN[key] }
         : { state: reached[key] ? "waiting" : "idle", value: reached[key] ? "…" : "—", chain: STAGE_CHAIN[key] };
   }
+  for (const key of venuesIn) {
+    if (!loop.retried[key]) continue;
+    stages[key].retried = true;
+    if (stages[key].state === "waiting") stages[key].value = "re-sent…";
+  }
 
   const base = elapsed(loop.applied.base);
   const precise = Boolean(loop.applied.base?.precise && loop.feed?.precise);
@@ -747,9 +783,24 @@ function timedView(loop: Loop, live: number, kind: "live" | "replay"): WatchView
     clockState: base === undefined ? "ticking" : "done",
     headline: base === undefined ? ["and counting…"] : ["exchange event to ", el("b", {}, "Base pool switched")],
     tag: (kind === "live" ? "Live" : "Replay") + " · update #" + loop.seq,
-    note: kind === "live" ? "Timed from block timestamps." : "",
+    note: kind === "live" ? liveNote(loop, live, venuesIn) : "",
     stages,
   };
+}
+
+/** The line under a live loop. It says so when a chain is late, and when the watchdog stepped in. */
+function liveNote(loop: Loop, live: number, venuesIn: VenueKey[]): string {
+  const name = (keys: VenueKey[]) => keys.map((k) => config.chains[k].short).join(" and ");
+  const retried = venuesIn.filter((k) => loop.retried[k]);
+  if (retried.length) {
+    const back = retried.every((k) => loop.applied[k]);
+    return name(retried) + " had not confirmed, so the watchdog had the update sent again. Nobody pressed anything." + (back ? "" : " Waiting for it to land…");
+  }
+  const late = venuesIn.filter((k) => !loop.applied[k]);
+  if (config.reactive.watchdog && loop.observed && late.length && live > 6_000 && live <= 60_000) {
+    return name(late) + (late.length > 1 ? " have" : " has") + " not confirmed yet. The watchdog checks again on its next clock tick.";
+  }
+  return "Timed from block timestamps.";
 }
 
 /** An update that landed before this page was watching: no timings, only whether each chain has it. */
@@ -835,6 +886,7 @@ function renderStopwatch(): void {
     if (changed("stage-" + key, stage)) {
       const was = node.dataset.state;
       node.dataset.state = stage.state;
+      node.toggleAttribute("data-retried", Boolean(stage.retried));
       node.querySelector(".node-value")!.textContent = stage.value;
       node.querySelector(".node-tx")!.replaceChildren(stage.tx ? link(stage.chain, stage.tx, "tx ↗") : "");
       if (was === "waiting" && stage.state === "done") {
@@ -929,7 +981,7 @@ function startReplay(loop?: Recorded): void {
 function replayLoop(play: Replay, now: number): { loop: Loop; live: number } {
   const r = play.loop;
   const since = now - play.startedAt;
-  const loop: Loop = { seq: BigInt(r.seq), status: statusOf(r.action), price: 0n, applied: {}, seenAt: play.startedAt, ageMs: 0, old: false, cursor: {} };
+  const loop: Loop = { seq: BigInt(r.seq), status: statusOf(r.action), price: 0n, applied: {}, retried: {}, seenAt: play.startedAt, ageMs: 0, old: false, cursor: {} };
   loop.feed = { block: 0n, tx: r.feed!, ms: r.at, precise: true };
   if (since >= play.at.observed) loop.observed = { block: BigInt(r.observedBlock ?? 0), tx: r.observed! };
   if (since >= play.at.base) loop.applied.base = { block: 0n, tx: r.base!, ms: r.at + r.baseMs!, precise: true };

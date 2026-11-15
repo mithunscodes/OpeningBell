@@ -158,6 +158,9 @@ The gas limit was put back to 1,000,000 four seconds after the update
 [putting it back](https://lasna.reactscan.net/tx/0x64d2a5511daaaec983548c51e70df8344074cf25fc67354852ca1f859e74798e)).
 Nobody called `resync`: the re-send came from the watchdog's own reactive transaction.
 
+The demo page shows it when it happens: the late chain's box on the stopwatch gets a "2nd try" tag,
+and the line under it says the watchdog had the update sent again.
+
 What it does not do: if the venue is still broken after three rounds it emits `GaveUp` and stops, so
 a dead venue cannot drain it. And it re-sends through `BellReactive`, so it has to own that
 contract; the deployer still reaches every owner function through the watchdog's `execute`.

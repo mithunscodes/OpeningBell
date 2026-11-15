@@ -180,6 +180,8 @@ h2 small { flex-basis: 100%; }
 .node[data-state="done"] .node-value { color: var(--ink); }
 .node[data-state="behind"] .node-dot { background: var(--bad); }
 .node[data-state="behind"] .node-value { color: var(--bad); }
+.node[data-retried] { position: relative; }
+.node[data-retried]::after { content: "2nd try"; position: absolute; top: -9px; right: 8px; padding: 1px 7px; border-radius: 99px; background: var(--accent); color: #1a1205; font: 700 10.5px/1.5 var(--sans, inherit); letter-spacing: .02em; }
 .node.landed { animation: land .5s ease-out; }
 @keyframes land { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--good) 60%, transparent); } 100% { box-shadow: 0 0 0 12px transparent; } }
 .watch-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; margin-top: 16px; min-height: 40px; }

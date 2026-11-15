@@ -32,8 +32,15 @@ export const conductorAbi = parseAbi([
   "function markets(bytes32 marketId) view returns (uint8 status, uint64 seq, uint64 sourceTime, uint112 price)",
   "function inSync(bytes32 marketId) view returns (bool)",
   "function venueCount() view returns (uint256)",
+  "struct Policy { uint24 feePips; uint24 halfRangeBps; }",
+  "struct Venue { uint256 chainId; address guard; uint64 gasLimit; uint16 minMoveBps; bool active; Policy[3] policy; }",
+  "function venue(uint256 venueId) view returns (Venue)",
   "function ackMode() view returns (uint8)",
   "function setAckMode(uint8 mode)",
+]);
+
+export const watchdogAbi = parseAbi([
+  "event Retried(bytes32 indexed marketId, uint64 indexed seq, uint256 indexed venueId, uint8 attempt)",
 ]);
 
 export const vaultAbi = parseAbi([
