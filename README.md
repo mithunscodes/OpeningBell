@@ -53,6 +53,12 @@ sequenceDiagram
 4. Each guard confirms with an `Ack` event, which `BellReactive` also subscribes to. When every venue
    has confirmed, it emits `LoopClosed`: an on-chain record that all chains agree.
 
+5. **`BellWatchdog`** (Reactive Lasna) makes sure the loop closes. It hears the same update, switches on
+   the network's own clock (`Cron10`, one event every ten blocks) and looks at the conductor's books
+   on the next tick. A venue that still owes a confirmation eight blocks after the send is sent the
+   state again, up to three rounds, with nobody pressing anything. Once every loop is closed the
+   watchdog unsubscribes from the clock, so a quiet market costs nothing.
+
 | Exchange state | Swaps | Fee | Liquidity band |
 | --- | --- | --- | --- |
 | Open | allowed | 0.05% | ±2% around the reference price |
@@ -127,6 +133,38 @@ Each row is one market update, from the origin event to the callbacks and back.
 
 All 233 recorded loops are listed the same way in `bench/results/`.
 
+## When a chain misses an update
+
+A callback can fail: the venue chain is congested, the callback runs out of gas, the guard is out
+of funds. Without a second look, that venue would stay on the old state until the next market
+update. `BellWatchdog` is that second look, and it is a reactive contract too.
+
+We broke one callback on purpose on the live testnets (15 November 2026, update #275, a resume after
+a halt). The Unichain venue's callback gas was set to 100,000, far too little, for one update:
+
+| Time (UTC) | What happened | Transaction |
+| --- | --- | --- |
+| 18:38:42 | The exchange resumes trading | [origin](https://sepolia.basescan.org/tx/0x14c3a2e7a0e868c2961a707ac6c86b14f9369d6cfcb832ea663d7b1d0ee823d2) |
+| Lasna block 8429091 | `BellReactive` sends to both venues; `BellWatchdog` starts watching and switches the clock on | [reactive tx](https://lasna.reactscan.net/tx/0xe39b7622a22fef2e86780e3201fd77de65a48c299d9d2f63b927c2b4d19a88f6), [watchdog](https://lasna.reactscan.net/tx/0x6869bf6313f231bb5de6e9430598b6c55438af56305d544731ae7c363979755f) |
+| Lasna block 8429092 | Base confirms | [ack](https://lasna.reactscan.net/tx/0xb83c9f943a33fd15acfb54f60aa8806ade2fee0d29232af5f47ea4a6100056ae) |
+| 18:38:44 | The callback to Unichain fails: out of gas | [reverted](https://sepolia.uniscan.xyz/tx/0xbd34a68ba2b9f458c704a2f0020c52692c2e4644137632caf9f6f44889a66ef4) |
+| Lasna block 8429101 | The clock ticks. The watchdog sees Unichain still owes a confirmation and has the conductor send again | [`Retried`](https://lasna.reactscan.net/tx/0x63e6f2398834a6256ea6092a9c7fd194d8f9350550c5fc53195be1cb0361b0e5) |
+| 18:38:54 | The second callback lands on Unichain, ten seconds after the first one failed | [callback](https://sepolia.uniscan.xyz/tx/0x78fc1d2e278b59ad2539b471189181bf7ea95b2bb99f977e1a26fb9f905c3b44) |
+| Lasna block 8429103 | Unichain confirms: `LoopClosed` | [loop closed](https://lasna.reactscan.net/tx/0x02bedad9705148bb8f5853b5de4c41a015d99712d9cfcae42463a27b13509c17) |
+| Lasna block 8429111 | Next tick: the watchdog records `Settled` after one round and switches the clock off | [`Settled`](https://lasna.reactscan.net/tx/0xa47e565a8060ef8d0e7f7437388a11f6f719ad23369d302c2d4b41d3926a17ce) |
+
+The gas limit was put back to 1,000,000 four seconds after the update
+([setting it low](https://lasna.reactscan.net/tx/0x7992f13b113ad8ad93e6ad94ca7028800e2cabd89b5dd214a35b7cc2bfdff004),
+[putting it back](https://lasna.reactscan.net/tx/0x64d2a5511daaaec983548c51e70df8344074cf25fc67354852ca1f859e74798e)).
+Nobody called `resync`: the re-send came from the watchdog's own reactive transaction.
+
+What it does not do: if the venue is still broken after three rounds it emits `GaveUp` and stops, so
+a dead venue cannot drain it. And it re-sends through `BellReactive`, so it has to own that
+contract; the deployer still reaches every owner function through the watchdog's `execute`.
+
+The benchmark in [Speed](#speed) was measured before the watchdog existed. It does not sit in the
+path of the first callback, which still leaves in `BellReactive`'s own reactive transaction.
+
 ## Why Reactive
 
 - A keeper bot per chain is off-chain and trusted, has to be run and funded on every chain
@@ -135,6 +173,9 @@ All 233 recorded loops are listed the same way in `bench/results/`.
   the band or move the liquidity away from the stale price.
 - With Reactive, one on-chain decision reaches every venue chain from a single reactive transaction,
   and the confirmations come back to the same contract, which records `LoopClosed`.
+- The safety net is on Reactive too. The watchdog's clock is a Reactive `Cron` event, it subscribes
+  and unsubscribes from inside `react()`, and it reads and calls `BellReactive` directly because both
+  live on Reactive Network. No keeper, no server.
 
 ## Live contracts
 
@@ -143,6 +184,7 @@ All 233 recorded loops are listed the same way in `bench/results/`.
 | Base Sepolia | `MarketFeed` | `0x8ddc373617e2D83348fE72eAcF8C4ffB58e9C46E` |
 | Base Sepolia | `DemoStage` | `0x5E61Ad5f07de8E8c6438036FC7315Ebf783c4Ba2` |
 | Reactive Lasna | `BellReactive` | `0x8ddc373617e2D83348fE72eAcF8C4ffB58e9C46E` |
+| Reactive Lasna | `BellWatchdog` | `0xF462b2cA056d52E762F3434789fDe040FE2964Eb` |
 | Base Sepolia | `BellGuard` | `0xac2b5Be3B5208D8f5bC91BEd7465da46954e2CEE` |
 | Base Sepolia | `BellHook` | `0x6E4b43f2B25851D0FAeDe788C41fc1B467e64880` |
 | Base Sepolia | `BellVault` | `0xE5a33BfF43DDB8c1518B883A8662c245958cAAd5` |
@@ -169,7 +211,7 @@ Twin pools, tokens and pool ids are in [`deployments/`](deployments/).
 | Path | What it holds |
 | --- | --- |
 | `src/origin/` | `MarketFeed`, and `DemoStage`, which lets anyone play the exchange in the demo |
-| `src/reactive/` | `BellReactive`, the contract on Reactive Network |
+| `src/reactive/` | `BellReactive`, the conductor on Reactive Network, and `BellWatchdog`, which re-sends to a venue that never confirmed |
 | `src/venue/` | `BellGuard`, `BellHook`, `BellVault`, `Arena`, `MockToken` and the price maths |
 | `script/` | Deployment scripts, the same ones the local rehearsal uses |
 | `test/` | Foundry tests, with a local simulator of Reactive Omni and the real Uniswap v4 PoolManager bytecode from Base Sepolia |
@@ -183,7 +225,7 @@ Needs [Foundry](https://book.getfoundry.sh/) and Node 20 or newer.
 ```sh
 git clone --recurse-submodules https://github.com/mithunscodes/OpeningBell
 cd OpeningBell
-forge test                     # 75 tests
+forge test                     # 101 tests
 ```
 
 The whole system on local forks of all three networks, with no wallet and no testnet funds. A
@@ -216,6 +258,9 @@ Measured over the live 200-update run:
 
 - 0.046 lREACT per market update on Lasna, at its 100 gwei gas price. One update is three reactive
   transactions: the update itself and the two confirmations.
+- The watchdog adds about 0.035 lREACT to a healthy update (one reactive transaction to start
+  watching, one clock tick to see the loop closed) and paid 0.054 for the recovery above. It has its
+  own balance and can be switched off with `setArmed(false)`.
 - Each guard pays for its own callbacks through the callback proxy: about 0.0000022 ETH per update on
   Base Sepolia and 0.0000005 ETH on Unichain Sepolia at current testnet gas prices.
 

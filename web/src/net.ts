@@ -35,7 +35,7 @@ export interface Config {
   mode: "testnet" | "local";
   chains: Record<ChainKey, ChainInfo>;
   origin: { chainId: number; block: number; feed: Address; stage: Address };
-  reactive: { chainId: number; block: number; conductor: Address };
+  reactive: { chainId: number; block: number; conductor: Address; watchdog?: Address };
   venues: Partial<Record<VenueKey, Venue>>;
 }
 

@@ -59,7 +59,7 @@ export interface Venue {
 
 export interface Deployments {
   origin: { chainId: number; block: number; feed: Address; stage: Address };
-  reactive: { chainId: number; block: number; conductor: Address };
+  reactive: { chainId: number; block: number; conductor: Address; watchdog?: Address };
   venues: Partial<Record<VenueName, Venue>>;
 }
 
@@ -74,9 +74,10 @@ export function deployments(): Deployments {
   const origin = load<Deployments["origin"]>(dir, "origin.json");
   const reactive = load<Deployments["reactive"]>(dir, "reactive.json");
   if (!origin || !reactive) throw new Error("no deployment found in " + dir);
+  const watchdog = load<{ watchdog: Address }>(dir, "watchdog.json")?.watchdog;
   return {
     origin,
-    reactive,
+    reactive: watchdog ? { ...reactive, watchdog } : reactive,
     venues: {
       base: load<Venue>(dir, "venue-" + CHAIN_IDS.base + ".json"),
       unichain: load<Venue>(dir, "venue-" + CHAIN_IDS.unichain + ".json"),

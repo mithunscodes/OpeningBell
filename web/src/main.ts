@@ -1159,6 +1159,7 @@ function renderContracts(): void {
     ["Exchange buttons (DemoStage)", "base", config.origin.stage],
     ["Reactive contract (BellReactive)", "lasna", config.reactive.conductor],
   ];
+  if (config.reactive.watchdog) rows.push(["Watchdog: re-sends to a chain that missed an update (BellWatchdog)", "lasna", config.reactive.watchdog]);
   for (const key of VENUES) {
     const v = config.venues[key];
     if (!v) continue;
