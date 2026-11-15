@@ -31,6 +31,12 @@ library Config {
     /// @dev Price-only moves smaller than this are not sent to venues.
     uint16 internal constant MIN_MOVE_BPS = 5;
 
+    /// @dev Reactive Network blocks (about a second each) a venue gets to confirm before the watchdog
+    ///      has the conductor send again. A healthy loop confirms within about four.
+    uint64 internal constant WATCHDOG_RETRY_AFTER_BLOCKS = 8;
+    /// @dev Rounds of re-sends per update before the watchdog gives up.
+    uint8 internal constant WATCHDOG_MAX_RETRIES = 3;
+
     /// @dev Public demo limits: one action every 15 seconds, 100 a day.
     uint32 internal constant STAGE_COOLDOWN = 15;
     uint32 internal constant STAGE_DAILY_CAP = 100;

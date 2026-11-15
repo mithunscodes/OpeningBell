@@ -13,6 +13,7 @@ import { IRefPrice } from "../src/common/MarketTypes.sol";
 import { MarketFeed } from "../src/origin/MarketFeed.sol";
 import { DemoStage } from "../src/origin/DemoStage.sol";
 import { BellReactive } from "../src/reactive/BellReactive.sol";
+import { BellWatchdog } from "../src/reactive/BellWatchdog.sol";
 import { BellGuard } from "../src/venue/BellGuard.sol";
 import { BellHook } from "../src/venue/BellHook.sol";
 import { BellVault } from "../src/venue/BellVault.sol";
@@ -239,6 +240,31 @@ contract WireVenues is DeployBase {
             console2.log("venue", venueId, chains[i], guard);
         }
         vm.stopBroadcast();
+    }
+}
+
+/// @notice Step 5, on Reactive Network: the watchdog, funded from the deployer, then made the owner
+///         of the conductor so that it can re-send. The deployer keeps control through the watchdog's
+///         `execute`, and `releaseConductor` undoes the hand-over.
+contract DeployWatchdog is DeployBase {
+    function run() external {
+        require(block.chainid == Config.LASNA, "run this on Reactive Lasna");
+        BellReactive conductor = BellReactive(payable(_read("reactive.json", ".conductor")));
+        uint256 funding = vm.envOr("WATCHDOG_FUNDING", uint256(2 ether));
+        uint64 retryAfter = uint64(vm.envOr("WATCHDOG_RETRY_AFTER_BLOCKS", uint256(Config.WATCHDOG_RETRY_AFTER_BLOCKS)));
+        uint8 maxRetries = uint8(vm.envOr("WATCHDOG_MAX_RETRIES", uint256(Config.WATCHDOG_MAX_RETRIES)));
+
+        vm.startBroadcast(_key());
+        BellWatchdog watchdog = new BellWatchdog{ value: funding }(conductor, retryAfter, maxRetries);
+        conductor.transferOwnership(address(watchdog));
+        vm.stopBroadcast();
+
+        string memory json = "watchdog";
+        vm.serializeUint(json, "chainId", block.chainid);
+        vm.serializeUint(json, "block", block.number);
+        vm.writeJson(vm.serializeAddress(json, "watchdog", address(watchdog)), string.concat(_dir(), "watchdog.json"));
+
+        console2.log("BellWatchdog", address(watchdog));
     }
 }
 
