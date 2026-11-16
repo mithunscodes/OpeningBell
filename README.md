@@ -28,7 +28,7 @@ the pools that ignore market hours lost **$54,908.75** to one raid each and the 
 
 [![The OpeningBell demo page: play the exchange, watch the clock, raid the pools](docs/demo.png)](https://openingbell-two.vercel.app)
 
-<!-- TODO: add the video link here once it exists: **[Watch the video](VIDEO_LINK)** -->
+**[Watch the three-minute video](https://youtu.be/8YB6nJwq09I)**: the benchmark, a live halt on two chains, a raid, a real NVIDIA night and the watchdog recovering a missed update.
 
 ## How it works
 
