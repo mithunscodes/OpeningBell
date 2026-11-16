@@ -11,7 +11,8 @@ same moment.
 OpeningBell puts the stock exchange's hours on-chain. A Reactive Network contract watches the
 exchange's state and, in a single reactive transaction, switches the token's pools on Base Sepolia
 and Unichain Sepolia into the right mode: re-priced the moment the market reopens, refusing swaps
-during a halt, wide and expensive after hours.
+during a halt, wide and expensive after hours. A second Reactive contract, the watchdog, checks that
+every chain confirmed, and re-sends by itself to one that did not.
 
 Built for the Reactive Omni Buildathon, track **Every Second Counts**.
 
@@ -21,6 +22,8 @@ Unichain pool about **2 s** after, and **230 of 230** loops closed. See [Speed](
 
 **[Play the demo](https://openingbell-two.vercel.app)** with any wallet and a little test ETH.
 
+[![The OpeningBell demo page: play the exchange, watch the clock, raid the pools](docs/demo.png)](https://openingbell-two.vercel.app)
+
 <!-- TODO: add the video link here once it exists: **[Watch the video](VIDEO_LINK)** -->
 
 ## How it works
@@ -29,14 +32,18 @@ Unichain pool about **2 s** after, and **230 of 230** loops closed. See [Speed](
 sequenceDiagram
     participant X as Exchange feed<br/>(Base Sepolia)
     participant R as BellReactive<br/>(Reactive Lasna)
+    participant W as BellWatchdog<br/>(Reactive Lasna)
     participant B as Pools on Base Sepolia
     participant U as Pools on Unichain Sepolia
     X->>R: MarketUpdate (open, closed or halted + price)
+    X->>W: the same MarketUpdate
     R->>B: callback: new mode and price
     R->>U: callback: new mode and price
     B-->>R: Ack
     U-->>R: Ack
     Note over R: LoopClosed: both chains in sync
+    W->>R: on a clock tick: has every chain confirmed?
+    Note over W: if one has not, BellReactive sends to it again
 ```
 
 1. **`MarketFeed`** (Base Sepolia) publishes the reference market's state: open, closed or halted,
@@ -52,9 +59,8 @@ sequenceDiagram
    applies the mode to every swap.
 4. Each guard confirms with an `Ack` event, which `BellReactive` also subscribes to. When every venue
    has confirmed, it emits `LoopClosed`: an on-chain record that all chains agree.
-
 5. **`BellWatchdog`** (Reactive Lasna) makes sure the loop closes. It hears the same update, switches on
-   the network's own clock (`Cron10`, one event every ten blocks) and looks at the conductor's books
+   the network's own clock (`Cron10`, one event every ten blocks) and looks at `BellReactive`'s books
    on the next tick. A venue that still owes a confirmation eight blocks after the send is sent the
    state again, up to three rounds, with nobody pressing anything. Once every loop is closed the
    watchdog unsubscribes from the clock, so a quiet market costs nothing.
