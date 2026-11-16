@@ -20,6 +20,10 @@ Live on Base Sepolia, Unichain Sepolia and Reactive Lasna. Over 230 market updat
 testnets, the Base pool switched a median of **1.4 s** after the exchange event (2.4 s at worst), the
 Unichain pool about **2 s** after, and **230 of 230** loops closed. See [Speed](#speed).
 
+Fed the real prices of NVIDIA's night of 11 to 12 November 2026, when the share opened 13.1% lower,
+the pools that ignore market hours lost **$54,908.75** to one raid each and the protected pools lost
+**nothing**. See [A real night, replayed](#a-real-night-replayed).
+
 **[Play the demo](https://openingbell-two.vercel.app)** with any wallet and a little test ETH.
 
 [![The OpeningBell demo page: play the exchange, watch the clock, raid the pools](docs/demo.png)](https://openingbell-two.vercel.app)
@@ -48,9 +52,10 @@ sequenceDiagram
 
 1. **`MarketFeed`** (Base Sepolia) publishes the reference market's state: open, closed or halted,
    plus the reference price. Nobody publishes equity prices on a testnet, so in the demo the
-   exchange is played by `DemoStage`: prices start at $140 and move when someone presses an exchange
-   button. In production the feed is replaced by an existing equity feed; the rest of the system
-   only depends on the `MarketUpdate` event.
+   exchange is played by `DemoStage`: the price moves when someone presses an exchange button, and
+   it has also been fed [a real night of NVIDIA prices](#a-real-night-replayed). In production the
+   feed is replaced by an existing equity feed; the rest of the system only depends on the
+   `MarketUpdate` event.
 2. **`BellReactive`** (Reactive Lasna) subscribes to the feed. For each update it decides what every
    venue should do and sends one callback per venue chain from the same reactive transaction.
 3. On each venue chain, **`BellGuard`** records the state (it accepts writes only through Reactive
@@ -99,6 +104,55 @@ nothing to take: they were already at the new price.
 Exchange actions are shared by everyone and rate-limited (one every 15 seconds, 100 a day), because
 each one costs the project testnet funds on Reactive Network. Playing needs a little test ETH for gas
 on Base Sepolia or Unichain Sepolia, for example from the [Superchain faucet](https://app.optimism.io/faucet).
+
+## A real night, replayed
+
+On 11 November 2026 NVIDIA closed at **$173.73**. News about its chief executive broke after the
+bell. The share could not trade again until 9:30 the next morning, when it opened at **$151.01**,
+13.1% lower. A token that tracks NVIDIA trades through all of that.
+
+On 16 November we played that night's real prices through the live system, with
+[`tools/src/replay.ts`](tools/src/replay.ts) and an ordinary wallet pressing the public exchange
+buttons. The twins started the night where the protected pools did, at the closing price.
+
+| New York time | Real price | Exchange event (Base Sepolia) | Reactive reacts (Lasna) | Base pool switched | Unichain pool switched | Both confirmed (Lasna) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 11 Nov, 4:00 pm: closing bell | **$173.73** | [update #285](https://sepolia.basescan.org/tx/0x712d32f55519aab42961ca784583b26c2aa5ab90cfd7a5a9f20a8ed38e4eb282) | [reactive tx](https://lasna.reactscan.net/tx/0xdeabc42e7f9b3c351eb97179b24a90c211fe4c321c91c5de05745c30c352fc32) | [1.40 s](https://sepolia.basescan.org/tx/0x73bc1c6f93d9bc5780f78c087cc3dec19bb634448782411cf9854b929a65db67) | [≈2 s](https://sepolia.uniscan.xyz/tx/0x64a98734d628ddbf3661d2eb1f7f092951bb64d3822ef30ac59ddec112175c47) | [loop closed](https://lasna.reactscan.net/tx/0xa3a180a5af738406876afad340520b57395dbbdf79a8545502b87280fa1166b3) |
+| 12 Nov, 8:55 am: pre-market quote, market still shut | **$154.68** | [update #286](https://sepolia.basescan.org/tx/0x157953b733885e5926820f023ff5d5983afcd58d37337438c6c49de30c627e04) | [reactive tx](https://lasna.reactscan.net/tx/0xee64696fa7928f118e3fe97dccf8d70df2d595b4bc6d46bcefb4620adfae47c8) | [1.00 s](https://sepolia.basescan.org/tx/0xedca06533e44e888df58d0876d2a35b1873b881dbd5a01fcf8ed5438f304a880) | [≈2 s](https://sepolia.uniscan.xyz/tx/0x409382c26dffb19ddecfda6f96947aceb56f0ecb3b28cb9edbe722bf743978aa) | [loop closed](https://lasna.reactscan.net/tx/0x29798e8108921c5dff262c9eb09f24e8c6023a0cf10da0158f22a37418d62233) |
+| 12 Nov, 9:30 am: opening bell | **$151.01** | [update #287](https://sepolia.basescan.org/tx/0x36d14dceed0b96ac0b9244b0f16be8e886bf6c6404303dec74e5693779845cd9) | [reactive tx](https://lasna.reactscan.net/tx/0x992f75c32d0dca67dd4d0cc1eebcf3c90f1651579d682765aabf19903fab38ed) | [1.60 s](https://sepolia.basescan.org/tx/0x80405fca829ea3f956e615772d9b33ab9be6f3342d6dba661e117748e8b07b4b) | [≈3 s](https://sepolia.uniscan.xyz/tx/0x214ccf8bc26f0cf1945f57a3dd4ad3bf52c65395b7b79529fba75c8f793e513c) | [loop closed](https://lasna.reactscan.net/tx/0x8c4848c9bb5c7d1dcc2325a11334adad7cab5c97bb124fa889a7708c70e72f6c) |
+
+After the opening bell, one raid on every pool:
+
+| | Base Sepolia | Unichain Sepolia |
+| --- | --- | --- |
+| Twin, still quoting $173.73 | [$21,661.53 taken](https://sepolia.basescan.org/tx/0x3c4cbc4c1302bc0d0b75911cf99d59f49fccf14fa861225f5b30f338c7c23bd9) | [$33,247.22 taken](https://sepolia.uniscan.xyz/tx/0x29a6640cef8c3d813680d24ea55d92c56d26f19ec7a57eee81f44eb277e54748) |
+| Protected pool, already at $151.01 | [nothing to take](https://sepolia.basescan.org/tx/0x2d37bb2ef2b237d15e2a8234f49777e79008f445e3f0f2132ac737a9456ea80c) | [nothing to take](https://sepolia.uniscan.xyz/tx/0x18281bdbb836afe2d399f1f9e34975f57eb737f506f2764e1c4d6dace87855e1) |
+| Protected pool before the open, at the pre-market $154.68 | [nothing to take](https://sepolia.basescan.org/tx/0x32b134067a1d2f7e0af82021aec1a66e314ee0678d1df4987e9ffd0b581d139f) | [nothing to take](https://sepolia.uniscan.xyz/tx/0x14da48e65787dfdd333b490c2c9c48e941fa2b18934f25fcc6b0d47f1e7d396b) |
+
+**$54,908.75 left the two pools that ignored the bell. Nothing left the two that followed it.** To
+take anything from a protected pool, a raider had to trade inside the 1.6 seconds between the opening
+bell and the Base pool's switch (about 3 seconds on Unichain).
+
+What is real here and what is not:
+
+- **The three prices are real.** The close and the open are from NVIDIA's daily price history
+  ([StockAnalysis](https://stockanalysis.com/stocks/nvda/history/), checked against
+  [TipRanks](https://www.tipranks.com/stocks/nvda/historical-prices)). The pre-market quote is the one
+  [Business Upturn](https://businessupturn.com/finance/stock-market/us-market/nvidia-shares-extend-slide-to-nearly-11-in-pre-market-trade-after-jensen-huang-resigns-as-ceo-trading-below-52-week-low/)
+  reported at 8:55 am.
+- **The feed is still ours.** `DemoStage` moves the price in whole basis points, so the script picked
+  moves that hit every real price to the cent: on-chain the three prices are $173.7343, $154.6756
+  and $151.0098.
+- **The night was played in under a minute, not seventeen and a half hours.** The three updates
+  went out one after the other. What is measured is each update's trip around the loop.
+- **The pools hold play money.** The dollar figures show the proportion between the two kinds of
+  pool, not what a mainnet pool would lose; the two twins held different amounts by then, which is
+  why their figures differ.
+
+The scenario is [`bench/replay/nvda-2026-11-12.json`](bench/replay/nvda-2026-11-12.json), and every
+transaction of the run, lead-in included, is in
+[`bench/replay/results/nvda-2026-11-12.json`](bench/replay/results/nvda-2026-11-12.json). The demo
+page shows the same night, and each of its three updates replays on the stopwatch.
 
 ## Speed
 
@@ -212,7 +266,7 @@ Twin pools, tokens and pool ids are in [`deployments/`](deployments/).
   that block. The after-hours fee and wide band make a closed market a poor place to bet on
   overnight news, which is where the largest gaps happen.
 - **The feed is a stand-in.** In the demo, prices are set by whoever plays the exchange, not by a
-  licensed exchange feed.
+  licensed exchange feed. The replayed night used NVIDIA's real prices, but we published them.
 - **Testnets and play money only.** The stock token is a mock with no value.
 
 ## Repository
@@ -224,7 +278,8 @@ Twin pools, tokens and pool ids are in [`deployments/`](deployments/).
 | `src/venue/` | `BellGuard`, `BellHook`, `BellVault`, `Arena`, `MockToken` and the price maths |
 | `script/` | Deployment scripts, the same ones the local rehearsal uses |
 | `test/` | Foundry tests, with a local simulator of Reactive Omni and the real Uniswap v4 PoolManager bytecode from Base Sepolia |
-| `tools/` | Fork rehearsal, latency benchmark, loop watcher, and a local relay for trying the demo offline |
+| `tools/` | Fork rehearsal, latency benchmark, real-night replay, loop watcher, and a local relay for trying the demo offline |
+| `bench/` | The benchmark's results, and the replayed night with its sources and transactions |
 | `web/` | The demo page, a static build that Vercel deploys using `vercel.json` |
 
 ## Build, test and run
@@ -259,6 +314,12 @@ On the live testnets, with the deployer's key:
 cd tools
 npx tsx src/watch.ts                                         # print each loop as it happens
 DEPLOYER_PRIVATE_KEY=0x... npx tsx src/bench.ts --rounds 100 # timed benchmark
+```
+
+The real night, from any funded testnet wallet (it uses the public exchange buttons):
+
+```sh
+REPLAY_PRIVATE_KEY=0x... npx tsx src/replay.ts ../bench/replay/nvda-2026-11-12.json
 ```
 
 ## Costs

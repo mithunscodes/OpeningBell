@@ -1079,6 +1079,89 @@ async function loadRecorded(): Promise<void> {
   }, 300);
 }
 
+// --- A real night, replayed --------------------------------------------------------------------------
+
+/** The real night that tools/src/replay.ts played through the live system, as web/build.mjs writes it to night.json. */
+interface Night {
+  title: string;
+  summary: string;
+  /** When the replay ran. */
+  played: string;
+  prints: { label: string; when: string; price: string; loop: Recorded }[];
+  twins: Partial<Record<VenueKey, { taken: string; tx: Hash }>>;
+  safe: Partial<Record<VenueKey, { outcome: string; tx: Hash }>>;
+}
+
+const NEW_YORK = "America/New_York";
+
+async function loadNight(): Promise<void> {
+  // The recording's transactions are on the testnets, so it has no place on a local rehearsal.
+  if (config.mode !== "testnet") return;
+  let night: Night;
+  try {
+    const response = await fetch("night.json");
+    if (!response.ok) return;
+    night = (await response.json()) as Night;
+  } catch {
+    return;
+  }
+  const close = Number(night.prints[0].price);
+  const open = Number(night.prints[night.prints.length - 1].price);
+  const drop = ((open / close - 1) * 100).toFixed(1).replace("-", "−") + "%";
+
+  $("night-tag").textContent = night.title;
+  $("night-lead").textContent =
+    night.summary + " On " + recordedDate(Date.parse(night.played)) + " we played that night's real prices through the live system. Times are New York's.";
+  const teaser = $("night-link");
+  teaser.textContent = "See a real night replayed: " + night.title.split(",")[0] + " opened " + drop.slice(1) + " lower ↓";
+  teaser.hidden = false;
+
+  $("night-prints").replaceChildren(
+    ...night.prints.map((p, i) => {
+      const at = new Date(p.when);
+      const time = at.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: NEW_YORK }).toLowerCase();
+      const day = at.toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: NEW_YORK });
+      const move = i === 0 ? "" : ((Number(p.price) / close - 1) * 100).toFixed(1).replace("-", "−") + "% from the close";
+      const speed =
+        p.loop.baseMs === undefined || p.loop.unichainMs === undefined
+          ? ""
+          : "Base " + (p.loop.baseMs / 1000).toFixed(2) + " s · Unichain ≈ " + Math.round(p.loop.unichainMs / 1000) + " s";
+      const button = el(
+        "button",
+        { class: "night-print", type: "button", "aria-label": p.label + ", " + day + " " + time + ". Replay this update on the stopwatch." },
+        el("span", { class: "night-when" }, day + " · " + time),
+        el("span", { class: "night-label" }, p.label),
+        el("span", { class: "night-price" }, "$" + p.price),
+        el("span", { class: "night-move" }, move || "the last price of the day"),
+        el("span", { class: "night-speed" }, "Pools switched: " + speed),
+        el("span", { class: "night-play" }, "▶ Replay"),
+      );
+      button.addEventListener("click", () => {
+        startReplay(p.loop);
+        $("step-2").scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+      return el("li", {}, button);
+    }),
+  );
+
+  const venuesIn = VENUES.filter((v) => night.twins[v] && night.safe[v]);
+  // Each chain's figure is shown to the cent, so the total adds up the cents that are shown.
+  const cent = 10n ** 16n;
+  const total = venuesIn.reduce((sum, v) => sum + ((BigInt(night.twins[v]!.taken) + cent / 2n) / cent) * cent, 0n);
+  $("night-twin").textContent = usd(total) + " taken";
+  const twinLinks: (Node | string)[] = ["Still quoting $" + night.prints[0].price + " at the open. "];
+  const safeLinks: (Node | string)[] = ["Already at $" + night.prints[night.prints.length - 1].price + ". The same raid found nothing: "];
+  venuesIn.forEach((v, i) => {
+    const name = config.chains[v].short;
+    if (i) twinLinks.push(" · "), safeLinks.push(" · ");
+    twinLinks.push(link(v, night.twins[v]!.tx, name + " " + usd(BigInt(night.twins[v]!.taken))));
+    safeLinks.push(link(v, night.safe[v]!.tx, name));
+  });
+  $("night-twin-tx").replaceChildren(...twinLinks);
+  $("night-safe-tx").replaceChildren(...safeLinks);
+  $("night").hidden = false;
+}
+
 // --- The three steps ---------------------------------------------------------------------------------
 
 function isStale(view: PoolView): boolean {
@@ -1282,7 +1365,7 @@ async function main(): Promise<void> {
     window.setTimeout(tick, timing ? 400 : config.mode === "local" ? 700 : 1200);
   };
   await tick();
-  void loadRecorded();
+  void loadRecorded().then(loadNight);
   clients.base
     .readContract({ address: config.origin.stage, abi: stageAbi, functionName: "owner" })
     .then((owner) => {

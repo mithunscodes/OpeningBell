@@ -1,0 +1,16 @@
+{
+  "id": "nvda-2026-11-12",
+  "title": "NVIDIA, 11 to 12 November 2026",
+  "ticker": "NVDA",
+  "summary": "News about the company's chief executive broke after the closing bell on 11 November 2026. The share could not trade until 9:30 the next morning, when it opened 13.1% lower.",
+  "prints": [
+    { "label": "Closing bell", "when": "2026-11-11T16:00:00-05:00", "status": "closed", "price": "173.73" },
+    { "label": "Pre-market quote", "when": "2026-11-12T08:55:00-05:00", "status": "closed", "price": "154.68" },
+    { "label": "Opening bell", "when": "2026-11-12T09:30:00-05:00", "status": "open", "price": "151.01" }
+  ],
+  "sources": [
+    { "what": "Close of 11 November ($173.73) and open of 12 November ($151.01)", "url": "https://stockanalysis.com/stocks/nvda/history/" },
+    { "what": "The same two prices, second source", "url": "https://www.tipranks.com/stocks/nvda/historical-prices" },
+    { "what": "Pre-market quote of $154.68 at 8:55 am New York time", "url": "https://businessupturn.com/finance/stock-market/us-market/nvidia-shares-extend-slide-to-nearly-11-in-pre-market-trade-after-jensen-huang-resigns-as-ceo-trading-below-52-week-low/" }
+  ]
+}

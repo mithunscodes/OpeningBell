@@ -1,0 +1,381 @@
+{
+  "scenario": {
+    "id": "nvda-2026-11-12",
+    "title": "NVIDIA, 11 to 12 November 2026",
+    "ticker": "NVDA",
+    "summary": "News about the company's chief executive broke after the closing bell on 11 November 2026. The share could not trade until 9:30 the next morning, when it opened 13.1% lower.",
+    "prints": [
+      {
+        "label": "Closing bell",
+        "when": "2026-11-11T16:00:00-05:00",
+        "status": "closed",
+        "price": "173.73"
+      },
+      {
+        "label": "Pre-market quote",
+        "when": "2026-11-12T08:55:00-05:00",
+        "status": "closed",
+        "price": "154.68"
+      },
+      {
+        "label": "Opening bell",
+        "when": "2026-11-12T09:30:00-05:00",
+        "status": "open",
+        "price": "151.01"
+      }
+    ],
+    "sources": [
+      {
+        "what": "Close of 11 November ($173.73) and open of 12 November ($151.01)",
+        "url": "https://stockanalysis.com/stocks/nvda/history/"
+      },
+      {
+        "what": "The same two prices, second source",
+        "url": "https://www.tipranks.com/stocks/nvda/historical-prices"
+      },
+      {
+        "what": "Pre-market quote of $154.68 at 8:55 am New York time",
+        "url": "https://businessupturn.com/finance/stock-market/us-market/nvidia-shares-extend-slide-to-nearly-11-in-pre-market-trade-after-jensen-huang-resigns-as-ceo-trading-below-52-week-low/"
+      }
+    ]
+  },
+  "started": "2026-11-16T11:33:16.783Z",
+  "signer": "0xC69d40092e5c4D6f4087CE8269233c13EE37f2f1",
+  "leadIn": [
+    {
+      "move": 1335,
+      "loop": {
+        "seq": "282",
+        "origin": {
+          "block": "59534647",
+          "tx": "0x76ddacf0e5218be5294162ebc0fe12cf88f9b70b1f743e3db0f79a313a940ec4",
+          "ms": 1794828798200,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "59534655",
+            "tx": "0x7cfb73c0087c75af031531fa48786049574199cb7cb20a5c041ade05257e0d2a",
+            "ms": 1794828799800,
+            "precise": true
+          },
+          "unichain": {
+            "block": "67976372",
+            "tx": "0x291005d1607182cb036af6421bfbe1418cf8a6ba1601a92f615ae772d6779aa3",
+            "ms": 1794828800000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "origin": 853,
+          "observed": 1607,
+          "base": 2586,
+          "closed": 3852,
+          "unichain": 4285
+        },
+        "observed": {
+          "block": "8486303",
+          "tx": "0xc183c009ef5b8c30fddc0b3e14075bc95da2eaae20b130dd91daa66d9c26364c"
+        },
+        "closed": {
+          "block": "8486305",
+          "tx": "0x10aad881937c36f28be6df4c65976f5842af0486c2753bedc2843a28bbbe077c"
+        }
+      }
+    },
+    {
+      "move": 1460,
+      "loop": {
+        "seq": "283",
+        "origin": {
+          "block": "59534738",
+          "tx": "0x754b86ca8563b8d55b43a5145d9c0d2e9716d48f5af5a6f24764210d612e01dc",
+          "ms": 1794828816400,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "59534744",
+            "tx": "0x1eb706f1d823144b2d08b104cbff3261aa3bd7dd7868f8d8bd476c2f5d358b11",
+            "ms": 1794828817600,
+            "precise": true
+          },
+          "unichain": {
+            "block": "67976390",
+            "tx": "0x72f0e6fa9d46e57cf51f444196e319a81724d3b34284a561bcf2334e497f9da8",
+            "ms": 1794828818000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "origin": 550,
+          "observed": 1284,
+          "base": 2340,
+          "closed": 3604,
+          "unichain": 4036
+        },
+        "observed": {
+          "block": "8486319",
+          "tx": "0x9fc17a275dbcb0517381603fb94940188ed96dca9f3ee5a4540d2e4e488890f1"
+        },
+        "closed": {
+          "block": "8486321",
+          "tx": "0x64f7cc78cb3190c9e887605419a79a6b091422b0300b9193454a972ffcbbef91"
+        }
+      }
+    },
+    {
+      "move": 1946,
+      "loop": {
+        "seq": "284",
+        "origin": {
+          "block": "59534827",
+          "tx": "0x8b2e7c51554af7ebdff261a68df70f55cff6591cc2eb9df28e0ce9d1cde8a463",
+          "ms": 1794828834200,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "59534833",
+            "tx": "0xf352c1a45c4c3abc646a2fb36c58fa183a9ee1b886036054fc1d82bcc792e024",
+            "ms": 1794828835400,
+            "precise": true
+          },
+          "unichain": {
+            "block": "67976408",
+            "tx": "0x1dde6cb856494239fd3603d3f14016e4fabd3eb19237f158bd27066f97c9ff34",
+            "ms": 1794828836000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "origin": 544,
+          "observed": 1286,
+          "base": 2246,
+          "unichain": 4505,
+          "closed": 6347
+        },
+        "observed": {
+          "block": "8486335",
+          "tx": "0x518af8fb3deb1623d8abef44e1f67f1cdc74b62e4da8c5aee4c8f94e9626d11c"
+        },
+        "closed": {
+          "block": "8486337",
+          "tx": "0x54b54fbfda14ce526c56df0152e2900bcbc618028675be132f19c8fa41192281"
+        }
+      }
+    }
+  ],
+  "lineUp": {
+    "base": {
+      "tx": "0xdb4e785a204e3bb57c2840dcb2a6e20a432c1be04ba6fb61829e4b2570cd6d8b",
+      "outcome": "taken",
+      "pnl": "141935598454294155487937",
+      "poolPrice": "101780410334287960260",
+      "refPrice": "173734286528938832715"
+    },
+    "unichain": {
+      "tx": "0x0b7ae3ebef1057f7e7363e91efaf6fc70184fd6fe01c1c74d842d48d2bd9330c",
+      "outcome": "taken",
+      "pnl": "92440328840799274644274",
+      "poolPrice": "101780410334287960260",
+      "refPrice": "173734286528938832715"
+    }
+  },
+  "prints": [
+    {
+      "label": "Closing bell",
+      "when": "2026-11-11T16:00:00-05:00",
+      "status": "closed",
+      "price": "173.73",
+      "move": 0,
+      "onChainPrice": "173734286528938832715",
+      "loop": {
+        "seq": "285",
+        "origin": {
+          "block": "59534917",
+          "tx": "0x712d32f55519aab42961ca784583b26c2aa5ab90cfd7a5a9f20a8ed38e4eb282",
+          "ms": 1794828852200,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "59534924",
+            "tx": "0x73bc1c6f93d9bc5780f78c087cc3dec19bb634448782411cf9854b929a65db67",
+            "ms": 1794828853600,
+            "precise": true
+          },
+          "unichain": {
+            "block": "67976426",
+            "tx": "0x64a98734d628ddbf3661d2eb1f7f092951bb64d3822ef30ac59ddec112175c47",
+            "ms": 1794828854000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "origin": 840,
+          "observed": 1595,
+          "base": 2654,
+          "closed": 3938,
+          "unichain": 4368
+        },
+        "observed": {
+          "block": "8486349",
+          "tx": "0xdeabc42e7f9b3c351eb97179b24a90c211fe4c321c91c5de05745c30c352fc32"
+        },
+        "closed": {
+          "block": "8486351",
+          "tx": "0xa3a180a5af738406876afad340520b57395dbbdf79a8545502b87280fa1166b3"
+        }
+      }
+    },
+    {
+      "label": "Pre-market quote",
+      "when": "2026-11-12T08:55:00-05:00",
+      "status": "closed",
+      "price": "154.68",
+      "move": -1097,
+      "onChainPrice": "154675635296714242766",
+      "loop": {
+        "seq": "286",
+        "origin": {
+          "block": "59535007",
+          "tx": "0x157953b733885e5926820f023ff5d5983afcd58d37337438c6c49de30c627e04",
+          "ms": 1794828870200,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "59535012",
+            "tx": "0xedca06533e44e888df58d0876d2a35b1873b881dbd5a01fcf8ed5438f304a880",
+            "ms": 1794828871200,
+            "precise": true
+          },
+          "unichain": {
+            "block": "67976444",
+            "tx": "0x409382c26dffb19ddecfda6f96947aceb56f0ecb3b28cb9edbe722bf743978aa",
+            "ms": 1794828872000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "origin": 787,
+          "observed": 1488,
+          "base": 2561,
+          "closed": 3219,
+          "unichain": 4080
+        },
+        "observed": {
+          "block": "8486365",
+          "tx": "0xee64696fa7928f118e3fe97dccf8d70df2d595b4bc6d46bcefb4620adfae47c8"
+        },
+        "closed": {
+          "block": "8486367",
+          "tx": "0x29798e8108921c5dff262c9eb09f24e8c6023a0cf10da0158f22a37418d62233"
+        }
+      },
+      "protected": {
+        "base": {
+          "tx": "0x32b134067a1d2f7e0af82021aec1a66e314ee0678d1df4987e9ffd0b581d139f",
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "154675635296714269385",
+          "refPrice": "154675635296714242766"
+        },
+        "unichain": {
+          "tx": "0x14da48e65787dfdd333b490c2c9c48e941fa2b18934f25fcc6b0d47f1e7d396b",
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "154675635296714269385",
+          "refPrice": "154675635296714242766"
+        }
+      }
+    },
+    {
+      "label": "Opening bell",
+      "when": "2026-11-12T09:30:00-05:00",
+      "status": "open",
+      "price": "151.01",
+      "move": -237,
+      "onChainPrice": "151009822740182115212",
+      "loop": {
+        "seq": "287",
+        "origin": {
+          "block": "59535097",
+          "tx": "0x36d14dceed0b96ac0b9244b0f16be8e886bf6c6404303dec74e5693779845cd9",
+          "ms": 1794828888200,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "59535105",
+            "tx": "0x80405fca829ea3f956e615772d9b33ab9be6f3342d6dba661e117748e8b07b4b",
+            "ms": 1794828889800,
+            "precise": true
+          },
+          "unichain": {
+            "block": "67976463",
+            "tx": "0x214ccf8bc26f0cf1945f57a3dd4ad3bf52c65395b7b79529fba75c8f793e513c",
+            "ms": 1794828891000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "origin": 539,
+          "observed": 1903,
+          "base": 2838,
+          "unichain": 5129,
+          "closed": 5260
+        },
+        "observed": {
+          "block": "8486382",
+          "tx": "0x992f75c32d0dca67dd4d0cc1eebcf3c90f1651579d682765aabf19903fab38ed"
+        },
+        "closed": {
+          "block": "8486385",
+          "tx": "0x8c4848c9bb5c7d1dcc2325a11334adad7cab5c97bb124fa889a7708c70e72f6c"
+        }
+      },
+      "protected": {
+        "base": {
+          "tx": "0x2d37bb2ef2b237d15e2a8234f49777e79008f445e3f0f2132ac737a9456ea80c",
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "151009822740182151677",
+          "refPrice": "151009822740182115212"
+        },
+        "unichain": {
+          "tx": "0x18281bdbb836afe2d399f1f9e34975f57eb737f506f2764e1c4d6dace87855e1",
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "151009822740182151677",
+          "refPrice": "151009822740182115212"
+        }
+      }
+    }
+  ],
+  "twins": {
+    "base": {
+      "poolPrice": "173734286528938865195",
+      "valueBefore": "1011866389759287823720661",
+      "raid": {
+        "tx": "0x3c4cbc4c1302bc0d0b75911cf99d59f49fccf14fa861225f5b30f338c7c23bd9",
+        "outcome": "taken",
+        "pnl": "21661532090933291350700",
+        "poolPrice": "173734286528938865195",
+        "refPrice": "151009822740182115212"
+      }
+    },
+    "unichain": {
+      "poolPrice": "173734286528938865195",
+      "valueBefore": "1636318755965242398454191",
+      "raid": {
+        "tx": "0x29a6640cef8c3d813680d24ea55d92c56d26f19ec7a57eee81f44eb277e54748",
+        "outcome": "taken",
+        "pnl": "33247224728673967510025",
+        "poolPrice": "173734286528938865195",
+        "refPrice": "151009822740182115212"
+      }
+    }
+  }
+}

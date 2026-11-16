@@ -256,12 +256,35 @@ h4 { font-size: 14px; }
 .toast[data-tone="bad"] { background: var(--bad); color: #1c0b08; }
 .toast[data-tone="warn"] { background: var(--warn); color: #1a1205; }
 
+/* A real night, replayed */
+.night-link { display: inline-block; margin-top: 14px; font-size: 14px; font-weight: 600; color: var(--accent); text-decoration: none; }
+.night-link:hover { text-decoration: underline; }
+.night { scroll-margin-top: 16px; }
+.night-lead { color: var(--muted); font-size: 14px; max-width: 86ch; margin-bottom: 14px; }
+.night-prints { list-style: none; margin: 0 0 12px; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.night-print { width: 100%; height: 100%; text-align: left; display: grid; gap: 3px; align-content: start; padding: 14px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--raise); transition: border-color .12s, transform .12s; }
+.night-print:hover { border-color: var(--accent); transform: translateY(-1px); }
+.night-when { font: 600 12px/1.3 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.night-label { font-weight: 650; font-size: 15px; }
+.night-price { font: 700 30px/1.15 var(--mono); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.night-move { font: 600 13px/1.3 var(--mono); color: var(--bad); }
+.night-prints li:first-child .night-move { color: var(--muted); }
+.night-speed { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.night-play { font-size: 13px; font-weight: 650; color: var(--accent); margin-top: 2px; }
+.night-out { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
+.night-tile { --edge: var(--bad); display: grid; gap: 4px; align-content: start; padding: 14px; border: 1px solid color-mix(in srgb, var(--edge) 55%, transparent); border-radius: 12px; background: color-mix(in srgb, var(--edge) 6%, var(--raise)); }
+.night-tile[data-tone="good"] { --edge: var(--good); }
+.night-k { font: 600 11px/1.3 var(--sans); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.night-tile strong { font: 700 28px/1.15 var(--mono); letter-spacing: -.04em; color: var(--edge); font-variant-numeric: tabular-nums; }
+.night-tx { font-size: 13px; color: var(--muted); }
+
 /* Narrow screens */
 @media (max-width: 900px) {
   .hero, .stage, .grid { grid-template-columns: minmax(0, 1fr); }
   .hero { padding-top: 16px; }
 }
 @media (max-width: 640px) {
+  .night-prints, .night-out { grid-template-columns: minmax(0, 1fr); }
   .route { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; gap: 6px; }
   .route .node { grid-area: auto; margin: 0; grid-template-columns: 10px minmax(0, 1fr) auto auto; }
   .route .node-value, .route .node-tx { grid-column: auto; }

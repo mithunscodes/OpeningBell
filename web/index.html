@@ -32,6 +32,7 @@
         <h1>A stock token that knows when the market is shut.</h1>
         <p>NVIDIA stops trading at 4pm. Its token never does. One <strong>Reactive</strong> contract switches its
           pools on <strong>Base</strong> and <strong>Unichain</strong> in about two seconds.</p>
+        <a id="night-link" class="night-link" href="#night" hidden></a>
       </div>
 
       <aside class="proof" aria-labelledby="proof-title">
@@ -122,6 +123,26 @@
     <section class="panel pools" id="step-3">
       <h2><span class="step">3</span>Raid the pools <span class="cue">your move</span></h2>
       <div id="venues" class="venues"></div>
+    </section>
+
+    <section class="panel night" id="night" hidden>
+      <h2>A real night, replayed <span id="night-tag" class="tag"></span></h2>
+      <p id="night-lead" class="night-lead"></p>
+      <ol id="night-prints" class="night-prints"></ol>
+      <div class="night-out">
+        <div class="night-tile" data-tone="bad">
+          <span class="night-k">Pools that ignored the bell</span>
+          <strong id="night-twin"></strong>
+          <span id="night-twin-tx" class="night-tx"></span>
+        </div>
+        <div class="night-tile" data-tone="good">
+          <span class="night-k">OpeningBell pools</span>
+          <strong>$0 taken</strong>
+          <span id="night-safe-tx" class="night-tx"></span>
+        </div>
+      </div>
+      <p class="note">The prices are NVIDIA's real ones. The pools hold play money on testnets.
+        <a href="https://github.com/mithunscodes/OpeningBell#a-real-night-replayed" target="_blank" rel="noopener">Sources and every transaction</a></p>
     </section>
 
     <div class="grid" id="lower">

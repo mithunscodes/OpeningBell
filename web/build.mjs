@@ -11,6 +11,32 @@ mkdirSync("dist", { recursive: true });
 // The benchmark runs reported in bench/RESULTS.md. The page draws them and can replay any loop.
 const BENCH_RUNS = ["2026-11-12T07-12-25-275Z.json", "2026-11-12T07-36-50-055Z.json"];
 
+/** One loop as the page wants it: transaction hashes, and each hop in ms after the exchange event. */
+function record(l, action) {
+  const t0 = l.origin?.ms;
+  const base = l.applied?.base;
+  const unichain = l.applied?.unichain;
+  const seen = l.seen ?? {};
+  return {
+    seq: Number(l.seq),
+    action,
+    at: t0,
+    feed: l.origin?.tx,
+    observed: l.observed?.tx,
+    observedBlock: l.observed ? Number(l.observed.block) : undefined,
+    base: base?.tx,
+    baseMs: base && t0 !== undefined ? base.ms - t0 : undefined,
+    unichain: unichain?.tx,
+    unichainMs: unichain && t0 !== undefined ? unichain.ms - t0 : undefined,
+    closed: l.closed?.tx,
+    closedBlock: l.closed ? Number(l.closed.block) : undefined,
+    // When the benchmark script itself noticed each Reactive step, in ms after the exchange
+    // event. Lasna blocks carry no millisecond time, so a replay paces those two steps by this.
+    sawObserved: seen.observed !== undefined && seen.origin !== undefined ? seen.observed - seen.origin : undefined,
+    sawClosed: seen.closed !== undefined && seen.origin !== undefined ? seen.closed - seen.origin : undefined,
+  };
+}
+
 /** Shrinks the benchmark's raw results to what the page needs: one small record per loop. */
 function recordedLoops() {
   const dir = resolve("../bench/results");
@@ -20,32 +46,28 @@ function recordedLoops() {
     if (!existsSync(path)) continue;
     const run = JSON.parse(readFileSync(path, "utf8"));
     if (run.local) continue;
-    for (const l of run.loops) {
-      const t0 = l.origin?.ms;
-      const base = l.applied?.base;
-      const unichain = l.applied?.unichain;
-      const seen = l.seen ?? {};
-      loops.push({
-        seq: Number(l.seq),
-        action: l.action,
-        at: t0,
-        feed: l.origin?.tx,
-        observed: l.observed?.tx,
-        observedBlock: l.observed ? Number(l.observed.block) : undefined,
-        base: base?.tx,
-        baseMs: base && t0 !== undefined ? base.ms - t0 : undefined,
-        unichain: unichain?.tx,
-        unichainMs: unichain && t0 !== undefined ? unichain.ms - t0 : undefined,
-        closed: l.closed?.tx,
-        closedBlock: l.closed ? Number(l.closed.block) : undefined,
-        // When the benchmark script itself noticed each Reactive step, in ms after the exchange
-        // event. Lasna blocks carry no millisecond time, so a replay paces those two steps by this.
-        sawObserved: seen.observed !== undefined && seen.origin !== undefined ? seen.observed - seen.origin : undefined,
-        sawClosed: seen.closed !== undefined && seen.origin !== undefined ? seen.closed - seen.origin : undefined,
-      });
-    }
+    for (const l of run.loops) loops.push(record(l, l.action));
   }
   return loops;
+}
+
+// The real night that tools/src/replay.ts played through the live system. The page shows it.
+const NIGHT = "nvda-2026-11-12.json";
+
+function realNight() {
+  const path = resolve("../bench/replay/results", NIGHT);
+  if (!existsSync(path)) return undefined;
+  const run = JSON.parse(readFileSync(path, "utf8"));
+  const last = run.prints[run.prints.length - 1];
+  const perVenue = (from, pick) => Object.fromEntries(Object.entries(from).map(([venue, v]) => [venue, pick(v)]));
+  return {
+    title: run.scenario.title,
+    summary: run.scenario.summary,
+    played: run.started,
+    prints: run.prints.map((p) => ({ label: p.label, when: p.when, price: p.price, loop: record(p.loop, p.status) })),
+    twins: perVenue(run.twins, (t) => ({ taken: t.raid.pnl, tx: t.raid.tx })),
+    safe: perVenue(last.protected, (r) => ({ outcome: r.outcome, tx: r.tx })),
+  };
 }
 
 const copyStatic = () => {
@@ -53,6 +75,8 @@ const copyStatic = () => {
   cpSync("style.css", "dist/style.css");
   if (existsSync("public")) cpSync("public", "dist", { recursive: true });
   writeFileSync("dist/loops.json", JSON.stringify(recordedLoops()));
+  const night = realNight();
+  if (night) writeFileSync("dist/night.json", JSON.stringify(night));
 };
 
 const options = {
