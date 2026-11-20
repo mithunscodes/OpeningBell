@@ -11,6 +11,7 @@ import { PoolKey } from "v4-core/types/PoolKey.sol";
 import { PoolId } from "v4-core/types/PoolId.sol";
 import { Currency } from "v4-core/types/Currency.sol";
 import { BalanceDelta } from "v4-core/types/BalanceDelta.sol";
+import { ModifyLiquidityParams, SwapParams } from "v4-core/types/PoolOperation.sol";
 import { OmniTest } from "./harness/OmniTest.sol";
 import { V4Fixture, Trader } from "./harness/V4Fixture.sol";
 import { MarketTypes } from "../src/common/MarketTypes.sol";
@@ -454,6 +455,115 @@ abstract contract BellPoolBase is OmniTest, V4Fixture {
         vm.expectRevert(Arena.NotSelf.selector);
         arena.attempt(0, 1e18, 0);
         vm.stopPrank();
+    }
+
+    function test_VaultEdgeCasesAndOwnerControls() public {
+        vm.prank(address(guard));
+        vm.expectRevert(BellVault.WrongMarket.selector);
+        vault.onMarketState(keccak256("TSLA/USD"), MarketTypes.OPEN, 1e18, 0, 100);
+
+        vm.expectRevert(BellVault.BadRange.selector);
+        vault.reposition(START_PRICE, 10_000);
+
+        // Idle tokens can be taken out by the owner only.
+        dollars.mint(address(vault), 5e18);
+        vm.prank(player);
+        vm.expectRevert(BellVault.NotAuthorized.selector);
+        vault.withdraw(address(dollars), player, 5e18);
+        vault.withdraw(address(dollars), player, 5e18);
+        assertEq(dollars.balanceOf(player), 5e18);
+
+        vm.prank(player);
+        vm.expectRevert(BellVault.NotAuthorized.selector);
+        vault.transferOwnership(player);
+        vault.transferOwnership(player);
+        assertEq(vault.owner(), player);
+        vm.expectRevert(BellVault.NotAuthorized.selector);
+        vault.setKeeper(address(this));
+    }
+
+    function test_AVaultWithNoMarketDataStaysPut() public {
+        // A fresh guard has heard nothing, so catching up is a no-op.
+        BellGuard quiet = new BellGuard(IPayable(payable(address(_proxy(BASE_SEPOLIA)))), address(conductor));
+        BellVault idle = new BellVault(POOL_MANAGER, quiet, NVDA, poolKey, address(stock));
+        idle.catchUp();
+        (uint256 s, uint256 d) = idle.holdings();
+        assertEq(s + d, 0);
+    }
+
+    function test_UnusedHooksRefuseToRun() public {
+        ModifyLiquidityParams memory mp;
+        SwapParams memory sp;
+        BalanceDelta zero;
+
+        vm.expectRevert(BellHook.HookNotImplemented.selector);
+        hook.beforeInitialize(address(0), poolKey, 0);
+        vm.expectRevert(BellHook.HookNotImplemented.selector);
+        hook.afterInitialize(address(0), poolKey, 0, 0);
+        vm.expectRevert(BellHook.HookNotImplemented.selector);
+        hook.afterAddLiquidity(address(0), poolKey, mp, zero, zero, "");
+        vm.expectRevert(BellHook.HookNotImplemented.selector);
+        hook.beforeRemoveLiquidity(address(0), poolKey, mp, "");
+        vm.expectRevert(BellHook.HookNotImplemented.selector);
+        hook.afterRemoveLiquidity(address(0), poolKey, mp, zero, zero, "");
+        vm.expectRevert(BellHook.HookNotImplemented.selector);
+        hook.afterSwap(address(0), poolKey, sp, zero, "");
+        vm.expectRevert(BellHook.HookNotImplemented.selector);
+        hook.beforeDonate(address(0), poolKey, 0, 0, "");
+        vm.expectRevert(BellHook.HookNotImplemented.selector);
+        hook.afterDonate(address(0), poolKey, 0, 0, "");
+
+        // The two hooks in use answer only to the pool manager.
+        vm.expectRevert(BellHook.NotPoolManager.selector);
+        hook.beforeSwap(address(this), poolKey, sp, "");
+        vm.expectRevert(BellHook.NotPoolManager.selector);
+        hook.beforeAddLiquidity(address(vault), poolKey, mp, "");
+    }
+
+    function test_HookRegistrationRules() public {
+        PoolKey memory wrongHook = poolKey;
+        wrongHook.hooks = IHooks(address(0x1234));
+        vm.expectRevert(BellHook.WrongHook.selector);
+        hook.registerPool(wrongHook, BellHook.PoolConfig(NVDA, address(vault), false, 0, 0, 0));
+
+        PoolKey memory fixedFee = poolKey;
+        fixedFee.fee = 3000;
+        vm.expectRevert(BellHook.NotDynamicFee.selector);
+        hook.registerPool(fixedFee, BellHook.PoolConfig(NVDA, address(vault), false, 0, 0, 0));
+
+        vm.startPrank(player);
+        vm.expectRevert(BellHook.NotOwner.selector);
+        hook.registerPool(poolKey, BellHook.PoolConfig(NVDA, player, false, 0, 0, 0));
+        vm.expectRevert(BellHook.NotOwner.selector);
+        hook.transferOwnership(player);
+        vm.stopPrank();
+
+        hook.transferOwnership(player);
+        assertEq(hook.owner(), player);
+    }
+
+    function test_ScoutShowsWhatARaidWouldFind() public {
+        Arena.Target memory t = arena.target(TWIN);
+        assertEq(address(t.vault), address(twinVault));
+        assertTrue(t.catchUpAfter);
+
+        _publish(MarketTypes.HALTED, START_PRICE);
+        (uint256 poolPrice, uint256 refPrice, bool tradable,) = arena.scout(PROTECTED);
+        assertEq(refPrice, START_PRICE);
+        assertApproxEqRel(poolPrice, START_PRICE, 1e15);
+        assertFalse(tradable, "halted pool is not tradable");
+
+        (,, tradable,) = arena.scout(TWIN);
+        assertTrue(tradable, "the twin never stops");
+
+        vm.expectRevert(Arena.UnknownTarget.selector);
+        arena.scout(7);
+        vm.expectRevert(Arena.UnknownTarget.selector);
+        arena.raid(7);
+
+        vm.prank(player);
+        vm.expectRevert(Arena.NotOwner.selector);
+        arena.setTarget(7, poolKey, vault, false, 0, 0);
     }
 
     function test_OrdinaryTradingEarnsFeesForTheVault() public {

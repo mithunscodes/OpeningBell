@@ -463,6 +463,153 @@ contract BellLoopTest is OmniTest {
 
         vm.expectRevert(BellReactive.BadVenue.selector);
         conductor.addVenue(BASE_SEPOLIA, address(0), 300_000, 0, _policy());
+
+        vm.expectRevert(BellReactive.BadVenue.selector);
+        conductor.addVenue(0, stranger, 300_000, 0, _policy());
+
+        vm.expectRevert(BellReactive.BadVenue.selector);
+        conductor.updateVenue(2, 300_000, 0, true, _policy());
+
+        vm.expectRevert(BellReactive.GasLimitTooLow.selector);
+        conductor.updateVenue(0, 99_999, 0, true, _policy());
+
+        vm.expectRevert(BellReactive.BadVenue.selector);
+        conductor.resync(NVDA, 2);
+
+        vm.expectRevert(BellReactive.UnknownMarket.selector);
+        conductor.resync(NVDA, 0);
+
+        // Room for eight venues, no more.
+        for (uint256 i = conductor.venueCount(); i != conductor.MAX_VENUES(); ++i) {
+            conductor.addVenue(BASE_SEPOLIA, address(uint160(0xA000 + i)), 300_000, 0, _policy());
+        }
+        vm.expectRevert(BellReactive.TooManyVenues.selector);
+        conductor.addVenue(BASE_SEPOLIA, address(0xB000), 300_000, 0, _policy());
+    }
+
+    function test_VenuesCanBeLookedUpByAddress() public view {
+        (bool found, uint256 venueId) = conductor.venueIdOf(UNICHAIN_SEPOLIA, address(uniGuard));
+        assertTrue(found);
+        assertEq(venueId, 1);
+
+        (found, venueId) = conductor.venueIdOf(UNICHAIN_SEPOLIA, address(baseGuard));
+        assertFalse(found, "right guard, wrong chain");
+        assertEq(venueId, 0);
+    }
+
+    function _ack(BellGuard guard, uint256 chainId, uint256 seq, bytes memory data)
+        internal
+        pure
+        returns (IReactive.LogRecord memory)
+    {
+        return IReactive.LogRecord({
+            chainId: chainId,
+            contractAddress: address(guard),
+            topic0: MarketTypes.ACK_TOPIC,
+            topic1: uint256(NVDA),
+            topic2: seq,
+            topic3: 0,
+            data: data,
+            blockNumber: 1,
+            opCode: 3,
+            blockHash: 0,
+            txHash: 2,
+            logIndex: 0
+        });
+    }
+
+    function test_MalformedStaleAndStrayConfirmationsAreIgnored() public {
+        uint64 seq = _publish(MarketTypes.OPEN, 140e18);
+        assertTrue(conductor.inSync(NVDA));
+        uint256 before = _count(address(conductor), IGNORED_SIG);
+        bytes memory ok = abi.encode(uint256(MarketTypes.OPEN));
+
+        vm.startPrank(address(OMNI));
+        conductor.react(_ack(baseGuard, BASE_SEPOLIA, seq, hex"01")); // wrong data size
+        conductor.react(_ack(baseGuard, BASE_SEPOLIA, uint256(type(uint64).max) + 1, ok)); // seq out of range
+        conductor.react(_ack(baseGuard, BASE_SEPOLIA, seq, ok)); // already confirmed
+        conductor.react(_ack(baseGuard, BASE_SEPOLIA, seq + 5, ok)); // never sent
+        conductor.react(_ack(baseGuard, UNICHAIN_SEPOLIA, seq, ok)); // not a venue on that chain
+        vm.stopPrank();
+        _pump();
+
+        assertEq(_count(address(conductor), IGNORED_SIG) - before, 5, "every bad confirmation is reported");
+        assertEq(_count(address(conductor), LOOP_CLOSED_SIG), 1, "and none of them closes a loop again");
+        assertTrue(conductor.inSync(NVDA));
+    }
+
+    function test_AnOlderConfirmationDoesNotSettleANewerSend() public {
+        // Unichain is down for two updates, so neither is confirmed.
+        _chainDown[UNICHAIN_SEPOLIA] = true;
+        uint64 first = _publish(MarketTypes.OPEN, 140e18);
+        uint64 second = _publish(MarketTypes.HALTED, 140e18);
+        (uint64 sentSeq, uint64 ackedSeq,, bool awaiting,) = conductor.links(NVDA, 1);
+        assertEq(sentSeq, second);
+        assertEq(ackedSeq, 0);
+        assertTrue(awaiting);
+
+        // A late confirmation of the first update is recorded, but the venue still owes the second.
+        vm.prank(address(OMNI));
+        conductor.react(_ack(uniGuard, UNICHAIN_SEPOLIA, first, abi.encode(uint256(MarketTypes.OPEN))));
+        _pump();
+
+        (, ackedSeq,, awaiting,) = conductor.links(NVDA, 1);
+        assertEq(ackedSeq, first);
+        assertTrue(awaiting, "still waiting for the newest state");
+        assertFalse(conductor.inSync(NVDA));
+    }
+
+    function test_OwnerMovesFundsAndAnyoneCanSettleDebt() public {
+        vm.deal(address(conductor), 2 ether);
+        vm.deal(address(baseGuard), 1 ether);
+        address payable to = payable(makeAddr("treasury"));
+
+        conductor.withdraw(to, 0.5 ether);
+        baseGuard.withdraw(to, 0.25 ether);
+        assertEq(to.balance, 0.75 ether);
+
+        vm.expectRevert("withdraw failed");
+        conductor.withdraw(payable(address(feed)), 1); // the feed takes no ether
+        vm.expectRevert("withdraw failed");
+        baseGuard.withdraw(payable(address(feed)), 1);
+
+        vm.startPrank(stranger);
+        vm.expectRevert(BellReactive.NotOwner.selector);
+        conductor.withdraw(payable(stranger), 1);
+        vm.expectRevert(BellGuard.NotOwner.selector);
+        baseGuard.withdraw(payable(stranger), 1);
+
+        // Nothing is owed here, so settling is free and changes nothing.
+        conductor.coverDebt();
+        baseGuard.coverDebt();
+        vm.stopPrank();
+        assertEq(address(conductor).balance, 1.5 ether);
+        assertEq(address(baseGuard).balance, 0.75 ether);
+    }
+
+    function test_OwnershipCanMove() public {
+        vm.prank(stranger);
+        vm.expectRevert(BellReactive.NotOwner.selector);
+        conductor.transferOwnership(stranger);
+        vm.prank(stranger);
+        vm.expectRevert(BellGuard.NotOwner.selector);
+        baseGuard.transferOwnership(stranger);
+
+        conductor.transferOwnership(stranger);
+        baseGuard.transferOwnership(stranger);
+        assertEq(conductor.owner(), stranger);
+        assertEq(baseGuard.owner(), stranger);
+
+        vm.expectRevert(BellReactive.NotOwner.selector);
+        conductor.setPaused(true);
+        vm.expectRevert(BellGuard.NotOwner.selector);
+        baseGuard.setListener(NVDA, address(this));
+    }
+
+    function test_TheGuardReportsThePriceItHolds() public {
+        _publish(MarketTypes.OPEN, 141.5e18);
+        assertEq(baseGuard.priceOf(NVDA), 141.5e18);
+        assertEq(uniGuard.priceOf(keccak256("TSLA/USD")), 0, "nothing known about another market");
     }
 
     // ---------------------------------------------------------------------------------------------

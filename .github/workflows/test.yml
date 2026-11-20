@@ -1,0 +1,68 @@
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  contracts:
+    name: Contracts (forge test, coverage, format)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Format
+        run: forge fmt --check
+
+      - name: Build
+        run: forge build --sizes
+
+      - name: Test
+        run: forge test -vv
+
+      - name: Coverage
+        run: forge coverage --report summary --no-match-coverage "(test|script|lib)"
+
+  slither:
+    name: Static analysis (Slither)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - uses: foundry-rs/foundry-toolchain@v1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Slither
+        run: |
+          pip install slither-analyzer==0.11.6
+          slither . --fail-high
+
+  web:
+    name: Demo page and tools (type check, build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Tools
+        working-directory: tools
+        run: |
+          npm ci
+          npx tsc --noEmit
+
+      - name: Demo page
+        run: |
+          npm ci --prefix web
+          npm run build --prefix web

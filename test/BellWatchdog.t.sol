@@ -516,6 +516,64 @@ contract BellWatchdogTest is OmniTest {
         new BellWatchdog(conductor, 0, 3);
     }
 
+    function test_TheOwnerCanRetune() public {
+        watchdog.setTiming(5, 2);
+        assertEq(watchdog.retryAfterBlocks(), 5);
+        assertEq(watchdog.maxRetries(), 2);
+    }
+
+    function _feedRecord(bytes memory data) internal view returns (IReactive.LogRecord memory) {
+        return IReactive.LogRecord({
+            chainId: BASE_SEPOLIA,
+            contractAddress: address(feed),
+            topic0: MarketTypes.MARKET_UPDATE_TOPIC,
+            topic1: uint256(NVDA),
+            topic2: MarketTypes.OPEN,
+            topic3: 0,
+            data: data,
+            blockNumber: 1,
+            opCode: 3,
+            blockHash: 0,
+            txHash: 3,
+            logIndex: 0
+        });
+    }
+
+    function test_MalformedFeedLogsOpenNoWatch() public {
+        vm.startPrank(address(OMNI));
+        watchdog.react(_feedRecord(hex"1234")); // wrong size
+        watchdog.react(_feedRecord(abi.encode(uint256(140e18), uint256(0), uint256(1)))); // seq zero
+        watchdog.react(_feedRecord(abi.encode(uint256(140e18), uint256(type(uint64).max) + 1, uint256(1)))); // seq too big
+        vm.stopPrank();
+        _pump();
+
+        assertEq(_count(address(watchdog), WATCHING_SIG), 0);
+        assertFalse(watchdog.ticking());
+        (uint64 seq,,, bool open) = _watch(NVDA);
+        assertEq(seq, 0);
+        assertFalse(open);
+    }
+
+    function test_OwnerMovesFundsAndOwnershipCanMove() public {
+        vm.deal(address(watchdog), 1 ether);
+        address payable to = payable(makeAddr("treasury"));
+
+        watchdog.withdraw(to, 0.4 ether);
+        assertEq(to.balance, 0.4 ether);
+        vm.expectRevert("withdraw failed");
+        watchdog.withdraw(payable(address(feed)), 1); // the feed takes no ether
+
+        // Nothing is owed, so settling changes nothing; anyone may call it.
+        vm.prank(stranger);
+        watchdog.coverDebt();
+        assertEq(address(watchdog).balance, 0.6 ether);
+
+        watchdog.transferOwnership(stranger);
+        assertEq(watchdog.owner(), stranger);
+        vm.expectRevert(BellWatchdog.NotOwner.selector);
+        watchdog.setArmed(false);
+    }
+
     // ------------------------------------------------------------------------------------------
     // Whatever happens, it ends in sync and switched off
     // ------------------------------------------------------------------------------------------

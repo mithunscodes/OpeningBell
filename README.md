@@ -1,5 +1,7 @@
 # OpeningBell
 
+[![test](https://github.com/mithunscodes/OpeningBell/actions/workflows/test.yml/badge.svg)](https://github.com/mithunscodes/OpeningBell/actions/workflows/test.yml)
+
 **Tokenized stocks that keep market hours, on every chain at once.**
 
 A share of NVIDIA stops trading at 4pm New York time. A token that tracks NVIDIA does not. Every
@@ -16,9 +18,11 @@ every chain confirmed, and re-sends by itself to one that did not.
 
 Built for the Reactive Omni Buildathon, track **Every Second Counts**.
 
-Live on Base Sepolia, Unichain Sepolia and Reactive Lasna. Over 230 market updates on the live
-testnets, the Base pool switched a median of **1.4 s** after the exchange event (2.4 s at worst), the
-Unichain pool about **2 s** after, and **230 of 230** loops closed. See [Speed](#speed).
+Live on Base Sepolia, Unichain Sepolia and Reactive Lasna, with all 20 contracts source-verified on
+Sourcify. 128 tests cover 99.5% of the contracts' lines, and every push runs them on CI. Over 230
+market updates on the live testnets, the Base pool switched a median of **1.4 s** after the exchange
+event (2.4 s at worst), the Unichain pool about **2 s** after, and **230 of 230** loops closed. On Reactive's earlier ~7 s blocks
+the same loop would leave the old price tradable about three times as long. See [Speed](#speed).
 
 Fed the real prices of NVIDIA's night of 11 to 12 November 2026, when the share opened 13.1% lower,
 the pools that ignore market hours lost **$54,908.75** to one raid each and the protected pools lost
@@ -181,6 +185,31 @@ first run's cycle skipped): Base p50 1.60 s, max 2.00 s, and 30 of 30 loops clos
 Full results are in [`bench/RESULTS.md`](bench/RESULTS.md), and every loop's transaction hashes are
 in `bench/results/`.
 
+### Why it needs Omni's one-second blocks
+
+Between the exchange event and the pool switching, a bot can still trade at the old price. That
+window is what OpeningBell exists to shrink, and its length is set mostly by Reactive's block time:
+the reaction waits for the next Lasna block, and the confirmation takes two more.
+
+The same loops on Reactive's earlier ~7 s blocks, estimated by keeping every measured leg and
+changing only the Lasna block time (so the estimate is a lower bound):
+
+| | On Omni (measured) | On ~7 s blocks (estimate) |
+| --- | --- | --- |
+| Exchange event → Base pool switched, median | **1.4 s** | about 4.4 s |
+| Exchange event → Base pool switched, worst | **2.4 s** | about 8.4 s |
+| Exchange event → Unichain pool switched, median | **≈2 s** | about 5 s |
+| Both pools confirmed back on Reactive | **2 blocks, ≈2 s** | 2 blocks, ≈14 s |
+| Watchdog re-sends to a chain that missed an update | **10 blocks, 10 s** (measured, update #275) | 10 blocks, ≈70 s |
+
+How the estimate works: with blocks every *T* seconds, an event waits on average *T*/2 for the next
+block and at most *T*. Going from ~1 s to ~7 s adds about 3 s on average and up to 6 s at worst.
+Legs counted in Lasna blocks scale with the block time.
+
+On Base Sepolia, whose blocks are 200 ms apart, a 1.4 s window is about 7 blocks in which a raid can
+still land. At ~7 s Reactive blocks it would be about 22. The window is three times longer, every
+time the market moves.
+
 ## On-chain proof: three full loops
 
 Each row is one market update, from the origin event to the callbacks and back.
@@ -259,6 +288,12 @@ path of the first callback, which still leaves in `BellReactive`'s own reactive 
 
 Twin pools, tokens and pool ids are in [`deployments/`](deployments/).
 
+**All 20 deployed contracts are source-verified on [Sourcify](https://sourcify.dev)**: the 12 above,
+plus both twin hooks, both twin vaults and the four play-money tokens. 19 are exact matches. The
+watchdog is a full match on its bytecode; only comment text changed after it was deployed. Look any
+address up at `https://repo.sourcify.dev/<chain id>/<address>` (Base Sepolia 84532, Unichain Sepolia
+1301, Reactive Lasna 5318007).
+
 ## Honest limits
 
 - **Two seconds is not zero.** OpeningBell shrinks the window from "until someone notices" to about
@@ -277,10 +312,12 @@ Twin pools, tokens and pool ids are in [`deployments/`](deployments/).
 | `src/reactive/` | `BellReactive`, the conductor on Reactive Network, and `BellWatchdog`, which re-sends to a venue that never confirmed |
 | `src/venue/` | `BellGuard`, `BellHook`, `BellVault`, `Arena`, `MockToken` and the price maths |
 | `script/` | Deployment scripts, the same ones the local rehearsal uses |
-| `test/` | Foundry tests, with a local simulator of Reactive Omni and the real Uniswap v4 PoolManager bytecode from Base Sepolia |
+| `test/` | Foundry tests (128, including fuzz tests), with a local simulator of Reactive Omni and the real Uniswap v4 PoolManager bytecode from Base Sepolia |
 | `tools/` | Fork rehearsal, latency benchmark, real-night replay, loop watcher, and a local relay for trying the demo offline |
 | `bench/` | The benchmark's results, and the replayed night with its sources and transactions |
 | `web/` | The demo page, a static build that Vercel deploys using `vercel.json` |
+| `docs/` | Static analysis report and the page screenshot |
+| `.github/workflows/` | CI: tests, coverage, Slither, demo page build |
 
 ## Build, test and run
 
@@ -289,8 +326,24 @@ Needs [Foundry](https://book.getfoundry.sh/) and Node 20 or newer.
 ```sh
 git clone --recurse-submodules https://github.com/mithunscodes/OpeningBell
 cd OpeningBell
-forge test                     # 101 tests
+forge test                     # 128 tests, 5 of them fuzz tests
+forge coverage --no-match-coverage "(test|script|lib)"
+slither .                      # static analysis, see docs/static-analysis.md
 ```
+
+| Coverage of `src/` | Lines | Statements | Branches | Functions |
+| --- | --- | --- | --- | --- |
+| All contracts | **99.5%** (659/662) | 98.5% (775/787) | **91.8%** (135/147) | 100% (113/113) |
+
+The branches left uncovered are defensive checks that cannot trip with our own contracts (a token
+transfer returning `false`, a swap failing for a reason other than a halt), tick clamps that only
+matter at extreme prices, and a few early returns.
+
+Every push runs the tests, coverage, a format check, Slither and the demo page's build on GitHub
+Actions (`.github/workflows/test.yml`).
+
+**Static analysis:** Slither reports 93 results, none of them high and none exploitable. Each one is
+explained in [`docs/static-analysis.md`](docs/static-analysis.md).
 
 The whole system on local forks of all three networks, with no wallet and no testnet funds. A
 local relay plays the part of the Reactive Network node, using the real system contract and
