@@ -1,0 +1,2470 @@
+{
+  "started": "2026-11-23T19:33:09.210Z",
+  "signer": "0xaA6939FC895270f29141f6582175411Fc0a5029a",
+  "race": {
+    "arena": "0x326b04659aaafA70e6Ec2F2430f622fadEdFB45F",
+    "block": 62702234,
+    "chainId": 84532,
+    "dollars": "0x34ffEd33748A64435c6D959c39Be69B0e4857226",
+    "marketId": "0x8a4940c8329076862a49cde6a747a3f811afc53f720c177ff6956760a8f3300e",
+    "poolId": "0x471670bb27a84a3870749f5330a7fa8ba37faa4ee944b23ca9cba572ba3ff710",
+    "stock": "0x0Bf0EDEC66aA76f58720D58f1078AC82B9AEF62A",
+    "twinPoolId": "0xa0672d47e0018947f4fc8a7300d073614b7c3eecab6479b734387bbb5d0a1724",
+    "twinVault": "0x8573e8AD50c4f1f2680181F5a8fcE7087C2DE16a",
+    "vault": "0x68f5B42DA827e1945018340C2A5d9a6C35622A5A"
+  },
+  "delays": [
+    0,
+    0.2,
+    0.4,
+    0.6,
+    0.8,
+    1,
+    1.2,
+    1.4,
+    1.6,
+    1.8,
+    2,
+    2.2,
+    2.4,
+    2.6,
+    2.8,
+    3
+  ],
+  "rounds": 2,
+  "moveBps": 500,
+  "attempts": [
+    {
+      "attempt": 1,
+      "delayTarget": 0,
+      "moveBps": -500,
+      "priceBefore": "140000000000000000000",
+      "price": "133000000000000000000",
+      "loop": {
+        "seq": "2",
+        "origin": {
+          "block": "62702610",
+          "tx": "0xb9c2f5f6ba12b15c0f7abf3b59ccbe2351d131e7bd7743d4eff8837444bd456e",
+          "ms": 1795462390800,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702614",
+            "tx": "0xe4e1055349ce8347c35582b3638c0da420980e687e632b92cb81e7ac73fbe78d",
+            "ms": 1795462391600,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68609964",
+            "tx": "0x305ff7324e149f83f08ceb48eaa4d849ce40a248ad48dd0885119531dcabf99a",
+            "ms": 1795462392000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "observed": 1174,
+          "base": 2322,
+          "unichain": 2877,
+          "closed": 3557
+        },
+        "observed": {
+          "block": "9079473",
+          "tx": "0xe2fcc5c1a2eb1b322aa5ed61df20c4e0d99621ff0ba58d52434e11444d351265"
+        },
+        "closed": {
+          "block": "9079475",
+          "tx": "0x8cec93f71af5957eb834baf73c80a474588c204ccc6bf2e5ff4145003b80acc8"
+        }
+      },
+      "raidLagMs": 0,
+      "loopMs": 800,
+      "raids": {
+        "protected": {
+          "tx": "0xde379f06dcdaed2cd7cc81e5af509cdefe910a738de1d2491646316b03a79cdf",
+          "at": {
+            "block": "62702610",
+            "tx": "0xde379f06dcdaed2cd7cc81e5af509cdefe910a738de1d2491646316b03a79cdf",
+            "ms": 1795462390800,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5536406599091014982452",
+          "poolPrice": "139999999999999999999",
+          "refPrice": "133000000000000000000"
+        },
+        "twin": {
+          "tx": "0x35a1453e0e8d8b60d00f8067fdf5fe005eedb7e3bd8e73111f9a67887f72480c",
+          "at": {
+            "block": "62702610",
+            "tx": "0x35a1453e0e8d8b60d00f8067fdf5fe005eedb7e3bd8e73111f9a67887f72480c",
+            "ms": 1795462390800,
+            "precise": true
+          },
+          "index": 4,
+          "outcome": "taken",
+          "pnl": "5536406599091014982453",
+          "poolPrice": "139999999999999999999",
+          "refPrice": "133000000000000000000"
+        }
+      }
+    },
+    {
+      "attempt": 2,
+      "delayTarget": 0.2,
+      "moveBps": 500,
+      "priceBefore": "133000000000000000000",
+      "price": "139650000000000000000",
+      "loop": {
+        "seq": "3",
+        "origin": {
+          "block": "62702632",
+          "tx": "0xd10c5689d076f176cfe41a6475a820b0fed8d535886e15303122f1278a674877",
+          "ms": 1795462395200,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702636",
+            "tx": "0x570f98782779680608653d867041f0347dffa9284487dac71e20af5f2ec73cb7",
+            "ms": 1795462396000,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68609969",
+            "tx": "0xffc07f051d51b1db2e472c752c21b45dce619de0802053b787cac59311f9ba6a",
+            "ms": 1795462397000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 1220,
+          "observed": 1345,
+          "closed": 3191,
+          "unichain": 3623
+        },
+        "observed": {
+          "block": "9079477",
+          "tx": "0xc90ba1eceadcf134736ba7b9f7c923219a62979fabe9e939b7f4a5333ca43e36"
+        },
+        "closed": {
+          "block": "9079479",
+          "tx": "0x4407f958f4bea5c24ad296aa45374fb4642c557b50d49108e6dd6e6c048c7bee"
+        }
+      },
+      "raidLagMs": 200,
+      "loopMs": 800,
+      "raids": {
+        "protected": {
+          "tx": "0xf9a970ea3a14909d6b0863c93899d808def9087d92d1fd103e17de6d1c6f12c8",
+          "at": {
+            "block": "62702633",
+            "tx": "0xf9a970ea3a14909d6b0863c93899d808def9087d92d1fd103e17de6d1c6f12c8",
+            "ms": 1795462395400,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "taken",
+          "pnl": "5443856401317066775615",
+          "poolPrice": "132999999999999999999",
+          "refPrice": "139650000000000000000"
+        },
+        "twin": {
+          "tx": "0x898e4bfed0a5415d282df898fbd1dd7ea66009376a4b1386e89790bec9bb89ed",
+          "at": {
+            "block": "62702633",
+            "tx": "0x898e4bfed0a5415d282df898fbd1dd7ea66009376a4b1386e89790bec9bb89ed",
+            "ms": 1795462395400,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5443856401317066775615",
+          "poolPrice": "132999999999999999999",
+          "refPrice": "139650000000000000000"
+        }
+      }
+    },
+    {
+      "attempt": 3,
+      "delayTarget": 0.4,
+      "moveBps": -500,
+      "priceBefore": "139650000000000000000",
+      "price": "132667500000000000000",
+      "loop": {
+        "seq": "4",
+        "origin": {
+          "block": "62702659",
+          "tx": "0xf032b73584fefb982e9868a3abce5dc34fe85cfd40e2cf433f556fa544a41532",
+          "ms": 1795462400600,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702663",
+            "tx": "0x610be1d281e4f2a4d64dbe40e443417a9e11d922c9bf57079c8a41560ea304c3",
+            "ms": 1795462401400,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68609974",
+            "tx": "0xff5647898ed7f9a9efaa42762828aacee10b231f3aa08ae91559a512fa369e6e",
+            "ms": 1795462402000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "observed": 1024,
+          "base": 2129,
+          "unichain": 3255,
+          "closed": 3359
+        },
+        "observed": {
+          "block": "9079482",
+          "tx": "0xbebefb73ad39b0ab8c9bf9da4ba0857619e6ec97f7fd28b7a39ec0ceff5bbf68"
+        },
+        "closed": {
+          "block": "9079484",
+          "tx": "0x5d8cca7810e2da9d3a00dd6bc49fa235fa56bbbf4d286fbe01fae4c7169b09e8"
+        }
+      },
+      "raidLagMs": 200,
+      "loopMs": 800,
+      "raids": {
+        "protected": {
+          "tx": "0x61c7f259e65d8e4ca927ae1b71c9d34ee0342a96f11280dab974c418dbb48065",
+          "at": {
+            "block": "62702660",
+            "tx": "0x61c7f259e65d8e4ca927ae1b71c9d34ee0342a96f11280dab974c418dbb48065",
+            "ms": 1795462400800,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "taken",
+          "pnl": "5495298044582717863515",
+          "poolPrice": "139649999999999999999",
+          "refPrice": "132667500000000000000"
+        },
+        "twin": {
+          "tx": "0xf603cc76664bf1039c0acfe06fd4a45ff5cbdb4e7d8ec428c451fb872fc9d56c",
+          "at": {
+            "block": "62702661",
+            "tx": "0xf603cc76664bf1039c0acfe06fd4a45ff5cbdb4e7d8ec428c451fb872fc9d56c",
+            "ms": 1795462401000,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "taken",
+          "pnl": "5495298044582717863515",
+          "poolPrice": "139649999999999999999",
+          "refPrice": "132667500000000000000"
+        }
+      }
+    },
+    {
+      "attempt": 4,
+      "delayTarget": 0.6,
+      "moveBps": 500,
+      "priceBefore": "132667500000000000000",
+      "price": "139300875000000000000",
+      "loop": {
+        "seq": "5",
+        "origin": {
+          "block": "62702680",
+          "tx": "0xc5442ca911d3d18896ac4e66dbe939a28f3587e4a767619e0150a5be29d268b8",
+          "ms": 1795462404800,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702685",
+            "tx": "0xa74405a0227e833d0622a97fdb54bcea7f07fb14714343699dcd71d3facdaf2e",
+            "ms": 1795462405800,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68609978",
+            "tx": "0x113841212a4a5f413970814cb5cf3f4da38f770a2145253b6e593ca83ea69fa1",
+            "ms": 1795462406000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "observed": 1165,
+          "base": 1823,
+          "closed": 2472,
+          "unichain": 3337
+        },
+        "observed": {
+          "block": "9079486",
+          "tx": "0xfc558bf71fdf25349f148b1c56e23857901e3dadcc5a3e1e72bc34fea71bda8f"
+        },
+        "closed": {
+          "block": "9079487",
+          "tx": "0x9698f3e7904f6ca6765e155077bc800bd8c283dfe9319dd3d12bca9f5dec14da"
+        }
+      },
+      "raidLagMs": 600,
+      "loopMs": 1000,
+      "raids": {
+        "protected": {
+          "tx": "0x2aa54566ac619ac8802d9410fbe4b79157008ec8ae21d2c5b478da8db6a6e493",
+          "at": {
+            "block": "62702683",
+            "tx": "0x2aa54566ac619ac8802d9410fbe4b79157008ec8ae21d2c5b478da8db6a6e493",
+            "ms": 1795462405400,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "taken",
+          "pnl": "5299375092876717018976",
+          "poolPrice": "132667499999999999999",
+          "refPrice": "139300875000000000000"
+        },
+        "twin": {
+          "tx": "0x56a9ed58c6f8bc461e411ed5b3056db8941cff81caa3b7a24f417dbb203c02f7",
+          "at": {
+            "block": "62702683",
+            "tx": "0x56a9ed58c6f8bc461e411ed5b3056db8941cff81caa3b7a24f417dbb203c02f7",
+            "ms": 1795462405400,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5299375092876717018976",
+          "poolPrice": "132667499999999999999",
+          "refPrice": "139300875000000000000"
+        }
+      }
+    },
+    {
+      "attempt": 5,
+      "delayTarget": 0.8,
+      "moveBps": -500,
+      "priceBefore": "139300875000000000000",
+      "price": "132335831250000000000",
+      "loop": {
+        "seq": "6",
+        "origin": {
+          "block": "62702704",
+          "tx": "0x2eb28d168da285f287612a59d20d42a1874f9ee20f104f7912f359a8581a3344",
+          "ms": 1795462409600,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702712",
+            "tx": "0x947f2ee956095a3a2f3f6ff1dc3837b8910715194733fd140fe90439c77fe017",
+            "ms": 1795462411200,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68609984",
+            "tx": "0x3bdf9cbb2c7d3dc4d567136b917b6311c16c01b5a9620ea701e3d45df8c92387",
+            "ms": 1795462412000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 1944,
+          "observed": 2063,
+          "closed": 3814,
+          "unichain": 4243
+        },
+        "observed": {
+          "block": "9079491",
+          "tx": "0x11700aa153d34f74f50e6a1a534c84dc2aa773e5166b62e037b530e9cbeeeaaf"
+        },
+        "closed": {
+          "block": "9079493",
+          "tx": "0x083a0d7d697f102c879cc9b09dcea7261d42feb7e24b9e93d38e62347230d588"
+        }
+      },
+      "raidLagMs": 800,
+      "loopMs": 1600,
+      "raids": {
+        "protected": {
+          "tx": "0xd652f35dffa1a4db38da4bb956a717341831bc3a6f8d208d2f81eb0121231fbb",
+          "at": {
+            "block": "62702708",
+            "tx": "0xd652f35dffa1a4db38da4bb956a717341831bc3a6f8d208d2f81eb0121231fbb",
+            "ms": 1795462410400,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5717870884268934292775",
+          "poolPrice": "139300874999999999999",
+          "refPrice": "132335831250000000000"
+        },
+        "twin": {
+          "tx": "0xafe626130a762a89df83d37e28519dbbe51f4ca2dc219f3f30435251e546f11a",
+          "at": {
+            "block": "62702708",
+            "tx": "0xafe626130a762a89df83d37e28519dbbe51f4ca2dc219f3f30435251e546f11a",
+            "ms": 1795462410400,
+            "precise": true
+          },
+          "index": 4,
+          "outcome": "taken",
+          "pnl": "5717870884268934292775",
+          "poolPrice": "139300874999999999999",
+          "refPrice": "132335831250000000000"
+        }
+      }
+    },
+    {
+      "attempt": 6,
+      "delayTarget": 1,
+      "moveBps": 500,
+      "priceBefore": "132335831250000000000",
+      "price": "138952622812500000000",
+      "loop": {
+        "seq": "7",
+        "origin": {
+          "block": "62702729",
+          "tx": "0x1a94fba2f6841ea06cc80d1e48c375abbc8c2fd079c3eaedd9524359796728b8",
+          "ms": 1795462414600,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702733",
+            "tx": "0xeecf955cb99a090f0d19079e82223e1071a1c0a970bd1f23910541ceb26b68f0",
+            "ms": 1795462415400,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68609988",
+            "tx": "0xbe5ece82db68ed1c62710c43537a7a54e27cf9b21a91e922efa846ce52e682af",
+            "ms": 1795462416000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 2474,
+          "observed": 2556,
+          "closed": 3101,
+          "unichain": 3531
+        },
+        "observed": {
+          "block": "9079495",
+          "tx": "0x3e72d93fa11bc9fd0217fbcee03c2d0728784e2deafe8e17e0e44911ef6d25fa"
+        },
+        "closed": {
+          "block": "9079497",
+          "tx": "0x0ed1c9a14af19068befecd97c7a5936e06e463d2e1f0b56ecbcaa31508ff14eb"
+        }
+      },
+      "raidLagMs": 1000,
+      "loopMs": 800,
+      "raids": {
+        "protected": {
+          "tx": "0x99ee1b31412804caa33e466f5fbe817a1cd224b2949aabe8b9c14518dcb53636",
+          "at": {
+            "block": "62702734",
+            "tx": "0x99ee1b31412804caa33e466f5fbe817a1cd224b2949aabe8b9c14518dcb53636",
+            "ms": 1795462415600,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "138952622812499999999",
+          "refPrice": "138952622812500000000"
+        },
+        "twin": {
+          "tx": "0x31889083b04071f6369cd4beadb1d8f6c1890555b8f8f15c3c8ba34cf3111003",
+          "at": {
+            "block": "62702734",
+            "tx": "0x31889083b04071f6369cd4beadb1d8f6c1890555b8f8f15c3c8ba34cf3111003",
+            "ms": 1795462415600,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5446841018976752718623",
+          "poolPrice": "132335831249999999999",
+          "refPrice": "138952622812500000000"
+        }
+      }
+    },
+    {
+      "attempt": 7,
+      "delayTarget": 1.2,
+      "moveBps": -500,
+      "priceBefore": "138952622812500000000",
+      "price": "132004991671875000000",
+      "loop": {
+        "seq": "8",
+        "origin": {
+          "block": "62702752",
+          "tx": "0x2f17f6c8728dc0385840aedf19cbc912ebd83f7677b59392e6f1b16cd7772c55",
+          "ms": 1795462419200,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702760",
+            "tx": "0x94372dafe9367dd1e8a9a64a51dd94618412b301ba442c8dfceb4b97057e0893",
+            "ms": 1795462420800,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68609994",
+            "tx": "0x434ca3bb9a1fdec05bfc20a08cd6af1719c99ec31e2204dac900b64d8b259c6b",
+            "ms": 1795462422000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "observed": 1946,
+          "base": 2577,
+          "closed": 4280,
+          "unichain": 4711
+        },
+        "observed": {
+          "block": "9079500",
+          "tx": "0x0d7fb7059d6bcdb29e90792e5b94e13a2769634d6a6b7003c3783bfcb58c689c"
+        },
+        "closed": {
+          "block": "9079502",
+          "tx": "0x11589f8d97027fe58bd13e6b52625db41e7c87a04400c0f6b0faf2cde4695043"
+        }
+      },
+      "raidLagMs": 1200,
+      "loopMs": 1600,
+      "raids": {
+        "protected": {
+          "tx": "0xb531e3438ad6334efa642784078f8bb9aea0f25d6a511196383928685407eb7d",
+          "at": {
+            "block": "62702758",
+            "tx": "0xb531e3438ad6334efa642784078f8bb9aea0f25d6a511196383928685407eb7d",
+            "ms": 1795462420400,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5570673010634929314359",
+          "poolPrice": "138952622812499999999",
+          "refPrice": "132004991671875000000"
+        },
+        "twin": {
+          "tx": "0x78054fa75bf0120684001e4fcc14022ae5c5fba4d68217a2cba15ae22436b541",
+          "at": {
+            "block": "62702758",
+            "tx": "0x78054fa75bf0120684001e4fcc14022ae5c5fba4d68217a2cba15ae22436b541",
+            "ms": 1795462420400,
+            "precise": true
+          },
+          "index": 4,
+          "outcome": "taken",
+          "pnl": "5466417399604316347270",
+          "poolPrice": "138952622812499999999",
+          "refPrice": "132004991671875000000"
+        }
+      }
+    },
+    {
+      "attempt": 8,
+      "delayTarget": 1.4,
+      "moveBps": 500,
+      "priceBefore": "132004991671875000000",
+      "price": "138605241255468750000",
+      "loop": {
+        "seq": "9",
+        "origin": {
+          "block": "62702779",
+          "tx": "0x95d2d72f50e8df2a83d94f1bd15bbfaae63314a54a2f82a4dd2e036faaca091e",
+          "ms": 1795462424600,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702787",
+            "tx": "0x42d492a24ea01705242f7be71401416b8e2f3154b8f12d2999991ed483fb5e45",
+            "ms": 1795462426200,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68609999",
+            "tx": "0x6fb81b80fef806cea1eafab0d30b6703dfb401670ba76948122c24ca63969d27",
+            "ms": 1795462427000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "observed": 1858,
+          "base": 2862,
+          "closed": 4035,
+          "unichain": 4467
+        },
+        "observed": {
+          "block": "9079505",
+          "tx": "0x1b315b1151f08d960bca4633701af491911c806d5bcf37f987f56dca3ec58e2c"
+        },
+        "closed": {
+          "block": "9079507",
+          "tx": "0x15b4cf24fe29dfde925354501c4389c2e7847f8f6a1bfdc76c1fd81a314d8ac9"
+        }
+      },
+      "raidLagMs": 1400,
+      "loopMs": 1600,
+      "raids": {
+        "protected": {
+          "tx": "0xc744e0ea21c2011cb99baf7054f73e38f5913286fa6be2e925a0bf3192138503",
+          "at": {
+            "block": "62702786",
+            "tx": "0xc744e0ea21c2011cb99baf7054f73e38f5913286fa6be2e925a0bf3192138503",
+            "ms": 1795462426000,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "taken",
+          "pnl": "5223576324988961445091",
+          "poolPrice": "132004991671874999999",
+          "refPrice": "138605241255468750000"
+        },
+        "twin": {
+          "tx": "0xf7347e54d9e26ddb6dd3995229c6db38d48e4dff7b35415249d87b070f522bbc",
+          "at": {
+            "block": "62702786",
+            "tx": "0xf7347e54d9e26ddb6dd3995229c6db38d48e4dff7b35415249d87b070f522bbc",
+            "ms": 1795462426000,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5333096593430082552388",
+          "poolPrice": "132004991671874999999",
+          "refPrice": "138605241255468750000"
+        }
+      }
+    },
+    {
+      "attempt": 9,
+      "delayTarget": 1.6,
+      "moveBps": -500,
+      "priceBefore": "138605241255468750000",
+      "price": "131674979192695312500",
+      "loop": {
+        "seq": "10",
+        "origin": {
+          "block": "62702807",
+          "tx": "0x6c05e74065bf27b4c697c0fa605da20f8f69a8faa54cc815339e04fb02a30853",
+          "ms": 1795462430200,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702813",
+            "tx": "0x16db9835c1fb17f78d567871659d3378f3bb6c7d726d92450eba6983536960ee",
+            "ms": 1795462431400,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610004",
+            "tx": "0x1225836130a00836cb3434bf647cfff99d645e5916daaf5d440f3e6625d878eb",
+            "ms": 1795462432000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 2082,
+          "observed": 2200,
+          "unichain": 3668,
+          "closed": 3765
+        },
+        "observed": {
+          "block": "9079510",
+          "tx": "0x3c6a4b6127e814d852bb371566403f462c5b2009159507db88969fcab8da390c"
+        },
+        "closed": {
+          "block": "9079512",
+          "tx": "0xfd1af44c09675b9ebb9e2b2cd0f3f951085177a83c5db3f151f6032f8594ec0f"
+        }
+      },
+      "raidLagMs": 1600,
+      "loopMs": 1200,
+      "raids": {
+        "protected": {
+          "tx": "0x4aad33aec0e7f7358bb4b0c673a75bf28d9ad4ad1ed26040476c567e082acf8d",
+          "at": {
+            "block": "62702815",
+            "tx": "0x4aad33aec0e7f7358bb4b0c673a75bf28d9ad4ad1ed26040476c567e082acf8d",
+            "ms": 1795462431800,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "131674979192695312499",
+          "refPrice": "131674979192695312500"
+        },
+        "twin": {
+          "tx": "0xecd256d5c577ad9157c3bc6f702a47c8b4f89e6275c3763e679a81fc1101ca23",
+          "at": {
+            "block": "62702815",
+            "tx": "0xecd256d5c577ad9157c3bc6f702a47c8b4f89e6275c3763e679a81fc1101ca23",
+            "ms": 1795462431800,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5686171301406642096282",
+          "poolPrice": "138605241255468749999",
+          "refPrice": "131674979192695312500"
+        }
+      }
+    },
+    {
+      "attempt": 10,
+      "delayTarget": 1.8,
+      "moveBps": 500,
+      "priceBefore": "131674979192695312500",
+      "price": "138258728152330078125",
+      "loop": {
+        "seq": "11",
+        "origin": {
+          "block": "62702830",
+          "tx": "0xb5b19f53ff6a5d87e5b72f673ba3f786f5373599c6435c3e9144ee3ca58adf1f",
+          "ms": 1795462434800,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702835",
+            "tx": "0x80df1bfb8bdc45a5fc119398e8249cb1375f90bb8471b31364309b0ab4a2b717",
+            "ms": 1795462435800,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610008",
+            "tx": "0x26223a3ea648060e92212fb4098cffadd9414cf5a13d50b76138533de5d974a4",
+            "ms": 1795462436000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 2331,
+          "observed": 2452,
+          "closed": 2944,
+          "unichain": 3375
+        },
+        "observed": {
+          "block": "9079514",
+          "tx": "0xbc9764923c5b8bdb6f341dd154987b0b3829aac1662e30c72f88dd72d66c2398"
+        },
+        "closed": {
+          "block": "9079516",
+          "tx": "0xc178ff4c7434b3aaaaa15912dfdd03c4b8da5793d2cba97bc327e8ddfc7e15c1"
+        }
+      },
+      "raidLagMs": 2000,
+      "loopMs": 1000,
+      "raids": {
+        "protected": {
+          "tx": "0x2a7ba7cf3753aed6fd8a9d23d36737cbc12a0f47bcf477a74542f00456464add",
+          "at": {
+            "block": "62702840",
+            "tx": "0x2a7ba7cf3753aed6fd8a9d23d36737cbc12a0f47bcf477a74542f00456464add",
+            "ms": 1795462436800,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "138258728152330078124",
+          "refPrice": "138258728152330078125"
+        },
+        "twin": {
+          "tx": "0xc691b11ae9ee1d6d292f1992602887db65a714849550986811523183a5d65341",
+          "at": {
+            "block": "62702840",
+            "tx": "0xc691b11ae9ee1d6d292f1992602887db65a714849550986811523183a5d65341",
+            "ms": 1795462436800,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5449827223809035657106",
+          "poolPrice": "131674979192695312499",
+          "refPrice": "138258728152330078125"
+        }
+      }
+    },
+    {
+      "attempt": 11,
+      "delayTarget": 2,
+      "moveBps": -500,
+      "priceBefore": "138258728152330078125",
+      "price": "131345791744713574218",
+      "loop": {
+        "seq": "12",
+        "origin": {
+          "block": "62702853",
+          "tx": "0x684149f8524edf5ffb719975e366a22f7c688a018a7117e63cdaffe8fc01d626",
+          "ms": 1795462439400,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702861",
+            "tx": "0x7f0b25b27953ccfac1192c8e98e8d6301d7447db50282b1a0e9afe709329a024",
+            "ms": 1795462441000,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610014",
+            "tx": "0xafc37fd6d757978ab13264e685c1164deb68aaddb140790988dd6cee82a7937a",
+            "ms": 1795462442000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 2488,
+          "observed": 2566,
+          "closed": 4205,
+          "unichain": 4641
+        },
+        "observed": {
+          "block": "9079519",
+          "tx": "0xbe141fe0a752e98d158e75ea6c5c19d99db4121ccdc27b62ea2dadaafe814d36"
+        },
+        "closed": {
+          "block": "9079521",
+          "tx": "0xb3bf68888431b689dbe10f76c90dae64bc30ae2a21de6997d98b053f188ba62a"
+        }
+      },
+      "raidLagMs": 2000,
+      "loopMs": 1600,
+      "raids": {
+        "protected": {
+          "tx": "0x8eede290c279eb3965fbc44d52dfb94cfa89d62984174cd6fd1514f446521f38",
+          "at": {
+            "block": "62702863",
+            "tx": "0x8eede290c279eb3965fbc44d52dfb94cfa89d62984174cd6fd1514f446521f38",
+            "ms": 1795462441400,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "131345791744713574217",
+          "refPrice": "131345791744713574218"
+        },
+        "twin": {
+          "tx": "0x1c3632a89aebf0a1205e20541826fbeee25433906d82aa1191dc14db6cc54155",
+          "at": {
+            "block": "62702863",
+            "tx": "0x1c3632a89aebf0a1205e20541826fbeee25433906d82aa1191dc14db6cc54155",
+            "ms": 1795462441400,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5434532378288276984935",
+          "poolPrice": "138258728152330078124",
+          "refPrice": "131345791744713574218"
+        }
+      }
+    },
+    {
+      "attempt": 12,
+      "delayTarget": 2.2,
+      "moveBps": 500,
+      "priceBefore": "131345791744713574218",
+      "price": "137913081331949252928",
+      "loop": {
+        "seq": "13",
+        "origin": {
+          "block": "62702883",
+          "tx": "0x8ee1f9fd8be1857d9a6d3b5d0e090bff8ce7e67c2e0f3b7e7fe9e5f545722670",
+          "ms": 1795462445400,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702888",
+            "tx": "0xa11ba63df927a6363a40f3f1f8a71924e49f4292500500a9850218dc0ae463ac",
+            "ms": 1795462446400,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610019",
+            "tx": "0xd5f2e109085c88bc4e99c6697eeca5e02389e7fc81038002c1458154fdf036e6",
+            "ms": 1795462447000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 2682,
+          "observed": 2759,
+          "closed": 3310,
+          "unichain": 4178
+        },
+        "observed": {
+          "block": "9079524",
+          "tx": "0xcbbea20f8afdac2710591c2ba610b81e9c83af18477f0a472c7708efd6ae9091"
+        },
+        "closed": {
+          "block": "9079526",
+          "tx": "0x18d1c23833b170719668b3df071525a3aa2af32cf128135234788583e84df4b3"
+        }
+      },
+      "raidLagMs": 2200,
+      "loopMs": 1000,
+      "raids": {
+        "protected": {
+          "tx": "0xc1b03f44a62719970c80bc295139e7eb55216d5694e2c4dce3eaa6a50b2f6fa6",
+          "at": {
+            "block": "62702894",
+            "tx": "0xc1b03f44a62719970c80bc295139e7eb55216d5694e2c4dce3eaa6a50b2f6fa6",
+            "ms": 1795462447600,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "137913081331949252927",
+          "refPrice": "137913081331949252928"
+        },
+        "twin": {
+          "tx": "0xc4825de729d42dc1013794683b28f4cadcd7935d8bc3e05fc89a114dbdb0f7f8",
+          "at": {
+            "block": "62702894",
+            "tx": "0xc4825de729d42dc1013794683b28f4cadcd7935d8bc3e05fc89a114dbdb0f7f8",
+            "ms": 1795462447600,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5369669731246267184401",
+          "poolPrice": "131345791744713574217",
+          "refPrice": "137913081331949252928"
+        }
+      }
+    },
+    {
+      "attempt": 13,
+      "delayTarget": 2.4,
+      "moveBps": -500,
+      "priceBefore": "137913081331949252928",
+      "price": "131017427265351790281",
+      "loop": {
+        "seq": "14",
+        "origin": {
+          "block": "62702908",
+          "tx": "0xb5954ec82f2fbb8472874a0a2bcdba1db5584eeb3bd494ac554ecbcb7d5e9e37",
+          "ms": 1795462450400,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702913",
+            "tx": "0xf62a35e5b1aa82523bfcfd26a3e93926d6ae028a6e930912de3f04dd99a48e7c",
+            "ms": 1795462451400,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610024",
+            "tx": "0x2e56c7d65a6d931cc184fb2eacb3c66150677e57441af84426001cf2b6c2eed0",
+            "ms": 1795462452000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 3149,
+          "observed": 3270,
+          "closed": 3845,
+          "unichain": 4276
+        },
+        "observed": {
+          "block": "9079529",
+          "tx": "0x90e9db49d920c291fb0826040d2268b793e6e408123e6d7d88490ab41a2e9071"
+        },
+        "closed": {
+          "block": "9079531",
+          "tx": "0xa0ce5e7f7e4b5e570e17a9ef2d646d9fa111f700afcf4b1608158c584236c3a4"
+        }
+      },
+      "raidLagMs": 2400,
+      "loopMs": 1000,
+      "raids": {
+        "protected": {
+          "tx": "0xd585df49816655ff2bf8bf935a82ef569bbb00295c6478ccaa7abd10fe8620a1",
+          "at": {
+            "block": "62702920",
+            "tx": "0xd585df49816655ff2bf8bf935a82ef569bbb00295c6478ccaa7abd10fe8620a1",
+            "ms": 1795462452800,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "131017427265351790280",
+          "refPrice": "131017427265351790281"
+        },
+        "twin": {
+          "tx": "0x9ce1610bc06f904467739a79bbc9cb6ad2285ee6e06361a0f9d6b9dc20bdb86e",
+          "at": {
+            "block": "62702921",
+            "tx": "0x9ce1610bc06f904467739a79bbc9cb6ad2285ee6e06361a0f9d6b9dc20bdb86e",
+            "ms": 1795462453000,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "taken",
+          "pnl": "5654647464545627147109",
+          "poolPrice": "137913081331949252927",
+          "refPrice": "131017427265351790281"
+        }
+      }
+    },
+    {
+      "attempt": 14,
+      "delayTarget": 2.6,
+      "moveBps": 500,
+      "priceBefore": "131017427265351790281",
+      "price": "137568298628619379795",
+      "loop": {
+        "seq": "15",
+        "origin": {
+          "block": "62702935",
+          "tx": "0x80b10ac105895c7f8b9c9f724b0cbe20a8006387705d72f60d8989e519c9fccc",
+          "ms": 1795462455800,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702940",
+            "tx": "0x717daf8d1fe48d93b448c3901e0adfdf5af3088a015f32aed2ad0a6da191c5ad",
+            "ms": 1795462456800,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610029",
+            "tx": "0x2912028b654e6d626f35bae842cb631b1b2fad5665b47d290729d7db69474d2f",
+            "ms": 1795462457000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "unichain": 3322,
+          "base": 3335,
+          "observed": 3419,
+          "closed": 3948
+        },
+        "observed": {
+          "block": "9079534",
+          "tx": "0x2078935658512dfc90a8524eda5e260b37b3669db871480468134eb251710d73"
+        },
+        "closed": {
+          "block": "9079536",
+          "tx": "0x36a372754f583e3fee44b37e8966a850b82ffc0a72971641609d5c4b051c3ece"
+        }
+      },
+      "raidLagMs": 2600,
+      "loopMs": 1000,
+      "raids": {
+        "protected": {
+          "tx": "0x21f7a0c83f5cee0822d24d9eee91479f4709986ffa83f85388036dfb68a0d4da",
+          "at": {
+            "block": "62702948",
+            "tx": "0x21f7a0c83f5cee0822d24d9eee91479f4709986ffa83f85388036dfb68a0d4da",
+            "ms": 1795462458400,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "137568298628619379794",
+          "refPrice": "137568298628619379795"
+        },
+        "twin": {
+          "tx": "0x1363578238b1b579af8e6fe961063ba5172f00c454bb64b2dae904feda480c7f",
+          "at": {
+            "block": "62702949",
+            "tx": "0x1363578238b1b579af8e6fe961063ba5172f00c454bb64b2dae904feda480c7f",
+            "ms": 1795462458600,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "taken",
+          "pnl": "5452815017322182474711",
+          "poolPrice": "131017427265351790280",
+          "refPrice": "137568298628619379795"
+        }
+      }
+    },
+    {
+      "attempt": 15,
+      "delayTarget": 2.8,
+      "moveBps": -500,
+      "priceBefore": "137568298628619379795",
+      "price": "130689883697188410805",
+      "loop": {
+        "seq": "16",
+        "origin": {
+          "block": "62702959",
+          "tx": "0x2e625f0d8957e1f5419d79095dc416476713003b7e57d3189ea0c2987d199cd0",
+          "ms": 1795462460600,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702965",
+            "tx": "0xc77c6f2d85d9d2cbd1cc06bd0443ddbc45d01e8bd2de56f6ae97f4e88924be39",
+            "ms": 1795462461800,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610035",
+            "tx": "0xc05a99b46118d38b328ef94af0ebf5563f96746384c144b62ae099f5cf629e00",
+            "ms": 1795462463000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 3550,
+          "observed": 3666,
+          "closed": 4166,
+          "unichain": 4598
+        },
+        "observed": {
+          "block": "9079539",
+          "tx": "0xd10959471fe1b0eed4f6b69f7933ccc58145ebd6883dc3950f00161ec2e5c48a"
+        },
+        "closed": {
+          "block": "9079541",
+          "tx": "0xf725ef27eac50fb5cd8cadb345903689286a0fb52216078441a935be704d0521"
+        }
+      },
+      "raidLagMs": 2800,
+      "loopMs": 1200,
+      "raids": {
+        "protected": {
+          "tx": "0xa91215b696090bba556c78336311c400fda61115cc08829b2c7154d9d432142d",
+          "at": {
+            "block": "62702973",
+            "tx": "0xa91215b696090bba556c78336311c400fda61115cc08829b2c7154d9d432142d",
+            "ms": 1795462463400,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "130689883697188410804",
+          "refPrice": "130689883697188410805"
+        },
+        "twin": {
+          "tx": "0x4228f2aa53c96d502ff56147a6bb24e8f64033251f41c357655630c3eb249329",
+          "at": {
+            "block": "62702974",
+            "tx": "0x4228f2aa53c96d502ff56147a6bb24e8f64033251f41c357655630c3eb249329",
+            "ms": 1795462463600,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5404401913955653196927",
+          "poolPrice": "137568298628619379794",
+          "refPrice": "130689883697188410805"
+        }
+      }
+    },
+    {
+      "attempt": 16,
+      "delayTarget": 3,
+      "moveBps": 500,
+      "priceBefore": "130689883697188410805",
+      "price": "137224377882047831345",
+      "loop": {
+        "seq": "17",
+        "origin": {
+          "block": "62702987",
+          "tx": "0x16d703fefc27a3ea298b4591341e47a13b0cfd72748afc1b0e7b8cdf0f371a37",
+          "ms": 1795462466200,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62702992",
+            "tx": "0xb4411e3946a3a1286888db8ffe1da2b9d8048c8c130a343e017e77e4b65a91e0",
+            "ms": 1795462467200,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610040",
+            "tx": "0x7ce279a2bcc340a01a96675aaac0baccbba5cece1617da3c05938b143b7f5102",
+            "ms": 1795462468000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "unichain": 3555,
+          "base": 3566,
+          "observed": 3650,
+          "closed": 4276
+        },
+        "observed": {
+          "block": "9079544",
+          "tx": "0x0c729397f6aa7e7754153bb64536eade7983e2f3a84a1fcf3b4fc0eb8c3abfd4"
+        },
+        "closed": {
+          "block": "9079546",
+          "tx": "0x9759186b97be913c708b5fa5dd86b0c081f0a497d0dd1e725fa56ea7d4805798"
+        }
+      },
+      "raidLagMs": 3200,
+      "loopMs": 1000,
+      "raids": {
+        "protected": {
+          "tx": "0xbea31c3a60f78fea7558422f4c12ff2381d73eb4639f3df9de008a23bb674f8b",
+          "at": {
+            "block": "62703003",
+            "tx": "0xbea31c3a60f78fea7558422f4c12ff2381d73eb4639f3df9de008a23bb674f8b",
+            "ms": 1795462469400,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "137224377882047831344",
+          "refPrice": "137224377882047831345"
+        },
+        "twin": {
+          "tx": "0xac61601ae5b2cae9077be2c1d4c041e9f7aca7ee9dd50e5a89932128d00e9f74",
+          "at": {
+            "block": "62703003",
+            "tx": "0xac61601ae5b2cae9077be2c1d4c041e9f7aca7ee9dd50e5a89932128d00e9f74",
+            "ms": 1795462469400,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5404631896931654361678",
+          "poolPrice": "130689883697188410804",
+          "refPrice": "137224377882047831345"
+        }
+      }
+    },
+    {
+      "attempt": 17,
+      "delayTarget": 0,
+      "moveBps": -500,
+      "priceBefore": "137224377882047831345",
+      "price": "130363158987945439777",
+      "loop": {
+        "seq": "18",
+        "origin": {
+          "block": "62703014",
+          "tx": "0x084723009662239253392fa79b379f2fb54370bf789df0fc2d275aa287bd49a0",
+          "ms": 1795462471600,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703018",
+            "tx": "0x7938e15c02dc1dbaf8030e53a7a21ae313fb8204a0f4f2b6fdda74352e187cb6",
+            "ms": 1795462472400,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610045",
+            "tx": "0xc0776402e5176354c8dd2d293c75ff7ac427d65c42304abd76f2b63169a71710",
+            "ms": 1795462473000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "observed": 1086,
+          "base": 1699,
+          "unichain": 3303,
+          "closed": 3400
+        },
+        "observed": {
+          "block": "9079549",
+          "tx": "0x1221e03948baebf14f92efca5e590e327e6c769b3e7c502778947da53cd76b03"
+        },
+        "closed": {
+          "block": "9079551",
+          "tx": "0xcc9454a05c93bf23328669568a438ca3ce05a1962de70b9add397c0fae72ba37"
+        }
+      },
+      "raidLagMs": 0,
+      "loopMs": 800,
+      "raids": {
+        "protected": {
+          "tx": "0x107d5f3222a35e77943bfc3d49bc9b09a238a2bb2d6af7ee206b499153fbcfd6",
+          "at": {
+            "block": "62703014",
+            "tx": "0x107d5f3222a35e77943bfc3d49bc9b09a238a2bb2d6af7ee206b499153fbcfd6",
+            "ms": 1795462471600,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "10826115048710347824790",
+          "poolPrice": "137224377882047831344",
+          "refPrice": "130363158987945439777"
+        },
+        "twin": {
+          "tx": "0xd31103902af9f42c4462eba5314a9c788f96f05e38cabd69c336d0c970a6a152",
+          "at": {
+            "block": "62703014",
+            "tx": "0xd31103902af9f42c4462eba5314a9c788f96f05e38cabd69c336d0c970a6a152",
+            "ms": 1795462471600,
+            "precise": true
+          },
+          "index": 4,
+          "outcome": "taken",
+          "pnl": "5623298398585970329564",
+          "poolPrice": "137224377882047831344",
+          "refPrice": "130363158987945439777"
+        }
+      }
+    },
+    {
+      "attempt": 18,
+      "delayTarget": 0.2,
+      "moveBps": 500,
+      "priceBefore": "130363158987945439777",
+      "price": "136881316937342711765",
+      "loop": {
+        "seq": "19",
+        "origin": {
+          "block": "62703035",
+          "tx": "0x898d70714d4734e80448b51c2345f58ed806413080af7b466e175847cfcf0ba3",
+          "ms": 1795462475800,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703039",
+            "tx": "0x4e35c6489ed34cacdea27440132344049201030e9cbd193143a7b59ccc9c823b",
+            "ms": 1795462476600,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610049",
+            "tx": "0xf8e6ce43c830e51ea9279216729f27cd2450e4bf2022f87efe9c1bc64a93111d",
+            "ms": 1795462477000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 1029,
+          "observed": 1105,
+          "unichain": 3116,
+          "closed": 3255
+        },
+        "observed": {
+          "block": "9079553",
+          "tx": "0xc0946239edbef38d78e424d950942dcf036a5a56e14881bda42d3990ff073c43"
+        },
+        "closed": {
+          "block": "9079555",
+          "tx": "0x2df5776fdb73629dca77c13272169c73aa163a1d1c011445b2d6d474895f0870"
+        }
+      },
+      "raidLagMs": 200,
+      "loopMs": 800,
+      "raids": {
+        "protected": {
+          "tx": "0xbd5d0cd4fe2b17b7685a5ad4824c527b23443ca1f3b59217f51b47a1c57121a9",
+          "at": {
+            "block": "62703036",
+            "tx": "0xbd5d0cd4fe2b17b7685a5ad4824c527b23443ca1f3b59217f51b47a1c57121a9",
+            "ms": 1795462476000,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "taken",
+          "pnl": "5455804401026369817904",
+          "poolPrice": "130363158987945439776",
+          "refPrice": "136881316937342711765"
+        },
+        "twin": {
+          "tx": "0x2930f23a55c08c0443439cf6579e224b3366d462aff61ca8e17da03a3464dfda",
+          "at": {
+            "block": "62703036",
+            "tx": "0x2930f23a55c08c0443439cf6579e224b3366d462aff61ca8e17da03a3464dfda",
+            "ms": 1795462476000,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5489853642939941661049",
+          "poolPrice": "130363158987945439776",
+          "refPrice": "136881316937342711765"
+        }
+      }
+    },
+    {
+      "attempt": 19,
+      "delayTarget": 0.4,
+      "moveBps": -500,
+      "priceBefore": "136881316937342711765",
+      "price": "130037251090475576176",
+      "loop": {
+        "seq": "20",
+        "origin": {
+          "block": "62703055",
+          "tx": "0x41d10a8c41f33e94d6f1bfdd729fbe7d0a058a89f271f8ebb5ee5d9a3a45cc18",
+          "ms": 1795462479800,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703061",
+            "tx": "0x52543dbe7c0d0a17243996381af8b0f71e67460238b60a1b2a2e9bd507751ee2",
+            "ms": 1795462481000,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610054",
+            "tx": "0xef97e628ead91f5f6e39a6a0bfbef28a07af7673ffd19c3d51c0d6f0cae22e29",
+            "ms": 1795462482000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "observed": 1468,
+          "base": 2082,
+          "closed": 3295,
+          "unichain": 4155
+        },
+        "observed": {
+          "block": "9079557",
+          "tx": "0x028aaebe30868ac4e05308df73a6efe290c7a301c6d2f2466c357de96f5fbe3e"
+        },
+        "closed": {
+          "block": "9079559",
+          "tx": "0x794975530a6ee2f6ccd8940b560555d1ca5d4d0f14f5c952599b3b747074b06a"
+        }
+      },
+      "raidLagMs": 400,
+      "loopMs": 1200,
+      "raids": {
+        "protected": {
+          "tx": "0x9963f365f109f04fbec788f411694c9bc15724090ddc4e0abc5c6de15ab40c85",
+          "at": {
+            "block": "62703057",
+            "tx": "0x9963f365f109f04fbec788f411694c9bc15724090ddc4e0abc5c6de15ab40c85",
+            "ms": 1795462480200,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "taken",
+          "pnl": "11167168792494936246434",
+          "poolPrice": "136881316937342711764",
+          "refPrice": "130037251090475576176"
+        },
+        "twin": {
+          "tx": "0x5885bca6982a8c8f0c2c9441c3e7ae80fcf06a550cc40fdb1df56c0f127f288b",
+          "at": {
+            "block": "62703057",
+            "tx": "0x5885bca6982a8c8f0c2c9441c3e7ae80fcf06a550cc40fdb1df56c0f127f288b",
+            "ms": 1795462480200,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5374438452145631183176",
+          "poolPrice": "136881316937342711764",
+          "refPrice": "130037251090475576176"
+        }
+      }
+    },
+    {
+      "attempt": 20,
+      "delayTarget": 0.6,
+      "moveBps": 500,
+      "priceBefore": "130037251090475576176",
+      "price": "136539113644999354984",
+      "loop": {
+        "seq": "21",
+        "origin": {
+          "block": "62703081",
+          "tx": "0x66a133aefbf2b6d8ab51e40e8d8ef6d8aa7fa92dd1c871e98e401af506fcad33",
+          "ms": 1795462485000,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703087",
+            "tx": "0xffa90f596b8914cb05f5726312d100b782463dd9e31bf8afbe9c547746e50e37",
+            "ms": 1795462486200,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610059",
+            "tx": "0x3b872a9e0e5510f877561df95d0a6def217bdfc008daca027a45f1655bdab808",
+            "ms": 1795462487000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 1601,
+          "observed": 1719,
+          "closed": 3907,
+          "unichain": 4337
+        },
+        "observed": {
+          "block": "9079562",
+          "tx": "0xb58dc9647b28a12c200e90345eab7de2ddd3bf50f74383fe86e2f10c800003e0"
+        },
+        "closed": {
+          "block": "9079564",
+          "tx": "0xa727334341847356b9a67a5e7b0ebf9b3060d1a72939da2446c9120ba03ebd61"
+        }
+      },
+      "raidLagMs": 600,
+      "loopMs": 1200,
+      "raids": {
+        "protected": {
+          "tx": "0xf40c72eee2c3b91ca21a0a583d568c1ac6c8d301c10392655f6d4dbd648c3988",
+          "at": {
+            "block": "62703084",
+            "tx": "0xf40c72eee2c3b91ca21a0a583d568c1ac6c8d301c10392655f6d4dbd648c3988",
+            "ms": 1795462485600,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "taken",
+          "pnl": "5232188677904141335999",
+          "poolPrice": "130037251090475576175",
+          "refPrice": "136539113644999354984"
+        },
+        "twin": {
+          "tx": "0xb78d6455f9d400a1cb3ca674c7e5f6410ec74b6bb4118bea22e0f84bc2034ef1",
+          "at": {
+            "block": "62703084",
+            "tx": "0xb78d6455f9d400a1cb3ca674c7e5f6410ec74b6bb4118bea22e0f84bc2034ef1",
+            "ms": 1795462485600,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5504914825518186811180",
+          "poolPrice": "130037251090475576175",
+          "refPrice": "136539113644999354984"
+        }
+      }
+    },
+    {
+      "attempt": 21,
+      "delayTarget": 0.8,
+      "moveBps": -500,
+      "priceBefore": "136539113644999354984",
+      "price": "129712157962749387234",
+      "loop": {
+        "seq": "22",
+        "origin": {
+          "block": "62703108",
+          "tx": "0xd6dacef6c35d893e63eb02962d0d2241d107316e8e89a8df34173eab56016923",
+          "ms": 1795462490400,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703113",
+            "tx": "0x3c55bdbf3c22f34ace2bf10ea20023424040d6b9725c5ef45dbcad531072ab8c",
+            "ms": 1795462491400,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610064",
+            "tx": "0x74d98f6e29d464d86a5460b687bace762089ce1500118e5737d9f69b3fdb53aa",
+            "ms": 1795462492000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 1273,
+          "observed": 1355,
+          "unichain": 3379,
+          "closed": 3476
+        },
+        "observed": {
+          "block": "9079567",
+          "tx": "0xbb45b8522b205608c01bc0ba3780a6bd64e6d9a09ded19239c0cce84d313baa7"
+        },
+        "closed": {
+          "block": "9079569",
+          "tx": "0x348aefbf3442ce585494b66c7099dbe8165fb26ea670b5491db3d26130159bf3"
+        }
+      },
+      "raidLagMs": 800,
+      "loopMs": 1000,
+      "raids": {
+        "protected": {
+          "tx": "0x570766ae3c21a3a2bd378e2a5f0e70323f8bc0e42cc9e9b2753db82f2ddd5d28",
+          "at": {
+            "block": "62703112",
+            "tx": "0x570766ae3c21a3a2bd378e2a5f0e70323f8bc0e42cc9e9b2753db82f2ddd5d28",
+            "ms": 1795462491200,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "10837065741554646996146",
+          "poolPrice": "136539113644999354983",
+          "refPrice": "129712157962749387234"
+        },
+        "twin": {
+          "tx": "0x67d089099eb71f6f6c57cc7161e1f3bfbced8de670b48e2fd5d50df76098ab32",
+          "at": {
+            "block": "62703112",
+            "tx": "0x67d089099eb71f6f6c57cc7161e1f3bfbced8de670b48e2fd5d50df76098ab32",
+            "ms": 1795462491200,
+            "precise": true
+          },
+          "index": 4,
+          "outcome": "taken",
+          "pnl": "5592123133846088594515",
+          "poolPrice": "136539113644999354983",
+          "refPrice": "129712157962749387234"
+        }
+      }
+    },
+    {
+      "attempt": 22,
+      "delayTarget": 1,
+      "moveBps": 500,
+      "priceBefore": "129712157962749387234",
+      "price": "136197765860886856595",
+      "loop": {
+        "seq": "23",
+        "origin": {
+          "block": "62703131",
+          "tx": "0x18c14ad6db215dab90022b684fd9e0001354556429e064b94ed620f2ac7447bc",
+          "ms": 1795462495000,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703135",
+            "tx": "0x25907e433d9b0ba536e57fa8e228911ee91f671c42014bd648bcf2c61a33dda6",
+            "ms": 1795462495800,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610068",
+            "tx": "0x830e13059b754e067f80700c8d598e9ef19a8cea12edf6770cf05123fff99ee7",
+            "ms": 1795462496000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 1450,
+          "observed": 1534,
+          "closed": 2046,
+          "unichain": 2905
+        },
+        "observed": {
+          "block": "9079571",
+          "tx": "0x61af192253efed01c568e4854bbef5191513d5f36783cab744c99bd782d1a0e8"
+        },
+        "closed": {
+          "block": "9079572",
+          "tx": "0x972345a4de68e7316016a3633baa51316d69a1508d92cf3ece9c726a3fbec710"
+        }
+      },
+      "raidLagMs": 1000,
+      "loopMs": 800,
+      "raids": {
+        "protected": {
+          "tx": "0xd50e5944d72b79e1f0dc6366c591f9009966c7ba74e4c35f322873c51ed8573d",
+          "at": {
+            "block": "62703136",
+            "tx": "0xd50e5944d72b79e1f0dc6366c591f9009966c7ba74e4c35f322873c51ed8573d",
+            "ms": 1795462496000,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "136197765860886856594",
+          "refPrice": "136197765860886856595"
+        },
+        "twin": {
+          "tx": "0xa10895d5a742f91b1d8c081453cc90d344d6e589c0496bf71d746535e850e169",
+          "at": {
+            "block": "62703136",
+            "tx": "0xa10895d5a742f91b1d8c081453cc90d344d6e589c0496bf71d746535e850e169",
+            "ms": 1795462496000,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5726113615628612244289",
+          "poolPrice": "129712157962749387233",
+          "refPrice": "136197765860886856595"
+        }
+      }
+    },
+    {
+      "attempt": 23,
+      "delayTarget": 1.2,
+      "moveBps": -500,
+      "priceBefore": "136197765860886856595",
+      "price": "129387877567842513765",
+      "loop": {
+        "seq": "24",
+        "origin": {
+          "block": "62703151",
+          "tx": "0x7a8f6dd2cb94fbc69a48f0b13e291e547fef1058243afd35e39ac2170c00e31d",
+          "ms": 1795462499000,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703156",
+            "tx": "0x8c4f1f68ccd40ed1fe5f5ff1b0bb69ee0339317d0c6ef1805a1e7f1737213c16",
+            "ms": 1795462500000,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610073",
+            "tx": "0x493a35de819f449440d2b3abe26d058148c635ed06a629b280772d04dcf5ffdb",
+            "ms": 1795462501000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 1720,
+          "observed": 1800,
+          "closed": 3064,
+          "unichain": 3925
+        },
+        "observed": {
+          "block": "9079575",
+          "tx": "0x77b577a452e3a65628c78ad13e9d3de911c4f6ef078304f39d9b160dc3bc9188"
+        },
+        "closed": {
+          "block": "9079577",
+          "tx": "0x12a843ae74fbaab2053ccef981d6af630d4b8313dee7756afd11dd2ac85f7472"
+        }
+      },
+      "raidLagMs": 1200,
+      "loopMs": 1000,
+      "raids": {
+        "protected": {
+          "tx": "0x003a3bcfb0590a051ba0eb1fd657963c362a13fa53c6d810a5c9ca5b6277ecdf",
+          "at": {
+            "block": "62703157",
+            "tx": "0x003a3bcfb0590a051ba0eb1fd657963c362a13fa53c6d810a5c9ca5b6277ecdf",
+            "ms": 1795462500200,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "129387877567842513764",
+          "refPrice": "129387877567842513765"
+        },
+        "twin": {
+          "tx": "0xf0d4c9519725320c26d310d6e28d4e5095cb964d4e71bf2a5f5f87004eca753f",
+          "at": {
+            "block": "62703158",
+            "tx": "0xf0d4c9519725320c26d310d6e28d4e5095cb964d4e71bf2a5f5f87004eca753f",
+            "ms": 1795462500400,
+            "precise": true
+          },
+          "index": 4,
+          "outcome": "taken",
+          "pnl": "5344641066812339398076",
+          "poolPrice": "136197765860886856594",
+          "refPrice": "129387877567842513765"
+        }
+      }
+    },
+    {
+      "attempt": 24,
+      "delayTarget": 1.4,
+      "moveBps": 500,
+      "priceBefore": "129387877567842513765",
+      "price": "135857271446234639453",
+      "loop": {
+        "seq": "25",
+        "origin": {
+          "block": "62703176",
+          "tx": "0x0d1d8c66e6ee9116922866f88338911dba03d731fe0d9c00b2e68ff42c38cd35",
+          "ms": 1795462504000,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703183",
+            "tx": "0x5906f44f09bfd72ae0f49403dcec6e3022fa7446cbedd6e91419634326f81408",
+            "ms": 1795462505400,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610078",
+            "tx": "0x926b01394989cbb9ad8fff1c42cf0922e258b863d6c5531fe37c11a7c3071fdf",
+            "ms": 1795462506000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 1900,
+          "observed": 1986,
+          "closed": 3706,
+          "unichain": 4137
+        },
+        "observed": {
+          "block": "9079580",
+          "tx": "0x261ade6e49d0b267ffe1da374be4bdbf2a86bfdd03ee3b3ca964f43be6646a37"
+        },
+        "closed": {
+          "block": "9079582",
+          "tx": "0x7bc0385ae7a570d18148b20dc4ad7ed613243ea669437bc7755eb3f6ca6e26c3"
+        }
+      },
+      "raidLagMs": 1400,
+      "loopMs": 1400,
+      "raids": {
+        "protected": {
+          "tx": "0xbf51f4c383e7cbbab705bb7ad73f4d950777ac5024622dda95c76b4931843cdc",
+          "at": {
+            "block": "62703183",
+            "tx": "0xbf51f4c383e7cbbab705bb7ad73f4d950777ac5024622dda95c76b4931843cdc",
+            "ms": 1795462505400,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "taken",
+          "pnl": "5235062423623288332416",
+          "poolPrice": "129387877567842513764",
+          "refPrice": "135857271446234639453"
+        },
+        "twin": {
+          "tx": "0xa3a96b2cece7effbc6475b49c28faaa0f67b908e287ab56bda71e2f0157c17f3",
+          "at": {
+            "block": "62703183",
+            "tx": "0xa3a96b2cece7effbc6475b49c28faaa0f67b908e287ab56bda71e2f0157c17f3",
+            "ms": 1795462505400,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5988144163537968899927",
+          "poolPrice": "129387877567842513764",
+          "refPrice": "135857271446234639453"
+        }
+      }
+    },
+    {
+      "attempt": 25,
+      "delayTarget": 1.6,
+      "moveBps": -500,
+      "priceBefore": "135857271446234639453",
+      "price": "129064407873922907480",
+      "loop": {
+        "seq": "26",
+        "origin": {
+          "block": "62703202",
+          "tx": "0x617de1e99d98c675a71eec503b6dcd45ffa1415f1fcb9ae9e3fe158d801daaa0",
+          "ms": 1795462509200,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703209",
+            "tx": "0xa6ef88d37d2b26bada03fead47dde7c20c3b3358717eb3014e21f3960a030dea",
+            "ms": 1795462510600,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610083",
+            "tx": "0xfb2726a0af0876ab68d3471892ef3fd9ed015c7e5d8c334b07fc1cbf2ec33f76",
+            "ms": 1795462511000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 2339,
+          "observed": 2421,
+          "closed": 3510,
+          "unichain": 3941
+        },
+        "observed": {
+          "block": "9079585",
+          "tx": "0x8c092a9f2c55cd79e22fcc8ec9ab6ec27dec82787620013eac3016a0ef4dded7"
+        },
+        "closed": {
+          "block": "9079587",
+          "tx": "0xcb7521026bf68a53680fca74b06e41ede634ec8b086652f88ba8717a539af618"
+        }
+      },
+      "raidLagMs": 1800,
+      "loopMs": 1400,
+      "raids": {
+        "protected": {
+          "tx": "0x1b985da88e9555fcfb5c52e6978ad487dfe7855b2a9b1e905c13de0476389e81",
+          "at": {
+            "block": "62703211",
+            "tx": "0x1b985da88e9555fcfb5c52e6978ad487dfe7855b2a9b1e905c13de0476389e81",
+            "ms": 1795462511000,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "129064407873922907479",
+          "refPrice": "129064407873922907480"
+        },
+        "twin": {
+          "tx": "0x57e0a8f7ff5bf67551f34c4df1771c829ccd0d2cd1bbc0ce0e4c276855fab48a",
+          "at": {
+            "block": "62703211",
+            "tx": "0x57e0a8f7ff5bf67551f34c4df1771c829ccd0d2cd1bbc0ce0e4c276855fab48a",
+            "ms": 1795462511000,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5561120706032558518650",
+          "poolPrice": "135857271446234639452",
+          "refPrice": "129064407873922907480"
+        }
+      }
+    },
+    {
+      "attempt": 26,
+      "delayTarget": 1.8,
+      "moveBps": 500,
+      "priceBefore": "129064407873922907480",
+      "price": "135517628267619052854",
+      "loop": {
+        "seq": "27",
+        "origin": {
+          "block": "62703227",
+          "tx": "0x887fbaddaa0633b472bab7a1aeaf44bb6de2337c9f98a089b049485cad047275",
+          "ms": 1795462514200,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703230",
+            "tx": "0x96b23f7ee5161a86342ccd6a2f2d456ea453dafd2ba3486cd2f6a0d8a006d046",
+            "ms": 1795462514800,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610088",
+            "tx": "0x56ac7490d08569f1e68f94f59e508703e0e1f0dfbd8c83207a722ffcb772562d",
+            "ms": 1795462516000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 2305,
+          "observed": 2425,
+          "closed": 2912,
+          "unichain": 3770
+        },
+        "observed": {
+          "block": "9079589",
+          "tx": "0x51d766f823e0dabe24b57d2d2547fb413af6ff5719d1b00296506b180ebe96e1"
+        },
+        "closed": {
+          "block": "9079591",
+          "tx": "0x702ea6891ae3d580b12f6bfa68b42ebdb635f55276deef6250b2cf0319e805d4"
+        }
+      },
+      "raidLagMs": 1800,
+      "loopMs": 600,
+      "raids": {
+        "protected": {
+          "tx": "0xc8a108ec60c3b9faf7591c0b1f7f499839042e56add8ae71224b2cc6b0eb7bce",
+          "at": {
+            "block": "62703236",
+            "tx": "0xc8a108ec60c3b9faf7591c0b1f7f499839042e56add8ae71224b2cc6b0eb7bce",
+            "ms": 1795462516000,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "135517628267619052853",
+          "refPrice": "135517628267619052854"
+        },
+        "twin": {
+          "tx": "0xeefed8f3fd44c46ee4e112dc3cda2b1169bd44e359ead09953e64c1b4e4d6ece",
+          "at": {
+            "block": "62703236",
+            "tx": "0xeefed8f3fd44c46ee4e112dc3cda2b1169bd44e359ead09953e64c1b4e4d6ece",
+            "ms": 1795462516000,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "6744344219456532362530",
+          "poolPrice": "129064407873922907479",
+          "refPrice": "135517628267619052854"
+        }
+      }
+    },
+    {
+      "attempt": 27,
+      "delayTarget": 2,
+      "moveBps": -500,
+      "priceBefore": "135517628267619052854",
+      "price": "128741746854238100211",
+      "loop": {
+        "seq": "28",
+        "origin": {
+          "block": "62703250",
+          "tx": "0xe88dd7651991f48e860fa5e8d67a6acb5f78b7bbcf543c52b5bc397599670451",
+          "ms": 1795462518800,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703257",
+            "tx": "0xdcd3379b1cfa2ee84534695f465db0b7fc075901d8116961399f6c65bd9ad8aa",
+            "ms": 1795462520200,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610093",
+            "tx": "0xc06bff0efbbc1267c4bbe292533acd327003e2c4cb97adcaa69d772bbc10f138",
+            "ms": 1795462521000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 2539,
+          "observed": 2660,
+          "closed": 3396,
+          "unichain": 4260
+        },
+        "observed": {
+          "block": "9079594",
+          "tx": "0x759716789336da069e89698703aa03a318198a567802b97dafac4186c2f87d45"
+        },
+        "closed": {
+          "block": "9079596",
+          "tx": "0xdc0143825fbdfb6965408ddafa72c1d0f4cd2d112bfddc5db49665e4fcf99752"
+        }
+      },
+      "raidLagMs": 2000,
+      "loopMs": 1400,
+      "raids": {
+        "protected": {
+          "tx": "0x9b2573072aaf20bcf26f2ba1e5ec09cf67ad8c040886f3d3d59b3f355f294775",
+          "at": {
+            "block": "62703260",
+            "tx": "0x9b2573072aaf20bcf26f2ba1e5ec09cf67ad8c040886f3d3d59b3f355f294775",
+            "ms": 1795462520800,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "128741746854238100210",
+          "refPrice": "128741746854238100211"
+        },
+        "twin": {
+          "tx": "0x9424160da0f84637066008fd18788e1bcf9226a176ed092e2423f3ec0e1e423f",
+          "at": {
+            "block": "62703261",
+            "tx": "0x9424160da0f84637066008fd18788e1bcf9226a176ed092e2423f3ec0e1e423f",
+            "ms": 1795462521000,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "taken",
+          "pnl": "5315008837050946981591",
+          "poolPrice": "135517628267619052853",
+          "refPrice": "128741746854238100211"
+        }
+      }
+    },
+    {
+      "attempt": 28,
+      "delayTarget": 2.2,
+      "moveBps": 500,
+      "priceBefore": "128741746854238100211",
+      "price": "135178834196950005221",
+      "loop": {
+        "seq": "29",
+        "origin": {
+          "block": "62703276",
+          "tx": "0xa906ccecec1f1951b3d00c3aa8a5998a6152268d3994ce04ac1a80d9b9b69408",
+          "ms": 1795462524000,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703283",
+            "tx": "0xd464dbca942c63ef2dd61d7925d88010cf4414b9e8fa086b5412da6de7124c54",
+            "ms": 1795462525400,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610098",
+            "tx": "0xe19d6fbc8e1c711a348fe61d4d7e88e998c40375c74b402df6e8c533e26ab6ff",
+            "ms": 1795462526000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 2687,
+          "observed": 2809,
+          "unichain": 3790,
+          "closed": 3887
+        },
+        "observed": {
+          "block": "9079599",
+          "tx": "0x57ead5a4b5f0a1993f62c983b7e5eaddf183c1e9ec6cb1ee0af7bfb9d5b927e0"
+        },
+        "closed": {
+          "block": "9079601",
+          "tx": "0x9b34e98dad6c1e20b9e53007cfbc63f8f8475b1b884a708fc8d7017f3f7512fe"
+        }
+      },
+      "raidLagMs": 2200,
+      "loopMs": 1400,
+      "raids": {
+        "protected": {
+          "tx": "0x7613c2c7244e32552382ffabfa025c90c583ebade9b42fe43cbb83e6e2e45e93",
+          "at": {
+            "block": "62703287",
+            "tx": "0x7613c2c7244e32552382ffabfa025c90c583ebade9b42fe43cbb83e6e2e45e93",
+            "ms": 1795462526200,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "135178834196950005220",
+          "refPrice": "135178834196950005221"
+        },
+        "twin": {
+          "tx": "0x1c9eed4dbd44c41443ed8ff565829de6bd35a06e6222e0994d72348272c5e708",
+          "at": {
+            "block": "62703288",
+            "tx": "0x1c9eed4dbd44c41443ed8ff565829de6bd35a06e6222e0994d72348272c5e708",
+            "ms": 1795462526400,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "taken",
+          "pnl": "7975458625149164467080",
+          "poolPrice": "128741746854238100210",
+          "refPrice": "135178834196950005221"
+        }
+      }
+    },
+    {
+      "attempt": 29,
+      "delayTarget": 2.4,
+      "moveBps": -500,
+      "priceBefore": "135178834196950005221",
+      "price": "128419892487102504959",
+      "loop": {
+        "seq": "30",
+        "origin": {
+          "block": "62703301",
+          "tx": "0xea37508c0e65d1fb918cdfcda797cac713e5867e0662298ce07815d8bf4c664c",
+          "ms": 1795462529000,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703305",
+            "tx": "0xaae49cdeac09c07a7b2443071244525f11d5879534e9c448cca27d5f8ac9a60b",
+            "ms": 1795462529800,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610102",
+            "tx": "0xb776f83d65455e801b5b3dfb2cf49ad9b8dbb807a1a230671004fe305c3ce4d6",
+            "ms": 1795462530000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "unichain": 3065,
+          "base": 3085,
+          "observed": 3207,
+          "closed": 3752
+        },
+        "observed": {
+          "block": "9079603",
+          "tx": "0x0620293fc9e13a319e010455aff58bde8fda229637505035e142c5fce93cb0f8"
+        },
+        "closed": {
+          "block": "9079605",
+          "tx": "0xea7b5a49fc07da6fbf9b3321bbc318375b86482866394694c88ba67e3a16d7a6"
+        }
+      },
+      "raidLagMs": 2600,
+      "loopMs": 800,
+      "raids": {
+        "protected": {
+          "tx": "0xf2f9040b7ca9cd61f9cb031fa08f153affbd445fcc47306e07f2740a56d509bd",
+          "at": {
+            "block": "62703314",
+            "tx": "0xf2f9040b7ca9cd61f9cb031fa08f153affbd445fcc47306e07f2740a56d509bd",
+            "ms": 1795462531600,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "128419892487102504958",
+          "refPrice": "128419892487102504959"
+        },
+        "twin": {
+          "tx": "0xa008b244c012a161162a7c441dc00b2bc8264d5175baa880b4a70f4a29b1dd8b",
+          "at": {
+            "block": "62703314",
+            "tx": "0xa008b244c012a161162a7c441dc00b2bc8264d5175baa880b4a70f4a29b1dd8b",
+            "ms": 1795462531600,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5530290156210108381250",
+          "poolPrice": "135178834196950005220",
+          "refPrice": "128419892487102504959"
+        }
+      }
+    },
+    {
+      "attempt": 30,
+      "delayTarget": 2.6,
+      "moveBps": 500,
+      "priceBefore": "128419892487102504959",
+      "price": "134840887111457630206",
+      "loop": {
+        "seq": "31",
+        "origin": {
+          "block": "62703324",
+          "tx": "0xe2f824e00d0ef0904a06434dc9433e154ca1ef2d20dfacc2677c8658673fb525",
+          "ms": 1795462533600,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703331",
+            "tx": "0x20fa3ab9905cc71933939bc3a2a77bf05aaa46936245e699b2931e41200cdde7",
+            "ms": 1795462535000,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610108",
+            "tx": "0x8546b5c31d0b742607dfb59c269859a48edebd9864951546f20d735dffdaaaaa",
+            "ms": 1795462536000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 3363,
+          "observed": 3480,
+          "closed": 3985,
+          "unichain": 4416
+        },
+        "observed": {
+          "block": "9079608",
+          "tx": "0x0ac86c793729b7e4625da0685c9a0e3c32a5dcfd4001bd5da7bceca00eb6bd26"
+        },
+        "closed": {
+          "block": "9079610",
+          "tx": "0xcf579fbf41421b8e17660493d8f31f360c67d110907da8e7fd43e797f811d56b"
+        }
+      },
+      "raidLagMs": 2600,
+      "loopMs": 1400,
+      "raids": {
+        "protected": {
+          "tx": "0xf32c5726c18618eb8d87415b7cbdda61309c081e5557f8b707a7c915a13d2fae",
+          "at": {
+            "block": "62703337",
+            "tx": "0xf32c5726c18618eb8d87415b7cbdda61309c081e5557f8b707a7c915a13d2fae",
+            "ms": 1795462536200,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "134840887111457630205",
+          "refPrice": "134840887111457630206"
+        },
+        "twin": {
+          "tx": "0x41486a95b5b2fddb1a57ecab8f0209aea1ef4bff39bc07adf199ee4adebccd5c",
+          "at": {
+            "block": "62703338",
+            "tx": "0x41486a95b5b2fddb1a57ecab8f0209aea1ef4bff39bc07adf199ee4adebccd5c",
+            "ms": 1795462536400,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "taken",
+          "pnl": "10300562206823312257729",
+          "poolPrice": "128419892487102504958",
+          "refPrice": "134840887111457630206"
+        }
+      }
+    },
+    {
+      "attempt": 31,
+      "delayTarget": 2.8,
+      "moveBps": -500,
+      "priceBefore": "134840887111457630206",
+      "price": "128098842755884748695",
+      "loop": {
+        "seq": "32",
+        "origin": {
+          "block": "62703352",
+          "tx": "0xacd71ca9669d4565c6bf249b14764b756a6b0ef34bedc1851687fe7228fab5a0",
+          "ms": 1795462539200,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703358",
+            "tx": "0xf387b97226eca1e8595fd609f55545fad5ae8a5339e44a595a306907fc664dbb",
+            "ms": 1795462540400,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610113",
+            "tx": "0x2eb6632955b2088d1c98f0872bd3ca5dd0df82434c998aecacfc308644f0f254",
+            "ms": 1795462541000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "base": 3263,
+          "observed": 3383,
+          "closed": 3938,
+          "unichain": 4370
+        },
+        "observed": {
+          "block": "9079613",
+          "tx": "0xa6a93a7154016e2b9cb94ab10992f75272fbef5949f9d57e57d83ffc8cad44b4"
+        },
+        "closed": {
+          "block": "9079615",
+          "tx": "0x1e56adac18f1ff39c52c8ab8d427a262dc78b04b564f3c7d097b23298130d7e1"
+        }
+      },
+      "raidLagMs": 2800,
+      "loopMs": 1200,
+      "raids": {
+        "protected": {
+          "tx": "0x699c726ffb96b695e2249ac64f993f0e4882c47463cef38974d393d28f2934ba",
+          "at": {
+            "block": "62703366",
+            "tx": "0x699c726ffb96b695e2249ac64f993f0e4882c47463cef38974d393d28f2934ba",
+            "ms": 1795462542000,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "128098842755884748694",
+          "refPrice": "128098842755884748695"
+        },
+        "twin": {
+          "tx": "0x448e06b8745302c6e808a65a60143a3897450026cf7d43217f8eef98757792d4",
+          "at": {
+            "block": "62703366",
+            "tx": "0x448e06b8745302c6e808a65a60143a3897450026cf7d43217f8eef98757792d4",
+            "ms": 1795462542000,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "5285540847069067895234",
+          "poolPrice": "134840887111457630205",
+          "refPrice": "128098842755884748695"
+        }
+      }
+    },
+    {
+      "attempt": 32,
+      "delayTarget": 3,
+      "moveBps": 500,
+      "priceBefore": "128098842755884748695",
+      "price": "134503784893678986129",
+      "loop": {
+        "seq": "33",
+        "origin": {
+          "block": "62703379",
+          "tx": "0x3041a88dc78617eb9ec621fd3891ec4bffe992618df751c6692f143750cc6588",
+          "ms": 1795462544600,
+          "precise": true
+        },
+        "applied": {
+          "base": {
+            "block": "62703384",
+            "tx": "0x355bcdac39059dbae3ff0e09ad0bed89e37b04e6cba8d8d5f5724de8fdec6a38",
+            "ms": 1795462545600,
+            "precise": true
+          },
+          "unichain": {
+            "block": "68610118",
+            "tx": "0x43ae8000b093112e1f0d7742bac72d14b28a77bb7fa5f500414c3320fa79c8f9",
+            "ms": 1795462546000,
+            "precise": false
+          }
+        },
+        "seen": {
+          "unichain": 3666,
+          "base": 3679,
+          "observed": 3764,
+          "closed": 4282
+        },
+        "observed": {
+          "block": "9079618",
+          "tx": "0x5f707646a1c265536373fbc3aed51d63069da9f7c2f36a674f3b2de813470ff7"
+        },
+        "closed": {
+          "block": "9079620",
+          "tx": "0xbcade11880a1584713d91109aec99508a097c1a9a3cffec831c8f06fbf1a64f9"
+        }
+      },
+      "raidLagMs": 3000,
+      "loopMs": 1000,
+      "raids": {
+        "protected": {
+          "tx": "0xcf2996c38afd9db4cee69975718352edd15431008dbe3bd6b944a1e4b86906a8",
+          "at": {
+            "block": "62703394",
+            "tx": "0xcf2996c38afd9db4cee69975718352edd15431008dbe3bd6b944a1e4b86906a8",
+            "ms": 1795462547600,
+            "precise": true
+          },
+          "index": 2,
+          "outcome": "nothing",
+          "pnl": "0",
+          "poolPrice": "134503784893678986128",
+          "refPrice": "134503784893678986129"
+        },
+        "twin": {
+          "tx": "0x974f8327356f4466dc844f85219238a8c6a1074cbc42abd82de676a7cb4b77ad",
+          "at": {
+            "block": "62703394",
+            "tx": "0x974f8327356f4466dc844f85219238a8c6a1074cbc42abd82de676a7cb4b77ad",
+            "ms": 1795462547600,
+            "precise": true
+          },
+          "index": 3,
+          "outcome": "taken",
+          "pnl": "10087348158430099395697",
+          "poolPrice": "128098842755884748694",
+          "refPrice": "134503784893678986129"
+        }
+      }
+    }
+  ]
+}

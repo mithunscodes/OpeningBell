@@ -49,6 +49,7 @@ export const vaultAbi = parseAbi([
   "function valueAt(uint256 price) view returns (uint256)",
   "function holdings() view returns (uint256 stock, uint256 dollars)",
   "function liquidity() view returns (uint128)",
+  "function catchUp()",
 ]);
 
 export const arenaAbi = parseAbi([

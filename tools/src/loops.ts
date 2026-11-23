@@ -9,7 +9,7 @@
  * hop is good to about a second. Lasna's clock runs about a second behind, so it is never
  * subtracted from another chain's clock; Lasna hops are counted in blocks instead.
  */
-import { toHex, type Hash, type PublicClient } from "viem";
+import { toHex, type Hash, type Hex, type PublicClient } from "viem";
 import { conductorAbi, guardAbi } from "./abi.js";
 import { MARKET_ID, sleep, type Deployments, type VenueName } from "./config.js";
 
@@ -64,8 +64,9 @@ export async function follow(
   clients: Clients,
   loop: LoopRecord,
   from: Record<"base" | "unichain" | "lasna", bigint>,
-  opts: { sentAt: number; timeoutMs?: number; pollMs?: number },
+  opts: { sentAt: number; timeoutMs?: number; pollMs?: number; marketId?: Hex },
 ): Promise<LoopRecord> {
+  const marketId = opts.marketId ?? MARKET_ID;
   const venues = (Object.keys(d.venues) as VenueName[]).filter((v) => d.venues[v]);
   const deadline = Date.now() + (opts.timeoutMs ?? 60_000);
   const pollMs = opts.pollMs ?? 400;
@@ -85,7 +86,7 @@ export async function follow(
                 address: d.reactive.conductor,
                 abi: conductorAbi,
                 eventName,
-                args: { marketId: MARKET_ID, seq: loop.seq },
+                args: { marketId, seq: loop.seq },
                 fromBlock: from.lasna,
               })
             )[0];
@@ -117,7 +118,7 @@ export async function follow(
               address: v.guard,
               abi: guardAbi,
               eventName: "Applied",
-              args: { marketId: MARKET_ID, seq: loop.seq },
+              args: { marketId, seq: loop.seq },
               fromBlock: from[venue],
             })
           )[0];

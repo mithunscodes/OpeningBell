@@ -34,8 +34,13 @@ import { chain, chainNameOf, SYSTEM, sleep, type ChainName, type Deployments, ty
 
 /** Reactive Network's fixed sender for node-injected reactive transactions (SystemContract.INJ_ADDR). */
 export const INJECTOR: Address = "0x038E06667e42782E571EaB20432b9237F9bD6B82";
-/** The account that delivers callbacks on Base Sepolia and Unichain Sepolia, read from past deliveries. */
-export const OPERATOR: Address = "0xf7e866d726658f6c3f14b8ee537fe268a4d91ddb";
+/**
+ * The account that delivers callbacks on Base Sepolia and Unichain Sepolia, read from a real delivery
+ * (the proxies keep a list of allowed operators in `_operators`). Reactive rotated it after 16 Nov 2026:
+ * the earlier one, 0xf7e866d726658f6c3f14b8ee537fe268a4d91ddb, is no longer allowed.
+ * RELAY_OPERATOR overrides it if it changes again.
+ */
+export const OPERATOR: Address = (process.env.RELAY_OPERATOR as Address | undefined) ?? "0xF9F61C1D3325e2d4aBb55dd9e0Db84F7A0D914B0";
 /** Every reactive transaction is sent with this gas limit. */
 const REACT_GAS = 900_000n;
 const LASNA_GAS_PRICE = parseGwei("100");

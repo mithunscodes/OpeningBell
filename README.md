@@ -18,11 +18,16 @@ every chain confirmed, and re-sends by itself to one that did not.
 
 Built for the Reactive Omni Buildathon, track **Every Second Counts**.
 
-Live on Base Sepolia, Unichain Sepolia and Reactive Lasna, with all 20 contracts source-verified on
+Live on Base Sepolia, Unichain Sepolia and Reactive Lasna, with all 25 contracts source-verified on
 Sourcify. 128 tests cover 99.5% of the contracts' lines, and every push runs them on CI. Over 230
 market updates on the live testnets, the Base pool switched a median of **1.4 s** after the exchange
 event (2.4 s at worst), the Unichain pool about **2 s** after, and **230 of 230** loops closed. On Reactive's earlier ~7 s blocks
 the same loop would leave the old price tradable about three times as long. See [Speed](#speed).
+
+A bot that raced the live loop 32 times, reading each new price on the same chain as the news,
+got paid by the protected pool only when it landed before the loop re-priced it (median 1.0 s after
+the news): **0 of 19** raids after that point paid, while the unprotected twin paid **32 of 32**. See
+[Beat the bell](#beat-the-bell-how-fast-does-a-raider-have-to-be).
 
 Fed the real prices of NVIDIA's night of 11 to 12 November 2026, when the share opened 13.1% lower,
 the pools that ignore market hours lost **$54,908.75** to one raid each and the protected pools lost
@@ -210,6 +215,28 @@ On Base Sepolia, whose blocks are 200 ms apart, a 1.4 s window is about 7 blocks
 still land. At ~7 s Reactive blocks it would be about 22. The window is three times longer, every
 time the market moves.
 
+### Beat the bell: how fast does a raider have to be?
+
+The numbers above say when the pool switches. This asks the question a raider asks: how quickly do I
+have to act on the news to still get paid? A bot raced the live loop 32 times on a separate market
+with its own pair of pools (the demo is untouched). It read each new price from the feed itself, on
+the same chain as the news, which is the fastest attacker there can be, and raided both pools after
+a set wait from 0 to 3 seconds.
+
+| 23 November 2026, 32 attempts, 5% moves | Raids that paid |
+| --- | --- |
+| Protected pool, raid landed **before** the loop re-priced it | **13 of 13** |
+| Protected pool, raid landed **after** the loop re-priced it | **0 of 19** |
+| Twin pool, which nothing re-prices | **32 of 32** |
+
+![Each attempt: when the raid landed against when the loop re-priced the protected pool](docs/beat-the-bell.svg)
+
+The loop re-priced the protected pool a median of **1.0 s** after the news (0.6 s to 1.6 s, Base
+Sepolia block times). A raider that acts within about 0.8 s always wins, and that is the honest
+limit of any cross-chain loop; one that takes longer than 1.6 s never does. The twin keeps paying
+every raider, however slow, until somebody re-prices it by hand. Every attempt, with its
+transactions: [`bench/race/RESULTS.md`](bench/race/RESULTS.md).
+
 ## On-chain proof: three full loops
 
 Each row is one market update, from the origin event to the callbacks and back.
@@ -285,11 +312,13 @@ path of the first callback, which still leaves in `BellReactive`'s own reactive 
 | Unichain Sepolia | `BellHook` | `0x2026BACF74615ca0c767b885C891067356E0C880` |
 | Unichain Sepolia | `BellVault` | `0x513a29Ed7091BCF66490AcA9Dc04e52B3198142f` |
 | Unichain Sepolia | `Arena` | `0xE5a33BfF43DDB8c1518B883A8662c245958cAAd5` |
+| Base Sepolia | `BellVault` (race) | `0x68f5B42DA827e1945018340C2A5d9a6C35622A5A` |
+| Base Sepolia | `Arena` (race) | `0x326b04659aaafA70e6Ec2F2430f622fadEdFB45F` |
 
-Twin pools, tokens and pool ids are in [`deployments/`](deployments/).
+Twin pools, tokens and pool ids are in [`deployments/`](deployments/); the race pools of Beat the bell are in `deployments/race-84532.json`.
 
-**All 20 deployed contracts are source-verified on [Sourcify](https://sourcify.dev)**: the 12 above,
-plus both twin hooks, both twin vaults and the four play-money tokens. 19 are exact matches. The
+**All 25 deployed contracts are source-verified on [Sourcify](https://sourcify.dev)**: the 14 above,
+plus both twin hooks, the three twin vaults and the six play-money tokens. 24 are exact matches. The
 watchdog is a full match on its bytecode; only comment text changed after it was deployed. Look any
 address up at `https://repo.sourcify.dev/<chain id>/<address>` (Base Sepolia 84532, Unichain Sepolia
 1301, Reactive Lasna 5318007).
@@ -297,8 +326,9 @@ address up at `https://repo.sourcify.dev/<chain id>/<address>` (Base Sepolia 845
 ## Honest limits
 
 - **Two seconds is not zero.** OpeningBell shrinks the window from "until someone notices" to about
-  two seconds, on every chain at once. A bot that trades in the same block as the news can still win
-  that block. The after-hours fee and wide band make a closed market a poor place to bet on
+  two seconds, on every chain at once. A bot that acts within about a second of the news can still
+  win, and [Beat the bell](#beat-the-bell-how-fast-does-a-raider-have-to-be) measures exactly where
+  that line falls. The after-hours fee and wide band make a closed market a poor place to bet on
   overnight news, which is where the largest gaps happen.
 - **The feed is a stand-in.** In the demo, prices are set by whoever plays the exchange, not by a
   licensed exchange feed. The replayed night used NVIDIA's real prices, but we published them.
@@ -313,8 +343,8 @@ address up at `https://repo.sourcify.dev/<chain id>/<address>` (Base Sepolia 845
 | `src/venue/` | `BellGuard`, `BellHook`, `BellVault`, `Arena`, `MockToken` and the price maths |
 | `script/` | Deployment scripts, the same ones the local rehearsal uses |
 | `test/` | Foundry tests (128, including fuzz tests), with a local simulator of Reactive Omni and the real Uniswap v4 PoolManager bytecode from Base Sepolia |
-| `tools/` | Fork rehearsal, latency benchmark, real-night replay, loop watcher, and a local relay for trying the demo offline |
-| `bench/` | The benchmark's results, and the replayed night with its sources and transactions |
+| `tools/` | Fork rehearsal, latency benchmark, real-night replay, the raider-speed sweep ("Beat the bell"), loop watcher, and a local relay for trying the demo offline |
+| `bench/` | The benchmark's results, the replayed night with its sources and transactions, and the raider-speed sweep |
 | `web/` | The demo page, a static build that Vercel deploys using `vercel.json` |
 | `docs/` | Static analysis report and the page screenshot |
 | `.github/workflows/` | CI: tests, coverage, Slither, demo page build |
@@ -373,6 +403,15 @@ The real night, from any funded testnet wallet (it uses the public exchange butt
 
 ```sh
 REPLAY_PRIVATE_KEY=0x... npx tsx src/replay.ts ../bench/replay/nvda-2026-11-12.json
+```
+
+Beat the bell, with a key that may publish on the feed (the race market has no public buttons).
+Rehearse it on forks first, then add the race pools on Base Sepolia once and run the sweep:
+
+```sh
+tools/race-rehearse.sh                                                   # on forks, five attempts
+forge script script/DeployRace.s.sol:DeployRace --rpc-url https://sepolia.base.org --broadcast
+cd tools && RACE_PRIVATE_KEY=0x... npx tsx src/race.ts                   # 32 attempts, 0.0 to 3.0 s
 ```
 
 ## Costs
