@@ -62,6 +62,10 @@ jobs:
           npm ci
           npx tsc --noEmit
 
+      - name: README claims (re-derived from bench/)
+        working-directory: tools
+        run: npx tsx src/claims.ts
+
       - name: Demo page
         run: |
           npm ci --prefix web

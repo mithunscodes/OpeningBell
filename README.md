@@ -19,8 +19,9 @@ every chain confirmed, and re-sends by itself to one that did not.
 Built for the Reactive Omni Buildathon, track **Every Second Counts**.
 
 Live on Base Sepolia, Unichain Sepolia and Reactive Lasna, with all 25 contracts source-verified on
-Sourcify. 128 tests cover 99.5% of the contracts' lines, and every push runs them on CI. Over 230
-market updates on the live testnets, the Base pool switched a median of **1.4 s** after the exchange
+Sourcify. 195 tests cover every line of the contracts and catch 2044 of the 2238 small changes
+[mutation testing](docs/mutation.md) made to them, and every change they miss is explained. Every push
+runs them on CI. Over 230 market updates on the live testnets, the Base pool switched a median of **1.4 s** after the exchange
 event (2.4 s at worst), the Unichain pool about **2 s** after, and **230 of 230** loops closed. On Reactive's earlier ~7 s blocks
 the same loop would leave the old price tradable about three times as long. See [Speed](#speed).
 
@@ -30,8 +31,12 @@ the news): **0 of 19** raids after that point paid, while the unprotected twin p
 [Beat the bell](#beat-the-bell-how-fast-does-a-raider-have-to-be).
 
 Fed the real prices of NVIDIA's night of 11 to 12 November 2026, when the share opened 13.1% lower,
-the pools that ignore market hours lost **$54,908.75** to one raid each and the protected pools lost
+the pools that ignore market hours lost **$54,908.76** to one raid each and the protected pools lost
 **nothing**. See [A real night, replayed](#a-real-night-replayed).
+
+Don't take these numbers on trust: [`docs/CLAIMS.md`](docs/CLAIMS.md) links every one of them to the file,
+transaction or test behind it, and `tools/src/claims.ts` re-checks them, read-only, against the raw data,
+the chains and Sourcify.
 
 **[Play the demo](https://openingbell-two.vercel.app)** with any wallet and a little test ETH.
 
@@ -138,7 +143,7 @@ After the opening bell, one raid on every pool:
 | Protected pool, already at $151.01 | [nothing to take](https://sepolia.basescan.org/tx/0x2d37bb2ef2b237d15e2a8234f49777e79008f445e3f0f2132ac737a9456ea80c) | [nothing to take](https://sepolia.uniscan.xyz/tx/0x18281bdbb836afe2d399f1f9e34975f57eb737f506f2764e1c4d6dace87855e1) |
 | Protected pool before the open, at the pre-market $154.68 | [nothing to take](https://sepolia.basescan.org/tx/0x32b134067a1d2f7e0af82021aec1a66e314ee0678d1df4987e9ffd0b581d139f) | [nothing to take](https://sepolia.uniscan.xyz/tx/0x14da48e65787dfdd333b490c2c9c48e941fa2b18934f25fcc6b0d47f1e7d396b) |
 
-**$54,908.75 left the two pools that ignored the bell. Nothing left the two that followed it.** To
+**$54,908.76 left the two pools that ignored the bell. Nothing left the two that followed it.** To
 take anything from a protected pool, a raider had to trade inside the 1.6 seconds between the opening
 bell and the Base pool's switch (about 3 seconds on Unichain).
 
@@ -333,6 +338,10 @@ address up at `https://repo.sourcify.dev/<chain id>/<address>` (Base Sepolia 845
 - **The feed is a stand-in.** In the demo, prices are set by whoever plays the exchange, not by a
   licensed exchange feed. The replayed night used NVIDIA's real prices, but we published them.
 - **Testnets and play money only.** The stock token is a mock with no value.
+- **One owner rule the watchdog does not enforce.** Mutation testing showed that lowering the
+  watchdog's `maxRetries` while a watch already has more rounds would make it re-send to a venue
+  that stays down until its round count overflows. The owner switches the watchdog off before
+  lowering it ([details](docs/mutation.md#the-one-thing-it-found-in-a-contract)).
 
 ## Repository
 
@@ -342,11 +351,11 @@ address up at `https://repo.sourcify.dev/<chain id>/<address>` (Base Sepolia 845
 | `src/reactive/` | `BellReactive`, the conductor on Reactive Network, and `BellWatchdog`, which re-sends to a venue that never confirmed |
 | `src/venue/` | `BellGuard`, `BellHook`, `BellVault`, `Arena`, `MockToken` and the price maths |
 | `script/` | Deployment scripts, the same ones the local rehearsal uses |
-| `test/` | Foundry tests (128, including fuzz tests), with a local simulator of Reactive Omni and the real Uniswap v4 PoolManager bytecode from Base Sepolia |
-| `tools/` | Fork rehearsal, latency benchmark, real-night replay, the raider-speed sweep ("Beat the bell"), loop watcher, and a local relay for trying the demo offline |
-| `bench/` | The benchmark's results, the replayed night with its sources and transactions, and the raider-speed sweep |
+| `test/` | Foundry tests (195, including fuzz tests), with a local simulator of Reactive Omni and the real Uniswap v4 PoolManager bytecode from Base Sepolia |
+| `tools/` | Fork rehearsal, latency benchmark, real-night replay, the raider-speed sweep ("Beat the bell"), the claims checker, mutation testing, loop watcher, and a local relay for trying the demo offline |
+| `bench/` | The benchmark's results, the replayed night with its sources and transactions, the raider-speed sweep, and the mutation testing results |
 | `web/` | The demo page, a static build that Vercel deploys using `vercel.json` |
-| `docs/` | Static analysis report and the page screenshot |
+| `docs/` | Every claim with its evidence (`CLAIMS.md`), the mutation testing report, the static analysis report and the page screenshot |
 | `.github/workflows/` | CI: tests, coverage, Slither, demo page build |
 
 ## Build, test and run
@@ -356,24 +365,38 @@ Needs [Foundry](https://book.getfoundry.sh/) and Node 20 or newer.
 ```sh
 git clone --recurse-submodules https://github.com/mithunscodes/OpeningBell
 cd OpeningBell
-forge test                     # 128 tests, 5 of them fuzz tests
+forge test                     # 195 tests, 8 of them fuzz tests
 forge coverage --no-match-coverage "(test|script|lib)"
 slither .                      # static analysis, see docs/static-analysis.md
 ```
 
 | Coverage of `src/` | Lines | Statements | Branches | Functions |
 | --- | --- | --- | --- | --- |
-| All contracts | **99.5%** (659/662) | 98.5% (775/787) | **91.8%** (135/147) | 100% (113/113) |
+| All contracts | **100%** (662/662) | 99.4% (782/787) | **95.9%** (141/147) | 100% (113/113) |
 
-The branches left uncovered are defensive checks that cannot trip with our own contracts (a token
-transfer returning `false`, a swap failing for a reason other than a halt), tick clamps that only
-matter at extreme prices, and a few early returns.
+The six branches left uncovered are two token transfers returning `false` (our tokens never do), two
+tick clamps that only matter at prices the price maths already refuses, the raid's early return when
+its limit equals the pool's price to the last bit, and the conductor's owner check, which
+`test_OwnerOnlyControls` trips but the coverage tool does not count.
 
 Every push runs the tests, coverage, a format check, Slither and the demo page's build on GitHub
 Actions (`.github/workflows/test.yml`).
 
 **Static analysis:** Slither reports 93 results, none of them high and none exploitable. Each one is
 explained in [`docs/static-analysis.md`](docs/static-analysis.md).
+
+**Mutation testing:** slither-mutate changed the contracts one small thing at a time, 2238 times, and
+ran the tests against each change. The tests as submitted caught 1791. The misses showed where they were
+thin, and with 67 new tests they now catch 2044. Of the other 194, 140 change nothing, 48 matter
+only in states the system cannot reach, 5 only at one exact value, and one only if the owner lowers
+the watchdog's retry limit mid-watch (see [Honest limits](#honest-limits)). Each is listed with its reason
+in [`docs/mutation.md`](docs/mutation.md).
+
+Every number in this README, re-checked from the raw data, the chains and Sourcify (read-only, no key):
+
+```sh
+cd tools && npm install && npx tsx src/claims.ts --all
+```
 
 The whole system on local forks of all three networks, with no wallet and no testnet funds. A
 local relay plays the part of the Reactive Network node, using the real system contract and

@@ -613,6 +613,356 @@ contract BellLoopTest is OmniTest {
     }
 
     // ---------------------------------------------------------------------------------------------
+    // Records and announcements (added after mutation testing found them unchecked)
+    // ---------------------------------------------------------------------------------------------
+
+    function test_TheConductorAnnouncesItsSetUp() public {
+        vm.expectEmit(true, true, false, false);
+        emit BellReactive.OwnershipTransferred(address(0), address(this));
+        vm.expectEmit(false, false, false, true);
+        emit BellReactive.AckModeSet(BellReactive.AckMode.OnStatusChange);
+        new BellReactive(BASE_SEPOLIA, address(feed), BellReactive.AckMode.OnStatusChange);
+    }
+
+    function test_AGoodUpdateIsNeverAlsoReportedAsIgnored() public {
+        vm.warp(1_800_000_000);
+        uint256 before = _count(address(conductor), IGNORED_SIG);
+        _publish(MarketTypes.OPEN, 140e18); // AckMode.Always: both confirmations come back too
+        assertEq(_count(address(conductor), IGNORED_SIG), before, "neither the update nor its confirmations");
+        assertEq(_count(address(conductor), LOOP_CLOSED_SIG), 1);
+        assertEq(_count(address(conductor), FORWARDED_SIG), 2, "one send per venue");
+        assertEq(_count(address(conductor), keccak256("VenueAcked(bytes32,uint64,uint256,uint8)")), 2, "one per venue");
+
+        (,, uint64 sourceTime,) = conductor.markets(NVDA);
+        assertEq(sourceTime, 1_800_000_000, "the time at the source is kept");
+    }
+
+    function test_IgnoredLogsSayWhy() public {
+        uint64 seq = _publish(MarketTypes.OPEN, 100e18);
+        uint256 malformed = conductor.IGNORED_MALFORMED();
+        uint256 stale = conductor.IGNORED_STALE();
+
+        IReactive.LogRecord memory log_ = IReactive.LogRecord({
+            chainId: BASE_SEPOLIA,
+            contractAddress: address(feed),
+            topic0: MarketTypes.MARKET_UPDATE_TOPIC,
+            topic1: uint256(NVDA),
+            topic2: 7, // not a status
+            topic3: 0,
+            data: abi.encode(uint256(100e18), uint64(seq + 1), uint64(1)),
+            blockNumber: block.number,
+            opCode: 3,
+            blockHash: 0,
+            txHash: 42,
+            logIndex: 0
+        });
+        vm.startPrank(address(OMNI));
+
+        vm.expectEmit(true, false, false, true, address(conductor));
+        emit BellReactive.Ignored(malformed, BASE_SEPOLIA, address(feed), 42);
+        conductor.react(log_);
+
+        log_.topic2 = MarketTypes.OPEN;
+        log_.data = abi.encode(uint256(0), uint64(seq + 1), uint64(1)); // zero price
+        vm.expectEmit(true, false, false, true, address(conductor));
+        emit BellReactive.Ignored(malformed, BASE_SEPOLIA, address(feed), 42);
+        conductor.react(log_);
+
+        log_.data = abi.encode(uint256(100e18), uint64(seq), uint64(1)); // already seen
+        vm.expectEmit(true, false, false, true, address(conductor));
+        emit BellReactive.Ignored(stale, BASE_SEPOLIA, address(feed), 42);
+        conductor.react(log_);
+        vm.stopPrank();
+    }
+
+    function test_TheGuardRecordsWhenItAppliedAndAnnouncesWhatItIgnored() public {
+        vm.expectEmit(true, false, false, true, address(baseGuard));
+        emit BellGuard.ListenerSet(NVDA, address(0xBEEF));
+        baseGuard.setListener(NVDA, address(0xBEEF));
+        assertEq(baseGuard.listeners(NVDA), address(0xBEEF));
+        baseGuard.setListener(NVDA, address(0));
+
+        vm.warp(1_800_000_000);
+        _publish(MarketTypes.OPEN, 100e18);
+        vm.warp(1_800_000_060);
+        uint64 seq = _publish(MarketTypes.HALTED, 100e18);
+        (,,,,, uint64 appliedAt) = baseGuard.current(NVDA);
+        assertEq(appliedAt, 1_800_000_060);
+
+        vm.expectEmit(true, false, false, true, address(baseGuard));
+        emit BellGuard.Stale(NVDA, 1, seq);
+        vm.prank(address(_proxy(BASE_SEPOLIA)));
+        baseGuard.applyState(address(conductor), NVDA, 1, MarketTypes.OPEN, 100e18, OPEN_FEE, OPEN_RANGE, true, 0, 0);
+    }
+
+    function test_AListenerWithoutGasDoesNotStopTheStateLanding() public {
+        bytes memory payload = abi.encodeCall(
+            BellGuard.applyState,
+            (
+                address(conductor),
+                NVDA,
+                uint64(1),
+                MarketTypes.HALTED,
+                uint256(100e18),
+                uint24(0),
+                uint24(0),
+                false,
+                0,
+                0
+            )
+        );
+        address proxy = address(_proxy(BASE_SEPOLIA));
+
+        // The gas it takes to apply the state when there is no listener.
+        uint256 snap = vm.snapshotState();
+        vm.prank(proxy);
+        uint256 before = gasleft();
+        (bool ok,) = address(baseGuard).call(payload);
+        uint256 needed = before - gasleft();
+        assertTrue(ok);
+        vm.revertToState(snap);
+
+        // With a listener and only 30,000 gas to spare, less than the guard keeps back for itself, the
+        // listener gets nothing and fails, and the state still lands.
+        baseGuard.setListener(NVDA, address(new RecordingListener()));
+        vm.prank(proxy);
+        (ok,) = address(baseGuard).call{ gas: needed + 30_000 }(payload);
+        assertTrue(ok, "the callback did not revert");
+        _assertGuard(baseGuard, MarketTypes.HALTED, 100e18, 0, 0, 1);
+    }
+
+    function test_SettlingDebtPaysWhatIsOwed() public {
+        vm.deal(address(conductor), 1 ether);
+        vm.deal(address(baseGuard), 1 ether);
+        address proxy = address(_proxy(BASE_SEPOLIA));
+        vm.mockCall(address(OMNI), abi.encodeWithSignature("debt(address)", address(conductor)), abi.encode(0.1 ether));
+        vm.mockCall(proxy, abi.encodeWithSignature("debt(address)", address(baseGuard)), abi.encode(0.2 ether));
+
+        vm.startPrank(stranger);
+        conductor.coverDebt();
+        baseGuard.coverDebt();
+        vm.stopPrank();
+
+        assertEq(address(conductor).balance, 0.9 ether);
+        assertEq(address(baseGuard).balance, 0.8 ether);
+    }
+
+    function test_OwnerChangesAreAnnouncedAndTakeEffect() public {
+        BellReactive.Policy[3] memory p = _policy();
+        p[MarketTypes.CLOSED] = BellReactive.Policy(10_000, 2_000);
+
+        vm.expectEmit(true, true, true, false, address(conductor));
+        emit BellReactive.VenueAdded(2, UNICHAIN_SEPOLIA, stranger);
+        conductor.addVenue(UNICHAIN_SEPOLIA, stranger, conductor.MIN_CALLBACK_GAS(), 0, _policy());
+        conductor.updateVenue(2, conductor.MIN_CALLBACK_GAS(), 0, false, _policy()); // the minimum is allowed
+
+        vm.expectEmit(true, false, false, false, address(conductor));
+        emit BellReactive.VenueUpdated(0);
+        conductor.updateVenue(0, 300_000, 0, true, p);
+        BellReactive.Venue memory v = conductor.venue(0);
+        assertEq(v.minMoveBps, 0, "the new minimum move");
+        assertEq(v.policy[MarketTypes.CLOSED].feePips, 10_000, "every status's policy is replaced, CLOSED too");
+
+        // With no minimum move, even a tiny price change is sent to venue 0.
+        _publish(MarketTypes.CLOSED, 100e18);
+        _publish(MarketTypes.CLOSED, 100.01e18);
+        _assertGuard(baseGuard, MarketTypes.CLOSED, 100.01e18, 10_000, 2_000, 2);
+        _assertGuard(uniGuard, MarketTypes.CLOSED, 100e18, CLOSED_FEE, CLOSED_RANGE, 1);
+
+        vm.expectEmit(false, false, false, true, address(conductor));
+        emit BellReactive.AckModeSet(BellReactive.AckMode.Never);
+        conductor.setAckMode(BellReactive.AckMode.Never);
+        vm.expectEmit(false, false, false, true, address(conductor));
+        emit BellReactive.PausedSet(true);
+        conductor.setPaused(true);
+        vm.expectEmit(true, true, false, false, address(conductor));
+        emit BellReactive.OwnershipTransferred(address(this), stranger);
+        conductor.transferOwnership(stranger);
+    }
+
+    function test_UnknownVenueNumbersAreRefusedCleanly() public {
+        _publish(MarketTypes.OPEN, 100e18);
+        vm.expectRevert(BellReactive.BadVenue.selector);
+        conductor.updateVenue(7, 300_000, 0, true, _policy());
+        vm.expectRevert(BellReactive.BadVenue.selector);
+        conductor.resync(NVDA, 7);
+    }
+
+    function _feedLog(uint256 topic0, uint8 status, bytes memory data)
+        internal
+        view
+        returns (IReactive.LogRecord memory)
+    {
+        return IReactive.LogRecord({
+            chainId: BASE_SEPOLIA,
+            contractAddress: address(feed),
+            topic0: topic0,
+            topic1: uint256(NVDA),
+            topic2: status,
+            topic3: 0,
+            data: data,
+            blockNumber: block.number,
+            opCode: 3,
+            blockHash: 0,
+            txHash: 42,
+            logIndex: 0
+        });
+    }
+
+    function _expectIgnored(uint256 reason, IReactive.LogRecord memory log_) internal {
+        vm.expectEmit(true, false, false, true, address(conductor));
+        emit BellReactive.Ignored(reason, log_.chainId, log_.contractAddress, log_.txHash);
+        vm.prank(address(OMNI));
+        conductor.react(log_);
+    }
+
+    function test_OnlyExactlyTheRightLogsAreActedOn() public {
+        uint64 seq = _publish(MarketTypes.OPEN, 100e18);
+        uint256 unknown = conductor.IGNORED_UNKNOWN_SOURCE();
+        uint256 malformed = conductor.IGNORED_MALFORMED();
+        uint256 stale = conductor.IGNORED_STALE();
+        bytes memory next = abi.encode(uint256(90e18), uint64(seq + 1), uint64(1));
+
+        // Another event of the feed, whatever its topic, is not a market update.
+        _expectIgnored(unknown, _feedLog(MarketTypes.MARKET_UPDATE_TOPIC + 1, MarketTypes.OPEN, next));
+        _expectIgnored(unknown, _feedLog(MarketTypes.MARKET_UPDATE_TOPIC - 1, MarketTypes.OPEN, next));
+        // Another event of a guard is not a confirmation.
+        IReactive.LogRecord memory fromGuard = _ack(baseGuard, BASE_SEPOLIA, seq, abi.encode(uint256(MarketTypes.OPEN)));
+        fromGuard.topic0 = MarketTypes.ACK_TOPIC + 1;
+        _expectIgnored(unknown, fromGuard);
+        fromGuard.topic0 = MarketTypes.ACK_TOPIC - 1;
+        _expectIgnored(unknown, fromGuard);
+        fromGuard.topic0 = uint256(APPLIED_SIG);
+        _expectIgnored(unknown, fromGuard);
+
+        // A market update must be exactly three words long.
+        _expectIgnored(
+            malformed, _feedLog(MarketTypes.MARKET_UPDATE_TOPIC, MarketTypes.OPEN, bytes.concat(next, bytes32(0)))
+        );
+        // The same observation twice is stale the second time.
+        _expectIgnored(
+            stale,
+            _feedLog(MarketTypes.MARKET_UPDATE_TOPIC, MarketTypes.OPEN, abi.encode(uint256(90e18), seq, uint64(1)))
+        );
+
+        // A confirmation must be exactly one word long and carry a sequence number that fits.
+        bytes memory ok = abi.encode(uint256(MarketTypes.OPEN));
+        _expectIgnored(malformed, _ack(baseGuard, BASE_SEPOLIA, seq, hex"01"));
+        _expectIgnored(malformed, _ack(baseGuard, BASE_SEPOLIA, seq, bytes.concat(ok, ok)));
+        _expectIgnored(malformed, _ack(baseGuard, BASE_SEPOLIA, uint256(type(uint64).max) + 1, ok));
+        _expectIgnored(stale, _ack(baseGuard, BASE_SEPOLIA, type(uint64).max, ok)); // fits, but never sent
+
+        (, uint64 known,,) = conductor.markets(NVDA);
+        assertEq(known, seq, "none of them was taken as an update");
+        assertEq(_count(address(conductor), FORWARDED_SIG), 2, "and nothing more was sent");
+    }
+
+    function test_SequenceNumbersBeyondThirtyTwoBitsWork() public {
+        uint64 big = uint64(1) << 40;
+        IReactive.LogRecord memory log_ =
+            _feedLog(MarketTypes.MARKET_UPDATE_TOPIC, MarketTypes.OPEN, abi.encode(uint256(100e18), big, uint64(1)));
+        vm.expectEmit(true, true, false, true, address(conductor));
+        emit BellReactive.Observed(NVDA, big, MarketTypes.OPEN, 100e18, log_.blockNumber, 42);
+        vm.prank(address(OMNI));
+        conductor.react(log_);
+        _pump();
+
+        (, uint64 seq,,) = conductor.markets(NVDA);
+        assertEq(seq, big);
+        _assertGuard(baseGuard, MarketTypes.OPEN, 100e18, OPEN_FEE, OPEN_RANGE, big);
+        (, uint64 acked,,,) = conductor.links(NVDA, 1);
+        assertEq(acked, big, "the confirmation of a large sequence number counts");
+        assertEq(_count(address(conductor), LOOP_CLOSED_SIG), 1);
+    }
+
+    function test_AnOlderConfirmationNeverWindsTheRecordBack() public {
+        _chainDown[UNICHAIN_SEPOLIA] = true;
+        uint64 first = _publish(MarketTypes.OPEN, 140e18);
+        uint64 second = _publish(MarketTypes.HALTED, 140e18);
+        bytes memory halted = abi.encode(uint256(MarketTypes.HALTED));
+
+        vm.startPrank(address(OMNI));
+        conductor.react(_ack(uniGuard, UNICHAIN_SEPOLIA, second, halted));
+        vm.stopPrank();
+        _expectIgnored(
+            conductor.IGNORED_STALE(), _ack(uniGuard, UNICHAIN_SEPOLIA, first, abi.encode(uint256(MarketTypes.OPEN)))
+        );
+
+        (, uint64 acked,,,) = conductor.links(NVDA, 1);
+        assertEq(acked, second);
+        assertTrue(conductor.inSync(NVDA));
+    }
+
+    function test_TheLoopClosesOnlyWithTheLastConfirmation() public {
+        // Whichever venue confirms last, the loop closes then and not before.
+        for (uint256 late = 0; late != 2; ++late) {
+            (BellGuard lateGuard, uint256 lateChain) =
+                late == 0 ? (baseGuard, BASE_SEPOLIA) : (uniGuard, UNICHAIN_SEPOLIA);
+            _chainDown[lateChain] = true;
+            uint64 seq = _publish(late == 0 ? MarketTypes.OPEN : MarketTypes.HALTED, 100e18);
+            uint256 closedBefore = _count(address(conductor), LOOP_CLOSED_SIG);
+            _chainDown[lateChain] = false;
+
+            assertEq(_count(address(conductor), LOOP_CLOSED_SIG), closedBefore, "one venue still owes");
+            assertFalse(conductor.inSync(NVDA));
+
+            (uint8 status,,,) = conductor.markets(NVDA);
+            vm.prank(address(OMNI));
+            conductor.react(_ack(lateGuard, lateChain, seq, abi.encode(uint256(status))));
+            _pump();
+            assertEq(_count(address(conductor), LOOP_CLOSED_SIG), closedBefore + 1, "closed by the last one");
+        }
+    }
+
+    function test_AVenueThatWasNeverToldKeepsTheLoopOpen() public {
+        // A third venue, switched off before the first update and back on before the last confirmation.
+        BellGuard third = new BellGuard(IPayable(payable(address(_proxy(BASE_SEPOLIA)))), address(conductor));
+        _place(address(third), BASE_SEPOLIA);
+        conductor.addVenue(BASE_SEPOLIA, address(third), 300_000, 10, _policy());
+
+        // Never sent anything (sentSeq 0), on a CLOSED market (status 0, the zero value).
+        _thirdOff(2);
+        _chainDown[UNICHAIN_SEPOLIA] = true;
+        uint64 seq = _publish(MarketTypes.CLOSED, 100e18);
+        _assertLoopStaysOpenWhenThirdReturns(seq, MarketTypes.CLOSED);
+
+        // Sent OPEN, then the market halts while it is off: it holds a lower status than the market's.
+        _resetLoop(MarketTypes.OPEN);
+        _thirdOff(2);
+        _chainDown[UNICHAIN_SEPOLIA] = true;
+        seq = _publish(MarketTypes.HALTED, 100e18);
+        _assertLoopStaysOpenWhenThirdReturns(seq, MarketTypes.HALTED);
+
+        // Sent HALTED, then the market closes while it is off: it holds a higher status.
+        _resetLoop(MarketTypes.HALTED);
+        _thirdOff(2);
+        _chainDown[UNICHAIN_SEPOLIA] = true;
+        seq = _publish(MarketTypes.CLOSED, 100e18);
+        _assertLoopStaysOpenWhenThirdReturns(seq, MarketTypes.CLOSED);
+    }
+
+    function _thirdOff(uint256 venueId) internal {
+        conductor.updateVenue(venueId, 300_000, 10, false, _policy());
+    }
+
+    function _resetLoop(uint8 status) internal {
+        conductor.updateVenue(2, 300_000, 10, true, _policy());
+        _publish(status, 100e18);
+        assertTrue(conductor.inSync(NVDA), "all three in step");
+    }
+
+    function _assertLoopStaysOpenWhenThirdReturns(uint64 seq, uint8 status) internal {
+        _chainDown[UNICHAIN_SEPOLIA] = false;
+        conductor.updateVenue(2, 300_000, 10, true, _policy()); // back on, but never told about `seq`
+        uint256 closedBefore = _count(address(conductor), LOOP_CLOSED_SIG);
+        vm.prank(address(OMNI));
+        conductor.react(_ack(uniGuard, UNICHAIN_SEPOLIA, seq, abi.encode(uint256(status))));
+        _pump();
+        assertEq(_count(address(conductor), LOOP_CLOSED_SIG), closedBefore, "the third venue is behind");
+        assertFalse(conductor.inSync(NVDA));
+    }
+
+    // ---------------------------------------------------------------------------------------------
     // Randomised sequences
     // ---------------------------------------------------------------------------------------------
 

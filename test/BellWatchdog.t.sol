@@ -246,6 +246,7 @@ contract BellWatchdogTest is OmniTest {
 
         _tick(10);
 
+        assertEq(_count(address(watchdog), RETRIED_SIG), MAX_RETRIES, "nothing more is sent once it gives up");
         Vm.Log memory gaveUp = _last(address(watchdog), GAVE_UP_SIG);
         assertEq(uint256(gaveUp.topics[2]), seq);
         assertEq(abi.decode(gaveUp.data, (uint8)), MAX_RETRIES);
@@ -414,10 +415,13 @@ contract BellWatchdogTest is OmniTest {
         _publish(MarketTypes.OPEN, 100e18);
         vm.roll(block.number + 20);
 
-        // Right topic, wrong contract; right contract, wrong chain.
+        // Right topic, wrong contract; right contract, wrong chain; right contract and chain, another event.
         vm.startPrank(address(OMNI));
         watchdog.react(_tickRecord(block.chainid, stranger));
         watchdog.react(_tickRecord(BASE_SEPOLIA, watchdog.CLOCK()));
+        IReactive.LogRecord memory other = _tickRecord(block.chainid, watchdog.CLOCK());
+        other.topic0 = 0;
+        watchdog.react(other);
         vm.stopPrank();
         _pump();
 
@@ -542,8 +546,10 @@ contract BellWatchdogTest is OmniTest {
     function test_MalformedFeedLogsOpenNoWatch() public {
         vm.startPrank(address(OMNI));
         watchdog.react(_feedRecord(hex"1234")); // wrong size
+        watchdog.react(_feedRecord(abi.encode(uint256(140e18), uint256(1), uint256(1), uint256(0)))); // too long
         watchdog.react(_feedRecord(abi.encode(uint256(140e18), uint256(0), uint256(1)))); // seq zero
         watchdog.react(_feedRecord(abi.encode(uint256(140e18), uint256(type(uint64).max) + 1, uint256(1)))); // seq too big
+        watchdog.react(_feedRecord(abi.encode(uint256(140e18), type(uint256).max, uint256(1)))); // far too big
         vm.stopPrank();
         _pump();
 
@@ -552,6 +558,75 @@ contract BellWatchdogTest is OmniTest {
         (uint64 seq,,, bool open) = _watch(NVDA);
         assertEq(seq, 0);
         assertFalse(open);
+    }
+
+    function _setUnichain(bool active) internal {
+        watchdog.execute(
+            address(conductor), abi.encodeCall(BellReactive.updateVenue, (1, 300_000, 10, active, _policy()))
+        );
+    }
+
+    /// @dev Publishes while Unichain is switched off, switches it back on, and lets the watchdog look.
+    function _publishWhileUnichainIsOff(uint8 status) internal returns (uint64 seq) {
+        _setUnichain(false);
+        seq = _publish(status, 100e18);
+        _setUnichain(true);
+        _tick(10);
+    }
+
+    function test_AVenueSwitchedBackOnIsCaughtUp() public {
+        // Never told about the market at all, and the market is closed (which is also what an empty record says).
+        uint64 seq = _publishWhileUnichainIsOff(MarketTypes.CLOSED);
+        assertEq(_count(address(watchdog), RETRIED_SIG), 1, "the venue that never heard of the market");
+        (uint8 status, uint64 uniSeq) = _status(uniGuard);
+        assertEq(uniSeq, seq);
+        assertEq(status, MarketTypes.CLOSED);
+        _tick(10);
+
+        // Told an older status, lower or higher than the new one.
+        seq = _publishWhileUnichainIsOff(MarketTypes.OPEN);
+        assertEq(_count(address(watchdog), RETRIED_SIG), 2, "closed, now open");
+        (status, uniSeq) = _status(uniGuard);
+        assertEq(status, MarketTypes.OPEN);
+        _tick(10);
+
+        seq = _publishWhileUnichainIsOff(MarketTypes.CLOSED);
+        assertEq(_count(address(watchdog), RETRIED_SIG), 3, "open, now closed");
+        (status, uniSeq) = _status(uniGuard);
+        assertEq(status, MarketTypes.CLOSED);
+        assertEq(uniSeq, seq);
+    }
+
+    function test_SwitchingOnAgainLeavesOpenWatchesAlone() public {
+        _chainDown[UNICHAIN_SEPOLIA] = true;
+        _publish(MarketTypes.OPEN, 100e18);
+        watchdog.setArmed(true);
+        assertTrue(_isOpen(NVDA));
+        assertEq(watchdog.openWatches().length, 1);
+        assertTrue(watchdog.ticking());
+    }
+
+    function test_SwitchingOffWithTheClockAlreadyOffLeavesTheClockAlone() public {
+        assertFalse(watchdog.ticking());
+        uint256 before = _count(address(watchdog), TICKING_SIG);
+        watchdog.setArmed(false);
+        _pump();
+        assertEq(_count(address(watchdog), TICKING_SIG), before);
+    }
+
+    function test_TheOwnerCanSendValueThroughTheWatchdog() public {
+        vm.deal(address(this), 1 ether);
+        watchdog.execute{ value: 1 ether }(stranger, "");
+        assertEq(stranger.balance, 1 ether);
+    }
+
+    function test_TheLargestSequenceNumberStillOpensAWatch() public {
+        vm.prank(address(OMNI));
+        watchdog.react(_feedRecord(abi.encode(uint256(140e18), uint256(type(uint64).max), uint256(1))));
+        _pump();
+        (uint64 seq,,, bool open) = _watch(NVDA);
+        assertEq(seq, type(uint64).max);
+        assertTrue(open);
     }
 
     function test_OwnerMovesFundsAndOwnershipCanMove() public {
@@ -572,6 +647,219 @@ contract BellWatchdogTest is OmniTest {
         assertEq(watchdog.owner(), stranger);
         vm.expectRevert(BellWatchdog.NotOwner.selector);
         watchdog.setArmed(false);
+    }
+
+    // ------------------------------------------------------------------------------------------
+    // Details that mutation testing found unchecked
+    // ------------------------------------------------------------------------------------------
+
+    function test_TheWatchdogAnnouncesItsSetUpAndChanges() public {
+        vm.expectEmit(true, true, false, false);
+        emit BellWatchdog.OwnershipTransferred(address(0), address(this));
+        vm.expectEmit(false, false, false, true);
+        emit BellWatchdog.TimingSet(RETRY_AFTER, MAX_RETRIES);
+        vm.expectEmit(false, false, false, true);
+        emit BellWatchdog.ArmedSet(true);
+        new BellWatchdog(conductor, RETRY_AFTER, MAX_RETRIES);
+
+        vm.expectEmit(false, false, false, true, address(watchdog));
+        emit BellWatchdog.TimingSet(20, 5);
+        watchdog.setTiming(20, 5);
+        vm.expectEmit(false, false, false, true, address(watchdog));
+        emit BellWatchdog.ArmedSet(true);
+        watchdog.setArmed(true);
+        vm.expectEmit(true, true, false, false, address(watchdog));
+        emit BellWatchdog.OwnershipTransferred(address(this), stranger);
+        watchdog.transferOwnership(stranger);
+    }
+
+    function test_TheClockIsSwitchedOnAndOffOutLoud() public {
+        uint64 seq = _publish(MarketTypes.OPEN, 100e18);
+        Vm.Log memory watching = _last(address(watchdog), WATCHING_SIG);
+        assertEq(watching.topics[1], NVDA);
+        assertEq(uint256(watching.topics[2]), seq);
+        assertEq(_count(address(watchdog), TICKING_SIG), 1);
+        assertTrue(abi.decode(_last(address(watchdog), TICKING_SIG).data, (bool)), "on");
+
+        _tick(10);
+        assertEq(_count(address(watchdog), TICKING_SIG), 2);
+        assertFalse(abi.decode(_last(address(watchdog), TICKING_SIG).data, (bool)), "off when all is settled");
+
+        _chainDown[UNICHAIN_SEPOLIA] = true;
+        _publish(MarketTypes.HALTED, 100e18);
+        assertEq(_count(address(watchdog), TICKING_SIG), 3);
+        watchdog.setArmed(false);
+        _pump();
+        assertEq(_count(address(watchdog), TICKING_SIG), 4);
+        assertFalse(abi.decode(_last(address(watchdog), TICKING_SIG).data, (bool)), "off when disarmed");
+    }
+
+    function test_EachRoundWaitsTheWholeDeadlineAgain() public {
+        watchdog.setTiming(20, MAX_RETRIES);
+        _chainDown[UNICHAIN_SEPOLIA] = true;
+        _publish(MarketTypes.OPEN, 100e18);
+
+        _tick(10);
+        assertEq(_count(address(watchdog), RETRIED_SIG), 0);
+        _tick(10);
+        assertEq(_count(address(watchdog), RETRIED_SIG), 1, "round one after 20 blocks");
+        _tick(10);
+        assertEq(_count(address(watchdog), RETRIED_SIG), 1, "round two waits 20 blocks again");
+        _tick(10);
+        assertEq(_count(address(watchdog), RETRIED_SIG), 2);
+    }
+
+    function _isOpen(bytes32 marketId) internal view returns (bool open) {
+        (,,, open) = _watch(marketId);
+    }
+
+    function _listed(bytes32 marketId) internal view returns (bool) {
+        bytes32[] memory open = watchdog.openWatches();
+        for (uint256 i = 0; i != open.length; ++i) {
+            if (open[i] == marketId) return true;
+        }
+        return false;
+    }
+
+    function test_ClosingOneWatchLeavesTheOthersInPlace() public {
+        bytes32 amd = keccak256("AMD/USD");
+        _chainDown[UNICHAIN_SEPOLIA] = true;
+        _publish(NVDA, MarketTypes.OPEN, 100e18); // first in the list, Unichain misses it
+        _chainDown[UNICHAIN_SEPOLIA] = false;
+        _publish(TSLA, MarketTypes.OPEN, 250e18); // in the middle, fine
+        _chainDown[UNICHAIN_SEPOLIA] = true;
+        _publish(amd, MarketTypes.OPEN, 50e18); // last, Unichain misses it
+
+        _tick(10); // TSLA settles and is closed; the other two are re-sent (and lost again)
+        assertEq(watchdog.openWatches().length, 2);
+        assertTrue(_listed(NVDA) && _isOpen(NVDA), "NVDA still watched");
+        assertTrue(_listed(amd) && _isOpen(amd), "AMD still watched");
+        assertFalse(_listed(TSLA) || _isOpen(TSLA), "TSLA closed");
+        assertEq(_count(address(watchdog), RETRIED_SIG), 2);
+    }
+
+    function test_GivingUpOnOneMarketKeepsWatchingTheOthers() public {
+        bytes32 amd = keccak256("AMD/USD");
+        _chainDown[UNICHAIN_SEPOLIA] = true;
+        _publish(NVDA, MarketTypes.OPEN, 100e18);
+        _publish(amd, MarketTypes.OPEN, 50e18);
+        for (uint256 i = 0; i != MAX_RETRIES; ++i) {
+            _tick(10);
+        }
+        // A newer NVDA update starts its count again; AMD has used up its rounds.
+        _publish(NVDA, MarketTypes.HALTED, 100e18);
+        _tick(10);
+
+        Vm.Log memory gaveUp = _last(address(watchdog), GAVE_UP_SIG);
+        assertEq(gaveUp.topics[1], amd);
+        assertEq(_count(address(watchdog), GAVE_UP_SIG), 1);
+        assertFalse(_listed(amd) || _isOpen(amd), "AMD dropped");
+        assertTrue(_listed(NVDA) && _isOpen(NVDA), "NVDA still watched");
+    }
+
+    function test_ItChasesTheFirstVenueAndSkipsSwitchedOffOnes() public {
+        watchdog.execute(
+            address(conductor), abi.encodeCall(BellReactive.updateVenue, (1, 300_000, 10, false, _policy()))
+        );
+        _chainDown[BASE_SEPOLIA] = true;
+        uint64 seq = _publish(MarketTypes.HALTED, 100e18);
+        _chainDown[BASE_SEPOLIA] = false;
+
+        uint256 revertsBefore = reactionReverts;
+        _tick(10);
+        assertEq(reactionReverts, revertsBefore, "the look went through");
+        assertEq(_count(address(watchdog), RETRIED_SIG), 1);
+        assertEq(uint256(_last(address(watchdog), RETRIED_SIG).topics[3]), 0, "venue 0 is Base");
+        (uint8 baseStatus, uint64 baseSeq) = _status(baseGuard);
+        assertEq(baseStatus, MarketTypes.HALTED);
+        assertEq(baseSeq, seq);
+    }
+
+    function test_OnlyTheFeedOnItsOwnChainStartsAWatch() public {
+        IReactive.LogRecord memory r = _feedRecord(abi.encode(uint256(140e18), uint256(1), uint256(1)));
+        vm.startPrank(address(OMNI));
+        r.contractAddress = stranger; // right chain, wrong contract
+        watchdog.react(r);
+        r.contractAddress = address(feed);
+        r.chainId = UNICHAIN_SEPOLIA; // right contract, wrong chain
+        watchdog.react(r);
+        r.chainId = BASE_SEPOLIA;
+        r.topic0 = MarketTypes.MARKET_UPDATE_TOPIC - 1; // right feed, other events
+        watchdog.react(r);
+        r.topic0 = MarketTypes.MARKET_UPDATE_TOPIC + 1;
+        watchdog.react(r);
+        vm.stopPrank();
+        _pump();
+        assertEq(_count(address(watchdog), WATCHING_SIG), 0);
+        assertFalse(watchdog.ticking());
+    }
+
+    function test_ARepeatedOrOlderUpdateNeverRestartsTheCount() public {
+        _chainDown[UNICHAIN_SEPOLIA] = true;
+        _publish(MarketTypes.OPEN, 100e18);
+        uint64 seq = _publish(MarketTypes.HALTED, 100e18);
+        (, uint64 since,,) = _watch(NVDA);
+        uint256 watching = _count(address(watchdog), WATCHING_SIG);
+
+        vm.roll(block.number + RETRY_AFTER);
+        vm.startPrank(address(OMNI));
+        watchdog.react(_feedRecord(abi.encode(uint256(100e18), uint256(seq), uint256(1)))); // the same update again
+        watchdog.react(_feedRecord(abi.encode(uint256(100e18), uint256(seq - 1), uint256(1)))); // an older one, late
+        vm.stopPrank();
+        _pump();
+
+        (uint64 watchedSeq, uint64 sinceAfter,,) = _watch(NVDA);
+        assertEq(watchedSeq, seq);
+        assertEq(sinceAfter, since, "the deadline did not move");
+        assertEq(_count(address(watchdog), WATCHING_SIG), watching);
+        _tick(0);
+        assertEq(_count(address(watchdog), RETRIED_SIG), 1, "the re-send is still due");
+    }
+
+    function test_ARepeatOfASettledUpdateOpensNoNewWatch() public {
+        uint64 seq = _publish(MarketTypes.OPEN, 100e18);
+        _tick(10);
+        assertFalse(_isOpen(NVDA));
+
+        vm.prank(address(OMNI));
+        watchdog.react(_feedRecord(abi.encode(uint256(100e18), uint256(seq), uint256(1))));
+        _pump();
+        assertFalse(_isOpen(NVDA));
+        assertEq(watchdog.openWatches().length, 0);
+        assertFalse(watchdog.ticking());
+    }
+
+    function test_ANewerUpdateForAWatchedMarketKeepsOneWatchAndOneClock() public {
+        _chainDown[UNICHAIN_SEPOLIA] = true;
+        _publish(MarketTypes.OPEN, 100e18);
+        _publish(MarketTypes.HALTED, 100e18);
+        _publish(TSLA, MarketTypes.OPEN, 250e18);
+        assertEq(watchdog.openWatches().length, 2, "NVDA once, TSLA once");
+        assertEq(_count(address(watchdog), TICKING_SIG), 1, "the clock was switched on once");
+    }
+
+    function test_AConductorThatIsBehindIsNotAskedToResendAnOlderState() public {
+        _chainDown[UNICHAIN_SEPOLIA] = true;
+        _publish(MarketTypes.OPEN, 100e18); // Unichain misses this one
+        watchdog.execute(address(conductor), abi.encodeCall(BellReactive.setPaused, (true)));
+        _publish(MarketTypes.HALTED, 100e18); // and the paused conductor ignores this one
+        _chainDown[UNICHAIN_SEPOLIA] = false;
+        uint256 requestsBefore = requests;
+
+        _tick(10);
+        assertEq(requests, requestsBefore, "the conductor never saw the update it would be re-sending");
+        assertEq(_count(address(watchdog), RETRIED_SIG), 0);
+        assertEq(_count(address(watchdog), REFUSED_SIG), 0);
+        (,, uint8 retries,) = _watch(NVDA);
+        assertEq(retries, 1, "the round still counts");
+    }
+
+    function test_SettlingDebtPaysWhatIsOwed() public {
+        vm.deal(address(watchdog), 1 ether);
+        vm.mockCall(address(OMNI), abi.encodeWithSignature("debt(address)", address(watchdog)), abi.encode(0.3 ether));
+        vm.prank(stranger);
+        watchdog.coverDebt();
+        assertEq(address(watchdog).balance, 0.7 ether);
     }
 
     // ------------------------------------------------------------------------------------------

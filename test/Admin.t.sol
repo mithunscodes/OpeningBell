@@ -129,6 +129,28 @@ contract MarketFeedRulesTest is Test {
         vm.expectRevert(MarketFeed.NotOwner.selector);
         feed.setPublisher(address(this), true);
     }
+
+    function test_TheFeedKeepsEveryFieldAndAnnouncesEveryChange() public {
+        vm.expectEmit(true, true, false, false);
+        emit MarketFeed.OwnershipTransferred(address(0), address(this));
+        MarketFeed fresh = new MarketFeed();
+
+        vm.expectEmit(true, false, false, true, address(fresh));
+        emit MarketFeed.PublisherSet(publisher, true);
+        fresh.setPublisher(publisher, true);
+
+        vm.prank(publisher);
+        fresh.publish(NVDA, MarketTypes.OPEN, 140e18, 1_795_000_000);
+        (uint8 status, uint64 seq, uint64 sourceTime, uint256 price) = fresh.markets(NVDA);
+        assertEq(status, MarketTypes.OPEN);
+        assertEq(seq, 1);
+        assertEq(sourceTime, 1_795_000_000, "the time at the source is kept");
+        assertEq(price, 140e18);
+
+        vm.expectEmit(true, true, false, false, address(fresh));
+        emit MarketFeed.OwnershipTransferred(address(this), stranger);
+        fresh.transferOwnership(stranger);
+    }
 }
 
 /// @notice Owner controls of the public buttons.

@@ -7,6 +7,8 @@ import { IHooks } from "v4-core/interfaces/IHooks.sol";
 import { IPoolManager } from "v4-core/interfaces/IPoolManager.sol";
 import { LPFeeLibrary } from "v4-core/libraries/LPFeeLibrary.sol";
 import { TickMath } from "v4-core/libraries/TickMath.sol";
+import { FullMath } from "v4-core/libraries/FullMath.sol";
+import { CustomRevert } from "v4-core/libraries/CustomRevert.sol";
 import { PoolKey } from "v4-core/types/PoolKey.sol";
 import { PoolId } from "v4-core/types/PoolId.sol";
 import { Currency } from "v4-core/types/Currency.sol";
@@ -48,6 +50,7 @@ abstract contract BellPoolBase is OmniTest, V4Fixture {
     bytes32 internal constant RAID_BLOCKED_SIG = keccak256("RaidBlocked(address,uint256)");
     bytes32 internal constant RAID_POINTLESS_SIG = keccak256("RaidPointless(address,uint256,uint256,uint256)");
     bytes32 internal constant LISTENER_FAILED_SIG = keccak256("ListenerFailed(bytes32,address,bytes)");
+    bytes32 internal constant REPOSITIONED_SIG = keccak256("Repositioned(uint256,uint24,int24,int24,uint128,uint160)");
 
     address internal publisher = makeAddr("publisher");
     address internal player = makeAddr("player");
@@ -487,8 +490,10 @@ abstract contract BellPoolBase is OmniTest, V4Fixture {
         BellGuard quiet = new BellGuard(IPayable(payable(address(_proxy(BASE_SEPOLIA)))), address(conductor));
         BellVault idle = new BellVault(POOL_MANAGER, quiet, NVDA, poolKey, address(stock));
         idle.catchUp();
+        _pump();
         (uint256 s, uint256 d) = idle.holdings();
         assertEq(s + d, 0);
+        assertEq(_count(address(idle), REPOSITIONED_SIG), 0, "it did not even try");
     }
 
     function test_UnusedHooksRefuseToRun() public {
@@ -584,6 +589,260 @@ abstract contract BellPoolBase is OmniTest, V4Fixture {
         // Fees are collected the next time the vault moves.
         _publish(MarketTypes.OPEN, START_PRICE + 0.5e18);
         assertGt(vault.valueAt(START_PRICE), before, "fees were collected");
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Details that mutation testing found unchecked
+    // ---------------------------------------------------------------------------------------------
+
+    /// @dev The reason a hook gave, from inside the pool manager's `WrappedError`.
+    function _hookReason(bytes memory err) internal pure returns (bytes4) {
+        assertEq(bytes32(bytes4(err)), bytes32(CustomRevert.WrappedError.selector), "a hook refused");
+        bytes memory body = new bytes(err.length - 4);
+        for (uint256 i = 0; i != body.length; ++i) {
+            body[i] = err[i + 4];
+        }
+        (,, bytes memory reason,) = abi.decode(body, (address, bytes4, bytes, bytes));
+        return bytes4(reason);
+    }
+
+    function test_TheHookChecksFeesAnnouncesPoolsAndQuotesUnknownOnesAsClosed() public {
+        PoolKey memory fresh = PoolKey(
+            poolKey.currency0, poolKey.currency1, LPFeeLibrary.DYNAMIC_FEE_FLAG, TICK_SPACING + 5, IHooks(address(hook))
+        );
+        (bool tradable, uint24 fee) = hook.quote(fresh.toId());
+        assertFalse(tradable);
+        assertEq(fee, 0);
+
+        vm.expectRevert(abi.encodeWithSelector(LPFeeLibrary.LPFeeTooLarge.selector, uint24(1_000_001)));
+        hook.registerPool(fresh, BellHook.PoolConfig(NVDA, address(vault), true, 1_000_001, 0, 0));
+        vm.expectRevert(abi.encodeWithSelector(LPFeeLibrary.LPFeeTooLarge.selector, uint24(1_000_001)));
+        hook.registerPool(fresh, BellHook.PoolConfig(NVDA, address(vault), false, 0, 600, 1_000_001));
+
+        vm.expectEmit(true, true, false, true, address(hook));
+        emit BellHook.PoolRegistered(fresh.toId(), NVDA, address(vault), true);
+        hook.registerPool(fresh, BellHook.PoolConfig(NVDA, address(vault), true, 1_000_000, 0, 0));
+    }
+
+    function test_AnUnregisteredPoolIsRefusedAsUnregistered() public {
+        PoolKey memory rogue = PoolKey(
+            poolKey.currency0, poolKey.currency1, LPFeeLibrary.DYNAMIC_FEE_FLAG, TICK_SPACING + 3, IHooks(address(hook))
+        );
+        POOL_MANAGER.initialize(rogue, _sqrt(START_PRICE));
+        try trader.swap(rogue, true, -1e18, TickMath.MIN_SQRT_PRICE + 1) {
+            fail();
+        } catch (bytes memory err) {
+            assertEq(bytes32(_hookReason(err)), bytes32(BellHook.PoolNotRegistered.selector));
+        }
+        try trader.addLiquidity(rogue, -TICK_SPACING * 10, TICK_SPACING * 10, 1e18) {
+            fail();
+        } catch (bytes memory err) {
+            assertEq(bytes32(_hookReason(err)), bytes32(BellHook.PoolNotRegistered.selector));
+        }
+    }
+
+    function test_AVaultCanPlaceItsPoolBeforeAnyMarketData() public {
+        bytes32 tsla = keccak256("TSLA/USD");
+        PoolKey memory fresh = PoolKey(
+            poolKey.currency0, poolKey.currency1, LPFeeLibrary.DYNAMIC_FEE_FLAG, TICK_SPACING + 4, IHooks(address(hook))
+        );
+        POOL_MANAGER.initialize(fresh, _sqrt(START_PRICE));
+        BellVault early = new BellVault(POOL_MANAGER, guard, tsla, fresh, address(stock));
+        hook.registerPool(fresh, BellHook.PoolConfig(tsla, address(early), false, 0, 0, 0));
+
+        // With nothing to put in, the vault only moves the empty pool.
+        vm.expectEmit(false, false, false, false, address(early));
+        emit BellVault.Repositioned(0, 0, 0, 0, 0, 0);
+        early.reposition(150e18, OPEN_RANGE);
+        assertEq(early.liquidity(), 0);
+        assertApproxEqRel(early.poolPrice(), 150e18, 1e12);
+
+        // With tokens, it provides liquidity, although the guard has never heard of this market.
+        stock.mint(address(early), 10e18);
+        dollars.mint(address(early), 1_500e18);
+        early.reposition(160e18, OPEN_RANGE);
+        assertGt(early.liquidity(), 0);
+        assertApproxEqRel(early.poolPrice(), 160e18, 1e12);
+
+        vm.expectEmit(false, false, false, true, address(early));
+        emit BellVault.KeeperSet(player);
+        early.setKeeper(player);
+    }
+
+    function test_TheVaultRefusesOtherMarketsAndImpossibleBands() public {
+        vm.startPrank(address(guard));
+        vm.expectRevert(BellVault.WrongMarket.selector);
+        vault.onMarketState(bytes32(type(uint256).max), MarketTypes.OPEN, 1e18, 0, 100);
+        vm.expectRevert(BellVault.WrongMarket.selector);
+        vault.onMarketState(bytes32(0), MarketTypes.OPEN, 1e18, 0, 100);
+        vm.stopPrank();
+        vm.expectRevert(BellVault.BadRange.selector);
+        vault.reposition(START_PRICE, 10_001);
+    }
+
+    function _gridFloor(int24 tick) internal pure returns (int24) {
+        int256 t = tick;
+        int256 s = TICK_SPACING;
+        // forge-lint: disable-next-line(unsafe-typecast)
+        return int24(t >= 0 ? (t / s) * s : -(((-t) + s - 1) / s) * s);
+    }
+
+    function _expectedBand(uint256 price, uint24 half) internal pure returns (int24 lower, int24 upper) {
+        uint160 a = _sqrt(price * (10_000 - half) / 10_000);
+        uint160 b = _sqrt(price * (10_000 + half) / 10_000);
+        if (a > b) (a, b) = (b, a);
+        lower = _gridFloor(TickMath.getTickAtSqrtPrice(a));
+        upper = _gridFloor(TickMath.getTickAtSqrtPrice(b)) + TICK_SPACING;
+    }
+
+    function test_TheBandSitsExactlyOnTheTickGrid() public {
+        uint256[5] memory prices = [uint256(140e18), 126e18, 151.01e18, 0.37e18, 2_345.6e18];
+        for (uint256 i = 0; i != prices.length; ++i) {
+            vault.reposition(prices[i], OPEN_RANGE);
+            (int24 lower, int24 upper) = _expectedBand(prices[i], OPEN_RANGE);
+            assertEq(vault.tickLower(), lower, "lower edge");
+            assertEq(vault.tickUpper(), upper, "upper edge");
+        }
+
+        // A lower edge that falls exactly on a negative multiple of the spacing stays there.
+        int24 t = -50_000;
+        uint256 inside = uint256(TickMath.getSqrtPriceAtTick(t)) * 100_002 / 100_000;
+        uint256 ratio = FullMath.mulDiv(inside * inside, 1e18, 1 << 192);
+        uint256 price = _stockIsCurrency0()
+            ? ratio * 10_000 / (10_000 - OPEN_RANGE)
+            : PriceMath.invert(ratio) * 10_000 / (10_000 + OPEN_RANGE);
+        vault.reposition(price, OPEN_RANGE);
+        assertEq(vault.tickLower(), t, "already on the grid, not moved down");
+    }
+
+    function _swapFee() internal returns (uint24) {
+        trader.swap(poolKey, true, -1e18, TickMath.MIN_SQRT_PRICE + 1);
+        _pump();
+        return _lastSwapFee();
+    }
+
+    function test_TheStaleFeeStartsExactlyWhenTheAllowedSilenceEnds() public {
+        uint24 staleFee = 10_000;
+        vm.warp(1_800_000_000);
+        hook.registerPool(poolKey, BellHook.PoolConfig(NVDA, address(vault), false, 0, 600, staleFee));
+        _publish(MarketTypes.OPEN, START_PRICE);
+
+        uint256[4] memory ages = [uint256(0), 300, 600, 601];
+        for (uint256 i = 0; i != ages.length; ++i) {
+            vm.warp(1_800_000_000 + ages[i]);
+            uint24 expected = ages[i] > 600 ? staleFee : OPEN_FEE;
+            (, uint24 quoted) = hook.quote(poolKey.toId());
+            assertEq(quoted, expected, "quote");
+            assertEq(_swapFee(), expected, "charged");
+        }
+
+        // After hours the closed fee applies, however long the silence.
+        _publish(MarketTypes.CLOSED, START_PRICE);
+        skip(601);
+        (, uint24 closedQuote) = hook.quote(poolKey.toId());
+        assertEq(closedQuote, CLOSED_FEE);
+        assertEq(_swapFee(), CLOSED_FEE);
+
+        // A pool with no staleness limit never falls back.
+        hook.registerPool(poolKey, BellHook.PoolConfig(NVDA, address(vault), false, 0, 0, staleFee));
+        _publish(MarketTypes.OPEN, START_PRICE);
+        skip(100_000);
+        (, uint24 openQuote) = hook.quote(poolKey.toId());
+        assertEq(openQuote, OPEN_FEE);
+        assertEq(_swapFee(), OPEN_FEE);
+    }
+
+    function test_TheTwinChargesItsOwnFeeAndNeverStops() public {
+        trader.swap(twinKey, true, -1e18, TickMath.MIN_SQRT_PRICE + 1);
+        _pump();
+        assertEq(_lastSwapFee(), OPEN_FEE);
+
+        _publish(MarketTypes.HALTED, START_PRICE);
+        trader.swap(twinKey, true, -1e18, TickMath.MIN_SQRT_PRICE + 1);
+        _pump();
+        assertEq(_lastSwapFee(), OPEN_FEE, "the twin ignores the halt");
+    }
+
+    function test_EveryRaidIsReportedAgainstTheRaider() public {
+        vm.expectEmit(true, false, false, true, address(arena));
+        emit Arena.TargetSet(9, twinKey.toId(), address(twinVault), false);
+        arena.setTarget(9, twinKey, twinVault, false, 0, 0);
+
+        vm.expectEmit(true, true, false, false, address(arena));
+        emit Arena.RaidPointless(player, TWIN, 0, 0);
+        _raid(TWIN);
+
+        _publish(MarketTypes.OPEN, 126e18);
+        vm.expectEmit(true, true, false, false, address(arena));
+        emit Arena.Raid(player, TWIN, false, 0, 0, 0, 0, 0);
+        int256 first = _raid(TWIN);
+        _publish(MarketTypes.OPEN, 113.4e18);
+        int256 second = _raid(TWIN);
+        assertEq(arena.loot(player), first + second, "loot adds up");
+
+        _publish(MarketTypes.HALTED, 113.4e18);
+        vm.expectEmit(true, true, false, false, address(arena));
+        emit Arena.RaidBlocked(player, PROTECTED);
+        _raid(PROTECTED);
+    }
+
+    function test_ARaidThePoolCannotSettleIsCountedAsBlocked() public {
+        arena.setTarget(9, twinKey, twinVault, false, 0, 0);
+        _publish(MarketTypes.OPEN, 126e18);
+
+        // The arena pays raids with play money it mints. Without that right the swap cannot be paid for.
+        stock.setMinter(address(arena), false);
+        dollars.setMinter(address(arena), false);
+        vm.expectEmit(true, true, false, false, address(arena));
+        emit Arena.RaidBlocked(player, 9);
+        assertEq(_raid(9), 0);
+        assertEq(arena.blocked(9), 1);
+        assertEq(arena.loot(player), 0);
+    }
+
+    function test_TheTwinIsToppedUpToExactlyWhatItStartedWith() public {
+        // Small moves, so the raid leaves the twin holding plenty of the token it gave up.
+        _publish(MarketTypes.OPEN, 138.6e18);
+        assertGt(_raid(TWIN), 0);
+        (uint256 stockHeld, uint256 dollarsHeld) = twinVault.holdings();
+        assertGt(stockHeld, START_STOCK, "it took stock");
+        assertApproxEqAbs(dollarsHeld, START_DOLLARS, 1e9, "dollars topped up exactly");
+
+        _publish(MarketTypes.OPEN, 141e18);
+        assertGt(_raid(TWIN), 0);
+        (stockHeld,) = twinVault.holdings();
+        assertApproxEqAbs(stockHeld, START_STOCK, 1e9, "stock topped up exactly");
+
+        // A big move empties the twin of stock altogether; it is still topped up to the same amount.
+        _publish(MarketTypes.OPEN, 155.1e18);
+        assertGt(_raid(TWIN), 0);
+        (stockHeld,) = twinVault.holdings();
+        assertApproxEqAbs(stockHeld, START_STOCK, 1e9, "stock topped up exactly after a big move");
+        assertEq(_count(address(arena), REFILLED_SIG), 3);
+
+        // A target with nothing to top up reports no refill.
+        arena.setTarget(10, twinKey, twinVault, true, 0, 0);
+        _raid(10);
+        assertEq(_count(address(arena), REFILLED_SIG), 3);
+    }
+
+    function test_AnyTargetNumberWorks() public {
+        uint256 far = uint256(1) << 200;
+        arena.setTarget(far, twinKey, twinVault, false, 0, 0);
+        vm.expectEmit(true, true, false, false, address(arena));
+        emit Arena.RaidPointless(player, far, 0, 0);
+        assertEq(_raid(far), 0);
+        assertEq(arena.blocked(far), 0);
+    }
+
+    function test_AMarketWithNoReferencePriceIsNeverRaided() public {
+        Arena blind = new Arena(POOL_MANAGER, feed, keccak256("TSLA/USD"), stock, dollars);
+        blind.setTarget(0, twinKey, twinVault, false, 0, 0);
+        vm.expectEmit(true, true, false, false, address(blind));
+        emit Arena.RaidPointless(player, 0, 0, 0);
+        vm.prank(player);
+        assertEq(blind.raid(0), 0);
+        assertEq(blind.blocked(0), 0);
     }
 
     // ---------------------------------------------------------------------------------------------

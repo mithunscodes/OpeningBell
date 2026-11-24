@@ -1,0 +1,2164 @@
+INFO:Slither-Mutate:Mutating contract DemoStage
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.47ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected identifier but got '('
+stderr:   --> src/origin/DemoStage.sol:25:11:
+stderr:    |
+stderr: 25 |     revert();
+stderr:    |           ^
+INFO:Slither-Mutate:[RR] Line 25: 'int16 public constant MAX_MOVE_BPS = 2_000' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.33ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected identifier but got '('
+stderr:   --> src/origin/DemoStage.sol:28:11:
+stderr:    |
+stderr: 28 |     revert();
+stderr:    |           ^
+INFO:Slither-Mutate:[RR] Line 28: 'uint256 public constant MIN_PRICE = 20e18' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.74ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected identifier but got '('
+stderr:   --> src/origin/DemoStage.sol:29:11:
+stderr:    |
+stderr: 29 |     revert();
+stderr:    |           ^
+INFO:Slither-Mutate:[RR] Line 29: 'uint256 public constant MAX_PRICE = 1_000e18' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.05ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected identifier but got '('
+stderr:   --> src/origin/DemoStage.sol:30:11:
+stderr:    |
+stderr: 30 |     revert();
+stderr:    |           ^
+INFO:Slither-Mutate:[RR] Line 30: 'uint256 public constant RESET_PRICE = 140e18' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 139.02ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Warning (5740): Unreachable code.
+stderr:   --> src/origin/DemoStage.sol:46:9:
+stderr:    |
+stderr: 46 |         MARKET_ID = marketId_;
+stderr:    |         ^ (Relevant source part starts here and spans across multiple lines).
+stderr: 
+stderr: Warning (5667): Unused function parameter. Remove or comment out the variable name to silence this warning.
+stderr:   --> src/origin/DemoStage.sol:44:17:
+stderr:    |
+stderr: 44 |     constructor(MarketFeed feed_, bytes32 marketId_, uint32 cooldown_, uint32 dailyCap_) {
+stderr:    |                 ^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (1284): Some immutables were read from but never assigned, possibly because of optimization.
+stderr:   --> src/origin/DemoStage.sol:14:1:
+stderr:    |
+stderr: 14 | contract DemoStage {
+stderr:    | ^ (Relevant source part starts here and spans across multiple lines).
+INFO:Slither-Mutate:[RR] Line 45: 'FEED = feed_' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 171.82ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Warning (5740): Unreachable code.
+stderr:   --> src/origin/DemoStage.sol:47:9:
+stderr:    |
+stderr: 47 |         owner = msg.sender;
+stderr:    |         ^ (Relevant source part starts here and spans across multiple lines).
+stderr: 
+stderr: Warning (5667): Unused function parameter. Remove or comment out the variable name to silence this warning.
+stderr:   --> src/origin/DemoStage.sol:44:35:
+stderr:    |
+stderr: 44 |     constructor(MarketFeed feed_, bytes32 marketId_, uint32 cooldown_, uint32 dailyCap_) {
+stderr:    |                                   ^^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (1284): Some immutables were read from but never assigned, possibly because of optimization.
+stderr:   --> src/origin/DemoStage.sol:14:1:
+stderr:    |
+stderr: 14 | contract DemoStage {
+stderr:    | ^ (Relevant source part starts here and spans across multiple lines).
+INFO:Slither-Mutate:[RR] Line 46: 'MARKET_ID = marketId_' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 166.93ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Warning (5740): Unreachable code.
+stderr:   --> src/origin/DemoStage.sol:48:9:
+stderr:    |
+stderr: 48 |         cooldown = cooldown_;
+stderr:    |         ^ (Relevant source part starts here and spans across multiple lines).
+stderr: 
+stderr: Error (1284): Some immutables were read from but never assigned, possibly because of optimization.
+stderr:   --> src/origin/DemoStage.sol:14:1:
+stderr:    |
+stderr: 14 | contract DemoStage {
+stderr:    | ^ (Relevant source part starts here and spans across multiple lines).
+INFO:Slither-Mutate:[RR] Line 47: 'owner = msg.sender' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 159.76ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Warning (5740): Unreachable code.
+stderr:   --> src/origin/DemoStage.sol:49:9:
+stderr:    |
+stderr: 49 |         dailyCap = dailyCap_;
+stderr:    |         ^^^^^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Warning (5667): Unused function parameter. Remove or comment out the variable name to silence this warning.
+stderr:   --> src/origin/DemoStage.sol:44:54:
+stderr:    |
+stderr: 44 |     constructor(MarketFeed feed_, bytes32 marketId_, uint32 cooldown_, uint32 dailyCap_) {
+stderr:    |                                                      ^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (1284): Some immutables were read from but never assigned, possibly because of optimization.
+stderr:   --> src/origin/DemoStage.sol:14:1:
+stderr:    |
+stderr: 14 | contract DemoStage {
+stderr:    | ^ (Relevant source part starts here and spans across multiple lines).
+INFO:Slither-Mutate:[RR] Line 48: 'cooldown = cooldown_' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 121.69ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Warning (5667): Unused function parameter. Remove or comment out the variable name to silence this warning.
+stderr:   --> src/origin/DemoStage.sol:44:72:
+stderr:    |
+stderr: 44 |     constructor(MarketFeed feed_, bytes32 marketId_, uint32 cooldown_, uint32 dailyCap_) {
+stderr:    |                                                                        ^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (1284): Some immutables were read from but never assigned, possibly because of optimization.
+stderr:   --> src/origin/DemoStage.sol:14:1:
+stderr:    |
+stderr: 14 | contract DemoStage {
+stderr:    | ^ (Relevant source part starts here and spans across multiple lines).
+INFO:Slither-Mutate:[RR] Line 49: 'dailyCap = dailyCap_' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 58: 'return _act(MarketTypes.HALTED, 0)' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 63: 'return _act(MarketTypes.OPEN, gapBps)' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 68: 'return _act(MarketTypes.CLOSED, 0)' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 73: 'return _act(status, moveBps)' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 82: 'readyAt = uint256(lastActionAt) + cooldown' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.42ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier. Did you mean "Paused" or "paused"?
+stderr:   --> src/origin/DemoStage.sol:84:21:
+stderr:    |
+stderr: 84 |         leftToday = used >= dailyCap ? 0 : dailyCap - used;
+stderr:    |                     ^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier. Did you mean "Paused" or "paused"?
+stderr:   --> src/origin/DemoStage.sol:84:55:
+stderr:    |
+stderr: 84 |         leftToday = used >= dailyCap ? 0 : dailyCap - used;
+stderr:    |                                                       ^^^^
+INFO:Slither-Mutate:[RR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 84: 'leftToday = used >= dailyCap ? 0 : dailyCap - used' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 93: 'cooldown = cooldown_' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 94: 'dailyCap = dailyCap_' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 95: 'paused = paused_' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 96: 'emit LimitsSet(cooldown_, dailyCap_, paused_)' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 101: 'owner = to' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.04ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:115:35:
+stderr:     |
+stderr: 115 |             if (block.timestamp < readyAt) revert CoolingDown(readyAt);
+stderr:     |                                   ^^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:115:63:
+stderr:     |
+stderr: 115 |             if (block.timestamp < readyAt) revert CoolingDown(readyAt);
+stderr:     |                                                               ^^^^^^^
+INFO:Slither-Mutate:[RR] Line 114: 'uint256 readyAt = uint256(lastActionAt) + cooldown' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.16ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:118:17:
+stderr:     |
+stderr: 118 |             if (today != countedDay) {
+stderr:     |                 ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:119:30:
+stderr:     |
+stderr: 119 |                 countedDay = today;
+stderr:     |                              ^^^^^
+INFO:Slither-Mutate:[RR] Line 117: 'uint64 today = uint64(block.timestamp / 1 days)' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 119: 'countedDay = today' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 120: 'usedToday = 0' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 123: '++usedToday' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 125: 'lastActionAt = uint64(block.timestamp)' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.01ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:128:13:
+stderr:     |
+stderr: 128 |         if (price == 0) {
+stderr:     |             ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:129:13:
+stderr:     |
+stderr: 129 |             price = RESET_PRICE;
+stderr:     |             ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:132:13:
+stderr:     |
+stderr: 132 |             price = price * uint256(int256(10_000) + moveBps) / 10_000;
+stderr:     |             ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:132:21:
+stderr:     |
+stderr: 132 |             price = price * uint256(int256(10_000) + moveBps) / 10_000;
+stderr:     |                     ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:133:17:
+stderr:     |
+stderr: 133 |             if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+stderr:     |                 ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:133:38:
+stderr:     |
+stderr: 133 |             if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+stderr:     |                                      ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:133:57:
+stderr:     |
+stderr: 133 |             if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+stderr:     |                                                         ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:136:47:
+stderr:     |
+stderr: 136 |         seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp));
+stderr:     |                                               ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:137:50:
+stderr:     |
+stderr: 137 |         emit Staged(msg.sender, status, moveBps, price, seq);
+stderr:     |                                                  ^^^^^
+INFO:Slither-Mutate:[RR] Line 127: '(,,, uint256 price) = FEED.markets(MARKET_ID)' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.60ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:128:13:
+stderr:     |
+stderr: 128 |         if (price == 0) {
+stderr:     |             ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:129:13:
+stderr:     |
+stderr: 129 |             price = RESET_PRICE;
+stderr:     |             ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:132:13:
+stderr:     |
+stderr: 132 |             price = price * uint256(int256(10_000) + moveBps) / 10_000;
+stderr:     |             ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:132:21:
+stderr:     |
+stderr: 132 |             price = price * uint256(int256(10_000) + moveBps) / 10_000;
+stderr:     |                     ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:133:17:
+stderr:     |
+stderr: 133 |             if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+stderr:     |                 ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:133:38:
+stderr:     |
+stderr: 133 |             if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+stderr:     |                                      ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:133:57:
+stderr:     |
+stderr: 133 |             if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+stderr:     |                                                         ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:136:47:
+stderr:     |
+stderr: 136 |         seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp));
+stderr:     |                                               ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:137:50:
+stderr:     |
+stderr: 137 |         emit Staged(msg.sender, status, moveBps, price, seq);
+stderr:     |                                                  ^^^^^
+INFO:Slither-Mutate:[RR] Line 127: 'uint256 price' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 129: 'price = RESET_PRICE' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 132: 'price = price * uint256(int256(10_000) + moveBps) / 10_000' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 133: 'price = RESET_PRICE' ==> 'revert()' --> UNCAUGHT
+INFO:Slither-Mutate:[RR] Line 136: 'seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp))' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 137: 'emit Staged(msg.sender, status, moveBps, price, seq)' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:Mutator RR found 19 caught revert mutants (out of 20 that compile)
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.62ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:109:23:
+stderr:     |
+stderr: 109 |         if (moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS) revert MoveTooLarge();
+stderr:     |                       ^^^^^^^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:109:50:
+stderr:     |
+stderr: 109 |         if (moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS) revert MoveTooLarge();
+stderr:     |                                                  ^^^^^^^^^^^^
+INFO:Slither-Mutate:[CR] Line 25: 'int16 public constant MAX_MOVE_BPS = 2_000' ==> '//int16 public constant MAX_MOVE_BPS = 2_000' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.31ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier. Did you mean "MAX_PRICE"?
+stderr:    --> src/origin/DemoStage.sol:133:25:
+stderr:     |
+stderr: 133 |             if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+stderr:     |                         ^^^^^^^^^
+INFO:Slither-Mutate:[CR] Line 28: 'uint256 public constant MIN_PRICE = 20e18' ==> '//uint256 public constant MIN_PRICE = 20e18' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.55ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier. Did you mean "MIN_PRICE"?
+stderr:    --> src/origin/DemoStage.sol:133:46:
+stderr:     |
+stderr: 133 |             if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+stderr:     |                                              ^^^^^^^^^
+INFO:Slither-Mutate:[CR] Line 29: 'uint256 public constant MAX_PRICE = 1_000e18' ==> '//uint256 public constant MAX_PRICE = 1_000e18' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.33ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:129:21:
+stderr:     |
+stderr: 129 |             price = RESET_PRICE;
+stderr:     |                     ^^^^^^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:133:65:
+stderr:     |
+stderr: 133 |             if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+stderr:     |                                                                 ^^^^^^^^^^^
+INFO:Slither-Mutate:[CR] Line 30: 'uint256 public constant RESET_PRICE = 140e18' ==> '//uint256 public constant RESET_PRICE = 140e18' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 45: 'FEED = feed_' ==> '//FEED = feed_' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 46: 'MARKET_ID = marketId_' ==> '//MARKET_ID = marketId_' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 47: 'owner = msg.sender' ==> '//owner = msg.sender' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 48: 'cooldown = cooldown_' ==> '//cooldown = cooldown_' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 49: 'dailyCap = dailyCap_' ==> '//dailyCap = dailyCap_' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 58: 'return _act(MarketTypes.HALTED, 0)' ==> '//return _act(MarketTypes.HALTED, 0)' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 63: 'return _act(MarketTypes.OPEN, gapBps)' ==> '//return _act(MarketTypes.OPEN, gapBps)' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 68: 'return _act(MarketTypes.CLOSED, 0)' ==> '//return _act(MarketTypes.CLOSED, 0)' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 73: 'return _act(status, moveBps)' ==> '//return _act(status, moveBps)' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 9.03ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '(' but got identifier
+stderr:   --> src/origin/DemoStage.sol:82:9:
+stderr:    |
+stderr: 82 |         readyAt = uint256(lastActionAt) + cooldown;
+stderr:    |         ^^^^^^^
+INFO:Slither-Mutate:[CR] Line 81: '(uint256 readyAt, uint256 leftToday)' ==> '//(uint256 readyAt, uint256 leftToday)' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 82: 'readyAt = uint256(lastActionAt) + cooldown' ==> '//readyAt = uint256(lastActionAt) + cooldown' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.49ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier. Did you mean "Paused" or "paused"?
+stderr:   --> src/origin/DemoStage.sol:84:21:
+stderr:    |
+stderr: 84 |         leftToday = used >= dailyCap ? 0 : dailyCap - used;
+stderr:    |                     ^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier. Did you mean "Paused" or "paused"?
+stderr:   --> src/origin/DemoStage.sol:84:55:
+stderr:    |
+stderr: 84 |         leftToday = used >= dailyCap ? 0 : dailyCap - used;
+stderr:    |                                                       ^^^^
+INFO:Slither-Mutate:[CR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> '//uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 84: 'leftToday = used >= dailyCap ? 0 : dailyCap - used' ==> '//leftToday = used >= dailyCap ? 0 : dailyCap - used' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.56ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got ';'
+stderr:   --> src/origin/DemoStage.sol:93:29:
+stderr:    |
+stderr: 93 |         cooldown = cooldown_;
+stderr:    |                             ^
+INFO:Slither-Mutate:[CR] Line 92: 'msg.sender != owner' ==> '//msg.sender != owner' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 92: 'revert NotOwner()' ==> '//revert NotOwner()' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 93: 'cooldown = cooldown_' ==> '//cooldown = cooldown_' --> UNCAUGHT
+INFO:Slither-Mutate:[CR] Line 94: 'dailyCap = dailyCap_' ==> '//dailyCap = dailyCap_' --> UNCAUGHT
+INFO:Slither-Mutate:[CR] Line 95: 'paused = paused_' ==> '//paused = paused_' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 96: 'emit LimitsSet(cooldown_, dailyCap_, paused_)' ==> '//emit LimitsSet(cooldown_, dailyCap_, paused_)' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.16ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got ';'
+stderr:    --> src/origin/DemoStage.sol:101:19:
+stderr:     |
+stderr: 101 |         owner = to;
+stderr:     |                   ^
+INFO:Slither-Mutate:[CR] Line 100: 'msg.sender != owner' ==> '//msg.sender != owner' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 100: 'revert NotOwner()' ==> '//revert NotOwner()' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 101: 'owner = to' ==> '//owner = to' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.85ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '(' but got 'if'
+stderr:    --> src/origin/DemoStage.sol:109:9:
+stderr:     |
+stderr: 109 |         if (moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS) revert MoveTooLarge();
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 108: '(uint64 seq)' ==> '//(uint64 seq)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.97ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/origin/DemoStage.sol:111:9:
+stderr:     |
+stderr: 111 |         if (msg.sender != owner) {
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> '//moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 109: 'revert MoveTooLarge()' ==> '//revert MoveTooLarge()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.05ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/origin/DemoStage.sol:112:13:
+stderr:     |
+stderr: 112 |             if (paused) revert Paused();
+stderr:     |             ^^
+INFO:Slither-Mutate:[CR] Line 111: 'msg.sender != owner' ==> '//msg.sender != owner' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.96ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got identifier
+stderr:    --> src/origin/DemoStage.sol:114:21:
+stderr:     |
+stderr: 114 |             uint256 readyAt = uint256(lastActionAt) + cooldown;
+stderr:     |                     ^^^^^^^
+INFO:Slither-Mutate:[CR] Line 112: 'paused' ==> '//paused' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.74ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9079): Variable declarations can only be used inside blocks.
+stderr:    --> src/origin/DemoStage.sol:114:13:
+stderr:     |
+stderr: 114 |             uint256 readyAt = uint256(lastActionAt) + cooldown;
+stderr:     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[CR] Line 112: 'revert Paused()' ==> '//revert Paused()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.69ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:115:35:
+stderr:     |
+stderr: 115 |             if (block.timestamp < readyAt) revert CoolingDown(readyAt);
+stderr:     |                                   ^^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:115:63:
+stderr:     |
+stderr: 115 |             if (block.timestamp < readyAt) revert CoolingDown(readyAt);
+stderr:     |                                                               ^^^^^^^
+INFO:Slither-Mutate:[CR] Line 114: 'uint256 readyAt = uint256(lastActionAt) + cooldown' ==> '//uint256 readyAt = uint256(lastActionAt) + cooldown' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.10ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got identifier
+stderr:    --> src/origin/DemoStage.sol:117:20:
+stderr:     |
+stderr: 117 |             uint64 today = uint64(block.timestamp / 1 days);
+stderr:     |                    ^^^^^
+INFO:Slither-Mutate:[CR] Line 115: 'block.timestamp < readyAt' ==> '//block.timestamp < readyAt' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.13ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9079): Variable declarations can only be used inside blocks.
+stderr:    --> src/origin/DemoStage.sol:117:13:
+stderr:     |
+stderr: 117 |             uint64 today = uint64(block.timestamp / 1 days);
+stderr:     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[CR] Line 115: 'revert CoolingDown(readyAt)' ==> '//revert CoolingDown(readyAt)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.90ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:118:17:
+stderr:     |
+stderr: 118 |             if (today != countedDay) {
+stderr:     |                 ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:119:30:
+stderr:     |
+stderr: 119 |                 countedDay = today;
+stderr:     |                              ^^^^^
+INFO:Slither-Mutate:[CR] Line 117: 'uint64 today = uint64(block.timestamp / 1 days)' ==> '//uint64 today = uint64(block.timestamp / 1 days)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.39ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got ';'
+stderr:    --> src/origin/DemoStage.sol:119:35:
+stderr:     |
+stderr: 119 |                 countedDay = today;
+stderr:     |                                   ^
+INFO:Slither-Mutate:[CR] Line 118: 'today != countedDay' ==> '//today != countedDay' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 119: 'countedDay = today' ==> '//countedDay = today' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 120: 'usedToday = 0' ==> '//usedToday = 0' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.17ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got ';'
+stderr:    --> src/origin/DemoStage.sol:123:24:
+stderr:     |
+stderr: 123 |             ++usedToday;
+stderr:     |                        ^
+INFO:Slither-Mutate:[CR] Line 122: 'usedToday >= dailyCap' ==> '//usedToday >= dailyCap' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 122: 'revert DailyCapReached()' ==> '//revert DailyCapReached()' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 123: '++usedToday' ==> '//++usedToday' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 125: 'lastActionAt = uint64(block.timestamp)' ==> '//lastActionAt = uint64(block.timestamp)' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.79ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:128:13:
+stderr:     |
+stderr: 128 |         if (price == 0) {
+stderr:     |             ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:129:13:
+stderr:     |
+stderr: 129 |             price = RESET_PRICE;
+stderr:     |             ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:132:13:
+stderr:     |
+stderr: 132 |             price = price * uint256(int256(10_000) + moveBps) / 10_000;
+stderr:     |             ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:132:21:
+stderr:     |
+stderr: 132 |             price = price * uint256(int256(10_000) + moveBps) / 10_000;
+stderr:     |                     ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:133:17:
+stderr:     |
+stderr: 133 |             if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+stderr:     |                 ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:133:38:
+stderr:     |
+stderr: 133 |             if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+stderr:     |                                      ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:133:57:
+stderr:     |
+stderr: 133 |             if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+stderr:     |                                                         ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:136:47:
+stderr:     |
+stderr: 136 |         seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp));
+stderr:     |                                               ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/origin/DemoStage.sol:137:50:
+stderr:     |
+stderr: 137 |         emit Staged(msg.sender, status, moveBps, price, seq);
+stderr:     |                                                  ^^^^^
+INFO:Slither-Mutate:[CR] Line 127: '(,,, uint256 price) = FEED.markets(MARKET_ID)' ==> '//(,,, uint256 price) = FEED.markets(MARKET_ID)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.02ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/origin/DemoStage.sol:128:9:
+stderr:     |
+stderr: 128 |         if (price == 0) {
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 127: 'uint256 price' ==> '//uint256 price' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.05ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got ';'
+stderr:    --> src/origin/DemoStage.sol:129:32:
+stderr:     |
+stderr: 129 |             price = RESET_PRICE;
+stderr:     |                                ^
+INFO:Slither-Mutate:[CR] Line 128: 'price == 0' ==> '//price == 0' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 129: 'price = RESET_PRICE' ==> '//price = RESET_PRICE' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 132: 'price = price * uint256(int256(10_000) + moveBps) / 10_000' ==> '//price = price * uint256(int256(10_000) + moveBps) / 10_000' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 136: 'seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp))' ==> '//seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp))' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 137: 'emit Staged(msg.sender, status, moveBps, price, seq)' ==> '//emit Staged(msg.sender, status, moveBps, price, seq)' --> UNCAUGHT
+INFO:Slither-Mutate:Mutator CR found 23 caught comment mutants (out of 28 that compile)
+INFO:Slither-Mutate:[AOR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint256 used = block.timestamp + 1 days == countedDay ? usedToday : 0' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint256 used = block.timestamp * 1 days == countedDay ? usedToday : 0' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint256 used = block.timestamp - 1 days == countedDay ? usedToday : 0' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint256 used = block.timestamp % 1 days == countedDay ? usedToday : 0' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 84: 'leftToday = used >= dailyCap ? 0 : dailyCap - used' ==> 'leftToday = used >= dailyCap ? 0 : dailyCap + used' --> UNCAUGHT
+INFO:Slither-Mutate:[AOR] Line 84: 'leftToday = used >= dailyCap ? 0 : dailyCap - used' ==> 'leftToday = used >= dailyCap ? 0 : dailyCap / used' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 84: 'leftToday = used >= dailyCap ? 0 : dailyCap - used' ==> 'leftToday = used >= dailyCap ? 0 : dailyCap * used' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 84: 'leftToday = used >= dailyCap ? 0 : dailyCap - used' ==> 'leftToday = used >= dailyCap ? 0 : dailyCap % used' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.96ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9636): Use of unary + is disallowed.
+stderr:    --> src/origin/DemoStage.sol:109:49:
+stderr:     |
+stderr: 109 |         if (moveBps > MAX_MOVE_BPS || moveBps < +MAX_MOVE_BPS) revert MoveTooLarge();
+stderr:     |                                                 ^
+INFO:Slither-Mutate:[AOR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'moveBps > MAX_MOVE_BPS || moveBps < +MAX_MOVE_BPS' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.02ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/origin/DemoStage.sol:109:49:
+stderr:     |
+stderr: 109 |         if (moveBps > MAX_MOVE_BPS || moveBps < /MAX_MOVE_BPS) revert MoveTooLarge();
+stderr:     |                                                 ^
+INFO:Slither-Mutate:[AOR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'moveBps > MAX_MOVE_BPS || moveBps < /MAX_MOVE_BPS' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.34ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/origin/DemoStage.sol:109:49:
+stderr:     |
+stderr: 109 |         if (moveBps > MAX_MOVE_BPS || moveBps < *MAX_MOVE_BPS) revert MoveTooLarge();
+stderr:     |                                                 ^
+INFO:Slither-Mutate:[AOR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'moveBps > MAX_MOVE_BPS || moveBps < *MAX_MOVE_BPS' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.84ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/origin/DemoStage.sol:109:49:
+stderr:     |
+stderr: 109 |         if (moveBps > MAX_MOVE_BPS || moveBps < %MAX_MOVE_BPS) revert MoveTooLarge();
+stderr:     |                                                 ^
+INFO:Slither-Mutate:[AOR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'moveBps > MAX_MOVE_BPS || moveBps < %MAX_MOVE_BPS' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[AOR] Line 114: 'uint256 readyAt = uint256(lastActionAt) + cooldown' ==> 'uint256 readyAt = uint256(lastActionAt) / cooldown' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 114: 'uint256 readyAt = uint256(lastActionAt) + cooldown' ==> 'uint256 readyAt = uint256(lastActionAt) * cooldown' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 114: 'uint256 readyAt = uint256(lastActionAt) + cooldown' ==> 'uint256 readyAt = uint256(lastActionAt) - cooldown' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 114: 'uint256 readyAt = uint256(lastActionAt) + cooldown' ==> 'uint256 readyAt = uint256(lastActionAt) % cooldown' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 117: 'uint64 today = uint64(block.timestamp / 1 days)' ==> 'uint64 today = uint64(block.timestamp + 1 days)' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 117: 'uint64 today = uint64(block.timestamp / 1 days)' ==> 'uint64 today = uint64(block.timestamp * 1 days)' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 117: 'uint64 today = uint64(block.timestamp / 1 days)' ==> 'uint64 today = uint64(block.timestamp - 1 days)' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 117: 'uint64 today = uint64(block.timestamp / 1 days)' ==> 'uint64 today = uint64(block.timestamp % 1 days)' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 132: 'price = price * uint256(int256(10_000) + moveBps) / 10_000' ==> 'price = price * uint256(int256(10_000) / moveBps) / 10_000' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 132: 'price = price * uint256(int256(10_000) + moveBps) / 10_000' ==> 'price = price * uint256(int256(10_000) * moveBps) / 10_000' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 132: 'price = price * uint256(int256(10_000) + moveBps) / 10_000' ==> 'price = price * uint256(int256(10_000) - moveBps) / 10_000' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 132: 'price = price * uint256(int256(10_000) + moveBps) / 10_000' ==> 'price = price * uint256(int256(10_000) % moveBps) / 10_000' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 132: 'price = price * uint256(int256(10_000) + moveBps) / 10_000' ==> 'price = price + uint256(int256(10_000) + moveBps) / 10_000' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 132: 'price = price * uint256(int256(10_000) + moveBps) / 10_000' ==> 'price = price / uint256(int256(10_000) + moveBps) / 10_000' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 132: 'price = price * uint256(int256(10_000) + moveBps) / 10_000' ==> 'price = price - uint256(int256(10_000) + moveBps) / 10_000' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 132: 'price = price * uint256(int256(10_000) + moveBps) / 10_000' ==> 'price = price % uint256(int256(10_000) + moveBps) / 10_000' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 132: 'price = price * uint256(int256(10_000) + moveBps) / 10_000' ==> 'price = price * uint256(int256(10_000) + moveBps) + 10_000' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 132: 'price = price * uint256(int256(10_000) + moveBps) / 10_000' ==> 'price = price * uint256(int256(10_000) + moveBps) * 10_000' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 132: 'price = price * uint256(int256(10_000) + moveBps) / 10_000' ==> 'price = price * uint256(int256(10_000) + moveBps) - 10_000' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 132: 'price = price * uint256(int256(10_000) + moveBps) / 10_000' ==> 'price = price * uint256(int256(10_000) + moveBps) % 10_000' --> CAUGHT
+INFO:Slither-Mutate:Mutator AOR found 27 caught tweak mutants (out of 28 that compile)
+INFO:Slither-Mutate:Running total: found 27 caught tweak mutants (out of 28 that compile)
+INFO:Slither-Mutate:Mutator ASOR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 27 caught tweak mutants (out of 28 that compile)
+INFO:Slither-Mutate:Mutator BOR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 27 caught tweak mutants (out of 28 that compile)
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 14.47ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7858): Expected pragma, import directive or contract/interface/library/struct/enum/constant/function/error definition.
+stderr:    --> src/origin/DemoStage.sol:139:2:
+stderr:     |
+stderr: 139 | }{
+stderr:     |  ^
+INFO:Slither-Mutate:[FHR] Line 14: 'contract DemoStage {
+    event Staged(address indexed by, uint8 status, int16 moveBps, uint256 price, uint64 seq);
+    event LimitsSet(uint32 cooldown, uint32 dailyCap, bool paused);
+
+    error NotOwner();
+    error Paused();
+    error CoolingDown(uint256 readyAt);
+    error DailyCapReached();
+    error MoveTooLarge();
+
+    /// @dev Largest move one action can make: 20% either way.
+    int16 public constant MAX_MOVE_BPS = 2_000;
+
+    /// @dev If the pretend price wanders outside this corridor it snaps back to `RESET_PRICE`.
+    uint256 public constant MIN_PRICE = 20e18;
+    uint256 public constant MAX_PRICE = 1_000e18;
+    uint256 public constant RESET_PRICE = 140e18;
+
+    MarketFeed public immutable FEED;
+    bytes32 public immutable MARKET_ID;
+
+    address public owner;
+    bool public paused;
+    uint32 public cooldown;
+    uint32 public dailyCap;
+
+    uint64 public lastActionAt;
+    uint64 public countedDay;
+    uint32 public usedToday;
+
+    constructor(MarketFeed feed_, bytes32 marketId_, uint32 cooldown_, uint32 dailyCap_) {
+        FEED = feed_;
+        MARKET_ID = marketId_;
+        owner = msg.sender;
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // The buttons
+    // ---------------------------------------------------------------------------------------------
+
+    /// @notice Trading is suspended. The price stays where it is.
+    function halt() external returns (uint64) {
+        return _act(MarketTypes.HALTED, 0);
+    }
+
+    /// @notice Trading resumes (or the day starts) at a price `gapBps` away from the last one.
+    function open(int16 gapBps) external returns (uint64) {
+        return _act(MarketTypes.OPEN, gapBps);
+    }
+
+    /// @notice The closing bell. The price becomes the day's close.
+    function close() external returns (uint64) {
+        return _act(MarketTypes.CLOSED, 0);
+    }
+
+    /// @notice Any status with any move, for scripted scenarios.
+    function act(uint8 status, int16 moveBps) external returns (uint64) {
+        return _act(status, moveBps);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Views
+    // ---------------------------------------------------------------------------------------------
+
+    /// @notice When the next public action is allowed, and how many are left today.
+    function availability() external view returns (uint256 readyAt, uint256 leftToday) {
+        readyAt = uint256(lastActionAt) + cooldown;
+        uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0;
+        leftToday = used >= dailyCap ? 0 : dailyCap - used;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Owner
+    // ---------------------------------------------------------------------------------------------
+
+    function setLimits(uint32 cooldown_, uint32 dailyCap_, bool paused_) external {
+        if (msg.sender != owner) revert NotOwner();
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+        paused = paused_;
+        emit LimitsSet(cooldown_, dailyCap_, paused_);
+    }
+
+    function transferOwnership(address to) external {
+        if (msg.sender != owner) revert NotOwner();
+        owner = to;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Internals
+    // ---------------------------------------------------------------------------------------------
+
+    function _act(uint8 status, int16 moveBps) internal returns (uint64 seq) {
+        if (moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS) revert MoveTooLarge();
+
+        if (msg.sender != owner) {
+            if (paused) revert Paused();
+
+            uint256 readyAt = uint256(lastActionAt) + cooldown;
+            if (block.timestamp < readyAt) revert CoolingDown(readyAt);
+
+            uint64 today = uint64(block.timestamp / 1 days);
+            if (today != countedDay) {
+                countedDay = today;
+                usedToday = 0;
+            }
+            if (usedToday >= dailyCap) revert DailyCapReached();
+            ++usedToday;
+        }
+        lastActionAt = uint64(block.timestamp);
+
+        (,,, uint256 price) = FEED.markets(MARKET_ID);
+        if (price == 0) {
+            price = RESET_PRICE;
+        } else {
+            // forge-lint: disable-next-line(unsafe-typecast)
+            price = price * uint256(int256(10_000) + moveBps) / 10_000;
+            if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+        }
+
+        seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp));
+        emit Staged(msg.sender, status, moveBps, price, seq);
+    }
+}' ==> 'contract DemoStage {
+    event Staged(address indexed by, uint8 status, int16 moveBps, uint256 price, uint64 seq);
+    event LimitsSet(uint32 cooldown, uint32 dailyCap, bool paused);
+
+    error NotOwner();
+    error Paused();
+    error CoolingDown(uint256 readyAt);
+    error DailyCapReached();
+    error MoveTooLarge();
+
+    /// @dev Largest move one action can make: 20% either way.
+    int16 public constant MAX_MOVE_BPS = 2_000;
+
+    /// @dev If the pretend price wanders outside this corridor it snaps back to `RESET_PRICE`.
+    uint256 public constant MIN_PRICE = 20e18;
+    uint256 public constant MAX_PRICE = 1_000e18;
+    uint256 public constant RESET_PRICE = 140e18;
+
+    MarketFeed public immutable FEED;
+    bytes32 public immutable MARKET_ID;
+
+    address public owner;
+    bool public paused;
+    uint32 public cooldown;
+    uint32 public dailyCap;
+
+    uint64 public lastActionAt;
+    uint64 public countedDay;
+    uint32 public usedToday;
+
+    constructor(MarketFeed feed_, bytes32 marketId_, uint32 cooldown_, uint32 dailyCap_) {
+        FEED = feed_;
+        MARKET_ID = marketId_;
+        owner = msg.sender;
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // The buttons
+    // ---------------------------------------------------------------------------------------------
+
+    /// @notice Trading is suspended. The price stays where it is.
+    function halt() external returns (uint64) {
+        return _act(MarketTypes.HALTED, 0);
+    }
+
+    /// @notice Trading resumes (or the day starts) at a price `gapBps` away from the last one.
+    function open(int16 gapBps) external returns (uint64) {
+        return _act(MarketTypes.OPEN, gapBps);
+    }
+
+    /// @notice The closing bell. The price becomes the day's close.
+    function close() external returns (uint64) {
+        return _act(MarketTypes.CLOSED, 0);
+    }
+
+    /// @notice Any status with any move, for scripted scenarios.
+    function act(uint8 status, int16 moveBps) external returns (uint64) {
+        return _act(status, moveBps);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Views
+    // ---------------------------------------------------------------------------------------------
+
+    /// @notice When the next public action is allowed, and how many are left today.
+    function availability() external pure returns (uint256 readyAt, uint256 leftToday) {
+        readyAt = uint256(lastActionAt) + cooldown;
+        uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0;
+        leftToday = used >= dailyCap ? 0 : dailyCap - used;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Owner
+    // ---------------------------------------------------------------------------------------------
+
+    function setLimits(uint32 cooldown_, uint32 dailyCap_, bool paused_) external {
+        if (msg.sender != owner) revert NotOwner();
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+        paused = paused_;
+        emit LimitsSet(cooldown_, dailyCap_, paused_);
+    }
+
+    function transferOwnership(address to) external {
+        if (msg.sender != owner) revert NotOwner();
+        owner = to;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Internals
+    // ---------------------------------------------------------------------------------------------
+
+    function _act(uint8 status, int16 moveBps) internal returns (uint64 seq) {
+        if (moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS) revert MoveTooLarge();
+
+        if (msg.sender != owner) {
+            if (paused) revert Paused();
+
+            uint256 readyAt = uint256(lastActionAt) + cooldown;
+            if (block.timestamp < readyAt) revert CoolingDown(readyAt);
+
+            uint64 today = uint64(block.timestamp / 1 days);
+            if (today != countedDay) {
+                countedDay = today;
+                usedToday = 0;
+            }
+            if (usedToday >= dailyCap) revert DailyCapReached();
+            ++usedToday;
+        }
+        lastActionAt = uint64(block.timestamp);
+
+        (,,, uint256 price) = FEED.markets(MARKET_ID);
+        if (price == 0) {
+            price = RESET_PRICE;
+        } else {
+            // forge-lint: disable-next-line(unsafe-typecast)
+            price = price * uint256(int256(10_000) + moveBps) / 10_000;
+            if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+        }
+
+        seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp));
+        emit Staged(msg.sender, status, moveBps, price, seq);
+    }
+}' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.34ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7858): Expected pragma, import directive or contract/interface/library/struct/enum/constant/function/error definition.
+stderr:    --> src/origin/DemoStage.sol:139:2:
+stderr:     |
+stderr: 139 | }{
+stderr:     |  ^
+INFO:Slither-Mutate:[FHR] Line 14: 'contract DemoStage {
+    event Staged(address indexed by, uint8 status, int16 moveBps, uint256 price, uint64 seq);
+    event LimitsSet(uint32 cooldown, uint32 dailyCap, bool paused);
+
+    error NotOwner();
+    error Paused();
+    error CoolingDown(uint256 readyAt);
+    error DailyCapReached();
+    error MoveTooLarge();
+
+    /// @dev Largest move one action can make: 20% either way.
+    int16 public constant MAX_MOVE_BPS = 2_000;
+
+    /// @dev If the pretend price wanders outside this corridor it snaps back to `RESET_PRICE`.
+    uint256 public constant MIN_PRICE = 20e18;
+    uint256 public constant MAX_PRICE = 1_000e18;
+    uint256 public constant RESET_PRICE = 140e18;
+
+    MarketFeed public immutable FEED;
+    bytes32 public immutable MARKET_ID;
+
+    address public owner;
+    bool public paused;
+    uint32 public cooldown;
+    uint32 public dailyCap;
+
+    uint64 public lastActionAt;
+    uint64 public countedDay;
+    uint32 public usedToday;
+
+    constructor(MarketFeed feed_, bytes32 marketId_, uint32 cooldown_, uint32 dailyCap_) {
+        FEED = feed_;
+        MARKET_ID = marketId_;
+        owner = msg.sender;
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // The buttons
+    // ---------------------------------------------------------------------------------------------
+
+    /// @notice Trading is suspended. The price stays where it is.
+    function halt() external returns (uint64) {
+        return _act(MarketTypes.HALTED, 0);
+    }
+
+    /// @notice Trading resumes (or the day starts) at a price `gapBps` away from the last one.
+    function open(int16 gapBps) external returns (uint64) {
+        return _act(MarketTypes.OPEN, gapBps);
+    }
+
+    /// @notice The closing bell. The price becomes the day's close.
+    function close() external returns (uint64) {
+        return _act(MarketTypes.CLOSED, 0);
+    }
+
+    /// @notice Any status with any move, for scripted scenarios.
+    function act(uint8 status, int16 moveBps) external returns (uint64) {
+        return _act(status, moveBps);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Views
+    // ---------------------------------------------------------------------------------------------
+
+    /// @notice When the next public action is allowed, and how many are left today.
+    function availability() external view returns (uint256 readyAt, uint256 leftToday) {
+        readyAt = uint256(lastActionAt) + cooldown;
+        uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0;
+        leftToday = used >= dailyCap ? 0 : dailyCap - used;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Owner
+    // ---------------------------------------------------------------------------------------------
+
+    function setLimits(uint32 cooldown_, uint32 dailyCap_, bool paused_) external {
+        if (msg.sender != owner) revert NotOwner();
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+        paused = paused_;
+        emit LimitsSet(cooldown_, dailyCap_, paused_);
+    }
+
+    function transferOwnership(address to) external {
+        if (msg.sender != owner) revert NotOwner();
+        owner = to;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Internals
+    // ---------------------------------------------------------------------------------------------
+
+    function _act(uint8 status, int16 moveBps) internal returns (uint64 seq) {
+        if (moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS) revert MoveTooLarge();
+
+        if (msg.sender != owner) {
+            if (paused) revert Paused();
+
+            uint256 readyAt = uint256(lastActionAt) + cooldown;
+            if (block.timestamp < readyAt) revert CoolingDown(readyAt);
+
+            uint64 today = uint64(block.timestamp / 1 days);
+            if (today != countedDay) {
+                countedDay = today;
+                usedToday = 0;
+            }
+            if (usedToday >= dailyCap) revert DailyCapReached();
+            ++usedToday;
+        }
+        lastActionAt = uint64(block.timestamp);
+
+        (,,, uint256 price) = FEED.markets(MARKET_ID);
+        if (price == 0) {
+            price = RESET_PRICE;
+        } else {
+            // forge-lint: disable-next-line(unsafe-typecast)
+            price = price * uint256(int256(10_000) + moveBps) / 10_000;
+            if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+        }
+
+        seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp));
+        emit Staged(msg.sender, status, moveBps, price, seq);
+    }
+}' ==> 'contract DemoStage {
+    event Staged(address indexed by, uint8 status, int16 moveBps, uint256 price, uint64 seq);
+    event LimitsSet(uint32 cooldown, uint32 dailyCap, bool paused);
+
+    error NotOwner();
+    error Paused();
+    error CoolingDown(uint256 readyAt);
+    error DailyCapReached();
+    error MoveTooLarge();
+
+    /// @dev Largest move one action can make: 20% either way.
+    int16 private constant MAX_MOVE_BPS = 2_000;
+
+    /// @dev If the pretend price wanders outside this corridor it snaps back to `RESET_PRICE`.
+    uint256 private constant MIN_PRICE = 20e18;
+    uint256 private constant MAX_PRICE = 1_000e18;
+    uint256 private constant RESET_PRICE = 140e18;
+
+    MarketFeed private immutable FEED;
+    bytes32 private immutable MARKET_ID;
+
+    address private owner;
+    bool private paused;
+    uint32 private cooldown;
+    uint32 private dailyCap;
+
+    uint64 private lastActionAt;
+    uint64 private countedDay;
+    uint32 private usedToday;
+
+    constructor(MarketFeed feed_, bytes32 marketId_, uint32 cooldown_, uint32 dailyCap_) {
+        FEED = feed_;
+        MARKET_ID = marketId_;
+        owner = msg.sender;
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // The buttons
+    // ---------------------------------------------------------------------------------------------
+
+    /// @notice Trading is suspended. The price stays where it is.
+    function halt() private returns (uint64) {
+        return _act(MarketTypes.HALTED, 0);
+    }
+
+    /// @notice Trading resumes (or the day starts) at a price `gapBps` away from the last one.
+    function open(int16 gapBps) private returns (uint64) {
+        return _act(MarketTypes.OPEN, gapBps);
+    }
+
+    /// @notice The closing bell. The price becomes the day's close.
+    function close() private returns (uint64) {
+        return _act(MarketTypes.CLOSED, 0);
+    }
+
+    /// @notice Any status with any move, for scripted scenarios.
+    function act(uint8 status, int16 moveBps) private returns (uint64) {
+        return _act(status, moveBps);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Views
+    // ---------------------------------------------------------------------------------------------
+
+    /// @notice When the next private action is allowed, and how many are left today.
+    function availability() private view returns (uint256 readyAt, uint256 leftToday) {
+        readyAt = uint256(lastActionAt) + cooldown;
+        uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0;
+        leftToday = used >= dailyCap ? 0 : dailyCap - used;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Owner
+    // ---------------------------------------------------------------------------------------------
+
+    function setLimits(uint32 cooldown_, uint32 dailyCap_, bool paused_) private {
+        if (msg.sender != owner) revert NotOwner();
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+        paused = paused_;
+        emit LimitsSet(cooldown_, dailyCap_, paused_);
+    }
+
+    function transferOwnership(address to) private {
+        if (msg.sender != owner) revert NotOwner();
+        owner = to;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Internals
+    // ---------------------------------------------------------------------------------------------
+
+    function _act(uint8 status, int16 moveBps) private returns (uint64 seq) {
+        if (moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS) revert MoveTooLarge();
+
+        if (msg.sender != owner) {
+            if (paused) revert Paused();
+
+            uint256 readyAt = uint256(lastActionAt) + cooldown;
+            if (block.timestamp < readyAt) revert CoolingDown(readyAt);
+
+            uint64 today = uint64(block.timestamp / 1 days);
+            if (today != countedDay) {
+                countedDay = today;
+                usedToday = 0;
+            }
+            if (usedToday >= dailyCap) revert DailyCapReached();
+            ++usedToday;
+        }
+        lastActionAt = uint64(block.timestamp);
+
+        (,,, uint256 price) = FEED.markets(MARKET_ID);
+        if (price == 0) {
+            price = RESET_PRICE;
+        } else {
+            // forge-lint: disable-next-line(unsafe-typecast)
+            price = price * uint256(int256(10_000) + moveBps) / 10_000;
+            if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+        }
+
+        seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp));
+        emit Staged(msg.sender, status, moveBps, price, seq);
+    }
+}' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 12.04ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7858): Expected pragma, import directive or contract/interface/library/struct/enum/constant/function/error definition.
+stderr:    --> src/origin/DemoStage.sol:139:2:
+stderr:     |
+stderr: 139 | }{
+stderr:     |  ^
+INFO:Slither-Mutate:[FHR] Line 14: 'contract DemoStage {
+    event Staged(address indexed by, uint8 status, int16 moveBps, uint256 price, uint64 seq);
+    event LimitsSet(uint32 cooldown, uint32 dailyCap, bool paused);
+
+    error NotOwner();
+    error Paused();
+    error CoolingDown(uint256 readyAt);
+    error DailyCapReached();
+    error MoveTooLarge();
+
+    /// @dev Largest move one action can make: 20% either way.
+    int16 public constant MAX_MOVE_BPS = 2_000;
+
+    /// @dev If the pretend price wanders outside this corridor it snaps back to `RESET_PRICE`.
+    uint256 public constant MIN_PRICE = 20e18;
+    uint256 public constant MAX_PRICE = 1_000e18;
+    uint256 public constant RESET_PRICE = 140e18;
+
+    MarketFeed public immutable FEED;
+    bytes32 public immutable MARKET_ID;
+
+    address public owner;
+    bool public paused;
+    uint32 public cooldown;
+    uint32 public dailyCap;
+
+    uint64 public lastActionAt;
+    uint64 public countedDay;
+    uint32 public usedToday;
+
+    constructor(MarketFeed feed_, bytes32 marketId_, uint32 cooldown_, uint32 dailyCap_) {
+        FEED = feed_;
+        MARKET_ID = marketId_;
+        owner = msg.sender;
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // The buttons
+    // ---------------------------------------------------------------------------------------------
+
+    /// @notice Trading is suspended. The price stays where it is.
+    function halt() external returns (uint64) {
+        return _act(MarketTypes.HALTED, 0);
+    }
+
+    /// @notice Trading resumes (or the day starts) at a price `gapBps` away from the last one.
+    function open(int16 gapBps) external returns (uint64) {
+        return _act(MarketTypes.OPEN, gapBps);
+    }
+
+    /// @notice The closing bell. The price becomes the day's close.
+    function close() external returns (uint64) {
+        return _act(MarketTypes.CLOSED, 0);
+    }
+
+    /// @notice Any status with any move, for scripted scenarios.
+    function act(uint8 status, int16 moveBps) external returns (uint64) {
+        return _act(status, moveBps);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Views
+    // ---------------------------------------------------------------------------------------------
+
+    /// @notice When the next public action is allowed, and how many are left today.
+    function availability() external view returns (uint256 readyAt, uint256 leftToday) {
+        readyAt = uint256(lastActionAt) + cooldown;
+        uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0;
+        leftToday = used >= dailyCap ? 0 : dailyCap - used;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Owner
+    // ---------------------------------------------------------------------------------------------
+
+    function setLimits(uint32 cooldown_, uint32 dailyCap_, bool paused_) external {
+        if (msg.sender != owner) revert NotOwner();
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+        paused = paused_;
+        emit LimitsSet(cooldown_, dailyCap_, paused_);
+    }
+
+    function transferOwnership(address to) external {
+        if (msg.sender != owner) revert NotOwner();
+        owner = to;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Internals
+    // ---------------------------------------------------------------------------------------------
+
+    function _act(uint8 status, int16 moveBps) internal returns (uint64 seq) {
+        if (moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS) revert MoveTooLarge();
+
+        if (msg.sender != owner) {
+            if (paused) revert Paused();
+
+            uint256 readyAt = uint256(lastActionAt) + cooldown;
+            if (block.timestamp < readyAt) revert CoolingDown(readyAt);
+
+            uint64 today = uint64(block.timestamp / 1 days);
+            if (today != countedDay) {
+                countedDay = today;
+                usedToday = 0;
+            }
+            if (usedToday >= dailyCap) revert DailyCapReached();
+            ++usedToday;
+        }
+        lastActionAt = uint64(block.timestamp);
+
+        (,,, uint256 price) = FEED.markets(MARKET_ID);
+        if (price == 0) {
+            price = RESET_PRICE;
+        } else {
+            // forge-lint: disable-next-line(unsafe-typecast)
+            price = price * uint256(int256(10_000) + moveBps) / 10_000;
+            if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+        }
+
+        seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp));
+        emit Staged(msg.sender, status, moveBps, price, seq);
+    }
+}' ==> 'contract DemoStage {
+    event Staged(address indexed by, uint8 status, int16 moveBps, uint256 price, uint64 seq);
+    event LimitsSet(uint32 cooldown, uint32 dailyCap, bool paused);
+
+    error NotOwner();
+    error Paused();
+    error CoolingDown(uint256 readyAt);
+    error DailyCapReached();
+    error MoveTooLarge();
+
+    /// @dev Largest move one action can make: 20% either way.
+    int16 internal constant MAX_MOVE_BPS = 2_000;
+
+    /// @dev If the pretend price wanders outside this corridor it snaps back to `RESET_PRICE`.
+    uint256 internal constant MIN_PRICE = 20e18;
+    uint256 internal constant MAX_PRICE = 1_000e18;
+    uint256 internal constant RESET_PRICE = 140e18;
+
+    MarketFeed internal immutable FEED;
+    bytes32 internal immutable MARKET_ID;
+
+    address internal owner;
+    bool internal paused;
+    uint32 internal cooldown;
+    uint32 internal dailyCap;
+
+    uint64 internal lastActionAt;
+    uint64 internal countedDay;
+    uint32 internal usedToday;
+
+    constructor(MarketFeed feed_, bytes32 marketId_, uint32 cooldown_, uint32 dailyCap_) {
+        FEED = feed_;
+        MARKET_ID = marketId_;
+        owner = msg.sender;
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // The buttons
+    // ---------------------------------------------------------------------------------------------
+
+    /// @notice Trading is suspended. The price stays where it is.
+    function halt() internal returns (uint64) {
+        return _act(MarketTypes.HALTED, 0);
+    }
+
+    /// @notice Trading resumes (or the day starts) at a price `gapBps` away from the last one.
+    function open(int16 gapBps) internal returns (uint64) {
+        return _act(MarketTypes.OPEN, gapBps);
+    }
+
+    /// @notice The closing bell. The price becomes the day's close.
+    function close() internal returns (uint64) {
+        return _act(MarketTypes.CLOSED, 0);
+    }
+
+    /// @notice Any status with any move, for scripted scenarios.
+    function act(uint8 status, int16 moveBps) internal returns (uint64) {
+        return _act(status, moveBps);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Views
+    // ---------------------------------------------------------------------------------------------
+
+    /// @notice When the next internal action is allowed, and how many are left today.
+    function availability() internal view returns (uint256 readyAt, uint256 leftToday) {
+        readyAt = uint256(lastActionAt) + cooldown;
+        uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0;
+        leftToday = used >= dailyCap ? 0 : dailyCap - used;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Owner
+    // ---------------------------------------------------------------------------------------------
+
+    function setLimits(uint32 cooldown_, uint32 dailyCap_, bool paused_) internal {
+        if (msg.sender != owner) revert NotOwner();
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+        paused = paused_;
+        emit LimitsSet(cooldown_, dailyCap_, paused_);
+    }
+
+    function transferOwnership(address to) internal {
+        if (msg.sender != owner) revert NotOwner();
+        owner = to;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Internals
+    // ---------------------------------------------------------------------------------------------
+
+    function _act(uint8 status, int16 moveBps) internal returns (uint64 seq) {
+        if (moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS) revert MoveTooLarge();
+
+        if (msg.sender != owner) {
+            if (paused) revert Paused();
+
+            uint256 readyAt = uint256(lastActionAt) + cooldown;
+            if (block.timestamp < readyAt) revert CoolingDown(readyAt);
+
+            uint64 today = uint64(block.timestamp / 1 days);
+            if (today != countedDay) {
+                countedDay = today;
+                usedToday = 0;
+            }
+            if (usedToday >= dailyCap) revert DailyCapReached();
+            ++usedToday;
+        }
+        lastActionAt = uint64(block.timestamp);
+
+        (,,, uint256 price) = FEED.markets(MARKET_ID);
+        if (price == 0) {
+            price = RESET_PRICE;
+        } else {
+            // forge-lint: disable-next-line(unsafe-typecast)
+            price = price * uint256(int256(10_000) + moveBps) / 10_000;
+            if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+        }
+
+        seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp));
+        emit Staged(msg.sender, status, moveBps, price, seq);
+    }
+}' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.32ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/DemoStage.sol:59:6:
+stderr:    |
+stderr: 59 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 57: 'function halt() external returns (uint64) {
+        return _act(MarketTypes.HALTED, 0);
+    }' ==> 'function halt() private returns (uint64) {
+        return _act(MarketTypes.HALTED, 0);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.46ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/DemoStage.sol:59:6:
+stderr:    |
+stderr: 59 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 57: 'function halt() external returns (uint64) {
+        return _act(MarketTypes.HALTED, 0);
+    }' ==> 'function halt() internal returns (uint64) {
+        return _act(MarketTypes.HALTED, 0);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.15ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/DemoStage.sol:64:6:
+stderr:    |
+stderr: 64 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 62: 'function open(int16 gapBps) external returns (uint64) {
+        return _act(MarketTypes.OPEN, gapBps);
+    }' ==> 'function open(int16 gapBps) private returns (uint64) {
+        return _act(MarketTypes.OPEN, gapBps);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.78ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/DemoStage.sol:64:6:
+stderr:    |
+stderr: 64 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 62: 'function open(int16 gapBps) external returns (uint64) {
+        return _act(MarketTypes.OPEN, gapBps);
+    }' ==> 'function open(int16 gapBps) internal returns (uint64) {
+        return _act(MarketTypes.OPEN, gapBps);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.94ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/DemoStage.sol:69:6:
+stderr:    |
+stderr: 69 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 67: 'function close() external returns (uint64) {
+        return _act(MarketTypes.CLOSED, 0);
+    }' ==> 'function close() private returns (uint64) {
+        return _act(MarketTypes.CLOSED, 0);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.97ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/DemoStage.sol:69:6:
+stderr:    |
+stderr: 69 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 67: 'function close() external returns (uint64) {
+        return _act(MarketTypes.CLOSED, 0);
+    }' ==> 'function close() internal returns (uint64) {
+        return _act(MarketTypes.CLOSED, 0);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.16ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/DemoStage.sol:74:6:
+stderr:    |
+stderr: 74 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 72: 'function act(uint8 status, int16 moveBps) external returns (uint64) {
+        return _act(status, moveBps);
+    }' ==> 'function act(uint8 status, int16 moveBps) private returns (uint64) {
+        return _act(status, moveBps);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.92ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/DemoStage.sol:74:6:
+stderr:    |
+stderr: 74 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 72: 'function act(uint8 status, int16 moveBps) external returns (uint64) {
+        return _act(status, moveBps);
+    }' ==> 'function act(uint8 status, int16 moveBps) internal returns (uint64) {
+        return _act(status, moveBps);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.42ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/DemoStage.sol:85:6:
+stderr:    |
+stderr: 85 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 81: 'function availability() external view returns (uint256 readyAt, uint256 leftToday) {
+        readyAt = uint256(lastActionAt) + cooldown;
+        uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0;
+        leftToday = used >= dailyCap ? 0 : dailyCap - used;
+    }' ==> 'function availability() external pure returns (uint256 readyAt, uint256 leftToday) {
+        readyAt = uint256(lastActionAt) + cooldown;
+        uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0;
+        leftToday = used >= dailyCap ? 0 : dailyCap - used;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.00ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/DemoStage.sol:85:6:
+stderr:    |
+stderr: 85 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 81: 'function availability() external view returns (uint256 readyAt, uint256 leftToday) {
+        readyAt = uint256(lastActionAt) + cooldown;
+        uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0;
+        leftToday = used >= dailyCap ? 0 : dailyCap - used;
+    }' ==> 'function availability() private view returns (uint256 readyAt, uint256 leftToday) {
+        readyAt = uint256(lastActionAt) + cooldown;
+        uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0;
+        leftToday = used >= dailyCap ? 0 : dailyCap - used;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.67ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/DemoStage.sol:85:6:
+stderr:    |
+stderr: 85 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 81: 'function availability() external view returns (uint256 readyAt, uint256 leftToday) {
+        readyAt = uint256(lastActionAt) + cooldown;
+        uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0;
+        leftToday = used >= dailyCap ? 0 : dailyCap - used;
+    }' ==> 'function availability() internal view returns (uint256 readyAt, uint256 leftToday) {
+        readyAt = uint256(lastActionAt) + cooldown;
+        uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0;
+        leftToday = used >= dailyCap ? 0 : dailyCap - used;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.23ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/DemoStage.sol:97:6:
+stderr:    |
+stderr: 97 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 91: 'function setLimits(uint32 cooldown_, uint32 dailyCap_, bool paused_) external {
+        if (msg.sender != owner) revert NotOwner();
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+        paused = paused_;
+        emit LimitsSet(cooldown_, dailyCap_, paused_);
+    }' ==> 'function setLimits(uint32 cooldown_, uint32 dailyCap_, bool paused_) private {
+        if (msg.sender != owner) revert NotOwner();
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+        paused = paused_;
+        emit LimitsSet(cooldown_, dailyCap_, paused_);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.08ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/DemoStage.sol:97:6:
+stderr:    |
+stderr: 97 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 91: 'function setLimits(uint32 cooldown_, uint32 dailyCap_, bool paused_) external {
+        if (msg.sender != owner) revert NotOwner();
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+        paused = paused_;
+        emit LimitsSet(cooldown_, dailyCap_, paused_);
+    }' ==> 'function setLimits(uint32 cooldown_, uint32 dailyCap_, bool paused_) internal {
+        if (msg.sender != owner) revert NotOwner();
+        cooldown = cooldown_;
+        dailyCap = dailyCap_;
+        paused = paused_;
+        emit LimitsSet(cooldown_, dailyCap_, paused_);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.53ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/origin/DemoStage.sol:102:6:
+stderr:     |
+stderr: 102 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 99: 'function transferOwnership(address to) external {
+        if (msg.sender != owner) revert NotOwner();
+        owner = to;
+    }' ==> 'function transferOwnership(address to) private {
+        if (msg.sender != owner) revert NotOwner();
+        owner = to;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.86ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/origin/DemoStage.sol:102:6:
+stderr:     |
+stderr: 102 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 99: 'function transferOwnership(address to) external {
+        if (msg.sender != owner) revert NotOwner();
+        owner = to;
+    }' ==> 'function transferOwnership(address to) internal {
+        if (msg.sender != owner) revert NotOwner();
+        owner = to;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.43ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/origin/DemoStage.sol:138:6:
+stderr:     |
+stderr: 138 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 108: 'function _act(uint8 status, int16 moveBps) internal returns (uint64 seq) {
+        if (moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS) revert MoveTooLarge();
+
+        if (msg.sender != owner) {
+            if (paused) revert Paused();
+
+            uint256 readyAt = uint256(lastActionAt) + cooldown;
+            if (block.timestamp < readyAt) revert CoolingDown(readyAt);
+
+            uint64 today = uint64(block.timestamp / 1 days);
+            if (today != countedDay) {
+                countedDay = today;
+                usedToday = 0;
+            }
+            if (usedToday >= dailyCap) revert DailyCapReached();
+            ++usedToday;
+        }
+        lastActionAt = uint64(block.timestamp);
+
+        (,,, uint256 price) = FEED.markets(MARKET_ID);
+        if (price == 0) {
+            price = RESET_PRICE;
+        } else {
+            // forge-lint: disable-next-line(unsafe-typecast)
+            price = price * uint256(int256(10_000) + moveBps) / 10_000;
+            if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+        }
+
+        seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp));
+        emit Staged(msg.sender, status, moveBps, price, seq);
+    }' ==> 'function _act(uint8 status, int16 moveBps) private returns (uint64 seq) {
+        if (moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS) revert MoveTooLarge();
+
+        if (msg.sender != owner) {
+            if (paused) revert Paused();
+
+            uint256 readyAt = uint256(lastActionAt) + cooldown;
+            if (block.timestamp < readyAt) revert CoolingDown(readyAt);
+
+            uint64 today = uint64(block.timestamp / 1 days);
+            if (today != countedDay) {
+                countedDay = today;
+                usedToday = 0;
+            }
+            if (usedToday >= dailyCap) revert DailyCapReached();
+            ++usedToday;
+        }
+        lastActionAt = uint64(block.timestamp);
+
+        (,,, uint256 price) = FEED.markets(MARKET_ID);
+        if (price == 0) {
+            price = RESET_PRICE;
+        } else {
+            // forge-lint: disable-next-line(unsafe-typecast)
+            price = price * uint256(int256(10_000) + moveBps) / 10_000;
+            if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+        }
+
+        seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp));
+        emit Staged(msg.sender, status, moveBps, price, seq);
+    }' --> COMPILATION FAILURE
+INFO:Slither-Mutate:Mutator FHR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 27 caught tweak mutants (out of 28 that compile)
+INFO:Slither-Mutate:Mutator LIR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 27 caught tweak mutants (out of 28 that compile)
+INFO:Slither-Mutate:[LOR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'moveBps > MAX_MOVE_BPS  &&  moveBps < -MAX_MOVE_BPS' --> CAUGHT
+INFO:Slither-Mutate:Mutator LOR found 1 caught tweak mutants (out of 1 that compile)
+INFO:Slither-Mutate:Running total: found 28 caught tweak mutants (out of 29 that compile)
+INFO:Slither-Mutate:[MIA] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'false' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.26ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ',' but got identifier
+stderr:   --> src/origin/DemoStage.sol:83:34:
+stderr:    |
+stderr: 83 |         uint256 used = !(uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0) ? usedToday : 0;
+stderr:    |                                  ^^^^
+INFO:Slither-Mutate:[MIA] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> '!(uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0)' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[MIA] Line 84: 'leftToday = used >= dailyCap ? 0 : dailyCap - used' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 84: 'leftToday = used >= dailyCap ? 0 : dailyCap - used' ==> 'false' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 11.14ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (4907): Built-in unary operator ! cannot be applied to type uint256.
+stderr:   --> src/origin/DemoStage.sol:84:21:
+stderr:    |
+stderr: 84 |         leftToday = !(leftToday = used >= dailyCap ? 0 : dailyCap - used) ? 0 : dailyCap - used;
+stderr:    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (7407): Type uint256 is not implicitly convertible to expected type bool.
+stderr:   --> src/origin/DemoStage.sol:84:21:
+stderr:    |
+stderr: 84 |         leftToday = !(leftToday = used >= dailyCap ? 0 : dailyCap - used) ? 0 : dailyCap - used;
+stderr:    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[MIA] Line 84: 'leftToday = used >= dailyCap ? 0 : dailyCap - used' ==> '!(leftToday = used >= dailyCap ? 0 : dailyCap - used)' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[MIA] Line 92: 'msg.sender != owner' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 92: 'msg.sender != owner' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 92: 'msg.sender != owner' ==> '!(msg.sender != owner)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 100: 'msg.sender != owner' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 100: 'msg.sender != owner' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 100: 'msg.sender != owner' ==> '!(msg.sender != owner)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> '!(moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 111: 'msg.sender != owner' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 111: 'msg.sender != owner' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 111: 'msg.sender != owner' ==> '!(msg.sender != owner)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 112: 'paused' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 112: 'paused' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 112: 'paused' ==> '!(paused)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 115: 'block.timestamp < readyAt' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 115: 'block.timestamp < readyAt' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 115: 'block.timestamp < readyAt' ==> '!(block.timestamp < readyAt)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 118: 'today != countedDay' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 118: 'today != countedDay' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 118: 'today != countedDay' ==> '!(today != countedDay)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 122: 'usedToday >= dailyCap' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 122: 'usedToday >= dailyCap' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 122: 'usedToday >= dailyCap' ==> '!(usedToday >= dailyCap)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 128: 'price == 0' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 128: 'price == 0' ==> 'false' --> UNCAUGHT
+INFO:Slither-Mutate:[MIA] Line 128: 'price == 0' ==> '!(price == 0)' --> CAUGHT
+INFO:Slither-Mutate:Mutator MIA found 29 caught tweak mutants (out of 31 that compile)
+INFO:Slither-Mutate:Running total: found 57 caught tweak mutants (out of 60 that compile)
+INFO:Slither-Mutate:[MVIE] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint256 used ' --> CAUGHT
+INFO:Slither-Mutate:[MVIE] Line 114: 'uint256 readyAt = uint256(lastActionAt) + cooldown' ==> 'uint256 readyAt ' --> CAUGHT
+INFO:Slither-Mutate:[MVIE] Line 117: 'uint64 today = uint64(block.timestamp / 1 days)' ==> 'uint64 today ' --> CAUGHT
+INFO:Slither-Mutate:Mutator MVIE found 3 caught tweak mutants (out of 3 that compile)
+INFO:Slither-Mutate:Running total: found 60 caught tweak mutants (out of 63 that compile)
+INFO:Slither-Mutate:Mutator MVIV found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 60 caught tweak mutants (out of 63 that compile)
+INFO:Slither-Mutate:Mutator MWA found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 60 caught tweak mutants (out of 63 that compile)
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.93ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ';' but got identifier
+stderr:   --> src/origin/DemoStage.sol:83:32:
+stderr:    |
+stderr: 83 |         uint256 used = uint256 used = block.timestamp / 1 days < countedDay ? usedToday : 0 ? usedToday : 0;
+stderr:    |                                ^^^^
+INFO:Slither-Mutate:[ROR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint256 used = block.timestamp / 1 days < countedDay ? usedToday : 0' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.32ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ';' but got identifier
+stderr:   --> src/origin/DemoStage.sol:83:32:
+stderr:    |
+stderr: 83 |         uint256 used = uint256 used = block.timestamp / 1 days > countedDay ? usedToday : 0 ? usedToday : 0;
+stderr:    |                                ^^^^
+INFO:Slither-Mutate:[ROR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint256 used = block.timestamp / 1 days > countedDay ? usedToday : 0' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.29ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ';' but got identifier
+stderr:   --> src/origin/DemoStage.sol:83:32:
+stderr:    |
+stderr: 83 |         uint256 used = uint256 used = block.timestamp / 1 days <= countedDay ? usedToday : 0 ? usedToday : 0;
+stderr:    |                                ^^^^
+INFO:Slither-Mutate:[ROR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint256 used = block.timestamp / 1 days <= countedDay ? usedToday : 0' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.63ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ';' but got identifier
+stderr:   --> src/origin/DemoStage.sol:83:32:
+stderr:    |
+stderr: 83 |         uint256 used = uint256 used = block.timestamp / 1 days >= countedDay ? usedToday : 0 ? usedToday : 0;
+stderr:    |                                ^^^^
+INFO:Slither-Mutate:[ROR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint256 used = block.timestamp / 1 days >= countedDay ? usedToday : 0' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.53ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ';' but got identifier
+stderr:   --> src/origin/DemoStage.sol:83:32:
+stderr:    |
+stderr: 83 |         uint256 used = uint256 used = block.timestamp / 1 days != countedDay ? usedToday : 0 ? usedToday : 0;
+stderr:    |                                ^^^^
+INFO:Slither-Mutate:[ROR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint256 used = block.timestamp / 1 days != countedDay ? usedToday : 0' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.53ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7407): Type uint256 is not implicitly convertible to expected type bool.
+stderr:   --> src/origin/DemoStage.sol:84:55:
+stderr:    |
+stderr: 84 |         leftToday = leftToday = used < dailyCap ? 0 : dailyCap - used ? 0 : dailyCap - used;
+stderr:    |                                                       ^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[ROR] Line 84: 'leftToday = used >= dailyCap ? 0 : dailyCap - used' ==> 'leftToday = used < dailyCap ? 0 : dailyCap - used' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 13.00ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7407): Type uint256 is not implicitly convertible to expected type bool.
+stderr:   --> src/origin/DemoStage.sol:84:55:
+stderr:    |
+stderr: 84 |         leftToday = leftToday = used > dailyCap ? 0 : dailyCap - used ? 0 : dailyCap - used;
+stderr:    |                                                       ^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[ROR] Line 84: 'leftToday = used >= dailyCap ? 0 : dailyCap - used' ==> 'leftToday = used > dailyCap ? 0 : dailyCap - used' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.28ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7407): Type uint256 is not implicitly convertible to expected type bool.
+stderr:   --> src/origin/DemoStage.sol:84:56:
+stderr:    |
+stderr: 84 |         leftToday = leftToday = used <= dailyCap ? 0 : dailyCap - used ? 0 : dailyCap - used;
+stderr:    |                                                        ^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[ROR] Line 84: 'leftToday = used >= dailyCap ? 0 : dailyCap - used' ==> 'leftToday = used <= dailyCap ? 0 : dailyCap - used' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.50ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7407): Type uint256 is not implicitly convertible to expected type bool.
+stderr:   --> src/origin/DemoStage.sol:84:56:
+stderr:    |
+stderr: 84 |         leftToday = leftToday = used == dailyCap ? 0 : dailyCap - used ? 0 : dailyCap - used;
+stderr:    |                                                        ^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[ROR] Line 84: 'leftToday = used >= dailyCap ? 0 : dailyCap - used' ==> 'leftToday = used == dailyCap ? 0 : dailyCap - used' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.78ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7407): Type uint256 is not implicitly convertible to expected type bool.
+stderr:   --> src/origin/DemoStage.sol:84:56:
+stderr:    |
+stderr: 84 |         leftToday = leftToday = used != dailyCap ? 0 : dailyCap - used ? 0 : dailyCap - used;
+stderr:    |                                                        ^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[ROR] Line 84: 'leftToday = used >= dailyCap ? 0 : dailyCap - used' ==> 'leftToday = used != dailyCap ? 0 : dailyCap - used' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[ROR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'moveBps < MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'moveBps <= MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'moveBps >= MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'moveBps == MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'moveBps != MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'moveBps > MAX_MOVE_BPS || moveBps > -MAX_MOVE_BPS' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'moveBps > MAX_MOVE_BPS || moveBps <= -MAX_MOVE_BPS' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'moveBps > MAX_MOVE_BPS || moveBps >= -MAX_MOVE_BPS' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'moveBps > MAX_MOVE_BPS || moveBps == -MAX_MOVE_BPS' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 109: 'moveBps > MAX_MOVE_BPS || moveBps < -MAX_MOVE_BPS' ==> 'moveBps > MAX_MOVE_BPS || moveBps != -MAX_MOVE_BPS' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 115: 'block.timestamp < readyAt' ==> 'block.timestamp > readyAt' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 115: 'block.timestamp < readyAt' ==> 'block.timestamp <= readyAt' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 115: 'block.timestamp < readyAt' ==> 'block.timestamp >= readyAt' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 115: 'block.timestamp < readyAt' ==> 'block.timestamp == readyAt' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 115: 'block.timestamp < readyAt' ==> 'block.timestamp != readyAt' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 118: 'today != countedDay' ==> 'today < countedDay' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 118: 'today != countedDay' ==> 'today > countedDay' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 118: 'today != countedDay' ==> 'today <= countedDay' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 118: 'today != countedDay' ==> 'today >= countedDay' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 118: 'today != countedDay' ==> 'today == countedDay' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 122: 'usedToday >= dailyCap' ==> 'usedToday < dailyCap' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 122: 'usedToday >= dailyCap' ==> 'usedToday > dailyCap' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 122: 'usedToday >= dailyCap' ==> 'usedToday <= dailyCap' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 122: 'usedToday >= dailyCap' ==> 'usedToday == dailyCap' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 122: 'usedToday >= dailyCap' ==> 'usedToday != dailyCap' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 128: 'price == 0' ==> 'price < 0' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 128: 'price == 0' ==> 'price > 0' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 128: 'price == 0' ==> 'price <= 0' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 128: 'price == 0' ==> 'price >= 0' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 128: 'price == 0' ==> 'price != 0' --> CAUGHT
+INFO:Slither-Mutate:Mutator ROR found 26 caught tweak mutants (out of 30 that compile)
+INFO:Slither-Mutate:Running total: found 86 caught tweak mutants (out of 93 that compile)
+INFO:Slither-Mutate:[SBR] Line 25: 'int16 public constant MAX_MOVE_BPS = 2_000' ==> 'int16 public immutable MAX_MOVE_BPS = 2_000' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.87ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7407): Type int_const 2000 is not implicitly convertible to expected type int8. Literal is too large to fit in int8.
+stderr:   --> src/origin/DemoStage.sol:25:41:
+stderr:    |
+stderr: 25 |     int8 public constant MAX_MOVE_BPS = 2_000;
+stderr:    |                                         ^^^^^
+INFO:Slither-Mutate:[SBR] Line 25: 'int16 public constant MAX_MOVE_BPS = 2_000' ==> 'int8 public constant MAX_MOVE_BPS = 2_000' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[SBR] Line 28: 'uint256 public constant MIN_PRICE = 20e18' ==> 'uint256 public immutable MIN_PRICE = 20e18' --> UNCAUGHT
+INFO:Slither-Mutate:[SBR] Line 28: 'uint256 public constant MIN_PRICE = 20e18' ==> 'uint128 public constant MIN_PRICE = 20e18' --> UNCAUGHT
+INFO:Slither-Mutate:[SBR] Line 29: 'uint256 public constant MAX_PRICE = 1_000e18' ==> 'uint256 public immutable MAX_PRICE = 1_000e18' --> UNCAUGHT
+INFO:Slither-Mutate:[SBR] Line 29: 'uint256 public constant MAX_PRICE = 1_000e18' ==> 'uint128 public constant MAX_PRICE = 1_000e18' --> UNCAUGHT
+INFO:Slither-Mutate:[SBR] Line 30: 'uint256 public constant RESET_PRICE = 140e18' ==> 'uint256 public immutable RESET_PRICE = 140e18' --> UNCAUGHT
+INFO:Slither-Mutate:[SBR] Line 30: 'uint256 public constant RESET_PRICE = 140e18' ==> 'uint128 public constant RESET_PRICE = 140e18' --> UNCAUGHT
+INFO:Slither-Mutate:[SBR] Line 47: 'owner = msg.sender' ==> 'owner = tx.origin' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 26.58ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7407): Type uint256 is not implicitly convertible to expected type uint128.
+stderr:   --> src/origin/DemoStage.sol:82:19:
+stderr:    |
+stderr: 82 |         readyAt = uint256(lastActionAt) + cooldown;
+stderr:    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (7407): Type uint256 is not implicitly convertible to expected type uint128.
+stderr:   --> src/origin/DemoStage.sol:84:21:
+stderr:    |
+stderr: 84 |         leftToday = used >= dailyCap ? 0 : dailyCap - used;
+stderr:    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 81: '(uint256 readyAt, uint256 leftToday)' ==> '(uint128 readyAt, uint128 leftToday)' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[SBR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint256 used = 0 / 1 days == countedDay ? usedToday : 0' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint256 used = block.timestamp / 1 seconds == countedDay ? usedToday : 0' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint256 used = block.timestamp / 1 minutes == countedDay ? usedToday : 0' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint256 used = block.timestamp / 1 hours == countedDay ? usedToday : 0' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint256 used = block.timestamp / 1 weeks == countedDay ? usedToday : 0' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 83: 'uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0' ==> 'uint128 used = block.timestamp / 1 days == countedDay ? usedToday : 0' --> UNCAUGHT
+INFO:Slither-Mutate:[SBR] Line 92: 'msg.sender != owner' ==> 'tx.origin != owner' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 100: 'msg.sender != owner' ==> 'tx.origin != owner' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 9.02ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7407): Type uint64 is not implicitly convertible to expected type uint32.
+stderr:    --> src/origin/DemoStage.sol:136:15:
+stderr:     |
+stderr: 136 |         seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp));
+stderr:     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 108: '(uint64 seq)' ==> '(uint32 seq)' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[SBR] Line 111: 'msg.sender != owner' ==> 'tx.origin != owner' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 114: 'uint256 readyAt = uint256(lastActionAt) + cooldown' ==> 'uint128 readyAt = uint128(lastActionAt) + cooldown' --> UNCAUGHT
+INFO:Slither-Mutate:[SBR] Line 115: 'block.timestamp < readyAt' ==> '0 < readyAt' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 117: 'uint64 today = uint64(block.timestamp / 1 days)' ==> 'uint64 today = uint64(0 / 1 days)' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 117: 'uint64 today = uint64(block.timestamp / 1 days)' ==> 'uint64 today = uint64(block.timestamp / 1 seconds)' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 117: 'uint64 today = uint64(block.timestamp / 1 days)' ==> 'uint64 today = uint64(block.timestamp / 1 minutes)' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 117: 'uint64 today = uint64(block.timestamp / 1 days)' ==> 'uint64 today = uint64(block.timestamp / 1 hours)' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 117: 'uint64 today = uint64(block.timestamp / 1 days)' ==> 'uint64 today = uint64(block.timestamp / 1 weeks)' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 117: 'uint64 today = uint64(block.timestamp / 1 days)' ==> 'uint32 today = uint32(block.timestamp / 1 days)' --> UNCAUGHT
+INFO:Slither-Mutate:[SBR] Line 125: 'lastActionAt = uint64(block.timestamp)' ==> 'lastActionAt = uint64(0)' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 125: 'lastActionAt = uint64(block.timestamp)' ==> 'lastActionAt = uint32(block.timestamp)' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.11ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9574): Type uint256 is not implicitly convertible to expected type uint128.
+stderr:    --> src/origin/DemoStage.sol:127:9:
+stderr:     |
+stderr: 127 |         (,,, uint128 price) = FEED.markets(MARKET_ID);
+stderr:     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (7407): Type uint256 is not implicitly convertible to expected type uint128.
+stderr:    --> src/origin/DemoStage.sol:129:21:
+stderr:     |
+stderr: 129 |             price = RESET_PRICE;
+stderr:     |                     ^^^^^^^^^^^
+stderr: 
+stderr: Error (7407): Type uint256 is not implicitly convertible to expected type uint128.
+stderr:    --> src/origin/DemoStage.sol:132:21:
+stderr:     |
+stderr: 132 |             price = price * uint256(int256(10_000) + moveBps) / 10_000;
+stderr:     |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (7407): Type uint256 is not implicitly convertible to expected type uint128.
+stderr:    --> src/origin/DemoStage.sol:133:65:
+stderr:     |
+stderr: 133 |             if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+stderr:     |                                                                 ^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 127: '(,,, uint256 price) = FEED.markets(MARKET_ID)' ==> '(,,, uint128 price) = FEED.markets(MARKET_ID)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.52ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9574): Type uint256 is not implicitly convertible to expected type uint128.
+stderr:    --> src/origin/DemoStage.sol:127:9:
+stderr:     |
+stderr: 127 |         (,,, uint128 price) = FEED.markets(MARKET_ID);
+stderr:     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (7407): Type uint256 is not implicitly convertible to expected type uint128.
+stderr:    --> src/origin/DemoStage.sol:129:21:
+stderr:     |
+stderr: 129 |             price = RESET_PRICE;
+stderr:     |                     ^^^^^^^^^^^
+stderr: 
+stderr: Error (7407): Type uint256 is not implicitly convertible to expected type uint128.
+stderr:    --> src/origin/DemoStage.sol:132:21:
+stderr:     |
+stderr: 132 |             price = price * uint256(int256(10_000) + moveBps) / 10_000;
+stderr:     |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (7407): Type uint256 is not implicitly convertible to expected type uint128.
+stderr:    --> src/origin/DemoStage.sol:133:65:
+stderr:     |
+stderr: 133 |             if (price < MIN_PRICE || price > MAX_PRICE) price = RESET_PRICE;
+stderr:     |                                                                 ^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 127: 'uint256 price' ==> 'uint128 price' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[SBR] Line 132: 'price = price * uint256(int256(10_000) + moveBps) / 10_000' ==> 'price = price * uint128(int128(10_000) + moveBps) / 10_000' --> UNCAUGHT
+INFO:Slither-Mutate:[SBR] Line 136: 'seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp))' ==> 'seq = FEED.publish(MARKET_ID, status, price, uint64(0))' --> UNCAUGHT
+INFO:Slither-Mutate:[SBR] Line 136: 'seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp))' ==> 'seq = FEED.publish(MARKET_ID, status, price, uint32(block.timestamp))' --> UNCAUGHT
+INFO:Slither-Mutate:Mutator SBR found 16 caught tweak mutants (out of 30 that compile)
+INFO:Slither-Mutate:Running total: found 102 caught tweak mutants (out of 123 that compile)
+INFO:Slither-Mutate:[UOR] Line 123: '++usedToday' ==> '--usedToday' --> CAUGHT
+INFO:Slither-Mutate:[UOR] Line 123: '++usedToday' ==> 'usedToday--' --> CAUGHT
+INFO:Slither-Mutate:[UOR] Line 123: '++usedToday' ==> 'usedToday++' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 3 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.11ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/origin/DemoStage.sol:123:23:
+stderr:     |
+stderr: 123 |             usedToday-;
+stderr:     |                       ^
+INFO:Slither-Mutate:[UOR] Line 123: '++usedToday' ==> 'usedToday-' --> COMPILATION FAILURE
+INFO:Slither-Mutate:Mutator UOR found 2 caught tweak mutants (out of 3 that compile)
+INFO:Slither-Mutate:Running total: found 104 caught tweak mutants (out of 126 that compile)
+INFO:Slither-Mutate:Done mutating DemoStage.

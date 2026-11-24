@@ -1,0 +1,2381 @@
+INFO:Slither-Mutate:Mutating contract BellHook
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 419.97ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Warning (5740): Unreachable code.
+stderr:   --> src/venue/BellHook.sol:60:9:
+stderr:    |
+stderr: 60 |         GUARD = guard_;
+stderr:    |         ^ (Relevant source part starts here and spans across multiple lines).
+stderr: 
+stderr: Warning (5667): Unused function parameter. Remove or comment out the variable name to silence this warning.
+stderr:   --> src/venue/BellHook.sol:58:17:
+stderr:    |
+stderr: 58 |     constructor(IPoolManager poolManager_, BellGuard guard_, address owner_) {
+stderr:    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (1284): Some immutables were read from but never assigned, possibly because of optimization.
+stderr:   --> src/venue/BellHook.sol:27:1:
+stderr:    |
+stderr: 27 | contract BellHook is IHooks {
+stderr:    | ^ (Relevant source part starts here and spans across multiple lines).
+INFO:Slither-Mutate:[RR] Line 59: 'POOL_MANAGER = poolManager_' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 405.88ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Warning (5740): Unreachable code.
+stderr:   --> src/venue/BellHook.sol:61:9:
+stderr:    |
+stderr: 61 |         owner = owner_;
+stderr:    |         ^ (Relevant source part starts here and spans across multiple lines).
+stderr: 
+stderr: Warning (5667): Unused function parameter. Remove or comment out the variable name to silence this warning.
+stderr:   --> src/venue/BellHook.sol:58:44:
+stderr:    |
+stderr: 58 |     constructor(IPoolManager poolManager_, BellGuard guard_, address owner_) {
+stderr:    |                                            ^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (1284): Some immutables were read from but never assigned, possibly because of optimization.
+stderr:   --> src/venue/BellHook.sol:27:1:
+stderr:    |
+stderr: 27 | contract BellHook is IHooks {
+stderr:    | ^ (Relevant source part starts here and spans across multiple lines).
+INFO:Slither-Mutate:[RR] Line 60: 'GUARD = guard_' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 391.71ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Warning (5740): Unreachable code.
+stderr:   --> src/venue/BellHook.sol:63:9:
+stderr:    |
+stderr: 63 |         Hooks.validateHookPermissions(
+stderr:    |         ^ (Relevant source part starts here and spans across multiple lines).
+stderr: 
+stderr: Warning (5667): Unused function parameter. Remove or comment out the variable name to silence this warning.
+stderr:   --> src/venue/BellHook.sol:58:62:
+stderr:    |
+stderr: 58 |     constructor(IPoolManager poolManager_, BellGuard guard_, address owner_) {
+stderr:    |                                                              ^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (1284): Some immutables were read from but never assigned, possibly because of optimization.
+stderr:   --> src/venue/BellHook.sol:27:1:
+stderr:    |
+stderr: 27 | contract BellHook is IHooks {
+stderr:    | ^ (Relevant source part starts here and spans across multiple lines).
+INFO:Slither-Mutate:[RR] Line 61: 'owner = owner_' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 452.02ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (1284): Some immutables were read from but never assigned, possibly because of optimization.
+stderr:   --> src/venue/BellHook.sol:27:1:
+stderr:    |
+stderr: 27 | contract BellHook is IHooks {
+stderr:    | ^ (Relevant source part starts here and spans across multiple lines).
+INFO:Slither-Mutate:[RR] Line 63: 'Hooks.validateHookPermissions(
+            IHooks(address(this)),
+            Hooks.Permissions({
+                beforeInitialize: false,
+                afterInitialize: false,
+                beforeAddLiquidity: true,
+                afterAddLiquidity: false,
+                beforeRemoveLiquidity: false,
+                afterRemoveLiquidity: false,
+                beforeSwap: true,
+                afterSwap: false,
+                beforeDonate: false,
+                afterDonate: false,
+                beforeSwapReturnDelta: false,
+                afterSwapReturnDelta: false,
+                afterAddLiquidityReturnDelta: false,
+                afterRemoveLiquidityReturnDelta: false
+            })
+        )' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 18.90ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7920): Identifier not found or not unique.
+stderr:   --> src/venue/BellHook.sol:98:86:
+stderr:    |
+stderr: 98 |     function registerPool(PoolKey calldata key, PoolConfig calldata config) external revert() {
+stderr:    |                                                                                      ^^^^^^
+INFO:Slither-Mutate:[RR] Line 98: 'onlyOwner' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 101: 'LPFeeLibrary.validate(config.baseFee)' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 102: 'LPFeeLibrary.validate(config.staleFee)' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 16.53ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:105:15:
+stderr:     |
+stderr: 105 |         pools[id] = config;
+stderr:     |               ^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:106:29:
+stderr:     |
+stderr: 106 |         emit PoolRegistered(id, config.marketId, config.vault, config.passive);
+stderr:     |                             ^^
+INFO:Slither-Mutate:[RR] Line 104: 'PoolId id = key.toId()' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 105: 'pools[id] = config' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 106: 'emit PoolRegistered(id, config.marketId, config.vault, config.passive)' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 20.96ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7920): Identifier not found or not unique.
+stderr:    --> src/venue/BellHook.sol:109:53:
+stderr:     |
+stderr: 109 |     function transferOwnership(address to) external revert() {
+stderr:     |                                                     ^^^^^^
+INFO:Slither-Mutate:[RR] Line 109: 'onlyOwner' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 110: 'owner = to' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 22.69ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:120:13:
+stderr:     |
+stderr: 120 |         if (c.vault == address(0)) return (false, 0);
+stderr:     |             ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:121:13:
+stderr:     |
+stderr: 121 |         if (c.passive) return (true, c.baseFee);
+stderr:     |             ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:121:38:
+stderr:     |
+stderr: 121 |         if (c.passive) return (true, c.baseFee);
+stderr:     |                                      ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:123:89:
+stderr:     |
+stderr: 123 |         (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+stderr:     |                                                                                         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:126:13:
+stderr:     |
+stderr: 126 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |             ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:126:92:
+stderr:     |
+stderr: 126 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |                                                                                            ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:127:27:
+stderr:     |
+stderr: 127 |             return (true, c.staleFee);
+stderr:     |                           ^
+INFO:Slither-Mutate:[RR] Line 119: 'PoolConfig memory c = pools[id]' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 120: 'return (false, 0)' ==> 'revert()' --> UNCAUGHT
+INFO:Slither-Mutate:[RR] Line 121: 'return (true, c.baseFee)' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 17.89ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:124:13:
+stderr:     |
+stderr: 124 |         if (seq == 0 || status == MarketTypes.HALTED) return (false, 0);
+stderr:     |             ^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:124:25:
+stderr:     |
+stderr: 124 |         if (seq == 0 || status == MarketTypes.HALTED) return (false, 0);
+stderr:     |                         ^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:126:32:
+stderr:     |
+stderr: 126 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |                                ^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:126:80:
+stderr:     |
+stderr: 126 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |                                                                                ^^^^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:129:23:
+stderr:     |
+stderr: 129 |         return (true, guardFee);
+stderr:     |                       ^^^^^^^^
+INFO:Slither-Mutate:[RR] Line 123: '(uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId)' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 13.15ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ',' but got identifier
+stderr:    --> src/venue/BellHook.sol:123:28:
+stderr:     |
+stderr: 123 |         (revert(),, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+stderr:     |                            ^^^^^^^^
+INFO:Slither-Mutate:[RR] Line 123: 'uint8 status' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 16.60ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected identifier but got '('
+stderr:    --> src/venue/BellHook.sol:123:31:
+stderr:     |
+stderr: 123 |         (uint8 status,, revert(),, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+stderr:     |                               ^
+INFO:Slither-Mutate:[RR] Line 123: 'uint24 guardFee' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 21.90ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected identifier but got '('
+stderr:    --> src/venue/BellHook.sol:123:49:
+stderr:     |
+stderr: 123 |         (uint8 status,, uint24 guardFee,, revert(), uint64 appliedAt) = GUARD.current(c.marketId);
+stderr:     |                                                 ^
+INFO:Slither-Mutate:[RR] Line 123: 'uint64 seq' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 14.00ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected identifier but got '('
+stderr:    --> src/venue/BellHook.sol:123:61:
+stderr:     |
+stderr: 123 |         (uint8 status,, uint24 guardFee,, uint64 seq, revert()) = GUARD.current(c.marketId);
+stderr:     |                                                             ^
+INFO:Slither-Mutate:[RR] Line 123: 'uint64 appliedAt' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 124: 'return (false, 0)' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 127: 'return (true, c.staleFee)' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 129: 'return (true, guardFee)' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 19.93ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7920): Identifier not found or not unique.
+stderr:    --> src/venue/BellHook.sol:139:9:
+stderr:     |
+stderr: 139 |         revert()
+stderr:     |         ^^^^^^
+INFO:Slither-Mutate:[RR] Line 139: 'onlyPoolManager' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 19.53ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:143:37:
+stderr:     |
+stderr: 143 |         PoolConfig memory c = pools[id];
+stderr:     |                                     ^^
+INFO:Slither-Mutate:[RR] Line 142: 'PoolId id = key.toId()' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 15.42ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:144:13:
+stderr:     |
+stderr: 144 |         if (c.vault == address(0)) revert PoolNotRegistered();
+stderr:     |             ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:147:23:
+stderr:     |
+stderr: 147 |         if (sender == c.vault) return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0);
+stderr:     |                       ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:149:13:
+stderr:     |
+stderr: 149 |         if (c.passive) {
+stderr:     |             ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:153:17:
+stderr:     |
+stderr: 153 |                 c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG
+stderr:     |                 ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:157:89:
+stderr:     |
+stderr: 157 |         (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+stderr:     |                                                                                         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:162:13:
+stderr:     |
+stderr: 162 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |             ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:162:92:
+stderr:     |
+stderr: 162 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |                                                                                            ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:163:19:
+stderr:     |
+stderr: 163 |             fee = c.staleFee;
+stderr:     |                   ^
+INFO:Slither-Mutate:[RR] Line 143: 'PoolConfig memory c = pools[id]' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 147: 'return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0)' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 150: 'return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG
+            )' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 26.36ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:158:13:
+stderr:     |
+stderr: 158 |         if (seq == 0) revert NoMarketData();
+stderr:     |             ^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:159:13:
+stderr:     |
+stderr: 159 |         if (status == MarketTypes.HALTED) revert MarketHalted();
+stderr:     |             ^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:161:22:
+stderr:     |
+stderr: 161 |         uint24 fee = guardFee;
+stderr:     |                      ^^^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:162:32:
+stderr:     |
+stderr: 162 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |                                ^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:162:80:
+stderr:     |
+stderr: 162 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |                                                                                ^^^^^^^^^
+INFO:Slither-Mutate:[RR] Line 157: '(uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId)' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 18.83ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ',' but got identifier
+stderr:    --> src/venue/BellHook.sol:157:28:
+stderr:     |
+stderr: 157 |         (revert(),, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+stderr:     |                            ^^^^^^^^
+INFO:Slither-Mutate:[RR] Line 157: 'uint8 status' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 29.79ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected identifier but got '('
+stderr:    --> src/venue/BellHook.sol:157:31:
+stderr:     |
+stderr: 157 |         (uint8 status,, revert(),, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+stderr:     |                               ^
+INFO:Slither-Mutate:[RR] Line 157: 'uint24 guardFee' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 26.80ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected identifier but got '('
+stderr:    --> src/venue/BellHook.sol:157:49:
+stderr:     |
+stderr: 157 |         (uint8 status,, uint24 guardFee,, revert(), uint64 appliedAt) = GUARD.current(c.marketId);
+stderr:     |                                                 ^
+INFO:Slither-Mutate:[RR] Line 157: 'uint64 seq' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 26.12ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected identifier but got '('
+stderr:    --> src/venue/BellHook.sol:157:61:
+stderr:     |
+stderr: 157 |         (uint8 status,, uint24 guardFee,, uint64 seq, revert()) = GUARD.current(c.marketId);
+stderr:     |                                                             ^
+INFO:Slither-Mutate:[RR] Line 157: 'uint64 appliedAt' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 45.88ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:163:13:
+stderr:     |
+stderr: 163 |             fee = c.staleFee;
+stderr:     |             ^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:166:80:
+stderr:     |
+stderr: 166 |         return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG);
+stderr:     |                                                                                ^^^
+INFO:Slither-Mutate:[RR] Line 161: 'uint24 fee = guardFee' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 163: 'fee = c.staleFee' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 166: 'return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG)' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 16.82ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7920): Identifier not found or not unique.
+stderr:    --> src/venue/BellHook.sol:172:9:
+stderr:     |
+stderr: 172 |         revert()
+stderr:     |         ^^^^^^
+INFO:Slither-Mutate:[RR] Line 172: 'onlyPoolManager' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 15.15ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:176:13:
+stderr:     |
+stderr: 176 |         if (vault == address(0)) revert PoolNotRegistered();
+stderr:     |             ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:177:23:
+stderr:     |
+stderr: 177 |         if (sender != vault) revert OnlyVault();
+stderr:     |                       ^^^^^
+INFO:Slither-Mutate:[RR] Line 175: 'address vault = pools[key.toId()].vault' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 178: 'return IHooks.beforeAddLiquidity.selector' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:Mutator RR found 14 caught revert mutants (out of 15 that compile)
+INFO:Slither-Mutate:[CR] Line 59: 'POOL_MANAGER = poolManager_' ==> '//POOL_MANAGER = poolManager_' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 60: 'GUARD = guard_' ==> '//GUARD = guard_' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 61: 'owner = owner_' ==> '//owner = owner_' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 34.27ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ';' but got ','
+stderr:   --> src/venue/BellHook.sol:64:34:
+stderr:    |
+stderr: 64 |             IHooks(address(this)),
+stderr:    |                                  ^
+INFO:Slither-Mutate:[CR] Line 63: 'Hooks.validateHookPermissions(
+            IHooks(address(this)),
+            Hooks.Permissions({
+                beforeInitialize: false,
+                afterInitialize: false,
+                beforeAddLiquidity: true,
+                afterAddLiquidity: false,
+                beforeRemoveLiquidity: false,
+                afterRemoveLiquidity: false,
+                beforeSwap: true,
+                afterSwap: false,
+                beforeDonate: false,
+                afterDonate: false,
+                beforeSwapReturnDelta: false,
+                afterSwapReturnDelta: false,
+                afterAddLiquidityReturnDelta: false,
+                afterRemoveLiquidityReturnDelta: false
+            })
+        )' ==> '//Hooks.validateHookPermissions(
+            IHooks(address(this)),
+            Hooks.Permissions({
+                beforeInitialize: false,
+                afterInitialize: false,
+                beforeAddLiquidity: true,
+                afterAddLiquidity: false,
+                beforeRemoveLiquidity: false,
+                afterRemoveLiquidity: false,
+                beforeSwap: true,
+                afterSwap: false,
+                beforeDonate: false,
+                afterDonate: false,
+                beforeSwapReturnDelta: false,
+                afterSwapReturnDelta: false,
+                afterAddLiquidityReturnDelta: false,
+                afterRemoveLiquidityReturnDelta: false
+            })
+        )' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 40.32ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got ';'
+stderr:   --> src/venue/BellHook.sol:86:10:
+stderr:    |
+stderr: 86 |         _;
+stderr:    |          ^
+INFO:Slither-Mutate:[CR] Line 85: 'msg.sender != address(POOL_MANAGER)' ==> '//msg.sender != address(POOL_MANAGER)' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 85: 'revert NotPoolManager()' ==> '//revert NotPoolManager()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 59.44ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2883): Modifier body does not contain '_'.
+stderr:   --> src/venue/BellHook.sol:84:32:
+stderr:    |
+stderr: 84 |     modifier onlyPoolManager() {
+stderr:    |                                ^ (Relevant source part starts here and spans across multiple lines).
+INFO:Slither-Mutate:[CR] Line 86: '_' ==> '//_' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 16.40ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got ';'
+stderr:   --> src/venue/BellHook.sol:91:10:
+stderr:    |
+stderr: 91 |         _;
+stderr:    |          ^
+INFO:Slither-Mutate:[CR] Line 90: 'msg.sender != owner' ==> '//msg.sender != owner' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 90: 'revert NotOwner()' ==> '//revert NotOwner()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 23.67ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2883): Modifier body does not contain '_'.
+stderr:   --> src/venue/BellHook.sol:89:26:
+stderr:    |
+stderr: 89 |     modifier onlyOwner() {
+stderr:    |                          ^ (Relevant source part starts here and spans across multiple lines).
+INFO:Slither-Mutate:[CR] Line 91: '_' ==> '//_' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 11.81ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '{' but got 'if'
+stderr:   --> src/venue/BellHook.sol:99:9:
+stderr:    |
+stderr: 99 |         if (address(key.hooks) != address(this)) revert WrongHook();
+stderr:    |         ^^
+INFO:Slither-Mutate:[CR] Line 98: 'onlyOwner' ==> '//onlyOwner' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.41ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/venue/BellHook.sol:100:9:
+stderr:     |
+stderr: 100 |         if (!LPFeeLibrary.isDynamicFee(key.fee)) revert NotDynamicFee();
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 99: 'address(key.hooks) != address(this)' ==> '//address(key.hooks) != address(this)' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 99: 'revert WrongHook()' ==> '//revert WrongHook()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 41.07ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got ';'
+stderr:    --> src/venue/BellHook.sol:101:46:
+stderr:     |
+stderr: 101 |         LPFeeLibrary.validate(config.baseFee);
+stderr:     |                                              ^
+INFO:Slither-Mutate:[CR] Line 100: '!LPFeeLibrary.isDynamicFee(key.fee)' ==> '//!LPFeeLibrary.isDynamicFee(key.fee)' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 100: 'revert NotDynamicFee()' ==> '//revert NotDynamicFee()' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 101: 'LPFeeLibrary.validate(config.baseFee)' ==> '//LPFeeLibrary.validate(config.baseFee)' --> UNCAUGHT
+INFO:Slither-Mutate:[CR] Line 102: 'LPFeeLibrary.validate(config.staleFee)' ==> '//LPFeeLibrary.validate(config.staleFee)' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 15.20ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:105:15:
+stderr:     |
+stderr: 105 |         pools[id] = config;
+stderr:     |               ^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:106:29:
+stderr:     |
+stderr: 106 |         emit PoolRegistered(id, config.marketId, config.vault, config.passive);
+stderr:     |                             ^^
+INFO:Slither-Mutate:[CR] Line 104: 'PoolId id = key.toId()' ==> '//PoolId id = key.toId()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 105: 'pools[id] = config' ==> '//pools[id] = config' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 106: 'emit PoolRegistered(id, config.marketId, config.vault, config.passive)' ==> '//emit PoolRegistered(id, config.marketId, config.vault, config.passive)' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.51ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '{' but got '='
+stderr:    --> src/venue/BellHook.sol:110:15:
+stderr:     |
+stderr: 110 |         owner = to;
+stderr:     |               ^
+INFO:Slither-Mutate:[CR] Line 109: 'onlyOwner' ==> '//onlyOwner' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 110: 'owner = to' ==> '//owner = to' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 21.37ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '(' but got identifier
+stderr:    --> src/venue/BellHook.sol:119:9:
+stderr:     |
+stderr: 119 |         PoolConfig memory c = pools[id];
+stderr:     |         ^^^^^^^^^^
+INFO:Slither-Mutate:[CR] Line 118: '(bool tradable, uint24 feePips)' ==> '//(bool tradable, uint24 feePips)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 31.15ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:120:13:
+stderr:     |
+stderr: 120 |         if (c.vault == address(0)) return (false, 0);
+stderr:     |             ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:121:13:
+stderr:     |
+stderr: 121 |         if (c.passive) return (true, c.baseFee);
+stderr:     |             ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:121:38:
+stderr:     |
+stderr: 121 |         if (c.passive) return (true, c.baseFee);
+stderr:     |                                      ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:123:89:
+stderr:     |
+stderr: 123 |         (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+stderr:     |                                                                                         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:126:13:
+stderr:     |
+stderr: 126 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |             ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:126:92:
+stderr:     |
+stderr: 126 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |                                                                                            ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:127:27:
+stderr:     |
+stderr: 127 |             return (true, c.staleFee);
+stderr:     |                           ^
+INFO:Slither-Mutate:[CR] Line 119: 'PoolConfig memory c = pools[id]' ==> '//PoolConfig memory c = pools[id]' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 22.63ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ',' but got identifier
+stderr:    --> src/venue/BellHook.sol:123:16:
+stderr:     |
+stderr: 123 |         (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+stderr:     |                ^^^^^^
+INFO:Slither-Mutate:[CR] Line 121: 'c.passive' ==> '//c.passive' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 47.09ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9079): Variable declarations can only be used inside blocks.
+stderr:    --> src/venue/BellHook.sol:123:9:
+stderr:     |
+stderr: 123 |         (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+stderr:     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[CR] Line 121: 'return (true, c.baseFee)' ==> '//return (true, c.baseFee)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 29.32ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:124:13:
+stderr:     |
+stderr: 124 |         if (seq == 0 || status == MarketTypes.HALTED) return (false, 0);
+stderr:     |             ^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:124:25:
+stderr:     |
+stderr: 124 |         if (seq == 0 || status == MarketTypes.HALTED) return (false, 0);
+stderr:     |                         ^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:126:32:
+stderr:     |
+stderr: 126 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |                                ^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:126:80:
+stderr:     |
+stderr: 126 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |                                                                                ^^^^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:129:23:
+stderr:     |
+stderr: 129 |         return (true, guardFee);
+stderr:     |                       ^^^^^^^^
+INFO:Slither-Mutate:[CR] Line 123: '(uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId)' ==> '//(uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 11.25ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/venue/BellHook.sol:124:9:
+stderr:     |
+stderr: 124 |         if (seq == 0 || status == MarketTypes.HALTED) return (false, 0);
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 123: 'uint8 status' ==> '//uint8 status' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.36ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (3546): Expected type name
+stderr:    --> src/venue/BellHook.sol:124:9:
+stderr:     |
+stderr: 124 |         if (seq == 0 || status == MarketTypes.HALTED) return (false, 0);
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 123: 'uint24 guardFee' ==> '//uint24 guardFee' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.94ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (3546): Expected type name
+stderr:    --> src/venue/BellHook.sol:124:9:
+stderr:     |
+stderr: 124 |         if (seq == 0 || status == MarketTypes.HALTED) return (false, 0);
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 123: 'uint64 seq' ==> '//uint64 seq' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.44ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (3546): Expected type name
+stderr:    --> src/venue/BellHook.sol:124:9:
+stderr:     |
+stderr: 124 |         if (seq == 0 || status == MarketTypes.HALTED) return (false, 0);
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 123: 'uint64 appliedAt' ==> '//uint64 appliedAt' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 11.37ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/venue/BellHook.sol:126:9:
+stderr:     |
+stderr: 126 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 124: 'seq == 0 || status == MarketTypes.HALTED' ==> '//seq == 0 || status == MarketTypes.HALTED' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 124: 'return (false, 0)' ==> '//return (false, 0)' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 26.07ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/venue/BellHook.sol:127:13:
+stderr:     |
+stderr: 127 |             return (true, c.staleFee);
+stderr:     |             ^^^^^^
+INFO:Slither-Mutate:[CR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> '//c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 127: 'return (true, c.staleFee)' ==> '//return (true, c.staleFee)' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 129: 'return (true, guardFee)' ==> '//return (true, guardFee)' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 139: 'onlyPoolManager' ==> '//onlyPoolManager' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 16.72ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:143:37:
+stderr:     |
+stderr: 143 |         PoolConfig memory c = pools[id];
+stderr:     |                                     ^^
+INFO:Slither-Mutate:[CR] Line 142: 'PoolId id = key.toId()' ==> '//PoolId id = key.toId()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 18.51ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:144:13:
+stderr:     |
+stderr: 144 |         if (c.vault == address(0)) revert PoolNotRegistered();
+stderr:     |             ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:147:23:
+stderr:     |
+stderr: 147 |         if (sender == c.vault) return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0);
+stderr:     |                       ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:149:13:
+stderr:     |
+stderr: 149 |         if (c.passive) {
+stderr:     |             ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:153:17:
+stderr:     |
+stderr: 153 |                 c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG
+stderr:     |                 ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:157:89:
+stderr:     |
+stderr: 157 |         (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+stderr:     |                                                                                         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:162:13:
+stderr:     |
+stderr: 162 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |             ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:162:92:
+stderr:     |
+stderr: 162 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |                                                                                            ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:163:19:
+stderr:     |
+stderr: 163 |             fee = c.staleFee;
+stderr:     |                   ^
+INFO:Slither-Mutate:[CR] Line 143: 'PoolConfig memory c = pools[id]' ==> '//PoolConfig memory c = pools[id]' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 15.25ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/venue/BellHook.sol:147:9:
+stderr:     |
+stderr: 147 |         if (sender == c.vault) return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0);
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 144: 'c.vault == address(0)' ==> '//c.vault == address(0)' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 144: 'revert PoolNotRegistered()' ==> '//revert PoolNotRegistered()' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 13.78ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/venue/BellHook.sol:149:9:
+stderr:     |
+stderr: 149 |         if (c.passive) {
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 147: 'sender == c.vault' ==> '//sender == c.vault' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 147: 'return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0)' ==> '//return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0)' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.83ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/venue/BellHook.sol:150:13:
+stderr:     |
+stderr: 150 |             return (
+stderr:     |             ^^^^^^
+INFO:Slither-Mutate:[CR] Line 149: 'c.passive' ==> '//c.passive' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 14.23ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ';' but got ','
+stderr:    --> src/venue/BellHook.sol:151:43:
+stderr:     |
+stderr: 151 |                 IHooks.beforeSwap.selector,
+stderr:     |                                           ^
+INFO:Slither-Mutate:[CR] Line 150: 'return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG
+            )' ==> '//return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG
+            )' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 33.03ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:158:13:
+stderr:     |
+stderr: 158 |         if (seq == 0) revert NoMarketData();
+stderr:     |             ^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:159:13:
+stderr:     |
+stderr: 159 |         if (status == MarketTypes.HALTED) revert MarketHalted();
+stderr:     |             ^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:161:22:
+stderr:     |
+stderr: 161 |         uint24 fee = guardFee;
+stderr:     |                      ^^^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:162:32:
+stderr:     |
+stderr: 162 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |                                ^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:162:80:
+stderr:     |
+stderr: 162 |         if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+stderr:     |                                                                                ^^^^^^^^^
+INFO:Slither-Mutate:[CR] Line 157: '(uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId)' ==> '//(uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 25.20ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/venue/BellHook.sol:158:9:
+stderr:     |
+stderr: 158 |         if (seq == 0) revert NoMarketData();
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 157: 'uint8 status' ==> '//uint8 status' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 49.05ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (3546): Expected type name
+stderr:    --> src/venue/BellHook.sol:158:9:
+stderr:     |
+stderr: 158 |         if (seq == 0) revert NoMarketData();
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 157: 'uint24 guardFee' ==> '//uint24 guardFee' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 31.32ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (3546): Expected type name
+stderr:    --> src/venue/BellHook.sol:158:9:
+stderr:     |
+stderr: 158 |         if (seq == 0) revert NoMarketData();
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 157: 'uint64 seq' ==> '//uint64 seq' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 47.78ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (3546): Expected type name
+stderr:    --> src/venue/BellHook.sol:158:9:
+stderr:     |
+stderr: 158 |         if (seq == 0) revert NoMarketData();
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 157: 'uint64 appliedAt' ==> '//uint64 appliedAt' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 27.09ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/venue/BellHook.sol:159:9:
+stderr:     |
+stderr: 159 |         if (status == MarketTypes.HALTED) revert MarketHalted();
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 158: 'seq == 0' ==> '//seq == 0' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 158: 'revert NoMarketData()' ==> '//revert NoMarketData()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 14.59ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got identifier
+stderr:    --> src/venue/BellHook.sol:161:16:
+stderr:     |
+stderr: 161 |         uint24 fee = guardFee;
+stderr:     |                ^^^
+INFO:Slither-Mutate:[CR] Line 159: 'status == MarketTypes.HALTED' ==> '//status == MarketTypes.HALTED' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 23.40ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9079): Variable declarations can only be used inside blocks.
+stderr:    --> src/venue/BellHook.sol:161:9:
+stderr:     |
+stderr: 161 |         uint24 fee = guardFee;
+stderr:     |         ^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[CR] Line 159: 'revert MarketHalted()' ==> '//revert MarketHalted()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 15.17ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:163:13:
+stderr:     |
+stderr: 163 |             fee = c.staleFee;
+stderr:     |             ^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:166:80:
+stderr:     |
+stderr: 166 |         return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG);
+stderr:     |                                                                                ^^^
+INFO:Slither-Mutate:[CR] Line 161: 'uint24 fee = guardFee' ==> '//uint24 fee = guardFee' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.65ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got ';'
+stderr:    --> src/venue/BellHook.sol:163:29:
+stderr:     |
+stderr: 163 |             fee = c.staleFee;
+stderr:     |                             ^
+INFO:Slither-Mutate:[CR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> '//c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 163: 'fee = c.staleFee' ==> '//fee = c.staleFee' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 166: 'return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG)' ==> '//return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG)' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 172: 'onlyPoolManager' ==> '//onlyPoolManager' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 24.46ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:176:13:
+stderr:     |
+stderr: 176 |         if (vault == address(0)) revert PoolNotRegistered();
+stderr:     |             ^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellHook.sol:177:23:
+stderr:     |
+stderr: 177 |         if (sender != vault) revert OnlyVault();
+stderr:     |                       ^^^^^
+INFO:Slither-Mutate:[CR] Line 175: 'address vault = pools[key.toId()].vault' ==> '//address vault = pools[key.toId()].vault' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 51.57ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/venue/BellHook.sol:177:9:
+stderr:     |
+stderr: 177 |         if (sender != vault) revert OnlyVault();
+stderr:     |         ^^
+INFO:Slither-Mutate:[CR] Line 176: 'vault == address(0)' ==> '//vault == address(0)' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 176: 'revert PoolNotRegistered()' ==> '//revert PoolNotRegistered()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 32.22ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/venue/BellHook.sol:178:9:
+stderr:     |
+stderr: 178 |         return IHooks.beforeAddLiquidity.selector;
+stderr:     |         ^^^^^^
+INFO:Slither-Mutate:[CR] Line 177: 'sender != vault' ==> '//sender != vault' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 177: 'revert OnlyVault()' ==> '//revert OnlyVault()' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 178: 'return IHooks.beforeAddLiquidity.selector' ==> '//return IHooks.beforeAddLiquidity.selector' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 186: 'revert HookNotImplemented()' ==> '//revert HookNotImplemented()' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 190: 'revert HookNotImplemented()' ==> '//revert HookNotImplemented()' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 201: 'revert HookNotImplemented()' ==> '//revert HookNotImplemented()' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 209: 'revert HookNotImplemented()' ==> '//revert HookNotImplemented()' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 220: 'revert HookNotImplemented()' ==> '//revert HookNotImplemented()' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 228: 'revert HookNotImplemented()' ==> '//revert HookNotImplemented()' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 232: 'revert HookNotImplemented()' ==> '//revert HookNotImplemented()' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 236: 'revert HookNotImplemented()' ==> '//revert HookNotImplemented()' --> CAUGHT
+INFO:Slither-Mutate:Mutator CR found 28 caught comment mutants (out of 33 that compile)
+INFO:Slither-Mutate:[AOR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp + appliedAt > c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[AOR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp / appliedAt > c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[AOR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp * appliedAt > c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[AOR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp % appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp + appliedAt > c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[AOR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp / appliedAt > c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[AOR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp * appliedAt > c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[AOR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp % appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:Mutator AOR found 2 caught tweak mutants (out of 8 that compile)
+INFO:Slither-Mutate:Running total: found 2 caught tweak mutants (out of 8 that compile)
+INFO:Slither-Mutate:Mutator ASOR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 2 caught tweak mutants (out of 8 that compile)
+INFO:Slither-Mutate:[BOR] Line 150: 'return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG
+            )' ==> 'return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee & LPFeeLibrary.OVERRIDE_FEE_FLAG
+            )' --> UNCAUGHT
+INFO:Slither-Mutate:[BOR] Line 150: 'return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG
+            )' ==> 'return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee << LPFeeLibrary.OVERRIDE_FEE_FLAG
+            )' --> UNCAUGHT
+INFO:Slither-Mutate:[BOR] Line 150: 'return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG
+            )' ==> 'return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee >> LPFeeLibrary.OVERRIDE_FEE_FLAG
+            )' --> UNCAUGHT
+INFO:Slither-Mutate:[BOR] Line 150: 'return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG
+            )' ==> 'return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee ^ LPFeeLibrary.OVERRIDE_FEE_FLAG
+            )' --> UNCAUGHT
+INFO:Slither-Mutate:[BOR] Line 166: 'return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG)' ==> 'return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee & LPFeeLibrary.OVERRIDE_FEE_FLAG)' --> CAUGHT
+INFO:Slither-Mutate:[BOR] Line 166: 'return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG)' ==> 'return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee << LPFeeLibrary.OVERRIDE_FEE_FLAG)' --> CAUGHT
+INFO:Slither-Mutate:[BOR] Line 166: 'return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG)' ==> 'return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee >> LPFeeLibrary.OVERRIDE_FEE_FLAG)' --> CAUGHT
+INFO:Slither-Mutate:[BOR] Line 166: 'return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG)' ==> 'return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee ^ LPFeeLibrary.OVERRIDE_FEE_FLAG)' --> UNCAUGHT
+INFO:Slither-Mutate:Mutator BOR found 3 caught tweak mutants (out of 8 that compile)
+INFO:Slither-Mutate:Running total: found 5 caught tweak mutants (out of 16 that compile)
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 14.88ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:107:6:
+stderr:     |
+stderr: 107 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 98: 'function registerPool(PoolKey calldata key, PoolConfig calldata config) external onlyOwner {
+        if (address(key.hooks) != address(this)) revert WrongHook();
+        if (!LPFeeLibrary.isDynamicFee(key.fee)) revert NotDynamicFee();
+        LPFeeLibrary.validate(config.baseFee);
+        LPFeeLibrary.validate(config.staleFee);
+
+        PoolId id = key.toId();
+        pools[id] = config;
+        emit PoolRegistered(id, config.marketId, config.vault, config.passive);
+    }' ==> 'function registerPool(PoolKey calldata key, PoolConfig calldata config) private onlyOwner {
+        if (address(key.hooks) != address(this)) revert WrongHook();
+        if (!LPFeeLibrary.isDynamicFee(key.fee)) revert NotDynamicFee();
+        LPFeeLibrary.validate(config.baseFee);
+        LPFeeLibrary.validate(config.staleFee);
+
+        PoolId id = key.toId();
+        pools[id] = config;
+        emit PoolRegistered(id, config.marketId, config.vault, config.passive);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 18.12ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:107:6:
+stderr:     |
+stderr: 107 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 98: 'function registerPool(PoolKey calldata key, PoolConfig calldata config) external onlyOwner {
+        if (address(key.hooks) != address(this)) revert WrongHook();
+        if (!LPFeeLibrary.isDynamicFee(key.fee)) revert NotDynamicFee();
+        LPFeeLibrary.validate(config.baseFee);
+        LPFeeLibrary.validate(config.staleFee);
+
+        PoolId id = key.toId();
+        pools[id] = config;
+        emit PoolRegistered(id, config.marketId, config.vault, config.passive);
+    }' ==> 'function registerPool(PoolKey calldata key, PoolConfig calldata config) internal onlyOwner {
+        if (address(key.hooks) != address(this)) revert WrongHook();
+        if (!LPFeeLibrary.isDynamicFee(key.fee)) revert NotDynamicFee();
+        LPFeeLibrary.validate(config.baseFee);
+        LPFeeLibrary.validate(config.staleFee);
+
+        PoolId id = key.toId();
+        pools[id] = config;
+        emit PoolRegistered(id, config.marketId, config.vault, config.passive);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 13.87ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:111:6:
+stderr:     |
+stderr: 111 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 109: 'function transferOwnership(address to) external onlyOwner {
+        owner = to;
+    }' ==> 'function transferOwnership(address to) private onlyOwner {
+        owner = to;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 12.84ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:111:6:
+stderr:     |
+stderr: 111 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 109: 'function transferOwnership(address to) external onlyOwner {
+        owner = to;
+    }' ==> 'function transferOwnership(address to) internal onlyOwner {
+        owner = to;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 13.21ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:130:6:
+stderr:     |
+stderr: 130 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 118: 'function quote(PoolId id) public view returns (bool tradable, uint24 feePips) {
+        PoolConfig memory c = pools[id];
+        if (c.vault == address(0)) return (false, 0);
+        if (c.passive) return (true, c.baseFee);
+
+        (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+        if (seq == 0 || status == MarketTypes.HALTED) return (false, 0);
+
+        if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+            return (true, c.staleFee);
+        }
+        return (true, guardFee);
+    }' ==> 'function quote(PoolId id) public pure returns (bool tradable, uint24 feePips) {
+        PoolConfig memory c = pools[id];
+        if (c.vault == address(0)) return (false, 0);
+        if (c.passive) return (true, c.baseFee);
+
+        (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+        if (seq == 0 || status == MarketTypes.HALTED) return (false, 0);
+
+        if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+            return (true, c.staleFee);
+        }
+        return (true, guardFee);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 11.29ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:130:6:
+stderr:     |
+stderr: 130 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 118: 'function quote(PoolId id) public view returns (bool tradable, uint24 feePips) {
+        PoolConfig memory c = pools[id];
+        if (c.vault == address(0)) return (false, 0);
+        if (c.passive) return (true, c.baseFee);
+
+        (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+        if (seq == 0 || status == MarketTypes.HALTED) return (false, 0);
+
+        if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+            return (true, c.staleFee);
+        }
+        return (true, guardFee);
+    }' ==> 'function quote(PoolId id) private view returns (bool tradable, uint24 feePips) {
+        PoolConfig memory c = pools[id];
+        if (c.vault == address(0)) return (false, 0);
+        if (c.passive) return (true, c.baseFee);
+
+        (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+        if (seq == 0 || status == MarketTypes.HALTED) return (false, 0);
+
+        if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+            return (true, c.staleFee);
+        }
+        return (true, guardFee);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 19.36ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:130:6:
+stderr:     |
+stderr: 130 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 118: 'function quote(PoolId id) public view returns (bool tradable, uint24 feePips) {
+        PoolConfig memory c = pools[id];
+        if (c.vault == address(0)) return (false, 0);
+        if (c.passive) return (true, c.baseFee);
+
+        (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+        if (seq == 0 || status == MarketTypes.HALTED) return (false, 0);
+
+        if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+            return (true, c.staleFee);
+        }
+        return (true, guardFee);
+    }' ==> 'function quote(PoolId id) internal view returns (bool tradable, uint24 feePips) {
+        PoolConfig memory c = pools[id];
+        if (c.vault == address(0)) return (false, 0);
+        if (c.passive) return (true, c.baseFee);
+
+        (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+        if (seq == 0 || status == MarketTypes.HALTED) return (false, 0);
+
+        if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+            return (true, c.staleFee);
+        }
+        return (true, guardFee);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 11.74ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:167:6:
+stderr:     |
+stderr: 167 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 136: 'function beforeSwap(address sender, PoolKey calldata key, SwapParams calldata, bytes calldata)
+        external
+        view
+        onlyPoolManager
+        returns (bytes4, BeforeSwapDelta, uint24)
+    {
+        PoolId id = key.toId();
+        PoolConfig memory c = pools[id];
+        if (c.vault == address(0)) revert PoolNotRegistered();
+
+        // The vault only swaps to move an empty pool to a new price. Nothing is traded, so no fee applies.
+        if (sender == c.vault) return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0);
+
+        if (c.passive) {
+            return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG
+            );
+        }
+
+        (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+        if (seq == 0) revert NoMarketData();
+        if (status == MarketTypes.HALTED) revert MarketHalted();
+
+        uint24 fee = guardFee;
+        if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+            fee = c.staleFee;
+        }
+
+        return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG);
+    }' ==> 'function beforeSwap(address sender, PoolKey calldata key, SwapParams calldata, bytes calldata)
+        external
+        pure
+        onlyPoolManager
+        returns (bytes4, BeforeSwapDelta, uint24)
+    {
+        PoolId id = key.toId();
+        PoolConfig memory c = pools[id];
+        if (c.vault == address(0)) revert PoolNotRegistered();
+
+        // The vault only swaps to move an empty pool to a new price. Nothing is traded, so no fee applies.
+        if (sender == c.vault) return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0);
+
+        if (c.passive) {
+            return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG
+            );
+        }
+
+        (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+        if (seq == 0) revert NoMarketData();
+        if (status == MarketTypes.HALTED) revert MarketHalted();
+
+        uint24 fee = guardFee;
+        if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+            fee = c.staleFee;
+        }
+
+        return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.48ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:167:6:
+stderr:     |
+stderr: 167 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 136: 'function beforeSwap(address sender, PoolKey calldata key, SwapParams calldata, bytes calldata)
+        external
+        view
+        onlyPoolManager
+        returns (bytes4, BeforeSwapDelta, uint24)
+    {
+        PoolId id = key.toId();
+        PoolConfig memory c = pools[id];
+        if (c.vault == address(0)) revert PoolNotRegistered();
+
+        // The vault only swaps to move an empty pool to a new price. Nothing is traded, so no fee applies.
+        if (sender == c.vault) return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0);
+
+        if (c.passive) {
+            return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG
+            );
+        }
+
+        (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+        if (seq == 0) revert NoMarketData();
+        if (status == MarketTypes.HALTED) revert MarketHalted();
+
+        uint24 fee = guardFee;
+        if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+            fee = c.staleFee;
+        }
+
+        return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG);
+    }' ==> 'function beforeSwap(address sender, PoolKey calldata key, SwapParams calldata, bytes calldata)
+        private
+        view
+        onlyPoolManager
+        returns (bytes4, BeforeSwapDelta, uint24)
+    {
+        PoolId id = key.toId();
+        PoolConfig memory c = pools[id];
+        if (c.vault == address(0)) revert PoolNotRegistered();
+
+        // The vault only swaps to move an empty pool to a new price. Nothing is traded, so no fee applies.
+        if (sender == c.vault) return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0);
+
+        if (c.passive) {
+            return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG
+            );
+        }
+
+        (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+        if (seq == 0) revert NoMarketData();
+        if (status == MarketTypes.HALTED) revert MarketHalted();
+
+        uint24 fee = guardFee;
+        if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+            fee = c.staleFee;
+        }
+
+        return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 16.59ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:167:6:
+stderr:     |
+stderr: 167 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 136: 'function beforeSwap(address sender, PoolKey calldata key, SwapParams calldata, bytes calldata)
+        external
+        view
+        onlyPoolManager
+        returns (bytes4, BeforeSwapDelta, uint24)
+    {
+        PoolId id = key.toId();
+        PoolConfig memory c = pools[id];
+        if (c.vault == address(0)) revert PoolNotRegistered();
+
+        // The vault only swaps to move an empty pool to a new price. Nothing is traded, so no fee applies.
+        if (sender == c.vault) return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0);
+
+        if (c.passive) {
+            return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG
+            );
+        }
+
+        (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+        if (seq == 0) revert NoMarketData();
+        if (status == MarketTypes.HALTED) revert MarketHalted();
+
+        uint24 fee = guardFee;
+        if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+            fee = c.staleFee;
+        }
+
+        return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG);
+    }' ==> 'function beforeSwap(address sender, PoolKey calldata key, SwapParams calldata, bytes calldata)
+        internal
+        view
+        onlyPoolManager
+        returns (bytes4, BeforeSwapDelta, uint24)
+    {
+        PoolId id = key.toId();
+        PoolConfig memory c = pools[id];
+        if (c.vault == address(0)) revert PoolNotRegistered();
+
+        // The vault only swaps to move an empty pool to a new price. Nothing is traded, so no fee applies.
+        if (sender == c.vault) return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0);
+
+        if (c.passive) {
+            return (
+                IHooks.beforeSwap.selector,
+                BeforeSwapDeltaLibrary.ZERO_DELTA,
+                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG
+            );
+        }
+
+        (uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+        if (seq == 0) revert NoMarketData();
+        if (status == MarketTypes.HALTED) revert MarketHalted();
+
+        uint24 fee = guardFee;
+        if (c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale) {
+            fee = c.staleFee;
+        }
+
+        return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 14.60ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:179:6:
+stderr:     |
+stderr: 179 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 169: 'function beforeAddLiquidity(address sender, PoolKey calldata key, ModifyLiquidityParams calldata, bytes calldata)
+        external
+        view
+        onlyPoolManager
+        returns (bytes4)
+    {
+        address vault = pools[key.toId()].vault;
+        if (vault == address(0)) revert PoolNotRegistered();
+        if (sender != vault) revert OnlyVault();
+        return IHooks.beforeAddLiquidity.selector;
+    }' ==> 'function beforeAddLiquidity(address sender, PoolKey calldata key, ModifyLiquidityParams calldata, bytes calldata)
+        external
+        pure
+        onlyPoolManager
+        returns (bytes4)
+    {
+        address vault = pools[key.toId()].vault;
+        if (vault == address(0)) revert PoolNotRegistered();
+        if (sender != vault) revert OnlyVault();
+        return IHooks.beforeAddLiquidity.selector;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 20.19ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:179:6:
+stderr:     |
+stderr: 179 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 169: 'function beforeAddLiquidity(address sender, PoolKey calldata key, ModifyLiquidityParams calldata, bytes calldata)
+        external
+        view
+        onlyPoolManager
+        returns (bytes4)
+    {
+        address vault = pools[key.toId()].vault;
+        if (vault == address(0)) revert PoolNotRegistered();
+        if (sender != vault) revert OnlyVault();
+        return IHooks.beforeAddLiquidity.selector;
+    }' ==> 'function beforeAddLiquidity(address sender, PoolKey calldata key, ModifyLiquidityParams calldata, bytes calldata)
+        private
+        view
+        onlyPoolManager
+        returns (bytes4)
+    {
+        address vault = pools[key.toId()].vault;
+        if (vault == address(0)) revert PoolNotRegistered();
+        if (sender != vault) revert OnlyVault();
+        return IHooks.beforeAddLiquidity.selector;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 19.07ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:179:6:
+stderr:     |
+stderr: 179 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 169: 'function beforeAddLiquidity(address sender, PoolKey calldata key, ModifyLiquidityParams calldata, bytes calldata)
+        external
+        view
+        onlyPoolManager
+        returns (bytes4)
+    {
+        address vault = pools[key.toId()].vault;
+        if (vault == address(0)) revert PoolNotRegistered();
+        if (sender != vault) revert OnlyVault();
+        return IHooks.beforeAddLiquidity.selector;
+    }' ==> 'function beforeAddLiquidity(address sender, PoolKey calldata key, ModifyLiquidityParams calldata, bytes calldata)
+        internal
+        view
+        onlyPoolManager
+        returns (bytes4)
+    {
+        address vault = pools[key.toId()].vault;
+        if (vault == address(0)) revert PoolNotRegistered();
+        if (sender != vault) revert OnlyVault();
+        return IHooks.beforeAddLiquidity.selector;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 12.12ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:187:6:
+stderr:     |
+stderr: 187 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 185: 'function beforeInitialize(address, PoolKey calldata, uint160) external pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' ==> 'function beforeInitialize(address, PoolKey calldata, uint160) external view returns (bytes4) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 20.20ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:187:6:
+stderr:     |
+stderr: 187 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 185: 'function beforeInitialize(address, PoolKey calldata, uint160) external pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' ==> 'function beforeInitialize(address, PoolKey calldata, uint160) private pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 18.55ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:187:6:
+stderr:     |
+stderr: 187 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 185: 'function beforeInitialize(address, PoolKey calldata, uint160) external pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' ==> 'function beforeInitialize(address, PoolKey calldata, uint160) internal pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 13.97ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:191:6:
+stderr:     |
+stderr: 191 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 189: 'function afterInitialize(address, PoolKey calldata, uint160, int24) external pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' ==> 'function afterInitialize(address, PoolKey calldata, uint160, int24) external view returns (bytes4) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 11.58ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:191:6:
+stderr:     |
+stderr: 191 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 189: 'function afterInitialize(address, PoolKey calldata, uint160, int24) external pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' ==> 'function afterInitialize(address, PoolKey calldata, uint160, int24) private pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 16.95ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:191:6:
+stderr:     |
+stderr: 191 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 189: 'function afterInitialize(address, PoolKey calldata, uint160, int24) external pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' ==> 'function afterInitialize(address, PoolKey calldata, uint160, int24) internal pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 24.09ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:202:6:
+stderr:     |
+stderr: 202 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 193: 'function afterAddLiquidity(
+        address,
+        PoolKey calldata,
+        ModifyLiquidityParams calldata,
+        BalanceDelta,
+        BalanceDelta,
+        bytes calldata
+    ) external pure returns (bytes4, BalanceDelta) {
+        revert HookNotImplemented();
+    }' ==> 'function afterAddLiquidity(
+        address,
+        PoolKey calldata,
+        ModifyLiquidityParams calldata,
+        BalanceDelta,
+        BalanceDelta,
+        bytes calldata
+    ) external view returns (bytes4, BalanceDelta) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 11.38ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:202:6:
+stderr:     |
+stderr: 202 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 193: 'function afterAddLiquidity(
+        address,
+        PoolKey calldata,
+        ModifyLiquidityParams calldata,
+        BalanceDelta,
+        BalanceDelta,
+        bytes calldata
+    ) external pure returns (bytes4, BalanceDelta) {
+        revert HookNotImplemented();
+    }' ==> 'function afterAddLiquidity(
+        address,
+        PoolKey calldata,
+        ModifyLiquidityParams calldata,
+        BalanceDelta,
+        BalanceDelta,
+        bytes calldata
+    ) private pure returns (bytes4, BalanceDelta) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 15.45ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:202:6:
+stderr:     |
+stderr: 202 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 193: 'function afterAddLiquidity(
+        address,
+        PoolKey calldata,
+        ModifyLiquidityParams calldata,
+        BalanceDelta,
+        BalanceDelta,
+        bytes calldata
+    ) external pure returns (bytes4, BalanceDelta) {
+        revert HookNotImplemented();
+    }' ==> 'function afterAddLiquidity(
+        address,
+        PoolKey calldata,
+        ModifyLiquidityParams calldata,
+        BalanceDelta,
+        BalanceDelta,
+        bytes calldata
+    ) internal pure returns (bytes4, BalanceDelta) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.97ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:210:6:
+stderr:     |
+stderr: 210 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 204: 'function beforeRemoveLiquidity(address, PoolKey calldata, ModifyLiquidityParams calldata, bytes calldata)
+        external
+        pure
+        returns (bytes4)
+    {
+        revert HookNotImplemented();
+    }' ==> 'function beforeRemoveLiquidity(address, PoolKey calldata, ModifyLiquidityParams calldata, bytes calldata)
+        external
+        view
+        returns (bytes4)
+    {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 19.52ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:210:6:
+stderr:     |
+stderr: 210 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 204: 'function beforeRemoveLiquidity(address, PoolKey calldata, ModifyLiquidityParams calldata, bytes calldata)
+        external
+        pure
+        returns (bytes4)
+    {
+        revert HookNotImplemented();
+    }' ==> 'function beforeRemoveLiquidity(address, PoolKey calldata, ModifyLiquidityParams calldata, bytes calldata)
+        private
+        pure
+        returns (bytes4)
+    {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.60ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:210:6:
+stderr:     |
+stderr: 210 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 204: 'function beforeRemoveLiquidity(address, PoolKey calldata, ModifyLiquidityParams calldata, bytes calldata)
+        external
+        pure
+        returns (bytes4)
+    {
+        revert HookNotImplemented();
+    }' ==> 'function beforeRemoveLiquidity(address, PoolKey calldata, ModifyLiquidityParams calldata, bytes calldata)
+        internal
+        pure
+        returns (bytes4)
+    {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.83ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:221:6:
+stderr:     |
+stderr: 221 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 212: 'function afterRemoveLiquidity(
+        address,
+        PoolKey calldata,
+        ModifyLiquidityParams calldata,
+        BalanceDelta,
+        BalanceDelta,
+        bytes calldata
+    ) external pure returns (bytes4, BalanceDelta) {
+        revert HookNotImplemented();
+    }' ==> 'function afterRemoveLiquidity(
+        address,
+        PoolKey calldata,
+        ModifyLiquidityParams calldata,
+        BalanceDelta,
+        BalanceDelta,
+        bytes calldata
+    ) external view returns (bytes4, BalanceDelta) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 11.12ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:221:6:
+stderr:     |
+stderr: 221 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 212: 'function afterRemoveLiquidity(
+        address,
+        PoolKey calldata,
+        ModifyLiquidityParams calldata,
+        BalanceDelta,
+        BalanceDelta,
+        bytes calldata
+    ) external pure returns (bytes4, BalanceDelta) {
+        revert HookNotImplemented();
+    }' ==> 'function afterRemoveLiquidity(
+        address,
+        PoolKey calldata,
+        ModifyLiquidityParams calldata,
+        BalanceDelta,
+        BalanceDelta,
+        bytes calldata
+    ) private pure returns (bytes4, BalanceDelta) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 11.83ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:221:6:
+stderr:     |
+stderr: 221 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 212: 'function afterRemoveLiquidity(
+        address,
+        PoolKey calldata,
+        ModifyLiquidityParams calldata,
+        BalanceDelta,
+        BalanceDelta,
+        bytes calldata
+    ) external pure returns (bytes4, BalanceDelta) {
+        revert HookNotImplemented();
+    }' ==> 'function afterRemoveLiquidity(
+        address,
+        PoolKey calldata,
+        ModifyLiquidityParams calldata,
+        BalanceDelta,
+        BalanceDelta,
+        bytes calldata
+    ) internal pure returns (bytes4, BalanceDelta) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.63ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:229:6:
+stderr:     |
+stderr: 229 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 223: 'function afterSwap(address, PoolKey calldata, SwapParams calldata, BalanceDelta, bytes calldata)
+        external
+        pure
+        returns (bytes4, int128)
+    {
+        revert HookNotImplemented();
+    }' ==> 'function afterSwap(address, PoolKey calldata, SwapParams calldata, BalanceDelta, bytes calldata)
+        external
+        view
+        returns (bytes4, int128)
+    {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 11.04ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:229:6:
+stderr:     |
+stderr: 229 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 223: 'function afterSwap(address, PoolKey calldata, SwapParams calldata, BalanceDelta, bytes calldata)
+        external
+        pure
+        returns (bytes4, int128)
+    {
+        revert HookNotImplemented();
+    }' ==> 'function afterSwap(address, PoolKey calldata, SwapParams calldata, BalanceDelta, bytes calldata)
+        private
+        pure
+        returns (bytes4, int128)
+    {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.99ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:229:6:
+stderr:     |
+stderr: 229 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 223: 'function afterSwap(address, PoolKey calldata, SwapParams calldata, BalanceDelta, bytes calldata)
+        external
+        pure
+        returns (bytes4, int128)
+    {
+        revert HookNotImplemented();
+    }' ==> 'function afterSwap(address, PoolKey calldata, SwapParams calldata, BalanceDelta, bytes calldata)
+        internal
+        pure
+        returns (bytes4, int128)
+    {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 13.32ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:233:6:
+stderr:     |
+stderr: 233 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 231: 'function beforeDonate(address, PoolKey calldata, uint256, uint256, bytes calldata) external pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' ==> 'function beforeDonate(address, PoolKey calldata, uint256, uint256, bytes calldata) external view returns (bytes4) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 32.09ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:233:6:
+stderr:     |
+stderr: 233 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 231: 'function beforeDonate(address, PoolKey calldata, uint256, uint256, bytes calldata) external pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' ==> 'function beforeDonate(address, PoolKey calldata, uint256, uint256, bytes calldata) private pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 17.67ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:233:6:
+stderr:     |
+stderr: 233 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 231: 'function beforeDonate(address, PoolKey calldata, uint256, uint256, bytes calldata) external pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' ==> 'function beforeDonate(address, PoolKey calldata, uint256, uint256, bytes calldata) internal pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 11.02ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:237:6:
+stderr:     |
+stderr: 237 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 235: 'function afterDonate(address, PoolKey calldata, uint256, uint256, bytes calldata) external pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' ==> 'function afterDonate(address, PoolKey calldata, uint256, uint256, bytes calldata) external view returns (bytes4) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.81ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:237:6:
+stderr:     |
+stderr: 237 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 235: 'function afterDonate(address, PoolKey calldata, uint256, uint256, bytes calldata) external pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' ==> 'function afterDonate(address, PoolKey calldata, uint256, uint256, bytes calldata) private pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 14.27ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellHook.sol:237:6:
+stderr:     |
+stderr: 237 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 235: 'function afterDonate(address, PoolKey calldata, uint256, uint256, bytes calldata) external pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' ==> 'function afterDonate(address, PoolKey calldata, uint256, uint256, bytes calldata) internal pure returns (bytes4) {
+        revert HookNotImplemented();
+    }' --> COMPILATION FAILURE
+INFO:Slither-Mutate:Mutator FHR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 5 caught tweak mutants (out of 16 that compile)
+INFO:Slither-Mutate:Mutator LIR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 5 caught tweak mutants (out of 16 that compile)
+INFO:Slither-Mutate:[LOR] Line 124: 'seq == 0 || status == MarketTypes.HALTED' ==> 'seq == 0  &&  status == MarketTypes.HALTED' --> CAUGHT
+INFO:Slither-Mutate:[LOR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0  ||  status == MarketTypes.OPEN ' --> CAUGHT
+INFO:Slither-Mutate:[LOR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0  ||  status == MarketTypes.OPEN ' --> CAUGHT
+INFO:Slither-Mutate:Mutator LOR found 3 caught tweak mutants (out of 3 that compile)
+INFO:Slither-Mutate:Running total: found 8 caught tweak mutants (out of 19 that compile)
+INFO:Slither-Mutate:[MIA] Line 85: 'msg.sender != address(POOL_MANAGER)' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 85: 'msg.sender != address(POOL_MANAGER)' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 85: 'msg.sender != address(POOL_MANAGER)' ==> '!(msg.sender != address(POOL_MANAGER))' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 90: 'msg.sender != owner' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 90: 'msg.sender != owner' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 90: 'msg.sender != owner' ==> '!(msg.sender != owner)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 99: 'address(key.hooks) != address(this)' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 99: 'address(key.hooks) != address(this)' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 99: 'address(key.hooks) != address(this)' ==> '!(address(key.hooks) != address(this))' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 100: '!LPFeeLibrary.isDynamicFee(key.fee)' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 100: '!LPFeeLibrary.isDynamicFee(key.fee)' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 121: 'c.passive' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 121: 'c.passive' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 121: 'c.passive' ==> '!(c.passive)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 124: 'seq == 0 || status == MarketTypes.HALTED' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 124: 'seq == 0 || status == MarketTypes.HALTED' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 124: 'seq == 0 || status == MarketTypes.HALTED' ==> '!(seq == 0 || status == MarketTypes.HALTED)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> '!(c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 149: 'c.passive' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 149: 'c.passive' ==> 'false' --> UNCAUGHT
+INFO:Slither-Mutate:[MIA] Line 149: 'c.passive' ==> '!(c.passive)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 158: 'seq == 0' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 158: 'seq == 0' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 158: 'seq == 0' ==> '!(seq == 0)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 159: 'status == MarketTypes.HALTED' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 159: 'status == MarketTypes.HALTED' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 159: 'status == MarketTypes.HALTED' ==> '!(status == MarketTypes.HALTED)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> '!(c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 176: 'vault == address(0)' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 176: 'vault == address(0)' ==> 'false' --> UNCAUGHT
+INFO:Slither-Mutate:[MIA] Line 176: 'vault == address(0)' ==> '!(vault == address(0))' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 177: 'sender != vault' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 177: 'sender != vault' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 177: 'sender != vault' ==> '!(sender != vault)' --> CAUGHT
+INFO:Slither-Mutate:Mutator MIA found 36 caught tweak mutants (out of 38 that compile)
+INFO:Slither-Mutate:Running total: found 44 caught tweak mutants (out of 57 that compile)
+INFO:Slither-Mutate:[MVIE] Line 104: 'PoolId id = key.toId()' ==> 'PoolId id ' --> CAUGHT
+INFO:Slither-Mutate:[MVIE] Line 119: 'PoolConfig memory c = pools[id]' ==> 'PoolConfig memory c ' --> CAUGHT
+INFO:Slither-Mutate:[MVIE] Line 142: 'PoolId id = key.toId()' ==> 'PoolId id ' --> CAUGHT
+INFO:Slither-Mutate:[MVIE] Line 143: 'PoolConfig memory c = pools[id]' ==> 'PoolConfig memory c ' --> CAUGHT
+INFO:Slither-Mutate:[MVIE] Line 161: 'uint24 fee = guardFee' ==> 'uint24 fee ' --> CAUGHT
+INFO:Slither-Mutate:[MVIE] Line 175: 'address vault = pools[key.toId()].vault' ==> 'address vault ' --> CAUGHT
+INFO:Slither-Mutate:Mutator MVIE found 6 caught tweak mutants (out of 6 that compile)
+INFO:Slither-Mutate:Running total: found 50 caught tweak mutants (out of 63 that compile)
+INFO:Slither-Mutate:Mutator MVIV found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 50 caught tweak mutants (out of 63 that compile)
+INFO:Slither-Mutate:Mutator MWA found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 50 caught tweak mutants (out of 63 that compile)
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 22.45ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2271): Built-in binary operator || cannot be applied to types bool and uint8.
+stderr:    --> src/venue/BellHook.sol:124:13:
+stderr:     |
+stderr: 124 |         if (seq < 0 || status  || status == MarketTypes.HALTED) return (false, 0);
+stderr:     |             ^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[ROR] Line 124: 'seq == 0 || status == MarketTypes.HALTED' ==> 'seq < 0 || status ' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 34.37ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2271): Built-in binary operator || cannot be applied to types bool and uint8.
+stderr:    --> src/venue/BellHook.sol:124:13:
+stderr:     |
+stderr: 124 |         if (seq > 0 || status  || status == MarketTypes.HALTED) return (false, 0);
+stderr:     |             ^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[ROR] Line 124: 'seq == 0 || status == MarketTypes.HALTED' ==> 'seq > 0 || status ' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 23.02ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2271): Built-in binary operator || cannot be applied to types bool and uint8.
+stderr:    --> src/venue/BellHook.sol:124:13:
+stderr:     |
+stderr: 124 |         if (seq <= 0 || status  || status == MarketTypes.HALTED) return (false, 0);
+stderr:     |             ^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[ROR] Line 124: 'seq == 0 || status == MarketTypes.HALTED' ==> 'seq <= 0 || status ' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 36.09ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2271): Built-in binary operator || cannot be applied to types bool and uint8.
+stderr:    --> src/venue/BellHook.sol:124:13:
+stderr:     |
+stderr: 124 |         if (seq >= 0 || status  || status == MarketTypes.HALTED) return (false, 0);
+stderr:     |             ^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[ROR] Line 124: 'seq == 0 || status == MarketTypes.HALTED' ==> 'seq >= 0 || status ' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 43.88ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2271): Built-in binary operator || cannot be applied to types bool and uint8.
+stderr:    --> src/venue/BellHook.sol:124:13:
+stderr:     |
+stderr: 124 |         if (seq != 0 || status  || status == MarketTypes.HALTED) return (false, 0);
+stderr:     |             ^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[ROR] Line 124: 'seq == 0 || status == MarketTypes.HALTED' ==> 'seq != 0 || status ' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 25.75ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2271): Built-in binary operator || cannot be applied to types bool and uint8.
+stderr:    --> src/venue/BellHook.sol:124:13:
+stderr:     |
+stderr: 124 |         if (seq == 0 || seq < 0 || status ) return (false, 0);
+stderr:     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[ROR] Line 124: 'seq == 0 || status == MarketTypes.HALTED' ==> 'seq < 0 || status ' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 27.26ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2271): Built-in binary operator || cannot be applied to types bool and uint8.
+stderr:    --> src/venue/BellHook.sol:124:13:
+stderr:     |
+stderr: 124 |         if (seq == 0 || seq > 0 || status ) return (false, 0);
+stderr:     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[ROR] Line 124: 'seq == 0 || status == MarketTypes.HALTED' ==> 'seq > 0 || status ' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 27.63ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2271): Built-in binary operator || cannot be applied to types bool and uint8.
+stderr:    --> src/venue/BellHook.sol:124:13:
+stderr:     |
+stderr: 124 |         if (seq == 0 || seq <= 0 || status ) return (false, 0);
+stderr:     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[ROR] Line 124: 'seq == 0 || status == MarketTypes.HALTED' ==> 'seq <= 0 || status ' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 23.34ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2271): Built-in binary operator || cannot be applied to types bool and uint8.
+stderr:    --> src/venue/BellHook.sol:124:13:
+stderr:     |
+stderr: 124 |         if (seq == 0 || seq >= 0 || status ) return (false, 0);
+stderr:     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[ROR] Line 124: 'seq == 0 || status == MarketTypes.HALTED' ==> 'seq >= 0 || status ' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 24.46ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2271): Built-in binary operator || cannot be applied to types bool and uint8.
+stderr:    --> src/venue/BellHook.sol:124:13:
+stderr:     |
+stderr: 124 |         if (seq == 0 || seq != 0 || status ) return (false, 0);
+stderr:     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[ROR] Line 124: 'seq == 0 || status == MarketTypes.HALTED' ==> 'seq != 0 || status ' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[ROR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale < 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale > 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale <= 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale >= 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale == 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status < MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status > MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status <= MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status >= MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status != MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt < c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt <= c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt >= c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt == c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt != c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 158: 'seq == 0' ==> 'seq < 0' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 158: 'seq == 0' ==> 'seq > 0' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 158: 'seq == 0' ==> 'seq <= 0' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 158: 'seq == 0' ==> 'seq >= 0' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 158: 'seq == 0' ==> 'seq != 0' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 159: 'status == MarketTypes.HALTED' ==> 'status < MarketTypes.HALTED' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 159: 'status == MarketTypes.HALTED' ==> 'status > MarketTypes.HALTED' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 159: 'status == MarketTypes.HALTED' ==> 'status <= MarketTypes.HALTED' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 159: 'status == MarketTypes.HALTED' ==> 'status >= MarketTypes.HALTED' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 159: 'status == MarketTypes.HALTED' ==> 'status != MarketTypes.HALTED' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale < 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale > 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale <= 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale >= 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale == 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status < MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status > MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status <= MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status >= MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status != MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt < c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt <= c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt >= c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt == c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt != c.maxStale' --> UNCAUGHT
+INFO:Slither-Mutate:Mutator ROR found 27 caught tweak mutants (out of 40 that compile)
+INFO:Slither-Mutate:Running total: found 77 caught tweak mutants (out of 103 that compile)
+INFO:Slither-Mutate:[SBR] Line 85: 'msg.sender != address(POOL_MANAGER)' ==> 'tx.origin != address(POOL_MANAGER)' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 90: 'msg.sender != owner' ==> 'tx.origin != owner' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 119: 'PoolConfig memory c = pools[id]' ==> 'PoolConfig storage c = pools[id]' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 22.07ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9574): Type uint64 is not implicitly convertible to expected type uint32.
+stderr:    --> src/venue/BellHook.sol:123:9:
+stderr:     |
+stderr: 123 |         (uint8 status,, uint24 guardFee,, uint32 seq, uint32 appliedAt) = GUARD.current(c.marketId);
+stderr:     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (9574): Type uint64 is not implicitly convertible to expected type uint32.
+stderr:    --> src/venue/BellHook.sol:123:9:
+stderr:     |
+stderr: 123 |         (uint8 status,, uint24 guardFee,, uint32 seq, uint32 appliedAt) = GUARD.current(c.marketId);
+stderr:     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 123: '(uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId)' ==> '(uint8 status,, uint24 guardFee,, uint32 seq, uint32 appliedAt) = GUARD.current(c.marketId)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 23.76ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9574): Type uint64 is not implicitly convertible to expected type uint32.
+stderr:    --> src/venue/BellHook.sol:123:9:
+stderr:     |
+stderr: 123 |         (uint8 status,, uint24 guardFee,, uint32 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+stderr:     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 123: 'uint64 seq' ==> 'uint32 seq' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 22.02ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9574): Type uint64 is not implicitly convertible to expected type uint32.
+stderr:    --> src/venue/BellHook.sol:123:9:
+stderr:     |
+stderr: 123 |         (uint8 status,, uint24 guardFee,, uint64 seq, uint32 appliedAt) = GUARD.current(c.marketId);
+stderr:     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 123: 'uint64 appliedAt' ==> 'uint32 appliedAt' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[SBR] Line 126: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && 0 - appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 143: 'PoolConfig memory c = pools[id]' ==> 'PoolConfig storage c = pools[id]' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 33.99ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9574): Type uint64 is not implicitly convertible to expected type uint32.
+stderr:    --> src/venue/BellHook.sol:157:9:
+stderr:     |
+stderr: 157 |         (uint8 status,, uint24 guardFee,, uint32 seq, uint32 appliedAt) = GUARD.current(c.marketId);
+stderr:     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (9574): Type uint64 is not implicitly convertible to expected type uint32.
+stderr:    --> src/venue/BellHook.sol:157:9:
+stderr:     |
+stderr: 157 |         (uint8 status,, uint24 guardFee,, uint32 seq, uint32 appliedAt) = GUARD.current(c.marketId);
+stderr:     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 157: '(uint8 status,, uint24 guardFee,, uint64 seq, uint64 appliedAt) = GUARD.current(c.marketId)' ==> '(uint8 status,, uint24 guardFee,, uint32 seq, uint32 appliedAt) = GUARD.current(c.marketId)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 55.90ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9574): Type uint64 is not implicitly convertible to expected type uint32.
+stderr:    --> src/venue/BellHook.sol:157:9:
+stderr:     |
+stderr: 157 |         (uint8 status,, uint24 guardFee,, uint32 seq, uint64 appliedAt) = GUARD.current(c.marketId);
+stderr:     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 157: 'uint64 seq' ==> 'uint32 seq' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 25 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 36.55ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9574): Type uint64 is not implicitly convertible to expected type uint32.
+stderr:    --> src/venue/BellHook.sol:157:9:
+stderr:     |
+stderr: 157 |         (uint8 status,, uint24 guardFee,, uint64 seq, uint32 appliedAt) = GUARD.current(c.marketId);
+stderr:     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 157: 'uint64 appliedAt' ==> 'uint32 appliedAt' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[SBR] Line 162: 'c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale' ==> 'c.maxStale != 0 && status == MarketTypes.OPEN && 0 - appliedAt > c.maxStale' --> CAUGHT
+INFO:Slither-Mutate:Mutator SBR found 4 caught tweak mutants (out of 6 that compile)
+INFO:Slither-Mutate:Running total: found 81 caught tweak mutants (out of 109 that compile)
+INFO:Slither-Mutate:Mutator UOR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 81 caught tweak mutants (out of 109 that compile)
+INFO:Slither-Mutate:Done mutating BellHook.

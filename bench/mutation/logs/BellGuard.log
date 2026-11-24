@@ -1,0 +1,2094 @@
+INFO:Slither-Mutate:Mutating contract BellGuard
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.62ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected identifier but got '('
+stderr:   --> src/venue/BellGuard.sol:54:11:
+stderr:    |
+stderr: 54 |     revert();
+stderr:    |           ^
+INFO:Slither-Mutate:[RR] Line 54: 'uint256 internal constant LISTENER_GAS_RESERVE = 60_000' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 8.92ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7920): Identifier not found or not unique.
+stderr:   --> src/venue/BellGuard.sol:60:69:
+stderr:    |
+stderr: 60 |     constructor(IPayable callbackProxy_, address reactive_) payable revert() {
+stderr:    |                                                                     ^^^^^^
+INFO:Slither-Mutate:[RR] Line 60: 'AbstractCallback(callbackProxy_, reactive_)' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 161.71ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (1284): Some immutables were read from but never assigned, possibly because of optimization.
+stderr:   --> src/venue/BellGuard.sol:17:1:
+stderr:    |
+stderr: 17 | contract BellGuard is AbstractCallback, IRefPrice {
+stderr:    | ^ (Relevant source part starts here and spans across multiple lines).
+INFO:Slither-Mutate:[RR] Line 61: 'owner = msg.sender' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 9.13ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7920): Identifier not found or not unique.
+stderr:   --> src/venue/BellGuard.sol:69:71:
+stderr:    |
+stderr: 69 |     function setListener(bytes32 marketId, address listener) external revert() {
+stderr:    |                                                                       ^^^^^^
+INFO:Slither-Mutate:[RR] Line 69: 'onlyOwner' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 70: 'listeners[marketId] = listener' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 71: 'emit ListenerSet(marketId, listener)' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.84ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7920): Identifier not found or not unique.
+stderr:   --> src/venue/BellGuard.sol:74:53:
+stderr:    |
+stderr: 74 |     function transferOwnership(address to) external revert() {
+stderr:    |                                                     ^^^^^^
+INFO:Slither-Mutate:[RR] Line 74: 'onlyOwner' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 75: 'owner = to' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 80: '_coverDebt()' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.37ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7920): Identifier not found or not unique.
+stderr:   --> src/venue/BellGuard.sol:83:68:
+stderr:    |
+stderr: 83 |     function withdraw(address payable to, uint256 amount) external revert() {
+stderr:    |                                                                    ^^^^^^
+INFO:Slither-Mutate:[RR] Line 83: 'onlyOwner' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.58ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:   --> src/venue/BellGuard.sol:85:17:
+stderr:    |
+stderr: 85 |         require(ok, "withdraw failed");
+stderr:    |                 ^^
+INFO:Slither-Mutate:[RR] Line 84: '(bool ok,) = to.call{ value: amount }("")' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.98ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:   --> src/venue/BellGuard.sol:85:17:
+stderr:    |
+stderr: 85 |         require(ok, "withdraw failed");
+stderr:    |                 ^^
+INFO:Slither-Mutate:[RR] Line 84: 'bool ok' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 85: 'require(ok, "withdraw failed")' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.44ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7920): Identifier not found or not unique.
+stderr:    --> src/venue/BellGuard.sol:101:16:
+stderr:     |
+stderr: 101 |     ) external revert() onlyCallbackSender(reactive_) {
+stderr:     |                ^^^^^^
+INFO:Slither-Mutate:[RR] Line 101: 'onlyServiceProvider' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.50ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7920): Identifier not found or not unique.
+stderr:    --> src/venue/BellGuard.sol:101:36:
+stderr:     |
+stderr: 101 |     ) external onlyServiceProvider revert() {
+stderr:     |                                    ^^^^^^
+INFO:Slither-Mutate:[RR] Line 101: 'onlyCallbackSender(reactive_)' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.87ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:106:19:
+stderr:     |
+stderr: 106 |         if (seq < s.seq) {
+stderr:     |                   ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:107:39:
+stderr:     |
+stderr: 107 |             emit Stale(marketId, seq, s.seq);
+stderr:     |                                       ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:111:9:
+stderr:     |
+stderr: 111 |         s.status = status;
+stderr:     |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:112:9:
+stderr:     |
+stderr: 112 |         s.seq = seq;
+stderr:     |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:113:9:
+stderr:     |
+stderr: 113 |         s.appliedAt = uint64(block.timestamp);
+stderr:     |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:114:9:
+stderr:     |
+stderr: 114 |         s.feePips = feePips;
+stderr:     |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:115:9:
+stderr:     |
+stderr: 115 |         s.halfRangeBps = halfRangeBps;
+stderr:     |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:116:9:
+stderr:     |
+stderr: 116 |         s.price = price;
+stderr:     |         ^
+INFO:Slither-Mutate:[RR] Line 102: 'State storage s = states[marketId]' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 107: 'emit Stale(marketId, seq, s.seq)' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.61ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ';' but got '}'
+stderr:    --> src/venue/BellGuard.sol:109:9:
+stderr:     |
+stderr: 109 |         }
+stderr:     |         ^
+INFO:Slither-Mutate:[RR] Line 108: 'return;' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 111: 's.status = status' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 112: 's.seq = seq' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 113: 's.appliedAt = uint64(block.timestamp)' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 114: 's.feePips = feePips' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 115: 's.halfRangeBps = halfRangeBps' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 116: 's.price = price' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 118: 'emit Applied(marketId, seq, status, price, feePips, halfRangeBps, originBlock, originTxHash)' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 13.16ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier. Did you mean "listeners"?
+stderr:    --> src/venue/BellGuard.sol:121:13:
+stderr:     |
+stderr: 121 |         if (listener != address(0)) {
+stderr:     |             ^^^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier. Did you mean "listeners"?
+stderr:    --> src/venue/BellGuard.sol:123:33:
+stderr:     |
+stderr: 123 |             try IMarketListener(listener).onMarketState{ gas: budget }(
+stderr:     |                                 ^^^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier. Did you mean "listeners"?
+stderr:    --> src/venue/BellGuard.sol:127:47:
+stderr:     |
+stderr: 127 |                 emit ListenerFailed(marketId, listener, reason);
+stderr:     |                                               ^^^^^^^^
+INFO:Slither-Mutate:[RR] Line 120: 'address listener = listeners[marketId]' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 13.47ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:123:63:
+stderr:     |
+stderr: 123 |             try IMarketListener(listener).onMarketState{ gas: budget }(
+stderr:     |                                                               ^^^^^^
+INFO:Slither-Mutate:[RR] Line 122: 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.01ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ';' but got '}'
+stderr:    --> src/venue/BellGuard.sol:124:9:
+stderr:     |
+stderr: 124 |         }
+stderr:     |         ^
+INFO:Slither-Mutate:[RR] Line 123: 'try IMarketListener(listener).onMarketState{ gas: budget }(
+                marketId, status, price, feePips, halfRangeBps
+            ) { }
+            catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.14ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '{' but got identifier
+stderr:    --> src/venue/BellGuard.sol:125:15:
+stderr:     |
+stderr: 125 |             ) revert()
+stderr:     |               ^^^^^^
+INFO:Slither-Mutate:[RR] Line 125: '{ }' ==> 'revert()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.67ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected 'catch' but got identifier
+stderr:    --> src/venue/BellGuard.sol:126:13:
+stderr:     |
+stderr: 126 |             revert()
+stderr:     |             ^^^^^^
+INFO:Slither-Mutate:[RR] Line 126: 'catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 127: 'emit ListenerFailed(marketId, listener, reason)' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 132: 'emit Ack(marketId, seq, status)' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.69ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:143:17:
+stderr:     |
+stderr: 143 |         return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+stderr:     |                 ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:143:27:
+stderr:     |
+stderr: 143 |         return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+stderr:     |                           ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:143:36:
+stderr:     |
+stderr: 143 |         return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+stderr:     |                                    ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:143:47:
+stderr:     |
+stderr: 143 |         return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+stderr:     |                                               ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:143:63:
+stderr:     |
+stderr: 143 |         return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+stderr:     |                                                               ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:143:70:
+stderr:     |
+stderr: 143 |         return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+stderr:     |                                                                      ^
+INFO:Slither-Mutate:[RR] Line 142: 'State storage s = states[marketId]' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 143: 'return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt)' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 148: 'return states[marketId].price' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:Mutator RR found 17 caught revert mutants (out of 17 that compile)
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 17.92ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:122:42:
+stderr:     |
+stderr: 122 |             uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0;
+stderr:     |                                          ^^^^^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:122:77:
+stderr:     |
+stderr: 122 |             uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0;
+stderr:     |                                                                             ^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[CR] Line 54: 'uint256 internal constant LISTENER_GAS_RESERVE = 60_000' ==> '//uint256 internal constant LISTENER_GAS_RESERVE = 60_000' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 17.34ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '{' but got '='
+stderr:   --> src/venue/BellGuard.sol:61:15:
+stderr:    |
+stderr: 61 |         owner = msg.sender;
+stderr:    |               ^
+INFO:Slither-Mutate:[CR] Line 60: 'AbstractCallback(callbackProxy_, reactive_)' ==> '//AbstractCallback(callbackProxy_, reactive_)' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 61: 'owner = msg.sender' ==> '//owner = msg.sender' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.21ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got ';'
+stderr:   --> src/venue/BellGuard.sol:66:10:
+stderr:    |
+stderr: 66 |         _;
+stderr:    |          ^
+INFO:Slither-Mutate:[CR] Line 65: 'msg.sender != owner' ==> '//msg.sender != owner' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 65: 'revert NotOwner()' ==> '//revert NotOwner()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.51ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2883): Modifier body does not contain '_'.
+stderr:   --> src/venue/BellGuard.sol:64:26:
+stderr:    |
+stderr: 64 |     modifier onlyOwner() {
+stderr:    |                          ^ (Relevant source part starts here and spans across multiple lines).
+INFO:Slither-Mutate:[CR] Line 66: '_' ==> '//_' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 15.40ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '{' but got '['
+stderr:   --> src/venue/BellGuard.sol:70:18:
+stderr:    |
+stderr: 70 |         listeners[marketId] = listener;
+stderr:    |                  ^
+INFO:Slither-Mutate:[CR] Line 69: 'onlyOwner' ==> '//onlyOwner' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 70: 'listeners[marketId] = listener' ==> '//listeners[marketId] = listener' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 71: 'emit ListenerSet(marketId, listener)' ==> '//emit ListenerSet(marketId, listener)' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 11.75ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '{' but got '='
+stderr:   --> src/venue/BellGuard.sol:75:15:
+stderr:    |
+stderr: 75 |         owner = to;
+stderr:    |               ^
+INFO:Slither-Mutate:[CR] Line 74: 'onlyOwner' ==> '//onlyOwner' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 75: 'owner = to' ==> '//owner = to' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 80: '_coverDebt()' ==> '//_coverDebt()' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.65ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '{' but got '('
+stderr:   --> src/venue/BellGuard.sol:84:9:
+stderr:    |
+stderr: 84 |         (bool ok,) = to.call{ value: amount }("");
+stderr:    |         ^
+INFO:Slither-Mutate:[CR] Line 83: 'onlyOwner' ==> '//onlyOwner' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.78ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:   --> src/venue/BellGuard.sol:85:17:
+stderr:    |
+stderr: 85 |         require(ok, "withdraw failed");
+stderr:    |                 ^^
+INFO:Slither-Mutate:[CR] Line 84: '(bool ok,) = to.call{ value: amount }("")' ==> '//(bool ok,) = to.call{ value: amount }("")' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.65ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ',' but got ';'
+stderr:   --> src/venue/BellGuard.sol:85:39:
+stderr:    |
+stderr: 85 |         require(ok, "withdraw failed");
+stderr:    |                                       ^
+INFO:Slither-Mutate:[CR] Line 84: 'bool ok' ==> '//bool ok' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 85: 'require(ok, "withdraw failed")' ==> '//require(ok, "withdraw failed")' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.87ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '{' but got 'storage'
+stderr:    --> src/venue/BellGuard.sol:102:15:
+stderr:     |
+stderr: 102 |         State storage s = states[marketId];
+stderr:     |               ^^^^^^^
+INFO:Slither-Mutate:[CR] Line 101: 'onlyServiceProvider' ==> '//onlyServiceProvider' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.08ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '{' but got 'storage'
+stderr:    --> src/venue/BellGuard.sol:102:15:
+stderr:     |
+stderr: 102 |         State storage s = states[marketId];
+stderr:     |               ^^^^^^^
+INFO:Slither-Mutate:[CR] Line 101: 'onlyCallbackSender(reactive_)' ==> '//onlyCallbackSender(reactive_)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.41ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:106:19:
+stderr:     |
+stderr: 106 |         if (seq < s.seq) {
+stderr:     |                   ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:107:39:
+stderr:     |
+stderr: 107 |             emit Stale(marketId, seq, s.seq);
+stderr:     |                                       ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:111:9:
+stderr:     |
+stderr: 111 |         s.status = status;
+stderr:     |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:112:9:
+stderr:     |
+stderr: 112 |         s.seq = seq;
+stderr:     |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:113:9:
+stderr:     |
+stderr: 113 |         s.appliedAt = uint64(block.timestamp);
+stderr:     |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:114:9:
+stderr:     |
+stderr: 114 |         s.feePips = feePips;
+stderr:     |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:115:9:
+stderr:     |
+stderr: 115 |         s.halfRangeBps = halfRangeBps;
+stderr:     |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:116:9:
+stderr:     |
+stderr: 116 |         s.price = price;
+stderr:     |         ^
+INFO:Slither-Mutate:[CR] Line 102: 'State storage s = states[marketId]' ==> '//State storage s = states[marketId]' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.12ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/venue/BellGuard.sol:107:13:
+stderr:     |
+stderr: 107 |             emit Stale(marketId, seq, s.seq);
+stderr:     |             ^^^^
+INFO:Slither-Mutate:[CR] Line 106: 'seq < s.seq' ==> '//seq < s.seq' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 107: 'emit Stale(marketId, seq, s.seq)' ==> '//emit Stale(marketId, seq, s.seq)' --> UNCAUGHT
+INFO:Slither-Mutate:[CR] Line 108: 'return;' ==> '//return;' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 111: 's.status = status' ==> '//s.status = status' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 112: 's.seq = seq' ==> '//s.seq = seq' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 113: 's.appliedAt = uint64(block.timestamp)' ==> '//s.appliedAt = uint64(block.timestamp)' --> UNCAUGHT
+INFO:Slither-Mutate:[CR] Line 114: 's.feePips = feePips' ==> '//s.feePips = feePips' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 115: 's.halfRangeBps = halfRangeBps' ==> '//s.halfRangeBps = halfRangeBps' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 116: 's.price = price' ==> '//s.price = price' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 118: 'emit Applied(marketId, seq, status, price, feePips, halfRangeBps, originBlock, originTxHash)' ==> '//emit Applied(marketId, seq, status, price, feePips, halfRangeBps, originBlock, originTxHash)' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.17ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier. Did you mean "listeners"?
+stderr:    --> src/venue/BellGuard.sol:121:13:
+stderr:     |
+stderr: 121 |         if (listener != address(0)) {
+stderr:     |             ^^^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier. Did you mean "listeners"?
+stderr:    --> src/venue/BellGuard.sol:123:33:
+stderr:     |
+stderr: 123 |             try IMarketListener(listener).onMarketState{ gas: budget }(
+stderr:     |                                 ^^^^^^^^
+stderr: 
+stderr: Error (7576): Undeclared identifier. Did you mean "listeners"?
+stderr:    --> src/venue/BellGuard.sol:127:47:
+stderr:     |
+stderr: 127 |                 emit ListenerFailed(marketId, listener, reason);
+stderr:     |                                               ^^^^^^^^
+INFO:Slither-Mutate:[CR] Line 120: 'address listener = listeners[marketId]' ==> '//address listener = listeners[marketId]' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 8.03ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got identifier
+stderr:    --> src/venue/BellGuard.sol:122:21:
+stderr:     |
+stderr: 122 |             uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0;
+stderr:     |                     ^^^^^^
+INFO:Slither-Mutate:[CR] Line 121: 'listener != address(0)' ==> '//listener != address(0)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 8.07ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:123:63:
+stderr:     |
+stderr: 123 |             try IMarketListener(listener).onMarketState{ gas: budget }(
+stderr:     |                                                               ^^^^^^
+INFO:Slither-Mutate:[CR] Line 122: 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' ==> '//uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 8.71ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ';' but got ','
+stderr:    --> src/venue/BellGuard.sol:124:25:
+stderr:     |
+stderr: 124 |                 marketId, status, price, feePips, halfRangeBps
+stderr:     |                         ^
+INFO:Slither-Mutate:[CR] Line 123: 'try IMarketListener(listener).onMarketState{ gas: budget }(
+                marketId, status, price, feePips, halfRangeBps
+            ) { }
+            catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }' ==> '//try IMarketListener(listener).onMarketState{ gas: budget }(
+                marketId, status, price, feePips, halfRangeBps
+            ) { }
+            catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.26ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '{' but got 'catch'
+stderr:    --> src/venue/BellGuard.sol:126:13:
+stderr:     |
+stderr: 126 |             catch (bytes memory reason) {
+stderr:     |             ^^^^^
+INFO:Slither-Mutate:[CR] Line 125: '{ }' ==> '//{ }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.41ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected 'catch' but got 'emit'
+stderr:    --> src/venue/BellGuard.sol:127:17:
+stderr:     |
+stderr: 127 |                 emit ListenerFailed(marketId, listener, reason);
+stderr:     |                 ^^^^
+INFO:Slither-Mutate:[CR] Line 126: 'catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }' ==> '//catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 127: 'emit ListenerFailed(marketId, listener, reason)' ==> '//emit ListenerFailed(marketId, listener, reason)' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.83ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:    --> src/venue/BellGuard.sol:132:13:
+stderr:     |
+stderr: 132 |             emit Ack(marketId, seq, status);
+stderr:     |             ^^^^
+INFO:Slither-Mutate:[CR] Line 131: 'wantAck' ==> '//wantAck' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 132: 'emit Ack(marketId, seq, status)' ==> '//emit Ack(marketId, seq, status)' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.12ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '(' but got '{'
+stderr:    --> src/venue/BellGuard.sol:141:5:
+stderr:     |
+stderr: 141 |     {
+stderr:     |     ^
+INFO:Slither-Mutate:[CR] Line 140: '(uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)' ==> '//(uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.67ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:143:17:
+stderr:     |
+stderr: 143 |         return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+stderr:     |                 ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:143:27:
+stderr:     |
+stderr: 143 |         return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+stderr:     |                           ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:143:36:
+stderr:     |
+stderr: 143 |         return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+stderr:     |                                    ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:143:47:
+stderr:     |
+stderr: 143 |         return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+stderr:     |                                               ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:143:63:
+stderr:     |
+stderr: 143 |         return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+stderr:     |                                                               ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:    --> src/venue/BellGuard.sol:143:70:
+stderr:     |
+stderr: 143 |         return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+stderr:     |                                                                      ^
+INFO:Slither-Mutate:[CR] Line 142: 'State storage s = states[marketId]' ==> '//State storage s = states[marketId]' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 143: 'return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt)' ==> '//return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt)' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 148: 'return states[marketId].price' ==> '//return states[marketId].price' --> CAUGHT
+INFO:Slither-Mutate:Mutator CR found 16 caught comment mutants (out of 20 that compile)
+INFO:Slither-Mutate:[AOR] Line 122: 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' ==> 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() + LISTENER_GAS_RESERVE : 0' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 122: 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' ==> 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() / LISTENER_GAS_RESERVE : 0' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 122: 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' ==> 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() * LISTENER_GAS_RESERVE : 0' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 122: 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' ==> 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() % LISTENER_GAS_RESERVE : 0' --> CAUGHT
+INFO:Slither-Mutate:Mutator AOR found 4 caught tweak mutants (out of 4 that compile)
+INFO:Slither-Mutate:Running total: found 4 caught tweak mutants (out of 4 that compile)
+INFO:Slither-Mutate:Mutator ASOR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 4 caught tweak mutants (out of 4 that compile)
+INFO:Slither-Mutate:Mutator BOR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 4 caught tweak mutants (out of 4 that compile)
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.58ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7858): Expected pragma, import directive or contract/interface/library/struct/enum/constant/function/error definition.
+stderr:    --> src/venue/BellGuard.sol:150:2:
+stderr:     |
+stderr: 150 | }{
+stderr:     |  ^
+INFO:Slither-Mutate:[FHR] Line 17: 'contract BellGuard is AbstractCallback, IRefPrice {
+    struct State {
+        uint8 status;
+        uint64 seq;
+        uint64 appliedAt;
+        uint24 feePips;
+        uint24 halfRangeBps;
+        uint256 price;
+    }
+
+    /// @notice Emitted for every state that is applied. `originBlock` and `originTxHash` identify the
+    ///         feed event that started the loop, so one log links the whole loop together.
+    event Applied(
+        bytes32 indexed marketId,
+        uint64 indexed seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        uint256 originBlock,
+        uint256 originTxHash
+    );
+
+    /// @notice Emitted only when the reactive contract asked for a confirmation. It subscribes to this.
+    event Ack(bytes32 indexed marketId, uint64 indexed seq, uint8 status);
+
+    /// @notice A callback arrived out of order and was ignored.
+    event Stale(bytes32 indexed marketId, uint64 seq, uint64 currentSeq);
+
+    /// @notice The listener reverted. The state is still applied, so readers stay correct.
+    event ListenerFailed(bytes32 indexed marketId, address listener, bytes reason);
+
+    event ListenerSet(bytes32 indexed marketId, address listener);
+
+    error NotOwner();
+
+    /// @dev Gas kept back so the guard can finish after a listener burns everything it was given.
+    uint256 internal constant LISTENER_GAS_RESERVE = 60_000;
+
+    address public owner;
+    mapping(bytes32 => State) public states;
+    mapping(bytes32 => address) public listeners;
+
+    constructor(IPayable callbackProxy_, address reactive_) payable AbstractCallback(callbackProxy_, reactive_) {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        if (msg.sender != owner) revert NotOwner();
+        _;
+    }
+
+    function setListener(bytes32 marketId, address listener) external onlyOwner {
+        listeners[marketId] = listener;
+        emit ListenerSet(marketId, listener);
+    }
+
+    function transferOwnership(address to) external onlyOwner {
+        owner = to;
+    }
+
+    /// @notice Lets the owner settle any debt to the callback proxy from this contract's balance.
+    function coverDebt() external {
+        _coverDebt();
+    }
+
+    function withdraw(address payable to, uint256 amount) external onlyOwner {
+        (bool ok,) = to.call{ value: amount }("");
+        require(ok, "withdraw failed");
+    }
+
+    /// @notice Entry point for Reactive Network callbacks.
+    /// @param reactive_ Filled in by the network with the address of the requesting reactive contract.
+    function applyState(
+        address reactive_,
+        bytes32 marketId,
+        uint64 seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        bool wantAck,
+        uint256 originBlock,
+        uint256 originTxHash
+    ) external onlyServiceProvider onlyCallbackSender(reactive_) {
+        State storage s = states[marketId];
+
+        // Older than what is already applied: ignore. The same sequence number is applied again, which
+        // is how the reactive contract re-sends a state after a policy change.
+        if (seq < s.seq) {
+            emit Stale(marketId, seq, s.seq);
+            return;
+        }
+
+        s.status = status;
+        s.seq = seq;
+        s.appliedAt = uint64(block.timestamp);
+        s.feePips = feePips;
+        s.halfRangeBps = halfRangeBps;
+        s.price = price;
+
+        emit Applied(marketId, seq, status, price, feePips, halfRangeBps, originBlock, originTxHash);
+
+        address listener = listeners[marketId];
+        if (listener != address(0)) {
+            uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0;
+            try IMarketListener(listener).onMarketState{ gas: budget }(
+                marketId, status, price, feePips, halfRangeBps
+            ) { }
+            catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }
+        }
+
+        if (wantAck) {
+            emit Ack(marketId, seq, status);
+        }
+    }
+
+    /// @notice Convenience view for integrators.
+    function current(bytes32 marketId)
+        external
+        view
+        returns (uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)
+    {
+        State storage s = states[marketId];
+        return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+    }
+
+    /// @inheritdoc IRefPrice
+    function priceOf(bytes32 marketId) external view returns (uint256) {
+        return states[marketId].price;
+    }
+}' ==> 'contract BellGuard is AbstractCallback, IRefPrice {
+    struct State {
+        uint8 status;
+        uint64 seq;
+        uint64 appliedAt;
+        uint24 feePips;
+        uint24 halfRangeBps;
+        uint256 price;
+    }
+
+    /// @notice Emitted for every state that is applied. `originBlock` and `originTxHash` identify the
+    ///         feed event that started the loop, so one log links the whole loop together.
+    event Applied(
+        bytes32 indexed marketId,
+        uint64 indexed seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        uint256 originBlock,
+        uint256 originTxHash
+    );
+
+    /// @notice Emitted only when the reactive contract asked for a confirmation. It subscribes to this.
+    event Ack(bytes32 indexed marketId, uint64 indexed seq, uint8 status);
+
+    /// @notice A callback arrived out of order and was ignored.
+    event Stale(bytes32 indexed marketId, uint64 seq, uint64 currentSeq);
+
+    /// @notice The listener reverted. The state is still applied, so readers stay correct.
+    event ListenerFailed(bytes32 indexed marketId, address listener, bytes reason);
+
+    event ListenerSet(bytes32 indexed marketId, address listener);
+
+    error NotOwner();
+
+    /// @dev Gas kept back so the guard can finish after a listener burns everything it was given.
+    uint256 internal constant LISTENER_GAS_RESERVE = 60_000;
+
+    address public owner;
+    mapping(bytes32 => State) public states;
+    mapping(bytes32 => address) public listeners;
+
+    constructor(IPayable callbackProxy_, address reactive_) payable AbstractCallback(callbackProxy_, reactive_) {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        if (msg.sender != owner) revert NotOwner();
+        _;
+    }
+
+    function setListener(bytes32 marketId, address listener) external onlyOwner {
+        listeners[marketId] = listener;
+        emit ListenerSet(marketId, listener);
+    }
+
+    function transferOwnership(address to) external onlyOwner {
+        owner = to;
+    }
+
+    /// @notice Lets the owner settle any debt to the callback proxy from this contract's balance.
+    function coverDebt() external {
+        _coverDebt();
+    }
+
+    function withdraw(address payable to, uint256 amount) external onlyOwner {
+        (bool ok,) = to.call{ value: amount }("");
+        require(ok, "withdraw failed");
+    }
+
+    /// @notice Entry point for Reactive Network callbacks.
+    /// @param reactive_ Filled in by the network with the address of the requesting reactive contract.
+    function applyState(
+        address reactive_,
+        bytes32 marketId,
+        uint64 seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        bool wantAck,
+        uint256 originBlock,
+        uint256 originTxHash
+    ) external onlyServiceProvider onlyCallbackSender(reactive_) {
+        State storage s = states[marketId];
+
+        // Older than what is already applied: ignore. The same sequence number is applied again, which
+        // is how the reactive contract re-sends a state after a policy change.
+        if (seq < s.seq) {
+            emit Stale(marketId, seq, s.seq);
+            return;
+        }
+
+        s.status = status;
+        s.seq = seq;
+        s.appliedAt = uint64(block.timestamp);
+        s.feePips = feePips;
+        s.halfRangeBps = halfRangeBps;
+        s.price = price;
+
+        emit Applied(marketId, seq, status, price, feePips, halfRangeBps, originBlock, originTxHash);
+
+        address listener = listeners[marketId];
+        if (listener != address(0)) {
+            uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0;
+            try IMarketListener(listener).onMarketState{ gas: budget }(
+                marketId, status, price, feePips, halfRangeBps
+            ) { }
+            catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }
+        }
+
+        if (wantAck) {
+            emit Ack(marketId, seq, status);
+        }
+    }
+
+    /// @notice Convenience pure for integrators.
+    function current(bytes32 marketId)
+        external
+        pure
+        returns (uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)
+    {
+        State storage s = states[marketId];
+        return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+    }
+
+    /// @inheritdoc IRefPrice
+    function priceOf(bytes32 marketId) external pure returns (uint256) {
+        return states[marketId].price;
+    }
+}' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.23ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7858): Expected pragma, import directive or contract/interface/library/struct/enum/constant/function/error definition.
+stderr:    --> src/venue/BellGuard.sol:150:2:
+stderr:     |
+stderr: 150 | }{
+stderr:     |  ^
+INFO:Slither-Mutate:[FHR] Line 17: 'contract BellGuard is AbstractCallback, IRefPrice {
+    struct State {
+        uint8 status;
+        uint64 seq;
+        uint64 appliedAt;
+        uint24 feePips;
+        uint24 halfRangeBps;
+        uint256 price;
+    }
+
+    /// @notice Emitted for every state that is applied. `originBlock` and `originTxHash` identify the
+    ///         feed event that started the loop, so one log links the whole loop together.
+    event Applied(
+        bytes32 indexed marketId,
+        uint64 indexed seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        uint256 originBlock,
+        uint256 originTxHash
+    );
+
+    /// @notice Emitted only when the reactive contract asked for a confirmation. It subscribes to this.
+    event Ack(bytes32 indexed marketId, uint64 indexed seq, uint8 status);
+
+    /// @notice A callback arrived out of order and was ignored.
+    event Stale(bytes32 indexed marketId, uint64 seq, uint64 currentSeq);
+
+    /// @notice The listener reverted. The state is still applied, so readers stay correct.
+    event ListenerFailed(bytes32 indexed marketId, address listener, bytes reason);
+
+    event ListenerSet(bytes32 indexed marketId, address listener);
+
+    error NotOwner();
+
+    /// @dev Gas kept back so the guard can finish after a listener burns everything it was given.
+    uint256 internal constant LISTENER_GAS_RESERVE = 60_000;
+
+    address public owner;
+    mapping(bytes32 => State) public states;
+    mapping(bytes32 => address) public listeners;
+
+    constructor(IPayable callbackProxy_, address reactive_) payable AbstractCallback(callbackProxy_, reactive_) {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        if (msg.sender != owner) revert NotOwner();
+        _;
+    }
+
+    function setListener(bytes32 marketId, address listener) external onlyOwner {
+        listeners[marketId] = listener;
+        emit ListenerSet(marketId, listener);
+    }
+
+    function transferOwnership(address to) external onlyOwner {
+        owner = to;
+    }
+
+    /// @notice Lets the owner settle any debt to the callback proxy from this contract's balance.
+    function coverDebt() external {
+        _coverDebt();
+    }
+
+    function withdraw(address payable to, uint256 amount) external onlyOwner {
+        (bool ok,) = to.call{ value: amount }("");
+        require(ok, "withdraw failed");
+    }
+
+    /// @notice Entry point for Reactive Network callbacks.
+    /// @param reactive_ Filled in by the network with the address of the requesting reactive contract.
+    function applyState(
+        address reactive_,
+        bytes32 marketId,
+        uint64 seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        bool wantAck,
+        uint256 originBlock,
+        uint256 originTxHash
+    ) external onlyServiceProvider onlyCallbackSender(reactive_) {
+        State storage s = states[marketId];
+
+        // Older than what is already applied: ignore. The same sequence number is applied again, which
+        // is how the reactive contract re-sends a state after a policy change.
+        if (seq < s.seq) {
+            emit Stale(marketId, seq, s.seq);
+            return;
+        }
+
+        s.status = status;
+        s.seq = seq;
+        s.appliedAt = uint64(block.timestamp);
+        s.feePips = feePips;
+        s.halfRangeBps = halfRangeBps;
+        s.price = price;
+
+        emit Applied(marketId, seq, status, price, feePips, halfRangeBps, originBlock, originTxHash);
+
+        address listener = listeners[marketId];
+        if (listener != address(0)) {
+            uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0;
+            try IMarketListener(listener).onMarketState{ gas: budget }(
+                marketId, status, price, feePips, halfRangeBps
+            ) { }
+            catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }
+        }
+
+        if (wantAck) {
+            emit Ack(marketId, seq, status);
+        }
+    }
+
+    /// @notice Convenience view for integrators.
+    function current(bytes32 marketId)
+        external
+        view
+        returns (uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)
+    {
+        State storage s = states[marketId];
+        return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+    }
+
+    /// @inheritdoc IRefPrice
+    function priceOf(bytes32 marketId) external view returns (uint256) {
+        return states[marketId].price;
+    }
+}' ==> 'contract BellGuard is AbstractCallback, IRefPrice {
+    struct State {
+        uint8 status;
+        uint64 seq;
+        uint64 appliedAt;
+        uint24 feePips;
+        uint24 halfRangeBps;
+        uint256 price;
+    }
+
+    /// @notice Emitted for every state that is applied. `originBlock` and `originTxHash` identify the
+    ///         feed event that started the loop, so one log links the whole loop together.
+    event Applied(
+        bytes32 indexed marketId,
+        uint64 indexed seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        uint256 originBlock,
+        uint256 originTxHash
+    );
+
+    /// @notice Emitted only when the reactive contract asked for a confirmation. It subscribes to this.
+    event Ack(bytes32 indexed marketId, uint64 indexed seq, uint8 status);
+
+    /// @notice A callback arrived out of order and was ignored.
+    event Stale(bytes32 indexed marketId, uint64 seq, uint64 currentSeq);
+
+    /// @notice The listener reverted. The state is still applied, so readers stay correct.
+    event ListenerFailed(bytes32 indexed marketId, address listener, bytes reason);
+
+    event ListenerSet(bytes32 indexed marketId, address listener);
+
+    error NotOwner();
+
+    /// @dev Gas kept back so the guard can finish after a listener burns everything it was given.
+    uint256 private constant LISTENER_GAS_RESERVE = 60_000;
+
+    address private owner;
+    mapping(bytes32 => State) private states;
+    mapping(bytes32 => address) private listeners;
+
+    constructor(IPayable callbackProxy_, address reactive_) payable AbstractCallback(callbackProxy_, reactive_) {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        if (msg.sender != owner) revert NotOwner();
+        _;
+    }
+
+    function setListener(bytes32 marketId, address listener) private onlyOwner {
+        listeners[marketId] = listener;
+        emit ListenerSet(marketId, listener);
+    }
+
+    function transferOwnership(address to) private onlyOwner {
+        owner = to;
+    }
+
+    /// @notice Lets the owner settle any debt to the callback proxy from this contract's balance.
+    function coverDebt() private {
+        _coverDebt();
+    }
+
+    function withdraw(address payable to, uint256 amount) private onlyOwner {
+        (bool ok,) = to.call{ value: amount }("");
+        require(ok, "withdraw failed");
+    }
+
+    /// @notice Entry point for Reactive Network callbacks.
+    /// @param reactive_ Filled in by the network with the address of the requesting reactive contract.
+    function applyState(
+        address reactive_,
+        bytes32 marketId,
+        uint64 seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        bool wantAck,
+        uint256 originBlock,
+        uint256 originTxHash
+    ) private onlyServiceProvider onlyCallbackSender(reactive_) {
+        State storage s = states[marketId];
+
+        // Older than what is already applied: ignore. The same sequence number is applied again, which
+        // is how the reactive contract re-sends a state after a policy change.
+        if (seq < s.seq) {
+            emit Stale(marketId, seq, s.seq);
+            return;
+        }
+
+        s.status = status;
+        s.seq = seq;
+        s.appliedAt = uint64(block.timestamp);
+        s.feePips = feePips;
+        s.halfRangeBps = halfRangeBps;
+        s.price = price;
+
+        emit Applied(marketId, seq, status, price, feePips, halfRangeBps, originBlock, originTxHash);
+
+        address listener = listeners[marketId];
+        if (listener != address(0)) {
+            uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0;
+            try IMarketListener(listener).onMarketState{ gas: budget }(
+                marketId, status, price, feePips, halfRangeBps
+            ) { }
+            catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }
+        }
+
+        if (wantAck) {
+            emit Ack(marketId, seq, status);
+        }
+    }
+
+    /// @notice Convenience view for integrators.
+    function current(bytes32 marketId)
+        private
+        view
+        returns (uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)
+    {
+        State storage s = states[marketId];
+        return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+    }
+
+    /// @inheritdoc IRefPrice
+    function priceOf(bytes32 marketId) private view returns (uint256) {
+        return states[marketId].price;
+    }
+}' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.82ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7858): Expected pragma, import directive or contract/interface/library/struct/enum/constant/function/error definition.
+stderr:    --> src/venue/BellGuard.sol:150:2:
+stderr:     |
+stderr: 150 | }{
+stderr:     |  ^
+INFO:Slither-Mutate:[FHR] Line 17: 'contract BellGuard is AbstractCallback, IRefPrice {
+    struct State {
+        uint8 status;
+        uint64 seq;
+        uint64 appliedAt;
+        uint24 feePips;
+        uint24 halfRangeBps;
+        uint256 price;
+    }
+
+    /// @notice Emitted for every state that is applied. `originBlock` and `originTxHash` identify the
+    ///         feed event that started the loop, so one log links the whole loop together.
+    event Applied(
+        bytes32 indexed marketId,
+        uint64 indexed seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        uint256 originBlock,
+        uint256 originTxHash
+    );
+
+    /// @notice Emitted only when the reactive contract asked for a confirmation. It subscribes to this.
+    event Ack(bytes32 indexed marketId, uint64 indexed seq, uint8 status);
+
+    /// @notice A callback arrived out of order and was ignored.
+    event Stale(bytes32 indexed marketId, uint64 seq, uint64 currentSeq);
+
+    /// @notice The listener reverted. The state is still applied, so readers stay correct.
+    event ListenerFailed(bytes32 indexed marketId, address listener, bytes reason);
+
+    event ListenerSet(bytes32 indexed marketId, address listener);
+
+    error NotOwner();
+
+    /// @dev Gas kept back so the guard can finish after a listener burns everything it was given.
+    uint256 internal constant LISTENER_GAS_RESERVE = 60_000;
+
+    address public owner;
+    mapping(bytes32 => State) public states;
+    mapping(bytes32 => address) public listeners;
+
+    constructor(IPayable callbackProxy_, address reactive_) payable AbstractCallback(callbackProxy_, reactive_) {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        if (msg.sender != owner) revert NotOwner();
+        _;
+    }
+
+    function setListener(bytes32 marketId, address listener) external onlyOwner {
+        listeners[marketId] = listener;
+        emit ListenerSet(marketId, listener);
+    }
+
+    function transferOwnership(address to) external onlyOwner {
+        owner = to;
+    }
+
+    /// @notice Lets the owner settle any debt to the callback proxy from this contract's balance.
+    function coverDebt() external {
+        _coverDebt();
+    }
+
+    function withdraw(address payable to, uint256 amount) external onlyOwner {
+        (bool ok,) = to.call{ value: amount }("");
+        require(ok, "withdraw failed");
+    }
+
+    /// @notice Entry point for Reactive Network callbacks.
+    /// @param reactive_ Filled in by the network with the address of the requesting reactive contract.
+    function applyState(
+        address reactive_,
+        bytes32 marketId,
+        uint64 seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        bool wantAck,
+        uint256 originBlock,
+        uint256 originTxHash
+    ) external onlyServiceProvider onlyCallbackSender(reactive_) {
+        State storage s = states[marketId];
+
+        // Older than what is already applied: ignore. The same sequence number is applied again, which
+        // is how the reactive contract re-sends a state after a policy change.
+        if (seq < s.seq) {
+            emit Stale(marketId, seq, s.seq);
+            return;
+        }
+
+        s.status = status;
+        s.seq = seq;
+        s.appliedAt = uint64(block.timestamp);
+        s.feePips = feePips;
+        s.halfRangeBps = halfRangeBps;
+        s.price = price;
+
+        emit Applied(marketId, seq, status, price, feePips, halfRangeBps, originBlock, originTxHash);
+
+        address listener = listeners[marketId];
+        if (listener != address(0)) {
+            uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0;
+            try IMarketListener(listener).onMarketState{ gas: budget }(
+                marketId, status, price, feePips, halfRangeBps
+            ) { }
+            catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }
+        }
+
+        if (wantAck) {
+            emit Ack(marketId, seq, status);
+        }
+    }
+
+    /// @notice Convenience view for integrators.
+    function current(bytes32 marketId)
+        external
+        view
+        returns (uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)
+    {
+        State storage s = states[marketId];
+        return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+    }
+
+    /// @inheritdoc IRefPrice
+    function priceOf(bytes32 marketId) external view returns (uint256) {
+        return states[marketId].price;
+    }
+}' ==> 'contract BellGuard is AbstractCallback, IRefPrice {
+    struct State {
+        uint8 status;
+        uint64 seq;
+        uint64 appliedAt;
+        uint24 feePips;
+        uint24 halfRangeBps;
+        uint256 price;
+    }
+
+    /// @notice Emitted for every state that is applied. `originBlock` and `originTxHash` identify the
+    ///         feed event that started the loop, so one log links the whole loop together.
+    event Applied(
+        bytes32 indexed marketId,
+        uint64 indexed seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        uint256 originBlock,
+        uint256 originTxHash
+    );
+
+    /// @notice Emitted only when the reactive contract asked for a confirmation. It subscribes to this.
+    event Ack(bytes32 indexed marketId, uint64 indexed seq, uint8 status);
+
+    /// @notice A callback arrived out of order and was ignored.
+    event Stale(bytes32 indexed marketId, uint64 seq, uint64 currentSeq);
+
+    /// @notice The listener reverted. The state is still applied, so readers stay correct.
+    event ListenerFailed(bytes32 indexed marketId, address listener, bytes reason);
+
+    event ListenerSet(bytes32 indexed marketId, address listener);
+
+    error NotOwner();
+
+    /// @dev Gas kept back so the guard can finish after a listener burns everything it was given.
+    uint256 internal constant LISTENER_GAS_RESERVE = 60_000;
+
+    address internal owner;
+    mapping(bytes32 => State) internal states;
+    mapping(bytes32 => address) internal listeners;
+
+    constructor(IPayable callbackProxy_, address reactive_) payable AbstractCallback(callbackProxy_, reactive_) {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        if (msg.sender != owner) revert NotOwner();
+        _;
+    }
+
+    function setListener(bytes32 marketId, address listener) internal onlyOwner {
+        listeners[marketId] = listener;
+        emit ListenerSet(marketId, listener);
+    }
+
+    function transferOwnership(address to) internal onlyOwner {
+        owner = to;
+    }
+
+    /// @notice Lets the owner settle any debt to the callback proxy from this contract's balance.
+    function coverDebt() internal {
+        _coverDebt();
+    }
+
+    function withdraw(address payable to, uint256 amount) internal onlyOwner {
+        (bool ok,) = to.call{ value: amount }("");
+        require(ok, "withdraw failed");
+    }
+
+    /// @notice Entry point for Reactive Network callbacks.
+    /// @param reactive_ Filled in by the network with the address of the requesting reactive contract.
+    function applyState(
+        address reactive_,
+        bytes32 marketId,
+        uint64 seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        bool wantAck,
+        uint256 originBlock,
+        uint256 originTxHash
+    ) internal onlyServiceProvider onlyCallbackSender(reactive_) {
+        State storage s = states[marketId];
+
+        // Older than what is already applied: ignore. The same sequence number is applied again, which
+        // is how the reactive contract re-sends a state after a policy change.
+        if (seq < s.seq) {
+            emit Stale(marketId, seq, s.seq);
+            return;
+        }
+
+        s.status = status;
+        s.seq = seq;
+        s.appliedAt = uint64(block.timestamp);
+        s.feePips = feePips;
+        s.halfRangeBps = halfRangeBps;
+        s.price = price;
+
+        emit Applied(marketId, seq, status, price, feePips, halfRangeBps, originBlock, originTxHash);
+
+        address listener = listeners[marketId];
+        if (listener != address(0)) {
+            uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0;
+            try IMarketListener(listener).onMarketState{ gas: budget }(
+                marketId, status, price, feePips, halfRangeBps
+            ) { }
+            catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }
+        }
+
+        if (wantAck) {
+            emit Ack(marketId, seq, status);
+        }
+    }
+
+    /// @notice Convenience view for integrators.
+    function current(bytes32 marketId)
+        internal
+        view
+        returns (uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)
+    {
+        State storage s = states[marketId];
+        return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+    }
+
+    /// @inheritdoc IRefPrice
+    function priceOf(bytes32 marketId) internal view returns (uint256) {
+        return states[marketId].price;
+    }
+}' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.36ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/venue/BellGuard.sol:72:6:
+stderr:    |
+stderr: 72 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 69: 'function setListener(bytes32 marketId, address listener) external onlyOwner {
+        listeners[marketId] = listener;
+        emit ListenerSet(marketId, listener);
+    }' ==> 'function setListener(bytes32 marketId, address listener) private onlyOwner {
+        listeners[marketId] = listener;
+        emit ListenerSet(marketId, listener);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.16ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/venue/BellGuard.sol:72:6:
+stderr:    |
+stderr: 72 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 69: 'function setListener(bytes32 marketId, address listener) external onlyOwner {
+        listeners[marketId] = listener;
+        emit ListenerSet(marketId, listener);
+    }' ==> 'function setListener(bytes32 marketId, address listener) internal onlyOwner {
+        listeners[marketId] = listener;
+        emit ListenerSet(marketId, listener);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.22ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/venue/BellGuard.sol:76:6:
+stderr:    |
+stderr: 76 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 74: 'function transferOwnership(address to) external onlyOwner {
+        owner = to;
+    }' ==> 'function transferOwnership(address to) private onlyOwner {
+        owner = to;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.32ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/venue/BellGuard.sol:76:6:
+stderr:    |
+stderr: 76 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 74: 'function transferOwnership(address to) external onlyOwner {
+        owner = to;
+    }' ==> 'function transferOwnership(address to) internal onlyOwner {
+        owner = to;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.41ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/venue/BellGuard.sol:81:6:
+stderr:    |
+stderr: 81 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 79: 'function coverDebt() external {
+        _coverDebt();
+    }' ==> 'function coverDebt() private {
+        _coverDebt();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.17ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/venue/BellGuard.sol:81:6:
+stderr:    |
+stderr: 81 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 79: 'function coverDebt() external {
+        _coverDebt();
+    }' ==> 'function coverDebt() internal {
+        _coverDebt();
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.83ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/venue/BellGuard.sol:86:6:
+stderr:    |
+stderr: 86 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 83: 'function withdraw(address payable to, uint256 amount) external onlyOwner {
+        (bool ok,) = to.call{ value: amount }("");
+        require(ok, "withdraw failed");
+    }' ==> 'function withdraw(address payable to, uint256 amount) private onlyOwner {
+        (bool ok,) = to.call{ value: amount }("");
+        require(ok, "withdraw failed");
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.85ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/venue/BellGuard.sol:86:6:
+stderr:    |
+stderr: 86 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 83: 'function withdraw(address payable to, uint256 amount) external onlyOwner {
+        (bool ok,) = to.call{ value: amount }("");
+        require(ok, "withdraw failed");
+    }' ==> 'function withdraw(address payable to, uint256 amount) internal onlyOwner {
+        (bool ok,) = to.call{ value: amount }("");
+        require(ok, "withdraw failed");
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.47ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellGuard.sol:134:6:
+stderr:     |
+stderr: 134 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 90: 'function applyState(
+        address reactive_,
+        bytes32 marketId,
+        uint64 seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        bool wantAck,
+        uint256 originBlock,
+        uint256 originTxHash
+    ) external onlyServiceProvider onlyCallbackSender(reactive_) {
+        State storage s = states[marketId];
+
+        // Older than what is already applied: ignore. The same sequence number is applied again, which
+        // is how the reactive contract re-sends a state after a policy change.
+        if (seq < s.seq) {
+            emit Stale(marketId, seq, s.seq);
+            return;
+        }
+
+        s.status = status;
+        s.seq = seq;
+        s.appliedAt = uint64(block.timestamp);
+        s.feePips = feePips;
+        s.halfRangeBps = halfRangeBps;
+        s.price = price;
+
+        emit Applied(marketId, seq, status, price, feePips, halfRangeBps, originBlock, originTxHash);
+
+        address listener = listeners[marketId];
+        if (listener != address(0)) {
+            uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0;
+            try IMarketListener(listener).onMarketState{ gas: budget }(
+                marketId, status, price, feePips, halfRangeBps
+            ) { }
+            catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }
+        }
+
+        if (wantAck) {
+            emit Ack(marketId, seq, status);
+        }
+    }' ==> 'function applyState(
+        address reactive_,
+        bytes32 marketId,
+        uint64 seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        bool wantAck,
+        uint256 originBlock,
+        uint256 originTxHash
+    ) private onlyServiceProvider onlyCallbackSender(reactive_) {
+        State storage s = states[marketId];
+
+        // Older than what is already applied: ignore. The same sequence number is applied again, which
+        // is how the reactive contract re-sends a state after a policy change.
+        if (seq < s.seq) {
+            emit Stale(marketId, seq, s.seq);
+            return;
+        }
+
+        s.status = status;
+        s.seq = seq;
+        s.appliedAt = uint64(block.timestamp);
+        s.feePips = feePips;
+        s.halfRangeBps = halfRangeBps;
+        s.price = price;
+
+        emit Applied(marketId, seq, status, price, feePips, halfRangeBps, originBlock, originTxHash);
+
+        address listener = listeners[marketId];
+        if (listener != address(0)) {
+            uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0;
+            try IMarketListener(listener).onMarketState{ gas: budget }(
+                marketId, status, price, feePips, halfRangeBps
+            ) { }
+            catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }
+        }
+
+        if (wantAck) {
+            emit Ack(marketId, seq, status);
+        }
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.77ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellGuard.sol:134:6:
+stderr:     |
+stderr: 134 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 90: 'function applyState(
+        address reactive_,
+        bytes32 marketId,
+        uint64 seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        bool wantAck,
+        uint256 originBlock,
+        uint256 originTxHash
+    ) external onlyServiceProvider onlyCallbackSender(reactive_) {
+        State storage s = states[marketId];
+
+        // Older than what is already applied: ignore. The same sequence number is applied again, which
+        // is how the reactive contract re-sends a state after a policy change.
+        if (seq < s.seq) {
+            emit Stale(marketId, seq, s.seq);
+            return;
+        }
+
+        s.status = status;
+        s.seq = seq;
+        s.appliedAt = uint64(block.timestamp);
+        s.feePips = feePips;
+        s.halfRangeBps = halfRangeBps;
+        s.price = price;
+
+        emit Applied(marketId, seq, status, price, feePips, halfRangeBps, originBlock, originTxHash);
+
+        address listener = listeners[marketId];
+        if (listener != address(0)) {
+            uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0;
+            try IMarketListener(listener).onMarketState{ gas: budget }(
+                marketId, status, price, feePips, halfRangeBps
+            ) { }
+            catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }
+        }
+
+        if (wantAck) {
+            emit Ack(marketId, seq, status);
+        }
+    }' ==> 'function applyState(
+        address reactive_,
+        bytes32 marketId,
+        uint64 seq,
+        uint8 status,
+        uint256 price,
+        uint24 feePips,
+        uint24 halfRangeBps,
+        bool wantAck,
+        uint256 originBlock,
+        uint256 originTxHash
+    ) internal onlyServiceProvider onlyCallbackSender(reactive_) {
+        State storage s = states[marketId];
+
+        // Older than what is already applied: ignore. The same sequence number is applied again, which
+        // is how the reactive contract re-sends a state after a policy change.
+        if (seq < s.seq) {
+            emit Stale(marketId, seq, s.seq);
+            return;
+        }
+
+        s.status = status;
+        s.seq = seq;
+        s.appliedAt = uint64(block.timestamp);
+        s.feePips = feePips;
+        s.halfRangeBps = halfRangeBps;
+        s.price = price;
+
+        emit Applied(marketId, seq, status, price, feePips, halfRangeBps, originBlock, originTxHash);
+
+        address listener = listeners[marketId];
+        if (listener != address(0)) {
+            uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0;
+            try IMarketListener(listener).onMarketState{ gas: budget }(
+                marketId, status, price, feePips, halfRangeBps
+            ) { }
+            catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }
+        }
+
+        if (wantAck) {
+            emit Ack(marketId, seq, status);
+        }
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.21ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellGuard.sol:144:6:
+stderr:     |
+stderr: 144 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 137: 'function current(bytes32 marketId)
+        external
+        view
+        returns (uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)
+    {
+        State storage s = states[marketId];
+        return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+    }' ==> 'function current(bytes32 marketId)
+        external
+        pure
+        returns (uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)
+    {
+        State storage s = states[marketId];
+        return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.42ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellGuard.sol:144:6:
+stderr:     |
+stderr: 144 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 137: 'function current(bytes32 marketId)
+        external
+        view
+        returns (uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)
+    {
+        State storage s = states[marketId];
+        return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+    }' ==> 'function current(bytes32 marketId)
+        private
+        view
+        returns (uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)
+    {
+        State storage s = states[marketId];
+        return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.52ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellGuard.sol:144:6:
+stderr:     |
+stderr: 144 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 137: 'function current(bytes32 marketId)
+        external
+        view
+        returns (uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)
+    {
+        State storage s = states[marketId];
+        return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+    }' ==> 'function current(bytes32 marketId)
+        internal
+        view
+        returns (uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)
+    {
+        State storage s = states[marketId];
+        return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.73ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellGuard.sol:149:6:
+stderr:     |
+stderr: 149 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 147: 'function priceOf(bytes32 marketId) external view returns (uint256) {
+        return states[marketId].price;
+    }' ==> 'function priceOf(bytes32 marketId) external pure returns (uint256) {
+        return states[marketId].price;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.34ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellGuard.sol:149:6:
+stderr:     |
+stderr: 149 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 147: 'function priceOf(bytes32 marketId) external view returns (uint256) {
+        return states[marketId].price;
+    }' ==> 'function priceOf(bytes32 marketId) private view returns (uint256) {
+        return states[marketId].price;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 9.63ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:    --> src/venue/BellGuard.sol:149:6:
+stderr:     |
+stderr: 149 |     }{
+stderr:     |      ^
+INFO:Slither-Mutate:[FHR] Line 147: 'function priceOf(bytes32 marketId) external view returns (uint256) {
+        return states[marketId].price;
+    }' ==> 'function priceOf(bytes32 marketId) internal view returns (uint256) {
+        return states[marketId].price;
+    }' --> COMPILATION FAILURE
+INFO:Slither-Mutate:Mutator FHR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 4 caught tweak mutants (out of 4 that compile)
+INFO:Slither-Mutate:Mutator LIR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 4 caught tweak mutants (out of 4 that compile)
+INFO:Slither-Mutate:Mutator LOR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 4 caught tweak mutants (out of 4 that compile)
+INFO:Slither-Mutate:[MIA] Line 65: 'msg.sender != owner' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 65: 'msg.sender != owner' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 65: 'msg.sender != owner' ==> '!(msg.sender != owner)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 106: 'seq < s.seq' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 106: 'seq < s.seq' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 106: 'seq < s.seq' ==> '!(seq < s.seq)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 121: 'listener != address(0)' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 121: 'listener != address(0)' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 121: 'listener != address(0)' ==> '!(listener != address(0))' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 122: 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' ==> 'true' --> UNCAUGHT
+INFO:Slither-Mutate:[MIA] Line 122: 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' ==> 'false' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.60ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ',' but got identifier
+stderr:    --> src/venue/BellGuard.sol:122:40:
+stderr:     |
+stderr: 122 |  ...         uint256 budget = !(uint256 budget = gasleft() > LISTENER_GAS_RESERVE ...
+stderr:     |                                         ^^^^^^
+INFO:Slither-Mutate:[MIA] Line 122: 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' ==> '!(uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0)' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[MIA] Line 131: 'wantAck' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 131: 'wantAck' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 131: 'wantAck' ==> '!(wantAck)' --> CAUGHT
+INFO:Slither-Mutate:Mutator MIA found 13 caught tweak mutants (out of 14 that compile)
+INFO:Slither-Mutate:Running total: found 17 caught tweak mutants (out of 18 that compile)
+ERROR:Slither-Mutate:MVIE mutator failed in BellGuard: 'NoneType' object has no attribute 'source_mapping'
+INFO:Slither-Mutate:Mutator MVIE found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 17 caught tweak mutants (out of 18 that compile)
+INFO:Slither-Mutate:Mutator MVIV found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 17 caught tweak mutants (out of 18 that compile)
+INFO:Slither-Mutate:Mutator MWA found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 17 caught tweak mutants (out of 18 that compile)
+INFO:Slither-Mutate:[ROR] Line 106: 'seq < s.seq' ==> 'seq > s.seq' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 106: 'seq < s.seq' ==> 'seq <= s.seq' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 106: 'seq < s.seq' ==> 'seq >= s.seq' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 106: 'seq < s.seq' ==> 'seq == s.seq' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 106: 'seq < s.seq' ==> 'seq != s.seq' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.40ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ';' but got identifier
+stderr:    --> src/venue/BellGuard.sol:122:38:
+stderr:     |
+stderr: 122 |  ...           uint256 budget = uint256 budget = gasleft() < LISTENER_GAS_RESERVE ...
+stderr:     |                                         ^^^^^^
+INFO:Slither-Mutate:[ROR] Line 122: 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' ==> 'uint256 budget = gasleft() < LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.96ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ';' but got identifier
+stderr:    --> src/venue/BellGuard.sol:122:38:
+stderr:     |
+stderr: 122 |  ...           uint256 budget = uint256 budget = gasleft() <= LISTENER_GAS_RESERV ...
+stderr:     |                                         ^^^^^^
+INFO:Slither-Mutate:[ROR] Line 122: 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' ==> 'uint256 budget = gasleft() <= LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.96ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ';' but got identifier
+stderr:    --> src/venue/BellGuard.sol:122:38:
+stderr:     |
+stderr: 122 |  ...           uint256 budget = uint256 budget = gasleft() >= LISTENER_GAS_RESERV ...
+stderr:     |                                         ^^^^^^
+INFO:Slither-Mutate:[ROR] Line 122: 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' ==> 'uint256 budget = gasleft() >= LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.40ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ';' but got identifier
+stderr:    --> src/venue/BellGuard.sol:122:38:
+stderr:     |
+stderr: 122 |  ...           uint256 budget = uint256 budget = gasleft() == LISTENER_GAS_RESERV ...
+stderr:     |                                         ^^^^^^
+INFO:Slither-Mutate:[ROR] Line 122: 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' ==> 'uint256 budget = gasleft() == LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.64ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ';' but got identifier
+stderr:    --> src/venue/BellGuard.sol:122:38:
+stderr:     |
+stderr: 122 |  ...           uint256 budget = uint256 budget = gasleft() != LISTENER_GAS_RESERV ...
+stderr:     |                                         ^^^^^^
+INFO:Slither-Mutate:[ROR] Line 122: 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' ==> 'uint256 budget = gasleft() != LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' --> COMPILATION FAILURE
+INFO:Slither-Mutate:Mutator ROR found 5 caught tweak mutants (out of 5 that compile)
+INFO:Slither-Mutate:Running total: found 22 caught tweak mutants (out of 23 that compile)
+INFO:Slither-Mutate:[SBR] Line 54: 'uint256 internal constant LISTENER_GAS_RESERVE = 60_000' ==> 'uint256 internal immutable LISTENER_GAS_RESERVE = 60_000' --> UNCAUGHT
+INFO:Slither-Mutate:[SBR] Line 54: 'uint256 internal constant LISTENER_GAS_RESERVE = 60_000' ==> 'uint128 internal constant LISTENER_GAS_RESERVE = 60_000' --> UNCAUGHT
+INFO:Slither-Mutate:[SBR] Line 61: 'owner = msg.sender' ==> 'owner = tx.origin' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 65: 'msg.sender != owner' ==> 'tx.origin != owner' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.91ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6189): Cannot set option "value" for delegatecall.
+stderr:   --> src/venue/BellGuard.sol:84:22:
+stderr:    |
+stderr: 84 |         (bool ok,) = to.delegatecall{ value: amount }("");
+stderr:    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 84: '(bool ok,) = to.call{ value: amount }("")' ==> '(bool ok,) = to.delegatecall{ value: amount }("")' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.30ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2842): Cannot set option "value" for staticcall.
+stderr:   --> src/venue/BellGuard.sol:84:22:
+stderr:    |
+stderr: 84 |         (bool ok,) = to.staticcall{ value: amount }("");
+stderr:    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 84: '(bool ok,) = to.call{ value: amount }("")' ==> '(bool ok,) = to.staticcall{ value: amount }("")' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[SBR] Line 102: 'State storage s = states[marketId]' ==> 'State memory s = states[marketId]' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.13ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9574): Type uint256 is not implicitly convertible to expected type uint128.
+stderr:    --> src/venue/BellGuard.sol:122:13:
+stderr:     |
+stderr: 122 |             uint128 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0;
+stderr:     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 122: 'uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' ==> 'uint128 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 7.27ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6651): Data location must be "memory" for parameter in function, but "storage" was given.
+stderr:    --> src/venue/BellGuard.sol:126:20:
+stderr:     |
+stderr: 126 |             catch (bytes storage reason) {
+stderr:     |                    ^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 123: 'try IMarketListener(listener).onMarketState{ gas: budget }(
+                marketId, status, price, feePips, halfRangeBps
+            ) { }
+            catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }' ==> 'try IMarketListener(listener).onMarketState{ gas: budget }(
+                marketId, status, price, feePips, halfRangeBps
+            ) { }
+            catch (bytes storage reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.07ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6651): Data location must be "memory" for parameter in function, but "storage" was given.
+stderr:    --> src/venue/BellGuard.sol:126:20:
+stderr:     |
+stderr: 126 |             catch (bytes storage reason) {
+stderr:     |                    ^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 126: 'catch (bytes memory reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }' ==> 'catch (bytes storage reason) {
+                emit ListenerFailed(marketId, listener, reason);
+            }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.98ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (5992): Return argument type tuple(uint8,uint256,uint24,uint24,uint64,uint64) is not implicitly convertible to expected type tuple(uint8,uint256,uint24,uint24,uint32,uint32).
+stderr:    --> src/venue/BellGuard.sol:143:16:
+stderr:     |
+stderr: 143 |         return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+stderr:     |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 140: '(uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)' ==> '(uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint32 seq, uint32 appliedAt)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 6 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 8.33ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (5992): Return argument type tuple(uint8,uint256,uint24,uint24,uint64,uint64) is not implicitly convertible to expected type tuple(uint8,uint128,uint24,uint24,uint64,uint64).
+stderr:    --> src/venue/BellGuard.sol:143:16:
+stderr:     |
+stderr: 143 |         return (s.status, s.price, s.feePips, s.halfRangeBps, s.seq, s.appliedAt);
+stderr:     |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 140: '(uint8 status, uint256 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)' ==> '(uint8 status, uint128 price, uint24 feePips, uint24 halfRangeBps, uint64 seq, uint64 appliedAt)' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[SBR] Line 142: 'State storage s = states[marketId]' ==> 'State memory s = states[marketId]' --> UNCAUGHT
+INFO:Slither-Mutate:Mutator SBR found 3 caught tweak mutants (out of 6 that compile)
+INFO:Slither-Mutate:Running total: found 25 caught tweak mutants (out of 29 that compile)
+INFO:Slither-Mutate:Mutator UOR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 25 caught tweak mutants (out of 29 that compile)
+INFO:Slither-Mutate:Done mutating BellGuard.

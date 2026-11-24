@@ -1,0 +1,4415 @@
+{
+ "mutants": [
+  {
+   "contract": "Arena",
+   "mutator": "SBR",
+   "line": 71,
+   "original": "int256 internal constant MAX_IN = 1e30",
+   "mutant": "int128 internal constant MAX_IN = 1e30",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "SBR",
+   "line": 71,
+   "original": "int256 internal constant MAX_IN = 1e30",
+   "mutant": "int256 internal immutable MAX_IN = 1e30",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "SBR",
+   "line": 77,
+   "original": "uint256 public constant MIN_RAID_GAS = 750_000",
+   "mutant": "uint128 public constant MIN_RAID_GAS = 750_000",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "SBR",
+   "line": 77,
+   "original": "uint256 public constant MIN_RAID_GAS = 750_000",
+   "mutant": "uint256 public immutable MIN_RAID_GAS = 750_000",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "CR",
+   "line": 120,
+   "original": "emit TargetSet(targetId, key.toId(), address(vault), catchUpAfter)",
+   "mutant": "//emit TargetSet(targetId, key.toId(), address(vault), catchUpAfter)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 134,
+   "original": "gasleft() < MIN_RAID_GAS",
+   "mutant": "gasleft() <= MIN_RAID_GAS",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "differs only at an exact value we could not set up in a test",
+   "why": "a raid started with exactly MIN_RAID_GAS gas left"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "SBR",
+   "line": 135,
+   "original": "Target memory t = _targets[targetId]",
+   "mutant": "Target storage t = _targets[targetId]",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "SBR",
+   "line": 143,
+   "original": "emit RaidBlocked(msg.sender, targetId)",
+   "mutant": "emit RaidBlocked(tx.origin, targetId)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "SBR",
+   "line": 150,
+   "original": "emit RaidPointless(msg.sender, targetId, poolPriceBefore, refPrice)",
+   "mutant": "emit RaidPointless(tx.origin, targetId, poolPriceBefore, refPrice)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ASOR",
+   "line": 158,
+   "original": "loot[msg.sender] += pnl",
+   "mutant": "loot[msg.sender] = pnl",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ASOR",
+   "line": 158,
+   "original": "loot[msg.sender] += pnl",
+   "mutant": "loot[msg.sender] ^= pnl",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ASOR",
+   "line": 158,
+   "original": "loot[msg.sender] += pnl",
+   "mutant": "loot[msg.sender] |= pnl",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "CR",
+   "line": 161,
+   "original": "emit Raid(msg.sender, targetId, soldStock, amountIn, amountOut, pnl, poolPriceBefore, refPrice)",
+   "mutant": "//emit Raid(msg.sender, targetId, soldStock, amountIn, amountOut, pnl, poolPriceBefore, refPrice)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "SBR",
+   "line": 163,
+   "original": "catch {\n                ++blocked[targetId];\n                emit RaidBlocked(msg.sender, targetId);\n            }",
+   "mutant": "catch {\n                ++blocked[targetId];\n                emit RaidBlocked(tx.origin, targetId);\n            }",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "RR",
+   "line": 164,
+   "original": "++blocked[targetId]",
+   "mutant": "revert()",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "RR",
+   "line": 165,
+   "original": "emit RaidBlocked(msg.sender, targetId)",
+   "mutant": "revert()",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "AOR",
+   "line": 178,
+   "original": "uint256 addStock = stock < t.refillStock ? t.refillStock - stock : 0",
+   "mutant": "uint256 addStock = stock < t.refillStock ? t.refillStock % stock : 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "AOR",
+   "line": 178,
+   "original": "uint256 addStock = stock < t.refillStock ? t.refillStock - stock : 0",
+   "mutant": "uint256 addStock = stock < t.refillStock ? t.refillStock * stock : 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "AOR",
+   "line": 178,
+   "original": "uint256 addStock = stock < t.refillStock ? t.refillStock - stock : 0",
+   "mutant": "uint256 addStock = stock < t.refillStock ? t.refillStock + stock : 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "AOR",
+   "line": 178,
+   "original": "uint256 addStock = stock < t.refillStock ? t.refillStock - stock : 0",
+   "mutant": "uint256 addStock = stock < t.refillStock ? t.refillStock / stock : 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "MIA",
+   "line": 178,
+   "original": "uint256 addStock = stock < t.refillStock ? t.refillStock - stock : 0",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "MVIE",
+   "line": 178,
+   "original": "uint256 addStock = stock < t.refillStock ? t.refillStock - stock : 0",
+   "mutant": "uint256 addStock ",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "AOR",
+   "line": 179,
+   "original": "uint256 addDollars = dollars < t.refillDollars ? t.refillDollars - dollars : 0",
+   "mutant": "uint256 addDollars = dollars < t.refillDollars ? t.refillDollars + dollars : 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "CR",
+   "line": 180,
+   "original": "return;",
+   "mutant": "//return;",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "MIA",
+   "line": 182,
+   "original": "addStock != 0",
+   "mutant": "!(addStock != 0)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "MIA",
+   "line": 182,
+   "original": "addStock != 0",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "MIA",
+   "line": 182,
+   "original": "addStock != 0",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "paying, minting, taking or counting zero tokens: a no-op either way"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 182,
+   "original": "addStock != 0",
+   "mutant": "addStock < 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 182,
+   "original": "addStock != 0",
+   "mutant": "addStock <= 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 182,
+   "original": "addStock != 0",
+   "mutant": "addStock == 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 182,
+   "original": "addStock != 0",
+   "mutant": "addStock > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 182,
+   "original": "addStock != 0",
+   "mutant": "addStock >= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "paying, minting, taking or counting zero tokens: a no-op either way"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "MIA",
+   "line": 183,
+   "original": "addDollars != 0",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "paying, minting, taking or counting zero tokens: a no-op either way"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 183,
+   "original": "addDollars != 0",
+   "mutant": "addDollars > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 183,
+   "original": "addDollars != 0",
+   "mutant": "addDollars >= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "paying, minting, taking or counting zero tokens: a no-op either way"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "SBR",
+   "line": 194,
+   "original": "Target memory t = _targets[targetId]",
+   "mutant": "Target storage t = _targets[targetId]",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "SBR",
+   "line": 207,
+   "original": "return abi.decode(\n            POOL_MANAGER.unlock(abi.encode(targetId, refPrice, feePips)), (bool, bool, uint256, uint256, uint256)\n        )",
+   "mutant": "return abi.decode(\n            POOL_MANAGER.unlock(abi.encode(targetId, refPrice, feePips)), (bool, bool, uint128, uint128, uint128)\n        )",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "SBR",
+   "line": 215,
+   "original": "(uint256 targetId, uint256 refPrice, uint24 feePips) = abi.decode(data, (uint256, uint256, uint24))",
+   "mutant": "(uint128 targetId, uint128 refPrice, uint24 feePips) = abi.decode(data, (uint128, uint128, uint24))",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "SBR",
+   "line": 217,
+   "original": "PoolKey memory k = _targets[targetId].key",
+   "mutant": "PoolKey storage k = _targets[targetId].key",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 227,
+   "original": "refPrice == 0 || (sellStock ? poolPrice <= stopPrice : poolPrice >= stopPrice)",
+   "mutant": "refPrice < 0 || (sellStock ? poolPrice <= stopPrice : poolPrice >= stopPrice)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 227,
+   "original": "refPrice == 0 || (sellStock ? poolPrice <= stopPrice : poolPrice >= stopPrice)",
+   "mutant": "refPrice <= 0 || (sellStock ? poolPrice <= stopPrice : poolPrice >= stopPrice)",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 227,
+   "original": "refPrice == 0 || (sellStock ? poolPrice <= stopPrice : poolPrice >= stopPrice)",
+   "mutant": "refPrice == 0 || (sellStock ? poolPrice < stopPrice : poolPrice >= stopPrice)",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "differs only at an exact value we could not set up in a test",
+   "why": "the pool price equal to the stop price to the wei"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 227,
+   "original": "refPrice == 0 || (sellStock ? poolPrice <= stopPrice : poolPrice >= stopPrice)",
+   "mutant": "refPrice == 0 || (sellStock ? poolPrice <= stopPrice : poolPrice > stopPrice)",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "differs only at an exact value we could not set up in a test",
+   "why": "the pool price equal to the stop price to the wei"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "SBR",
+   "line": 228,
+   "original": "return abi.encode(false, sellStock, uint256(0), uint256(0), poolPrice)",
+   "mutant": "return abi.encode(false, sellStock, uint128(0), uint128(0), poolPrice)",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "RR",
+   "line": 233,
+   "original": "return abi.encode(false, sellStock, uint256(0), uint256(0), poolPrice)",
+   "mutant": "revert()",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "differs only at an exact value we could not set up in a test",
+   "why": "the limit price equal to the pool's current price to the last bit"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "SBR",
+   "line": 240,
+   "original": "uint256 amountIn = uint256(uint128(-(zeroForOne ? delta.amount0() : delta.amount1())))",
+   "mutant": "uint128 amountIn = uint128(uint128(-(zeroForOne ? delta.amount0() : delta.amount1())))",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "SBR",
+   "line": 241,
+   "original": "uint256 amountOut = uint256(uint128(zeroForOne ? delta.amount1() : delta.amount0()))",
+   "mutant": "uint128 amountOut = uint128(uint128(zeroForOne ? delta.amount1() : delta.amount0()))",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "MIA",
+   "line": 245,
+   "original": "amountIn != 0",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "paying, minting, taking or counting zero tokens: a no-op either way"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 245,
+   "original": "amountIn != 0",
+   "mutant": "amountIn > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 245,
+   "original": "amountIn != 0",
+   "mutant": "amountIn >= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "paying, minting, taking or counting zero tokens: a no-op either way"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "MIA",
+   "line": 251,
+   "original": "amountOut != 0",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "paying, minting, taking or counting zero tokens: a no-op either way"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 251,
+   "original": "amountOut != 0",
+   "mutant": "amountOut > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "ROR",
+   "line": 251,
+   "original": "amountOut != 0",
+   "mutant": "amountOut >= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "paying, minting, taking or counting zero tokens: a no-op either way"
+  },
+  {
+   "contract": "Arena",
+   "mutator": "LOR",
+   "line": 255,
+   "original": "return abi.encode(amountIn != 0 || amountOut != 0, sellStock, amountIn, amountOut, poolPrice)",
+   "mutant": "return abi.encode(amountIn != 0  &&  amountOut != 0, sellStock, amountIn, amountOut, poolPrice)",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "differs only at an exact value we could not set up in a test",
+   "why": "a swap that takes tokens in but pays nothing out"
+  },
+  {
+   "contract": "BellGuard",
+   "mutator": "SBR",
+   "line": 54,
+   "original": "uint256 internal constant LISTENER_GAS_RESERVE = 60_000",
+   "mutant": "uint128 internal constant LISTENER_GAS_RESERVE = 60_000",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellGuard",
+   "mutator": "SBR",
+   "line": 54,
+   "original": "uint256 internal constant LISTENER_GAS_RESERVE = 60_000",
+   "mutant": "uint256 internal immutable LISTENER_GAS_RESERVE = 60_000",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellGuard",
+   "mutator": "CR",
+   "line": 71,
+   "original": "emit ListenerSet(marketId, listener)",
+   "mutant": "//emit ListenerSet(marketId, listener)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellGuard",
+   "mutator": "CR",
+   "line": 80,
+   "original": "_coverDebt()",
+   "mutant": "//_coverDebt()",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellGuard",
+   "mutator": "CR",
+   "line": 107,
+   "original": "emit Stale(marketId, seq, s.seq)",
+   "mutant": "//emit Stale(marketId, seq, s.seq)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellGuard",
+   "mutator": "CR",
+   "line": 113,
+   "original": "s.appliedAt = uint64(block.timestamp)",
+   "mutant": "//s.appliedAt = uint64(block.timestamp)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellGuard",
+   "mutator": "MIA",
+   "line": 122,
+   "original": "uint256 budget = gasleft() > LISTENER_GAS_RESERVE ? gasleft() - LISTENER_GAS_RESERVE : 0",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellGuard",
+   "mutator": "SBR",
+   "line": 142,
+   "original": "State storage s = states[marketId]",
+   "mutant": "State memory s = states[marketId]",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "CR",
+   "line": 101,
+   "original": "LPFeeLibrary.validate(config.baseFee)",
+   "mutant": "//LPFeeLibrary.validate(config.baseFee)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "CR",
+   "line": 102,
+   "original": "LPFeeLibrary.validate(config.staleFee)",
+   "mutant": "//LPFeeLibrary.validate(config.staleFee)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "CR",
+   "line": 106,
+   "original": "emit PoolRegistered(id, config.marketId, config.vault, config.passive)",
+   "mutant": "//emit PoolRegistered(id, config.marketId, config.vault, config.passive)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "SBR",
+   "line": 119,
+   "original": "PoolConfig memory c = pools[id]",
+   "mutant": "PoolConfig storage c = pools[id]",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "RR",
+   "line": 120,
+   "original": "return (false, 0)",
+   "mutant": "revert()",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "AOR",
+   "line": 126,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp * appliedAt > c.maxStale",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "AOR",
+   "line": 126,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp + appliedAt > c.maxStale",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "AOR",
+   "line": 126,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp / appliedAt > c.maxStale",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "ROR",
+   "line": 126,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale != 0 && status <= MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "ROR",
+   "line": 126,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt >= c.maxStale",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "ROR",
+   "line": 126,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale != 0 && status >= MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "`status == OPEN` as `>= OPEN` (HALTED was already refused), or `maxStale != 0` as `> 0` (unsigned)"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "ROR",
+   "line": 126,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale > 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "ROR",
+   "line": 126,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale >= 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "SBR",
+   "line": 143,
+   "original": "PoolConfig memory c = pools[id]",
+   "mutant": "PoolConfig storage c = pools[id]",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "CR",
+   "line": 144,
+   "original": "revert PoolNotRegistered()",
+   "mutant": "//revert PoolNotRegistered()",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "CR",
+   "line": 147,
+   "original": "return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0)",
+   "mutant": "//return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, 0)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "MIA",
+   "line": 149,
+   "original": "c.passive",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "BOR",
+   "line": 150,
+   "original": "return (\n                IHooks.beforeSwap.selector,\n                BeforeSwapDeltaLibrary.ZERO_DELTA,\n                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG\n            )",
+   "mutant": "return (\n                IHooks.beforeSwap.selector,\n                BeforeSwapDeltaLibrary.ZERO_DELTA,\n                c.baseFee & LPFeeLibrary.OVERRIDE_FEE_FLAG\n            )",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "BOR",
+   "line": 150,
+   "original": "return (\n                IHooks.beforeSwap.selector,\n                BeforeSwapDeltaLibrary.ZERO_DELTA,\n                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG\n            )",
+   "mutant": "return (\n                IHooks.beforeSwap.selector,\n                BeforeSwapDeltaLibrary.ZERO_DELTA,\n                c.baseFee << LPFeeLibrary.OVERRIDE_FEE_FLAG\n            )",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "BOR",
+   "line": 150,
+   "original": "return (\n                IHooks.beforeSwap.selector,\n                BeforeSwapDeltaLibrary.ZERO_DELTA,\n                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG\n            )",
+   "mutant": "return (\n                IHooks.beforeSwap.selector,\n                BeforeSwapDeltaLibrary.ZERO_DELTA,\n                c.baseFee >> LPFeeLibrary.OVERRIDE_FEE_FLAG\n            )",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "BOR",
+   "line": 150,
+   "original": "return (\n                IHooks.beforeSwap.selector,\n                BeforeSwapDeltaLibrary.ZERO_DELTA,\n                c.baseFee | LPFeeLibrary.OVERRIDE_FEE_FLAG\n            )",
+   "mutant": "return (\n                IHooks.beforeSwap.selector,\n                BeforeSwapDeltaLibrary.ZERO_DELTA,\n                c.baseFee ^ LPFeeLibrary.OVERRIDE_FEE_FLAG\n            )",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`fee | FLAG` as `fee ^ FLAG`: a fee never has the flag's bit set"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "ROR",
+   "line": 158,
+   "original": "seq == 0",
+   "mutant": "seq <= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "ROR",
+   "line": 159,
+   "original": "status == MarketTypes.HALTED",
+   "mutant": "status >= MarketTypes.HALTED",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "`status == HALTED` as `>= HALTED`: HALTED is the highest status"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "AOR",
+   "line": 162,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp * appliedAt > c.maxStale",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "AOR",
+   "line": 162,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp + appliedAt > c.maxStale",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "AOR",
+   "line": 162,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp / appliedAt > c.maxStale",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "ROR",
+   "line": 162,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale != 0 && status <= MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "ROR",
+   "line": 162,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt != c.maxStale",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "ROR",
+   "line": 162,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt >= c.maxStale",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "ROR",
+   "line": 162,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale != 0 && status >= MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "`status == OPEN` as `>= OPEN` (HALTED was already refused), or `maxStale != 0` as `> 0` (unsigned)"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "ROR",
+   "line": 162,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale > 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "ROR",
+   "line": 162,
+   "original": "c.maxStale != 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "mutant": "c.maxStale >= 0 && status == MarketTypes.OPEN && block.timestamp - appliedAt > c.maxStale",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "BOR",
+   "line": 166,
+   "original": "return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee | LPFeeLibrary.OVERRIDE_FEE_FLAG)",
+   "mutant": "return (IHooks.beforeSwap.selector, BeforeSwapDeltaLibrary.ZERO_DELTA, fee ^ LPFeeLibrary.OVERRIDE_FEE_FLAG)",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`fee | FLAG` as `fee ^ FLAG`: a fee never has the flag's bit set"
+  },
+  {
+   "contract": "BellHook",
+   "mutator": "MIA",
+   "line": 176,
+   "original": "vault == address(0)",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 130,
+   "original": "uint256 public constant IGNORED_STALE = 1",
+   "mutant": "uint128 public constant IGNORED_STALE = 1",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 130,
+   "original": "uint256 public constant IGNORED_STALE = 1",
+   "mutant": "uint256 public immutable IGNORED_STALE = 1",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 131,
+   "original": "uint256 public constant IGNORED_MALFORMED = 2",
+   "mutant": "uint128 public constant IGNORED_MALFORMED = 2",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 131,
+   "original": "uint256 public constant IGNORED_MALFORMED = 2",
+   "mutant": "uint256 public immutable IGNORED_MALFORMED = 2",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 132,
+   "original": "uint256 public constant IGNORED_UNKNOWN_SOURCE = 3",
+   "mutant": "uint128 public constant IGNORED_UNKNOWN_SOURCE = 3",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 132,
+   "original": "uint256 public constant IGNORED_UNKNOWN_SOURCE = 3",
+   "mutant": "uint256 public immutable IGNORED_UNKNOWN_SOURCE = 3",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 133,
+   "original": "uint256 public constant IGNORED_PAUSED = 4",
+   "mutant": "uint128 public constant IGNORED_PAUSED = 4",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 133,
+   "original": "uint256 public constant IGNORED_PAUSED = 4",
+   "mutant": "uint256 public immutable IGNORED_PAUSED = 4",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 136,
+   "original": "uint64 public constant MIN_CALLBACK_GAS = 100_000",
+   "mutant": "uint32 public constant MIN_CALLBACK_GAS = 100_000",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 136,
+   "original": "uint64 public constant MIN_CALLBACK_GAS = 100_000",
+   "mutant": "uint64 public immutable MIN_CALLBACK_GAS = 100_000",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 139,
+   "original": "uint256 public constant MAX_VENUES = 8",
+   "mutant": "uint128 public constant MAX_VENUES = 8",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 139,
+   "original": "uint256 public constant MAX_VENUES = 8",
+   "mutant": "uint256 public immutable MAX_VENUES = 8",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 169,
+   "original": "emit OwnershipTransferred(address(0), msg.sender)",
+   "mutant": "//emit OwnershipTransferred(address(0), msg.sender)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 170,
+   "original": "emit AckModeSet(ackMode_)",
+   "mutant": "//emit AckModeSet(ackMode_)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 193,
+   "original": "log_.topic0 == MarketTypes.MARKET_UPDATE_TOPIC",
+   "mutant": "log_.topic0 >= MarketTypes.MARKET_UPDATE_TOPIC",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 196,
+   "original": "return;",
+   "mutant": "//return;",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "MIA",
+   "line": 198,
+   "original": "log_.topic0 == MarketTypes.ACK_TOPIC",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 198,
+   "original": "log_.topic0 == MarketTypes.ACK_TOPIC",
+   "mutant": "log_.topic0 <= MarketTypes.ACK_TOPIC",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 198,
+   "original": "log_.topic0 == MarketTypes.ACK_TOPIC",
+   "mutant": "log_.topic0 >= MarketTypes.ACK_TOPIC",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 200,
+   "original": "index != 0",
+   "mutant": "index > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 211,
+   "original": "log_.data.length != 96 || log_.topic2 > MarketTypes.HALTED",
+   "mutant": "log_.data.length < 96 || log_.topic2 > MarketTypes.HALTED",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 212,
+   "original": "emit Ignored(IGNORED_MALFORMED, log_.chainId, log_.contractAddress, log_.txHash)",
+   "mutant": "//emit Ignored(IGNORED_MALFORMED, log_.chainId, log_.contractAddress, log_.txHash)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 217,
+   "original": "price == 0 || price > type(uint112).max || seq > type(uint64).max || sourceTime > type(uint64).max",
+   "mutant": "price <= 0 || price > type(uint112).max || seq > type(uint64).max || sourceTime > type(uint64).max",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 217,
+   "original": "price == 0 || price > type(uint112).max || seq > type(uint64).max || sourceTime > type(uint64).max",
+   "mutant": "price == 0 || price > type(uint112).max || seq > type(uint32).max || sourceTime > type(uint32).max",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 218,
+   "original": "emit Ignored(IGNORED_MALFORMED, log_.chainId, log_.contractAddress, log_.txHash)",
+   "mutant": "//emit Ignored(IGNORED_MALFORMED, log_.chainId, log_.contractAddress, log_.txHash)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 227,
+   "original": "seq <= m.seq",
+   "mutant": "seq < m.seq",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 228,
+   "original": "emit Ignored(IGNORED_STALE, log_.chainId, log_.contractAddress, log_.txHash)",
+   "mutant": "//emit Ignored(IGNORED_STALE, log_.chainId, log_.contractAddress, log_.txHash)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 233,
+   "original": "m.seq = uint64(seq)",
+   "mutant": "m.seq = uint32(seq)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 234,
+   "original": "m.sourceTime = uint64(sourceTime)",
+   "mutant": "//m.sourceTime = uint64(sourceTime)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 237,
+   "original": "emit Observed(marketId, uint64(seq), status, price, log_.blockNumber, log_.txHash)",
+   "mutant": "emit Observed(marketId, uint32(seq), status, price, log_.blockNumber, log_.txHash)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 244,
+   "original": "Market memory m = markets[marketId]",
+   "mutant": "Market storage m = markets[marketId]",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "LIR",
+   "line": 247,
+   "original": "uint256 venueId = 0",
+   "mutant": "uint256 venueId = 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`= 0` left out, or replaced by itself: variables start at zero"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "MVIV",
+   "line": 247,
+   "original": "uint256 venueId = 0",
+   "mutant": "uint256 venueId ",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`= 0` left out, or replaced by itself: variables start at zero"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 247,
+   "original": "venueId != count",
+   "mutant": "venueId < count",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`i != n` as `i < n` in a loop that counts up to n"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 247,
+   "original": "for (uint256 venueId = 0; venueId != count; ++venueId) {\n            Venue storage v = _venues[venueId];\n            if (!v.active) continue;\n\n            Link storage l = links[marketId][venueId];\n            bool statusChanged = l.sentSeq == 0 || l.sentStatus != m.status;\n\n            // A venue that owes a confirmation gets the new state no matter how small the move is.\n            if (!statusChanged && !l.awaitingAck && !_movedEnough(l.sentPrice, m.price, v.minMoveBps)) {\n                emit Filtered(marketId, m.seq, venueId);\n                continue;\n            }\n\n            _forward(marketId, venueId, m, statusChanged, originBlock, originTxHash);\n        }",
+   "mutant": "for (uint128 venueId = 0; venueId != count; ++venueId) {\n            Venue storage v = _venues[venueId];\n            if (!v.active) continue;\n\n            Link storage l = links[marketId][venueId];\n            bool statusChanged = l.sentSeq == 0 || l.sentStatus != m.status;\n\n            // A venue that owes a confirmation gets the new state no matter how small the move is.\n            if (!statusChanged && !l.awaitingAck && !_movedEnough(l.sentPrice, m.price, v.minMoveBps)) {\n                emit Filtered(marketId, m.seq, venueId);\n                continue;\n            }\n\n            _forward(marketId, venueId, m, statusChanged, originBlock, originTxHash);\n        }",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a loop counter with a smaller type: no loop runs more than 8 times"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 247,
+   "original": "for (uint256 venueId = 0; venueId != count; ++venueId) {\n            Venue storage v = _venues[venueId];\n            if (!v.active) continue;\n\n            Link storage l = links[marketId][venueId];\n            bool statusChanged = l.sentSeq == 0 || l.sentStatus != m.status;\n\n            // A venue that owes a confirmation gets the new state no matter how small the move is.\n            if (!statusChanged && !l.awaitingAck && !_movedEnough(l.sentPrice, m.price, v.minMoveBps)) {\n                emit Filtered(marketId, m.seq, venueId);\n                continue;\n            }\n\n            _forward(marketId, venueId, m, statusChanged, originBlock, originTxHash);\n        }",
+   "mutant": "for (uint256 venueId = 0; venueId != count; ++venueId) {\n            Venue memory v = _venues[venueId];\n            if (!v.active) continue;\n\n            Link memory l = links[marketId][venueId];\n            bool statusChanged = l.sentSeq == 0 || l.sentStatus != m.status;\n\n            // A venue that owes a confirmation gets the new state no matter how small the move is.\n            if (!statusChanged && !l.awaitingAck && !_movedEnough(l.sentPrice, m.price, v.minMoveBps)) {\n                emit Filtered(marketId, m.seq, venueId);\n                continue;\n            }\n\n            _forward(marketId, venueId, m, statusChanged, originBlock, originTxHash);\n        }",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 247,
+   "original": "uint256 venueId = 0",
+   "mutant": "uint128 venueId = 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a loop counter with a smaller type: no loop runs more than 8 times"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "UOR",
+   "line": 247,
+   "original": "++venueId",
+   "mutant": "venueId++",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`++i` written as `i++` (or `--i` as `i--`) where the value is not used"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 248,
+   "original": "Venue storage v = _venues[venueId]",
+   "mutant": "Venue memory v = _venues[venueId]",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 251,
+   "original": "Link storage l = links[marketId][venueId]",
+   "mutant": "Link memory l = links[marketId][venueId]",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "LOR",
+   "line": 266,
+   "original": "log_.data.length != 32 || log_.topic2 > type(uint64).max",
+   "mutant": "log_.data.length != 32  &&  log_.topic2 > type(uint64).max",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "MIA",
+   "line": 266,
+   "original": "log_.data.length != 32 || log_.topic2 > type(uint64).max",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 266,
+   "original": "log_.data.length != 32 || log_.topic2 > type(uint64).max",
+   "mutant": "log_.data.length != 32 || log_.topic2 == type(uint64).max",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 266,
+   "original": "log_.data.length != 32 || log_.topic2 > type(uint64).max",
+   "mutant": "log_.data.length != 32 || log_.topic2 >= type(uint64).max",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 266,
+   "original": "log_.data.length != 32 || log_.topic2 > type(uint64).max",
+   "mutant": "log_.data.length < 32 || log_.topic2 > type(uint64).max",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 266,
+   "original": "log_.data.length != 32 || log_.topic2 > type(uint64).max",
+   "mutant": "log_.data.length > 32 || log_.topic2 > type(uint64).max",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 266,
+   "original": "log_.data.length != 32 || log_.topic2 > type(uint64).max",
+   "mutant": "log_.data.length != 32 || log_.topic2 > type(uint32).max",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 272,
+   "original": "uint64 seq = uint64(log_.topic2)",
+   "mutant": "uint32 seq = uint32(log_.topic2)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 275,
+   "original": "seq <= l.ackedSeq || seq > l.sentSeq",
+   "mutant": "seq == l.ackedSeq || seq > l.sentSeq",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 281,
+   "original": "emit VenueAcked(marketId, seq, venueId, uint8(abi.decode(log_.data, (uint256))))",
+   "mutant": "//emit VenueAcked(marketId, seq, venueId, uint8(abi.decode(log_.data, (uint256))))",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 284,
+   "original": "seq != l.sentSeq",
+   "mutant": "seq < l.sentSeq",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "`seq != sent` as `seq < sent`: a larger `seq` was already turned away two lines up"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "MIA",
+   "line": 287,
+   "original": "_settled(marketId)",
+   "mutant": "!(_settled(marketId))",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 304,
+   "original": "Venue storage v = _venues[venueId]",
+   "mutant": "Venue memory v = _venues[venueId]",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 306,
+   "original": "Policy memory p = v.policy[m.status]",
+   "mutant": "Policy storage p = v.policy[m.status]",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 318,
+   "original": "bytes memory payload = abi.encodeCall(\n            BellGuard.applyState,\n            (\n                address(0),\n                marketId,\n                m.seq,\n                m.status,\n                uint256(m.price),\n                p.feePips,\n                p.halfRangeBps,\n                wantAck,\n                originBlock,\n                originTxHash\n            )\n        )",
+   "mutant": "bytes memory payload = abi.encodeCall(\n            BellGuard.applyState,\n            (\n                address(0),\n                marketId,\n                m.seq,\n                m.status,\n                uint128(m.price),\n                p.feePips,\n                p.halfRangeBps,\n                wantAck,\n                originBlock,\n                originTxHash\n            )\n        )",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 340,
+   "original": "emit Forwarded(marketId, m.seq, venueId, m.status, m.price, p.feePips, p.halfRangeBps, wantAck)",
+   "mutant": "//emit Forwarded(marketId, m.seq, venueId, m.status, m.price, p.feePips, p.halfRangeBps, wantAck)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "MIA",
+   "line": 344,
+   "original": "minMoveBps == 0",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "the `minMoveBps == 0` check removed: with a zero minimum the formula says 'moved enough' anyway"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 344,
+   "original": "minMoveBps == 0",
+   "mutant": "minMoveBps < 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "the `minMoveBps == 0` check removed: with a zero minimum the formula says 'moved enough' anyway"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 344,
+   "original": "minMoveBps == 0",
+   "mutant": "minMoveBps <= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "LIR",
+   "line": 354,
+   "original": "uint256 venueId = 0",
+   "mutant": "uint256 venueId = 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`= 0` left out, or replaced by itself: variables start at zero"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "LIR",
+   "line": 354,
+   "original": "uint256 venueId = 0",
+   "mutant": "uint256 venueId = 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "MVIV",
+   "line": 354,
+   "original": "uint256 venueId = 0",
+   "mutant": "uint256 venueId ",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`= 0` left out, or replaced by itself: variables start at zero"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 354,
+   "original": "venueId != count",
+   "mutant": "venueId < count",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`i != n` as `i < n` in a loop that counts up to n"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 354,
+   "original": "for (uint256 venueId = 0; venueId != count; ++venueId) {\n            if (!_venues[venueId].active) continue;\n            Link storage l = links[marketId][venueId];\n            if (l.awaitingAck || l.sentSeq == 0 || l.sentStatus != status) return false;\n        }",
+   "mutant": "for (uint128 venueId = 0; venueId != count; ++venueId) {\n            if (!_venues[venueId].active) continue;\n            Link storage l = links[marketId][venueId];\n            if (l.awaitingAck || l.sentSeq == 0 || l.sentStatus != status) return false;\n        }",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a loop counter with a smaller type: no loop runs more than 8 times"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 354,
+   "original": "for (uint256 venueId = 0; venueId != count; ++venueId) {\n            if (!_venues[venueId].active) continue;\n            Link storage l = links[marketId][venueId];\n            if (l.awaitingAck || l.sentSeq == 0 || l.sentStatus != status) return false;\n        }",
+   "mutant": "for (uint256 venueId = 0; venueId != count; ++venueId) {\n            if (!_venues[venueId].active) continue;\n            Link memory l = links[marketId][venueId];\n            if (l.awaitingAck || l.sentSeq == 0 || l.sentStatus != status) return false;\n        }",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 354,
+   "original": "uint256 venueId = 0",
+   "mutant": "uint128 venueId = 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a loop counter with a smaller type: no loop runs more than 8 times"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "UOR",
+   "line": 354,
+   "original": "++venueId",
+   "mutant": "venueId++",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`++i` written as `i++` (or `--i` as `i--`) where the value is not used"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 356,
+   "original": "Link storage l = links[marketId][venueId]",
+   "mutant": "Link memory l = links[marketId][venueId]",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 357,
+   "original": "l.awaitingAck || l.sentSeq == 0 || l.sentStatus != status",
+   "mutant": "l.awaitingAck || l.sentSeq < 0 || l.sentStatus != status",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 357,
+   "original": "l.awaitingAck || l.sentSeq == 0 || l.sentStatus != status",
+   "mutant": "l.awaitingAck || l.sentSeq <= 0 || l.sentStatus != status",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 357,
+   "original": "l.awaitingAck || l.sentSeq == 0 || l.sentStatus != status",
+   "mutant": "l.awaitingAck || l.sentSeq == 0 || l.sentStatus < status",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 357,
+   "original": "l.awaitingAck || l.sentSeq == 0 || l.sentStatus != status",
+   "mutant": "l.awaitingAck || l.sentSeq == 0 || l.sentStatus > status",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 376,
+   "original": "_venueIndex[chainId_][guard_] != 0",
+   "mutant": "_venueIndex[chainId_][guard_] > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 377,
+   "original": "_venues.length == MAX_VENUES",
+   "mutant": "_venues.length >= MAX_VENUES",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "`length == MAX` as `length >= MAX`: the list can never grow past MAX"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 378,
+   "original": "gasLimit_ < MIN_CALLBACK_GAS",
+   "mutant": "gasLimit_ <= MIN_CALLBACK_GAS",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "LIR",
+   "line": 387,
+   "original": "uint256 i = 0",
+   "mutant": "uint256 i = 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`= 0` left out, or replaced by itself: variables start at zero"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "MVIV",
+   "line": 387,
+   "original": "uint256 i = 0",
+   "mutant": "uint256 i ",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`= 0` left out, or replaced by itself: variables start at zero"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 387,
+   "original": "i != 3",
+   "mutant": "i < 3",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`i != n` as `i < n` in a loop that counts up to n"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 387,
+   "original": "for (uint256 i = 0; i != 3; ++i) {\n            v.policy[i] = policy_[i];\n        }",
+   "mutant": "for (uint128 i = 0; i != 3; ++i) {\n            v.policy[i] = policy_[i];\n        }",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a loop counter with a smaller type: no loop runs more than 8 times"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 387,
+   "original": "uint256 i = 0",
+   "mutant": "uint128 i = 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a loop counter with a smaller type: no loop runs more than 8 times"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "UOR",
+   "line": 387,
+   "original": "++i",
+   "mutant": "i++",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`++i` written as `i++` (or `--i` as `i--`) where the value is not used"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 394,
+   "original": "emit VenueAdded(venueId, chainId_, guard_)",
+   "mutant": "//emit VenueAdded(venueId, chainId_, guard_)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 405,
+   "original": "venueId >= _venues.length",
+   "mutant": "venueId == _venues.length",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 406,
+   "original": "gasLimit_ < MIN_CALLBACK_GAS",
+   "mutant": "gasLimit_ <= MIN_CALLBACK_GAS",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 410,
+   "original": "v.minMoveBps = minMoveBps_",
+   "mutant": "//v.minMoveBps = minMoveBps_",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "LIR",
+   "line": 412,
+   "original": "uint256 i = 0",
+   "mutant": "uint256 i = 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`= 0` left out, or replaced by itself: variables start at zero"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "LIR",
+   "line": 412,
+   "original": "uint256 i = 0",
+   "mutant": "uint256 i = 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "MVIV",
+   "line": 412,
+   "original": "uint256 i = 0",
+   "mutant": "uint256 i ",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`= 0` left out, or replaced by itself: variables start at zero"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 412,
+   "original": "i != 3",
+   "mutant": "i < 3",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`i != n` as `i < n` in a loop that counts up to n"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 412,
+   "original": "for (uint256 i = 0; i != 3; ++i) {\n            v.policy[i] = policy_[i];\n        }",
+   "mutant": "for (uint128 i = 0; i != 3; ++i) {\n            v.policy[i] = policy_[i];\n        }",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a loop counter with a smaller type: no loop runs more than 8 times"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 412,
+   "original": "uint256 i = 0",
+   "mutant": "uint128 i = 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a loop counter with a smaller type: no loop runs more than 8 times"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "UOR",
+   "line": 412,
+   "original": "++i",
+   "mutant": "i++",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`++i` written as `i++` (or `--i` as `i--`) where the value is not used"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 416,
+   "original": "emit VenueUpdated(venueId)",
+   "mutant": "//emit VenueUpdated(venueId)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 422,
+   "original": "venueId >= _venues.length",
+   "mutant": "venueId == _venues.length",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "SBR",
+   "line": 423,
+   "original": "Market memory m = markets[marketId]",
+   "mutant": "Market storage m = markets[marketId]",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "ROR",
+   "line": 424,
+   "original": "m.seq == 0",
+   "mutant": "m.seq <= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 431,
+   "original": "emit AckModeSet(mode)",
+   "mutant": "//emit AckModeSet(mode)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 437,
+   "original": "emit PausedSet(paused_)",
+   "mutant": "//emit PausedSet(paused_)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 441,
+   "original": "emit OwnershipTransferred(owner, to)",
+   "mutant": "//emit OwnershipTransferred(owner, to)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellReactive",
+   "mutator": "CR",
+   "line": 447,
+   "original": "_coverDebt()",
+   "mutant": "//_coverDebt()",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 83,
+   "original": "marketId != MARKET_ID",
+   "mutant": "marketId < MARKET_ID",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "MIA",
+   "line": 92,
+   "original": "seq == 0",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 92,
+   "original": "seq == 0",
+   "mutant": "seq < 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 92,
+   "original": "seq == 0",
+   "mutant": "seq <= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "CR",
+   "line": 103,
+   "original": "emit KeeperSet(keeper_)",
+   "mutant": "//emit KeeperSet(keeper_)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 120,
+   "original": "halfRangeBps >= 10_000",
+   "mutant": "halfRangeBps == 10_000",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "SBR",
+   "line": 127,
+   "original": "(uint256 price, uint24 halfRangeBps) = abi.decode(data, (uint256, uint24))",
+   "mutant": "(uint128 price, uint24 halfRangeBps) = abi.decode(data, (uint128, uint24))",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "SBR",
+   "line": 129,
+   "original": "PoolKey memory k = key",
+   "mutant": "PoolKey storage k = key",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "SBR",
+   "line": 130,
+   "original": "int256 net0",
+   "mutant": "int128 net0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "SBR",
+   "line": 131,
+   "original": "int256 net1",
+   "mutant": "int128 net1",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 134,
+   "original": "liquidity != 0",
+   "mutant": "liquidity > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "SBR",
+   "line": 135,
+   "original": "(BalanceDelta removed,) = POOL_MANAGER.modifyLiquidity(\n                k,\n                ModifyLiquidityParams({\n                    tickLower: tickLower,\n                    tickUpper: tickUpper,\n                    liquidityDelta: -int256(uint256(liquidity)),\n                    salt: bytes32(0)\n                }),\n                \"\"\n            )",
+   "mutant": "(BalanceDelta removed,) = POOL_MANAGER.modifyLiquidity(\n                k,\n                ModifyLiquidityParams({\n                    tickLower: tickLower,\n                    tickUpper: tickUpper,\n                    liquidityDelta: -int128(uint128(liquidity)),\n                    salt: bytes32(0)\n                }),\n                \"\"\n            )",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ASOR",
+   "line": 145,
+   "original": "net0 += removed.amount0()",
+   "mutant": "net0 = removed.amount0()",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`net += x` as `net = x`, `|=` or `^=` while `net` is still zero"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ASOR",
+   "line": 145,
+   "original": "net0 += removed.amount0()",
+   "mutant": "net0 ^= removed.amount0()",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`net += x` as `net = x`, `|=` or `^=` while `net` is still zero"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ASOR",
+   "line": 145,
+   "original": "net0 += removed.amount0()",
+   "mutant": "net0 |= removed.amount0()",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`net += x` as `net = x`, `|=` or `^=` while `net` is still zero"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ASOR",
+   "line": 146,
+   "original": "net1 += removed.amount1()",
+   "mutant": "net1 = removed.amount1()",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`net += x` as `net = x`, `|=` or `^=` while `net` is still zero"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ASOR",
+   "line": 146,
+   "original": "net1 += removed.amount1()",
+   "mutant": "net1 ^= removed.amount1()",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`net += x` as `net = x`, `|=` or `^=` while `net` is still zero"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ASOR",
+   "line": 146,
+   "original": "net1 += removed.amount1()",
+   "mutant": "net1 |= removed.amount1()",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`net += x` as `net = x`, `|=` or `^=` while `net` is still zero"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 151,
+   "original": "halfRangeBps != 0",
+   "mutant": "halfRangeBps > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "CR",
+   "line": 163,
+   "original": "net0 += moved.amount0()",
+   "mutant": "//net0 += moved.amount0()",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "moving an empty pool moves no tokens: only the vault can add liquidity, and it took all of it out first"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "CR",
+   "line": 164,
+   "original": "net1 += moved.amount1()",
+   "mutant": "//net1 += moved.amount1()",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "moving an empty pool moves no tokens: only the vault can add liquidity, and it took all of it out first"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "MIA",
+   "line": 178,
+   "original": "newLiquidity != 0",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 178,
+   "original": "newLiquidity != 0",
+   "mutant": "newLiquidity > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 178,
+   "original": "newLiquidity != 0",
+   "mutant": "newLiquidity >= 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "SBR",
+   "line": 179,
+   "original": "(BalanceDelta added,) = POOL_MANAGER.modifyLiquidity(\n                    k,\n                    ModifyLiquidityParams({\n                        tickLower: lower,\n                        tickUpper: upper,\n                        liquidityDelta: int256(uint256(newLiquidity)),\n                        salt: bytes32(0)\n                    }),\n                    \"\"\n                )",
+   "mutant": "(BalanceDelta added,) = POOL_MANAGER.modifyLiquidity(\n                    k,\n                    ModifyLiquidityParams({\n                        tickLower: lower,\n                        tickUpper: upper,\n                        liquidityDelta: int128(uint128(newLiquidity)),\n                        salt: bytes32(0)\n                    }),\n                    \"\"\n                )",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "CR",
+   "line": 200,
+   "original": "emit Repositioned(price, halfRangeBps, tickLower, tickUpper, liquidity, sqrtPriceX96)",
+   "mutant": "//emit Repositioned(price, halfRangeBps, tickLower, tickUpper, liquidity, sqrtPriceX96)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "CR",
+   "line": 201,
+   "original": "return \"\"",
+   "mutant": "//return \"\"",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`return \"\"` left out: the function returns empty bytes anyway"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "MIA",
+   "line": 207,
+   "original": "return total > 0 ? uint256(total) : 0",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "the `total > 0` check removed: what the vault is owed here is never negative"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 212,
+   "original": "net > 0",
+   "mutant": "net >= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "paying, minting, taking or counting zero tokens: a no-op either way"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "MIA",
+   "line": 214,
+   "original": "net < 0",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "paying, minting, taking or counting zero tokens: a no-op either way"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 214,
+   "original": "net < 0",
+   "mutant": "net != 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "paying, minting, taking or counting zero tokens: a no-op either way"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 214,
+   "original": "net < 0",
+   "mutant": "net <= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "paying, minting, taking or counting zero tokens: a no-op either way"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 230,
+   "original": "a > b",
+   "mutant": "a >= b",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "two equal numbers swapped, or left in place"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "RR",
+   "line": 237,
+   "original": "lower = minTick",
+   "mutant": "revert()",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "the tick clamps: PriceMath refuses prices that far out (beyond about 443,000 ticks) long before the 887,000 limit"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "RR",
+   "line": 238,
+   "original": "upper = maxTick",
+   "mutant": "revert()",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "the tick clamps: PriceMath refuses prices that far out (beyond about 443,000 ticks) long before the 887,000 limit"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "AOR",
+   "line": 243,
+   "original": "tick < 0 && tick % spacing != 0",
+   "mutant": "tick < 0 && tick * spacing != 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "AOR",
+   "line": 243,
+   "original": "tick < 0 && tick % spacing != 0",
+   "mutant": "tick < 0 && tick + spacing != 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "AOR",
+   "line": 243,
+   "original": "tick < 0 && tick % spacing != 0",
+   "mutant": "tick < 0 && tick - spacing != 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "AOR",
+   "line": 243,
+   "original": "tick < 0 && tick % spacing != 0",
+   "mutant": "tick < 0 && tick / spacing != 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 243,
+   "original": "tick < 0 && tick % spacing != 0",
+   "mutant": "tick < 0 && tick % spacing < 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "rounding down to the tick grid: for a negative tick `% spacing != 0` means `< 0`, and tick 0 has no remainder"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 243,
+   "original": "tick < 0 && tick % spacing != 0",
+   "mutant": "tick < 0 && tick % spacing <= 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 243,
+   "original": "tick < 0 && tick % spacing != 0",
+   "mutant": "tick <= 0 && tick % spacing != 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "rounding down to the tick grid: for a negative tick `% spacing != 0` means `< 0`, and tick 0 has no remainder"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "UOR",
+   "line": 243,
+   "original": "--compressed",
+   "mutant": "compressed--",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`++i` written as `i++` (or `--i` as `i--`) where the value is not used"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "SBR",
+   "line": 253,
+   "original": "PoolKey memory k = key",
+   "mutant": "PoolKey storage k = key",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a copy that is read but never written, kept in memory instead of storage or the reverse"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "MIA",
+   "line": 257,
+   "original": "liquidity != 0",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "paying, minting, taking or counting zero tokens: a no-op either way"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 257,
+   "original": "liquidity != 0",
+   "mutant": "liquidity > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellVault",
+   "mutator": "ROR",
+   "line": 257,
+   "original": "liquidity != 0",
+   "mutant": "liquidity >= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "paying, minting, taking or counting zero tokens: a no-op either way"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "SBR",
+   "line": 76,
+   "original": "address public constant CLOCK = 0x0000000000000000000000000000000000fffFfF",
+   "mutant": "address public immutable CLOCK = 0x0000000000000000000000000000000000fffFfF",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "SBR",
+   "line": 79,
+   "original": "uint256 public constant TICK_TOPIC = 0x04463f7c1651e6b9774d7f85c85bb94654e3c46ca79b0c16fb16d4183307b687",
+   "mutant": "uint256 public immutable TICK_TOPIC = 0x04463f7c1651e6b9774d7f85c85bb94654e3c46ca79b0c16fb16d4183307b687",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "SBR",
+   "line": 82,
+   "original": "uint256 public constant MAX_WATCHES = 8",
+   "mutant": "uint128 public constant MAX_WATCHES = 8",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "SBR",
+   "line": 82,
+   "original": "uint256 public constant MAX_WATCHES = 8",
+   "mutant": "uint256 public immutable MAX_WATCHES = 8",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "CR",
+   "line": 120,
+   "original": "emit OwnershipTransferred(address(0), msg.sender)",
+   "mutant": "//emit OwnershipTransferred(address(0), msg.sender)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "CR",
+   "line": 121,
+   "original": "emit TimingSet(retryAfterBlocks_, maxRetries_)",
+   "mutant": "//emit TimingSet(retryAfterBlocks_, maxRetries_)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "CR",
+   "line": 122,
+   "original": "emit ArmedSet(true)",
+   "mutant": "//emit ArmedSet(true)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 140,
+   "original": "log_.topic0 == TICK_TOPIC",
+   "mutant": "log_.topic0 <= TICK_TOPIC",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "MIA",
+   "line": 142,
+   "original": "log_.topic0 == MarketTypes.MARKET_UPDATE_TOPIC",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 142,
+   "original": "log_.topic0 == MarketTypes.MARKET_UPDATE_TOPIC",
+   "mutant": "log_.topic0 <= MarketTypes.MARKET_UPDATE_TOPIC",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 142,
+   "original": "log_.topic0 == MarketTypes.MARKET_UPDATE_TOPIC",
+   "mutant": "log_.topic0 >= MarketTypes.MARKET_UPDATE_TOPIC",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "LOR",
+   "line": 143,
+   "original": "log_.chainId == FEED_CHAIN_ID && log_.contractAddress == FEED",
+   "mutant": "log_.chainId == FEED_CHAIN_ID  ||  log_.contractAddress == FEED",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "MIA",
+   "line": 143,
+   "original": "log_.chainId == FEED_CHAIN_ID && log_.contractAddress == FEED",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 149,
+   "original": "!armed || log_.data.length != 96",
+   "mutant": "!armed || log_.data.length < 96",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "SBR",
+   "line": 151,
+   "original": "(, uint256 seq,) = abi.decode(log_.data, (uint256, uint256, uint256))",
+   "mutant": "(, uint128 seq,) = abi.decode(log_.data, (uint128, uint128, uint128))",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 152,
+   "original": "seq == 0 || seq > type(uint64).max",
+   "mutant": "seq < 0 || seq > type(uint64).max",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "the `seq == 0` check dropped: a zero `seq` is turned away two lines later anyway, by `seq <= w.seq`"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 152,
+   "original": "seq == 0 || seq > type(uint64).max",
+   "mutant": "seq <= 0 || seq > type(uint64).max",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 152,
+   "original": "seq == 0 || seq > type(uint64).max",
+   "mutant": "seq == 0 || seq >= type(uint64).max",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "SBR",
+   "line": 152,
+   "original": "seq == 0 || seq > type(uint64).max",
+   "mutant": "seq == 0 || seq > type(uint32).max",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "MIA",
+   "line": 156,
+   "original": "seq <= w.seq",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 156,
+   "original": "seq <= w.seq",
+   "mutant": "seq < w.seq",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 156,
+   "original": "seq <= w.seq",
+   "mutant": "seq == w.seq",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "MIA",
+   "line": 158,
+   "original": "!w.open",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 160,
+   "original": "_open.length == MAX_WATCHES",
+   "mutant": "_open.length >= MAX_WATCHES",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "`length == MAX` as `length >= MAX`: the list can never grow past MAX"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "SBR",
+   "line": 166,
+   "original": "w.seq = uint64(seq)",
+   "mutant": "w.seq = uint32(seq)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "SBR",
+   "line": 167,
+   "original": "w.sinceBlock = uint64(block.number)",
+   "mutant": "w.sinceBlock = uint32(block.number)",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "CR",
+   "line": 170,
+   "original": "emit Watching(marketId, uint64(seq))",
+   "mutant": "//emit Watching(marketId, uint64(seq))",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "MIA",
+   "line": 172,
+   "original": "!ticking",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "CR",
+   "line": 175,
+   "original": "emit Ticking(true)",
+   "mutant": "//emit Ticking(true)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 184,
+   "original": "i != 0",
+   "mutant": "i > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "UOR",
+   "line": 184,
+   "original": "--i",
+   "mutant": "i--",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`++i` written as `i++` (or `--i` as `i--`) where the value is not used"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "AOR",
+   "line": 195,
+   "original": "_close(i - 1)",
+   "mutant": "_close(i % 1)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 199,
+   "original": "block.number < uint256(w.sinceBlock) + retryAfterBlocks",
+   "mutant": "block.number <= uint256(w.sinceBlock) + retryAfterBlocks",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "SBR",
+   "line": 199,
+   "original": "block.number < uint256(w.sinceBlock) + retryAfterBlocks",
+   "mutant": "block.number < uint128(w.sinceBlock) + retryAfterBlocks",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 201,
+   "original": "w.retries == maxRetries",
+   "mutant": "w.retries >= maxRetries",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "differs only after an owner change the contract does not guard against",
+   "why": "`retries == maxRetries` as `>=`: differs only if the owner lowers maxRetries below a watch's count, which `setTiming` allows"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "AOR",
+   "line": 203,
+   "original": "_close(i - 1)",
+   "mutant": "_close(i % 1)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "CR",
+   "line": 204,
+   "original": "continue",
+   "mutant": "//continue",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "CR",
+   "line": 208,
+   "original": "w.sinceBlock = uint64(block.number)",
+   "mutant": "//w.sinceBlock = uint64(block.number)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "MIA",
+   "line": 209,
+   "original": "seen",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 212,
+   "original": "_open.length == 0",
+   "mutant": "_open.length <= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "CR",
+   "line": 215,
+   "original": "emit Ticking(false)",
+   "mutant": "//emit Ticking(false)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "LIR",
+   "line": 222,
+   "original": "uint256 venueId = 0",
+   "mutant": "uint256 venueId = 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`= 0` left out, or replaced by itself: variables start at zero"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "LIR",
+   "line": 222,
+   "original": "uint256 venueId = 0",
+   "mutant": "uint256 venueId = 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "MVIV",
+   "line": 222,
+   "original": "uint256 venueId = 0",
+   "mutant": "uint256 venueId ",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`= 0` left out, or replaced by itself: variables start at zero"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 222,
+   "original": "venueId != count",
+   "mutant": "venueId < count",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`i != n` as `i < n` in a loop that counts up to n"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "SBR",
+   "line": 222,
+   "original": "for (uint256 venueId = 0; venueId != count; ++venueId) {\n            if (!CONDUCTOR.venue(venueId).active) continue;\n\n            (uint64 sentSeq,, uint8 sentStatus, bool awaitingAck,) = CONDUCTOR.links(marketId, venueId);\n            // The same test the conductor uses to decide that a venue is not settled.\n            if (!awaitingAck && sentSeq != 0 && sentStatus == status) continue;\n\n            try CONDUCTOR.resync(marketId, venueId) {\n                emit Retried(marketId, seq, venueId, attempt);\n            } catch (bytes memory reason) {\n                emit RetryRefused(marketId, venueId, reason);\n            }\n        }",
+   "mutant": "for (uint128 venueId = 0; venueId != count; ++venueId) {\n            if (!CONDUCTOR.venue(venueId).active) continue;\n\n            (uint64 sentSeq,, uint8 sentStatus, bool awaitingAck,) = CONDUCTOR.links(marketId, venueId);\n            // The same test the conductor uses to decide that a venue is not settled.\n            if (!awaitingAck && sentSeq != 0 && sentStatus == status) continue;\n\n            try CONDUCTOR.resync(marketId, venueId) {\n                emit Retried(marketId, seq, venueId, attempt);\n            } catch (bytes memory reason) {\n                emit RetryRefused(marketId, venueId, reason);\n            }\n        }",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a loop counter with a smaller type: no loop runs more than 8 times"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "SBR",
+   "line": 222,
+   "original": "uint256 venueId = 0",
+   "mutant": "uint128 venueId = 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a loop counter with a smaller type: no loop runs more than 8 times"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "UOR",
+   "line": 222,
+   "original": "++venueId",
+   "mutant": "venueId++",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`++i` written as `i++` (or `--i` as `i--`) where the value is not used"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "RR",
+   "line": 223,
+   "original": "continue",
+   "mutant": "revert()",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 227,
+   "original": "!awaitingAck && sentSeq != 0 && sentStatus == status",
+   "mutant": "!awaitingAck && sentSeq != 0 && sentStatus <= status",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 227,
+   "original": "!awaitingAck && sentSeq != 0 && sentStatus == status",
+   "mutant": "!awaitingAck && sentSeq != 0 && sentStatus >= status",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 227,
+   "original": "!awaitingAck && sentSeq != 0 && sentStatus == status",
+   "mutant": "!awaitingAck && sentSeq > 0 && sentStatus == status",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 227,
+   "original": "!awaitingAck && sentSeq != 0 && sentStatus == status",
+   "mutant": "!awaitingAck && sentSeq >= 0 && sentStatus == status",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "CR",
+   "line": 239,
+   "original": "_open[index] = _open[_open.length - 1]",
+   "mutant": "//_open[index] = _open[_open.length - 1]",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "CR",
+   "line": 250,
+   "original": "emit ArmedSet(armed_)",
+   "mutant": "//emit ArmedSet(armed_)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "MIA",
+   "line": 251,
+   "original": "armed_",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "ROR",
+   "line": 253,
+   "original": "i != 0",
+   "mutant": "i > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "UOR",
+   "line": 253,
+   "original": "--i",
+   "mutant": "i--",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`++i` written as `i++` (or `--i` as `i--`) where the value is not used"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "AOR",
+   "line": 254,
+   "original": "_close(i - 1)",
+   "mutant": "_close(i % 1)",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "switching off closes every watch from the front instead of the back: they all close either way"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "MIA",
+   "line": 256,
+   "original": "ticking",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "CR",
+   "line": 259,
+   "original": "emit Ticking(false)",
+   "mutant": "//emit Ticking(false)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "CR",
+   "line": 267,
+   "original": "emit TimingSet(retryAfterBlocks_, maxRetries_)",
+   "mutant": "//emit TimingSet(retryAfterBlocks_, maxRetries_)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "SBR",
+   "line": 274,
+   "original": "(ok, result) = target.call{ value: msg.value }(data)",
+   "mutant": "(ok, result) = target.call{ value: 0 }(data)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "CR",
+   "line": 284,
+   "original": "emit OwnershipTransferred(owner, to)",
+   "mutant": "//emit OwnershipTransferred(owner, to)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "BellWatchdog",
+   "mutator": "CR",
+   "line": 290,
+   "original": "_coverDebt()",
+   "mutant": "//_coverDebt()",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "SBR",
+   "line": 25,
+   "original": "int16 public constant MAX_MOVE_BPS = 2_000",
+   "mutant": "int16 public immutable MAX_MOVE_BPS = 2_000",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "SBR",
+   "line": 28,
+   "original": "uint256 public constant MIN_PRICE = 20e18",
+   "mutant": "uint128 public constant MIN_PRICE = 20e18",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "SBR",
+   "line": 28,
+   "original": "uint256 public constant MIN_PRICE = 20e18",
+   "mutant": "uint256 public immutable MIN_PRICE = 20e18",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "SBR",
+   "line": 29,
+   "original": "uint256 public constant MAX_PRICE = 1_000e18",
+   "mutant": "uint128 public constant MAX_PRICE = 1_000e18",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "SBR",
+   "line": 29,
+   "original": "uint256 public constant MAX_PRICE = 1_000e18",
+   "mutant": "uint256 public immutable MAX_PRICE = 1_000e18",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "SBR",
+   "line": 30,
+   "original": "uint256 public constant RESET_PRICE = 140e18",
+   "mutant": "uint128 public constant RESET_PRICE = 140e18",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "SBR",
+   "line": 30,
+   "original": "uint256 public constant RESET_PRICE = 140e18",
+   "mutant": "uint256 public immutable RESET_PRICE = 140e18",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "CR",
+   "line": 82,
+   "original": "readyAt = uint256(lastActionAt) + cooldown",
+   "mutant": "//readyAt = uint256(lastActionAt) + cooldown",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "SBR",
+   "line": 83,
+   "original": "uint256 used = block.timestamp / 1 days == countedDay ? usedToday : 0",
+   "mutant": "uint128 used = block.timestamp / 1 days == countedDay ? usedToday : 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "AOR",
+   "line": 84,
+   "original": "leftToday = used >= dailyCap ? 0 : dailyCap - used",
+   "mutant": "leftToday = used >= dailyCap ? 0 : dailyCap + used",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "MIA",
+   "line": 84,
+   "original": "leftToday = used >= dailyCap ? 0 : dailyCap - used",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "CR",
+   "line": 93,
+   "original": "cooldown = cooldown_",
+   "mutant": "//cooldown = cooldown_",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "CR",
+   "line": 94,
+   "original": "dailyCap = dailyCap_",
+   "mutant": "//dailyCap = dailyCap_",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "CR",
+   "line": 96,
+   "original": "emit LimitsSet(cooldown_, dailyCap_, paused_)",
+   "mutant": "//emit LimitsSet(cooldown_, dailyCap_, paused_)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "SBR",
+   "line": 114,
+   "original": "uint256 readyAt = uint256(lastActionAt) + cooldown",
+   "mutant": "uint128 readyAt = uint128(lastActionAt) + cooldown",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "SBR",
+   "line": 117,
+   "original": "uint64 today = uint64(block.timestamp / 1 days)",
+   "mutant": "uint32 today = uint32(block.timestamp / 1 days)",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "ROR",
+   "line": 118,
+   "original": "today != countedDay",
+   "mutant": "today > countedDay",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "`today != countedDay` as `today > countedDay`: the day number only goes up"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "ROR",
+   "line": 122,
+   "original": "usedToday >= dailyCap",
+   "mutant": "usedToday == dailyCap",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "UOR",
+   "line": 123,
+   "original": "++usedToday",
+   "mutant": "usedToday++",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`++i` written as `i++` (or `--i` as `i--`) where the value is not used"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "SBR",
+   "line": 125,
+   "original": "lastActionAt = uint64(block.timestamp)",
+   "mutant": "lastActionAt = uint32(block.timestamp)",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "MIA",
+   "line": 128,
+   "original": "price == 0",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "the `price == 0` check removed: a zero price falls below the corridor and snaps to the same reset price"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "ROR",
+   "line": 128,
+   "original": "price == 0",
+   "mutant": "price < 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "the `price == 0` check removed: a zero price falls below the corridor and snaps to the same reset price"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "ROR",
+   "line": 128,
+   "original": "price == 0",
+   "mutant": "price <= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "SBR",
+   "line": 132,
+   "original": "price = price * uint256(int256(10_000) + moveBps) / 10_000",
+   "mutant": "price = price * uint128(int128(10_000) + moveBps) / 10_000",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "RR",
+   "line": 133,
+   "original": "price = RESET_PRICE",
+   "mutant": "revert()",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "SBR",
+   "line": 136,
+   "original": "seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp))",
+   "mutant": "seq = FEED.publish(MARKET_ID, status, price, uint32(block.timestamp))",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "cannot differ given how the system is built",
+   "why": "a smaller integer type for a value that always fits (prices are capped at uint112, pool amounts are 128-bit, block numbers and timestamps fit 32 bits for decades)"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "SBR",
+   "line": 136,
+   "original": "seq = FEED.publish(MARKET_ID, status, price, uint64(block.timestamp))",
+   "mutant": "seq = FEED.publish(MARKET_ID, status, price, uint64(0))",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "DemoStage",
+   "mutator": "CR",
+   "line": 137,
+   "original": "emit Staged(msg.sender, status, moveBps, price, seq)",
+   "mutant": "//emit Staged(msg.sender, status, moveBps, price, seq)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "MarketFeed",
+   "mutator": "CR",
+   "line": 42,
+   "original": "emit OwnershipTransferred(address(0), msg.sender)",
+   "mutant": "//emit OwnershipTransferred(address(0), msg.sender)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "MarketFeed",
+   "mutator": "CR",
+   "line": 51,
+   "original": "emit OwnershipTransferred(owner, to)",
+   "mutant": "//emit OwnershipTransferred(owner, to)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "MarketFeed",
+   "mutator": "CR",
+   "line": 57,
+   "original": "emit PublisherSet(publisher, allowed)",
+   "mutant": "//emit PublisherSet(publisher, allowed)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "MarketFeed",
+   "mutator": "ROR",
+   "line": 64,
+   "original": "price == 0",
+   "mutant": "price <= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "MarketFeed",
+   "mutator": "CR",
+   "line": 70,
+   "original": "m.sourceTime = sourceTime",
+   "mutant": "//m.sourceTime = sourceTime",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "SBR",
+   "line": 10,
+   "original": "uint256 internal constant WAD = 1e18",
+   "mutant": "uint128 internal constant WAD = 1e18",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "SBR",
+   "line": 11,
+   "original": "uint256 internal constant Q96 = 1 << 96",
+   "mutant": "uint128 internal constant Q96 = 1 << 96",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a constant declared `immutable`, or given a smaller type its value still fits"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "LOR",
+   "line": 19,
+   "original": "ratioWad == 0 || ratioWad >= (uint256(1) << 64) * WAD",
+   "mutant": "ratioWad == 0  &&  ratioWad >= (uint256(1) << 64) * WAD",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "MIA",
+   "line": 19,
+   "original": "ratioWad == 0 || ratioWad >= (uint256(1) << 64) * WAD",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 19,
+   "original": "ratioWad == 0 || ratioWad >= (uint256(1) << 64) * WAD",
+   "mutant": "ratioWad < 0 || ratioWad >= (uint256(1) << 64) * WAD",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 19,
+   "original": "ratioWad == 0 || ratioWad >= (uint256(1) << 64) * WAD",
+   "mutant": "ratioWad <= 0 || ratioWad >= (uint256(1) << 64) * WAD",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 19,
+   "original": "ratioWad == 0 || ratioWad >= (uint256(1) << 64) * WAD",
+   "mutant": "ratioWad == 0 || ratioWad == (uint256(1) << 64) * WAD",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 19,
+   "original": "ratioWad == 0 || ratioWad >= (uint256(1) << 64) * WAD",
+   "mutant": "ratioWad == 0 || ratioWad > (uint256(1) << 64) * WAD",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "SBR",
+   "line": 19,
+   "original": "ratioWad == 0 || ratioWad >= (uint256(1) << 64) * WAD",
+   "mutant": "ratioWad == 0 || ratioWad >= (uint128(1) << 64) * WAD",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`uint256(1) << 64` as `uint128(1) << 64`: the same number, which fits"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "MIA",
+   "line": 30,
+   "original": "ratioWad == 0",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 30,
+   "original": "ratioWad == 0",
+   "mutant": "ratioWad < 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 30,
+   "original": "ratioWad == 0",
+   "mutant": "ratioWad <= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "MIA",
+   "line": 41,
+   "original": "sqrtP <= sqrtA",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 41,
+   "original": "sqrtP <= sqrtA",
+   "mutant": "sqrtP < sqrtA",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 41,
+   "original": "sqrtP <= sqrtA",
+   "mutant": "sqrtP == sqrtA",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "RR",
+   "line": 42,
+   "original": "liquidity = _liquidityForAmount0(sqrtA, sqrtB, amount0)",
+   "mutant": "revert()",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "MIA",
+   "line": 43,
+   "original": "sqrtP < sqrtB",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 43,
+   "original": "sqrtP < sqrtB",
+   "mutant": "sqrtP != sqrtB",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 43,
+   "original": "sqrtP < sqrtB",
+   "mutant": "sqrtP <= sqrtB",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "RR",
+   "line": 48,
+   "original": "liquidity = _liquidityForAmount1(sqrtA, sqrtB, amount1)",
+   "mutant": "revert()",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "MIA",
+   "line": 51,
+   "original": "liquidity > uint128(type(int128).max)",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 51,
+   "original": "liquidity > uint128(type(int128).max)",
+   "mutant": "liquidity == uint128(type(int128).max)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 51,
+   "original": "liquidity > uint128(type(int128).max)",
+   "mutant": "liquidity >= uint128(type(int128).max)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 62,
+   "original": "sqrtP <= sqrtA",
+   "mutant": "sqrtP < sqrtA",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "at the band's edge both formulas give the same amounts (the other side's share is zero)"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "CR",
+   "line": 63,
+   "original": "amount0 = SqrtPriceMath.getAmount0Delta(sqrtA, sqrtB, liquidity, false)",
+   "mutant": "//amount0 = SqrtPriceMath.getAmount0Delta(sqrtA, sqrtB, liquidity, false)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 64,
+   "original": "sqrtP < sqrtB",
+   "mutant": "sqrtP <= sqrtB",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "at the band's edge both formulas give the same amounts (the other side's share is zero)"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "CR",
+   "line": 68,
+   "original": "amount1 = SqrtPriceMath.getAmount1Delta(sqrtA, sqrtB, liquidity, false)",
+   "mutant": "//amount1 = SqrtPriceMath.getAmount1Delta(sqrtA, sqrtB, liquidity, false)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "AOR",
+   "line": 73,
+   "original": "return FullMath.mulDiv(amount0, FullMath.mulDiv(sqrtA, sqrtB, Q96), sqrtB - sqrtA)",
+   "mutant": "return FullMath.mulDiv(amount0, FullMath.mulDiv(sqrtA, sqrtB, Q96), sqrtB % sqrtA)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "AOR",
+   "line": 77,
+   "original": "return FullMath.mulDiv(amount1, Q96, sqrtB - sqrtA)",
+   "mutant": "return FullMath.mulDiv(amount1, Q96, sqrtB % sqrtA)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "RR",
+   "line": 82,
+   "original": "return 0",
+   "mutant": "revert()",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 86,
+   "original": "y >> 128 != 0",
+   "mutant": "y ^ 128 != 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 86,
+   "original": "y >> 128 != 0",
+   "mutant": "y | 128 != 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "MIA",
+   "line": 86,
+   "original": "y >> 128 != 0",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 86,
+   "original": "y >> 128 != 0",
+   "mutant": "y >> 128 > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 86,
+   "original": "y >> 128 != 0",
+   "mutant": "y >> 128 >= 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 90,
+   "original": "y >> 64 != 0",
+   "mutant": "y >> 64 > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 90,
+   "original": "y >> 64 != 0",
+   "mutant": "y >> 64 >= 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ASOR",
+   "line": 91,
+   "original": "y >>= 64",
+   "mutant": "y %= 64",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ASOR",
+   "line": 91,
+   "original": "y >>= 64",
+   "mutant": "y &= 64",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ASOR",
+   "line": 91,
+   "original": "y >>= 64",
+   "mutant": "y = 64",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 91,
+   "original": "y >>= 64",
+   "mutant": "y &= 64",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 94,
+   "original": "y >> 32 != 0",
+   "mutant": "y >> 32 > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "CR",
+   "line": 95,
+   "original": "y >>= 32",
+   "mutant": "//y >>= 32",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 98,
+   "original": "y >> 16 != 0",
+   "mutant": "y >> 16 > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "CR",
+   "line": 99,
+   "original": "y >>= 16",
+   "mutant": "//y >>= 16",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 102,
+   "original": "y >> 8 != 0",
+   "mutant": "y & 8 != 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 102,
+   "original": "y >> 8 != 0",
+   "mutant": "y << 8 != 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 102,
+   "original": "y >> 8 != 0",
+   "mutant": "y ^ 8 != 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 102,
+   "original": "y >> 8 != 0",
+   "mutant": "y | 8 != 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "MIA",
+   "line": 102,
+   "original": "y >> 8 != 0",
+   "mutant": "!(y >> 8 != 0)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "MIA",
+   "line": 102,
+   "original": "y >> 8 != 0",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "MIA",
+   "line": 102,
+   "original": "y >> 8 != 0",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 102,
+   "original": "y >> 8 != 0",
+   "mutant": "y >> 8 < 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 102,
+   "original": "y >> 8 != 0",
+   "mutant": "y >> 8 <= 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 102,
+   "original": "y >> 8 != 0",
+   "mutant": "y >> 8 == 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 102,
+   "original": "y >> 8 != 0",
+   "mutant": "y >> 8 > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 102,
+   "original": "y >> 8 != 0",
+   "mutant": "y >> 8 >= 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "CR",
+   "line": 103,
+   "original": "y >>= 8",
+   "mutant": "//y >>= 8",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ASOR",
+   "line": 104,
+   "original": "z <<= 4",
+   "mutant": "z *= 4",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 106,
+   "original": "y >> 4 != 0",
+   "mutant": "y & 4 != 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 106,
+   "original": "y >> 4 != 0",
+   "mutant": "y << 4 != 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 106,
+   "original": "y >> 4 != 0",
+   "mutant": "y ^ 4 != 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 106,
+   "original": "y >> 4 != 0",
+   "mutant": "y | 4 != 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "MIA",
+   "line": 106,
+   "original": "y >> 4 != 0",
+   "mutant": "!(y >> 4 != 0)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "MIA",
+   "line": 106,
+   "original": "y >> 4 != 0",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "MIA",
+   "line": 106,
+   "original": "y >> 4 != 0",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 106,
+   "original": "y >> 4 != 0",
+   "mutant": "y >> 4 < 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 106,
+   "original": "y >> 4 != 0",
+   "mutant": "y >> 4 <= 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 106,
+   "original": "y >> 4 != 0",
+   "mutant": "y >> 4 == 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 106,
+   "original": "y >> 4 != 0",
+   "mutant": "y >> 4 > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 106,
+   "original": "y >> 4 != 0",
+   "mutant": "y >> 4 >= 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "CR",
+   "line": 107,
+   "original": "y >>= 4",
+   "mutant": "//y >>= 4",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a larger first guess for the square root, which seven rounds still turn into the exact root"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "CR",
+   "line": 108,
+   "original": "z <<= 2",
+   "mutant": "//z <<= 2",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ASOR",
+   "line": 110,
+   "original": "z <<= 1",
+   "mutant": "z *= 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ASOR",
+   "line": 110,
+   "original": "z <<= 1",
+   "mutant": "z += 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ASOR",
+   "line": 110,
+   "original": "z <<= 1",
+   "mutant": "z -= 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ASOR",
+   "line": 110,
+   "original": "z <<= 1",
+   "mutant": "z /= 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ASOR",
+   "line": 110,
+   "original": "z <<= 1",
+   "mutant": "z >>= 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ASOR",
+   "line": 110,
+   "original": "z <<= 1",
+   "mutant": "z ^= 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ASOR",
+   "line": 110,
+   "original": "z <<= 1",
+   "mutant": "z |= 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 110,
+   "original": "y >> 2 != 0",
+   "mutant": "y & 2 != 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 110,
+   "original": "y >> 2 != 0",
+   "mutant": "y << 2 != 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a larger first guess for the square root, which seven rounds still turn into the exact root"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 110,
+   "original": "y >> 2 != 0",
+   "mutant": "y ^ 2 != 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a larger first guess for the square root, which seven rounds still turn into the exact root"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 110,
+   "original": "y >> 2 != 0",
+   "mutant": "y | 2 != 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a larger first guess for the square root, which seven rounds still turn into the exact root"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 110,
+   "original": "z <<= 1",
+   "mutant": "z >>= 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 110,
+   "original": "z <<= 1",
+   "mutant": "z ^= 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "BOR",
+   "line": 110,
+   "original": "z <<= 1",
+   "mutant": "z |= 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "MIA",
+   "line": 110,
+   "original": "y >> 2 != 0",
+   "mutant": "!(y >> 2 != 0)",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "MIA",
+   "line": 110,
+   "original": "y >> 2 != 0",
+   "mutant": "false",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "MIA",
+   "line": 110,
+   "original": "y >> 2 != 0",
+   "mutant": "true",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a larger first guess for the square root, which seven rounds still turn into the exact root"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 110,
+   "original": "y >> 2 != 0",
+   "mutant": "y >> 2 < 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 110,
+   "original": "y >> 2 != 0",
+   "mutant": "y >> 2 <= 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 110,
+   "original": "y >> 2 != 0",
+   "mutant": "y >> 2 == 0",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 110,
+   "original": "y >> 2 != 0",
+   "mutant": "y >> 2 > 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "`x != 0` as `x > 0`, or `x == 0` as `x <= 0`, on an unsigned number"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "ROR",
+   "line": 110,
+   "original": "y >> 2 != 0",
+   "mutant": "y >> 2 >= 0",
+   "result": "uncaught",
+   "second": "uncaught",
+   "kind": "same code, written differently",
+   "why": "a larger first guess for the square root, which seven rounds still turn into the exact root"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "CR",
+   "line": 112,
+   "original": "z = (z + x / z) >> 1",
+   "mutant": "//z = (z + x / z) >> 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "CR",
+   "line": 113,
+   "original": "z = (z + x / z) >> 1",
+   "mutant": "//z = (z + x / z) >> 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "CR",
+   "line": 114,
+   "original": "z = (z + x / z) >> 1",
+   "mutant": "//z = (z + x / z) >> 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "CR",
+   "line": 115,
+   "original": "z = (z + x / z) >> 1",
+   "mutant": "//z = (z + x / z) >> 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "CR",
+   "line": 116,
+   "original": "z = (z + x / z) >> 1",
+   "mutant": "//z = (z + x / z) >> 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "CR",
+   "line": 117,
+   "original": "z = (z + x / z) >> 1",
+   "mutant": "//z = (z + x / z) >> 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "CR",
+   "line": 118,
+   "original": "z = (z + x / z) >> 1",
+   "mutant": "//z = (z + x / z) >> 1",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "AOR",
+   "line": 119,
+   "original": "uint256 other = x / z",
+   "mutant": "uint256 other = x * z",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "AOR",
+   "line": 119,
+   "original": "uint256 other = x / z",
+   "mutant": "uint256 other = x + z",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "AOR",
+   "line": 119,
+   "original": "uint256 other = x / z",
+   "mutant": "uint256 other = x - z",
+   "result": "uncaught",
+   "second": "caught"
+  },
+  {
+   "contract": "PriceMath",
+   "mutator": "RR",
+   "line": 120,
+   "original": "z = other",
+   "mutant": "revert()",
+   "result": "uncaught",
+   "second": "caught"
+  }
+ ]
+}

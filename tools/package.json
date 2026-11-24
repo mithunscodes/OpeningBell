@@ -8,6 +8,7 @@
     "rehearse": "tsx src/rehearse.ts",
     "watch": "tsx src/watch.ts",
     "bench": "tsx src/bench.ts",
+    "claims": "tsx src/claims.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

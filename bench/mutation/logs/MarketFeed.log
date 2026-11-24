@@ -1,0 +1,513 @@
+INFO:Slither-Mutate:Mutating contract MarketFeed
+INFO:Slither-Mutate:[RR] Line 41: 'owner = msg.sender' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 42: 'emit OwnershipTransferred(address(0), msg.sender)' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.10ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7920): Identifier not found or not unique.
+stderr:   --> src/origin/MarketFeed.sol:50:53:
+stderr:    |
+stderr: 50 |     function transferOwnership(address to) external revert() {
+stderr:    |                                                     ^^^^^^
+INFO:Slither-Mutate:[RR] Line 50: 'onlyOwner' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 51: 'emit OwnershipTransferred(owner, to)' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 52: 'owner = to' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.68ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7920): Identifier not found or not unique.
+stderr:   --> src/origin/MarketFeed.sol:55:69:
+stderr:    |
+stderr: 55 |     function setPublisher(address publisher, bool allowed) external revert() {
+stderr:    |                                                                     ^^^^^^
+INFO:Slither-Mutate:[RR] Line 55: 'onlyOwner' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 56: 'publishers[publisher] = allowed' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 57: 'emit PublisherSet(publisher, allowed)' ==> 'revert()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 15.78ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:   --> src/origin/MarketFeed.sol:67:15:
+stderr:    |
+stderr: 67 |         seq = m.seq + 1;
+stderr:    |               ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:   --> src/origin/MarketFeed.sol:68:9:
+stderr:    |
+stderr: 68 |         m.status = status;
+stderr:    |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:   --> src/origin/MarketFeed.sol:69:9:
+stderr:    |
+stderr: 69 |         m.seq = seq;
+stderr:    |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:   --> src/origin/MarketFeed.sol:70:9:
+stderr:    |
+stderr: 70 |         m.sourceTime = sourceTime;
+stderr:    |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:   --> src/origin/MarketFeed.sol:71:9:
+stderr:    |
+stderr: 71 |         m.price = price;
+stderr:    |         ^
+INFO:Slither-Mutate:[RR] Line 66: 'Market storage m = markets[marketId]' ==> 'revert()' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[RR] Line 67: 'seq = m.seq + 1' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 68: 'm.status = status' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 69: 'm.seq = seq' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 70: 'm.sourceTime = sourceTime' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 71: 'm.price = price' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 73: 'emit MarketUpdate(marketId, status, price, seq, sourceTime)' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:[RR] Line 78: 'return markets[marketId].price' ==> 'revert()' --> CAUGHT
+INFO:Slither-Mutate:Mutator RR found 13 caught revert mutants (out of 13 that compile)
+INFO:Slither-Mutate:[CR] Line 41: 'owner = msg.sender' ==> '//owner = msg.sender' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 42: 'emit OwnershipTransferred(address(0), msg.sender)' ==> '//emit OwnershipTransferred(address(0), msg.sender)' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.12ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got ';'
+stderr:   --> src/origin/MarketFeed.sol:47:10:
+stderr:    |
+stderr: 47 |         _;
+stderr:    |          ^
+INFO:Slither-Mutate:[CR] Line 46: 'msg.sender != owner' ==> '//msg.sender != owner' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 46: 'revert NotOwner()' ==> '//revert NotOwner()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.68ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2883): Modifier body does not contain '_'.
+stderr:   --> src/origin/MarketFeed.sol:45:26:
+stderr:    |
+stderr: 45 |     modifier onlyOwner() {
+stderr:    |                          ^ (Relevant source part starts here and spans across multiple lines).
+INFO:Slither-Mutate:[CR] Line 47: '_' ==> '//_' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.51ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '{' but got 'emit'
+stderr:   --> src/origin/MarketFeed.sol:51:9:
+stderr:    |
+stderr: 51 |         emit OwnershipTransferred(owner, to);
+stderr:    |         ^^^^
+INFO:Slither-Mutate:[CR] Line 50: 'onlyOwner' ==> '//onlyOwner' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 51: 'emit OwnershipTransferred(owner, to)' ==> '//emit OwnershipTransferred(owner, to)' --> UNCAUGHT
+INFO:Slither-Mutate:[CR] Line 52: 'owner = to' ==> '//owner = to' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.97ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '{' but got '['
+stderr:   --> src/origin/MarketFeed.sol:56:19:
+stderr:    |
+stderr: 56 |         publishers[publisher] = allowed;
+stderr:    |                   ^
+INFO:Slither-Mutate:[CR] Line 55: 'onlyOwner' ==> '//onlyOwner' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 56: 'publishers[publisher] = allowed' ==> '//publishers[publisher] = allowed' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 57: 'emit PublisherSet(publisher, allowed)' ==> '//emit PublisherSet(publisher, allowed)' --> UNCAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.71ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected '(' but got 'if'
+stderr:   --> src/origin/MarketFeed.sol:62:9:
+stderr:    |
+stderr: 62 |         if (!publishers[msg.sender]) revert NotPublisher();
+stderr:    |         ^^
+INFO:Slither-Mutate:[CR] Line 61: '(uint64 seq)' ==> '//(uint64 seq)' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.50ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:   --> src/origin/MarketFeed.sol:63:9:
+stderr:    |
+stderr: 63 |         if (status > MarketTypes.HALTED) revert BadStatus(status);
+stderr:    |         ^^
+INFO:Slither-Mutate:[CR] Line 62: '!publishers[msg.sender]' ==> '//!publishers[msg.sender]' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 62: 'revert NotPublisher()' ==> '//revert NotPublisher()' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 12.52ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (6933): Expected primary expression.
+stderr:   --> src/origin/MarketFeed.sol:64:9:
+stderr:    |
+stderr: 64 |         if (price == 0) revert BadPrice();
+stderr:    |         ^^
+INFO:Slither-Mutate:[CR] Line 63: 'status > MarketTypes.HALTED' ==> '//status > MarketTypes.HALTED' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 63: 'revert BadStatus(status)' ==> '//revert BadStatus(status)' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.36ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (2314): Expected ')' but got 'storage'
+stderr:   --> src/origin/MarketFeed.sol:66:16:
+stderr:    |
+stderr: 66 |         Market storage m = markets[marketId];
+stderr:    |                ^^^^^^^
+INFO:Slither-Mutate:[CR] Line 64: 'price == 0' ==> '//price == 0' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.11ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9079): Variable declarations can only be used inside blocks.
+stderr:   --> src/origin/MarketFeed.sol:66:9:
+stderr:    |
+stderr: 66 |         Market storage m = markets[marketId];
+stderr:    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[CR] Line 64: 'revert BadPrice()' ==> '//revert BadPrice()' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 3.76ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7576): Undeclared identifier.
+stderr:   --> src/origin/MarketFeed.sol:67:15:
+stderr:    |
+stderr: 67 |         seq = m.seq + 1;
+stderr:    |               ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:   --> src/origin/MarketFeed.sol:68:9:
+stderr:    |
+stderr: 68 |         m.status = status;
+stderr:    |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:   --> src/origin/MarketFeed.sol:69:9:
+stderr:    |
+stderr: 69 |         m.seq = seq;
+stderr:    |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:   --> src/origin/MarketFeed.sol:70:9:
+stderr:    |
+stderr: 70 |         m.sourceTime = sourceTime;
+stderr:    |         ^
+stderr: 
+stderr: Error (7576): Undeclared identifier.
+stderr:   --> src/origin/MarketFeed.sol:71:9:
+stderr:    |
+stderr: 71 |         m.price = price;
+stderr:    |         ^
+INFO:Slither-Mutate:[CR] Line 66: 'Market storage m = markets[marketId]' ==> '//Market storage m = markets[marketId]' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[CR] Line 67: 'seq = m.seq + 1' ==> '//seq = m.seq + 1' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 68: 'm.status = status' ==> '//m.status = status' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 69: 'm.seq = seq' ==> '//m.seq = seq' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 70: 'm.sourceTime = sourceTime' ==> '//m.sourceTime = sourceTime' --> UNCAUGHT
+INFO:Slither-Mutate:[CR] Line 71: 'm.price = price' ==> '//m.price = price' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 73: 'emit MarketUpdate(marketId, status, price, seq, sourceTime)' ==> '//emit MarketUpdate(marketId, status, price, seq, sourceTime)' --> CAUGHT
+INFO:Slither-Mutate:[CR] Line 78: 'return markets[marketId].price' ==> '//return markets[marketId].price' --> CAUGHT
+INFO:Slither-Mutate:Mutator CR found 12 caught comment mutants (out of 16 that compile)
+INFO:Slither-Mutate:[AOR] Line 67: 'seq = m.seq + 1' ==> 'seq = m.seq / 1' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 67: 'seq = m.seq + 1' ==> 'seq = m.seq * 1' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 67: 'seq = m.seq + 1' ==> 'seq = m.seq - 1' --> CAUGHT
+INFO:Slither-Mutate:[AOR] Line 67: 'seq = m.seq + 1' ==> 'seq = m.seq % 1' --> CAUGHT
+INFO:Slither-Mutate:Mutator AOR found 4 caught tweak mutants (out of 4 that compile)
+INFO:Slither-Mutate:Running total: found 4 caught tweak mutants (out of 4 that compile)
+INFO:Slither-Mutate:Mutator ASOR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 4 caught tweak mutants (out of 4 that compile)
+INFO:Slither-Mutate:Mutator BOR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 4 caught tweak mutants (out of 4 that compile)
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 14.04ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/MarketFeed.sol:53:6:
+stderr:    |
+stderr: 53 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 50: 'function transferOwnership(address to) external onlyOwner {
+        emit OwnershipTransferred(owner, to);
+        owner = to;
+    }' ==> 'function transferOwnership(address to) private onlyOwner {
+        emit OwnershipTransferred(owner, to);
+        owner = to;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 10.16ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/MarketFeed.sol:53:6:
+stderr:    |
+stderr: 53 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 50: 'function transferOwnership(address to) external onlyOwner {
+        emit OwnershipTransferred(owner, to);
+        owner = to;
+    }' ==> 'function transferOwnership(address to) internal onlyOwner {
+        emit OwnershipTransferred(owner, to);
+        owner = to;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.33ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/MarketFeed.sol:58:6:
+stderr:    |
+stderr: 58 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 55: 'function setPublisher(address publisher, bool allowed) external onlyOwner {
+        publishers[publisher] = allowed;
+        emit PublisherSet(publisher, allowed);
+    }' ==> 'function setPublisher(address publisher, bool allowed) private onlyOwner {
+        publishers[publisher] = allowed;
+        emit PublisherSet(publisher, allowed);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.61ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/MarketFeed.sol:58:6:
+stderr:    |
+stderr: 58 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 55: 'function setPublisher(address publisher, bool allowed) external onlyOwner {
+        publishers[publisher] = allowed;
+        emit PublisherSet(publisher, allowed);
+    }' ==> 'function setPublisher(address publisher, bool allowed) internal onlyOwner {
+        publishers[publisher] = allowed;
+        emit PublisherSet(publisher, allowed);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.79ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/MarketFeed.sol:74:6:
+stderr:    |
+stderr: 74 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 61: 'function publish(bytes32 marketId, uint8 status, uint256 price, uint64 sourceTime) external returns (uint64 seq) {
+        if (!publishers[msg.sender]) revert NotPublisher();
+        if (status > MarketTypes.HALTED) revert BadStatus(status);
+        if (price == 0) revert BadPrice();
+
+        Market storage m = markets[marketId];
+        seq = m.seq + 1;
+        m.status = status;
+        m.seq = seq;
+        m.sourceTime = sourceTime;
+        m.price = price;
+
+        emit MarketUpdate(marketId, status, price, seq, sourceTime);
+    }' ==> 'function publish(bytes32 marketId, uint8 status, uint256 price, uint64 sourceTime) private returns (uint64 seq) {
+        if (!publishers[msg.sender]) revert NotPublisher();
+        if (status > MarketTypes.HALTED) revert BadStatus(status);
+        if (price == 0) revert BadPrice();
+
+        Market storage m = markets[marketId];
+        seq = m.seq + 1;
+        m.status = status;
+        m.seq = seq;
+        m.sourceTime = sourceTime;
+        m.price = price;
+
+        emit MarketUpdate(marketId, status, price, seq, sourceTime);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.00ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/MarketFeed.sol:74:6:
+stderr:    |
+stderr: 74 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 61: 'function publish(bytes32 marketId, uint8 status, uint256 price, uint64 sourceTime) external returns (uint64 seq) {
+        if (!publishers[msg.sender]) revert NotPublisher();
+        if (status > MarketTypes.HALTED) revert BadStatus(status);
+        if (price == 0) revert BadPrice();
+
+        Market storage m = markets[marketId];
+        seq = m.seq + 1;
+        m.status = status;
+        m.seq = seq;
+        m.sourceTime = sourceTime;
+        m.price = price;
+
+        emit MarketUpdate(marketId, status, price, seq, sourceTime);
+    }' ==> 'function publish(bytes32 marketId, uint8 status, uint256 price, uint64 sourceTime) internal returns (uint64 seq) {
+        if (!publishers[msg.sender]) revert NotPublisher();
+        if (status > MarketTypes.HALTED) revert BadStatus(status);
+        if (price == 0) revert BadPrice();
+
+        Market storage m = markets[marketId];
+        seq = m.seq + 1;
+        m.status = status;
+        m.seq = seq;
+        m.sourceTime = sourceTime;
+        m.price = price;
+
+        emit MarketUpdate(marketId, status, price, seq, sourceTime);
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 8.67ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/MarketFeed.sol:79:6:
+stderr:    |
+stderr: 79 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 77: 'function priceOf(bytes32 marketId) external view returns (uint256) {
+        return markets[marketId].price;
+    }' ==> 'function priceOf(bytes32 marketId) external pure returns (uint256) {
+        return markets[marketId].price;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 5.08ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/MarketFeed.sol:79:6:
+stderr:    |
+stderr: 79 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 77: 'function priceOf(bytes32 marketId) external view returns (uint256) {
+        return markets[marketId].price;
+    }' ==> 'function priceOf(bytes32 marketId) private view returns (uint256) {
+        return markets[marketId].price;
+    }' --> COMPILATION FAILURE
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.99ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (9182): Function, variable, struct or modifier declaration expected.
+stderr:   --> src/origin/MarketFeed.sol:79:6:
+stderr:    |
+stderr: 79 |     }{
+stderr:    |      ^
+INFO:Slither-Mutate:[FHR] Line 77: 'function priceOf(bytes32 marketId) external view returns (uint256) {
+        return markets[marketId].price;
+    }' ==> 'function priceOf(bytes32 marketId) internal view returns (uint256) {
+        return markets[marketId].price;
+    }' --> COMPILATION FAILURE
+INFO:Slither-Mutate:Mutator FHR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 4 caught tweak mutants (out of 4 that compile)
+INFO:Slither-Mutate:Mutator LIR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 4 caught tweak mutants (out of 4 that compile)
+INFO:Slither-Mutate:Mutator LOR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 4 caught tweak mutants (out of 4 that compile)
+INFO:Slither-Mutate:[MIA] Line 46: 'msg.sender != owner' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 46: 'msg.sender != owner' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 46: 'msg.sender != owner' ==> '!(msg.sender != owner)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 62: '!publishers[msg.sender]' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 62: '!publishers[msg.sender]' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 63: 'status > MarketTypes.HALTED' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 63: 'status > MarketTypes.HALTED' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 63: 'status > MarketTypes.HALTED' ==> '!(status > MarketTypes.HALTED)' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 64: 'price == 0' ==> 'true' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 64: 'price == 0' ==> 'false' --> CAUGHT
+INFO:Slither-Mutate:[MIA] Line 64: 'price == 0' ==> '!(price == 0)' --> CAUGHT
+INFO:Slither-Mutate:Mutator MIA found 11 caught tweak mutants (out of 11 that compile)
+INFO:Slither-Mutate:Running total: found 15 caught tweak mutants (out of 15 that compile)
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 6.87ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (3464): This variable is of storage pointer type and can be accessed without prior assignment, which would lead to undefined behaviour.
+stderr:   --> src/origin/MarketFeed.sol:67:15:
+stderr:    |
+stderr: 67 |         seq = m.seq + 1;
+stderr:    |               ^
+stderr: Note: The variable was declared here.
+stderr:   --> src/origin/MarketFeed.sol:66:9:
+stderr:    |
+stderr: 66 |         Market storage m ;
+stderr:    |         ^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (3464): This variable is of storage pointer type and can be accessed without prior assignment, which would lead to undefined behaviour.
+stderr:   --> src/origin/MarketFeed.sol:68:9:
+stderr:    |
+stderr: 68 |         m.status = status;
+stderr:    |         ^
+stderr: Note: The variable was declared here.
+stderr:   --> src/origin/MarketFeed.sol:66:9:
+stderr:    |
+stderr: 66 |         Market storage m ;
+stderr:    |         ^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (3464): This variable is of storage pointer type and can be accessed without prior assignment, which would lead to undefined behaviour.
+stderr:   --> src/origin/MarketFeed.sol:69:9:
+stderr:    |
+stderr: 69 |         m.seq = seq;
+stderr:    |         ^
+stderr: Note: The variable was declared here.
+stderr:   --> src/origin/MarketFeed.sol:66:9:
+stderr:    |
+stderr: 66 |         Market storage m ;
+stderr:    |         ^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (3464): This variable is of storage pointer type and can be accessed without prior assignment, which would lead to undefined behaviour.
+stderr:   --> src/origin/MarketFeed.sol:70:9:
+stderr:    |
+stderr: 70 |         m.sourceTime = sourceTime;
+stderr:    |         ^
+stderr: Note: The variable was declared here.
+stderr:   --> src/origin/MarketFeed.sol:66:9:
+stderr:    |
+stderr: 66 |         Market storage m ;
+stderr:    |         ^^^^^^^^^^^^^^^^
+stderr: 
+stderr: Error (3464): This variable is of storage pointer type and can be accessed without prior assignment, which would lead to undefined behaviour.
+stderr:   --> src/origin/MarketFeed.sol:71:9:
+stderr:    |
+stderr: 71 |         m.price = price;
+stderr:    |         ^
+stderr: Note: The variable was declared here.
+stderr:   --> src/origin/MarketFeed.sol:66:9:
+stderr:    |
+stderr: 66 |         Market storage m ;
+stderr:    |         ^^^^^^^^^^^^^^^^
+INFO:Slither-Mutate:[MVIE] Line 66: 'Market storage m = markets[marketId]' ==> 'Market storage m ' --> COMPILATION FAILURE
+INFO:Slither-Mutate:Mutator MVIE found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 15 caught tweak mutants (out of 15 that compile)
+INFO:Slither-Mutate:Mutator MVIV found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 15 caught tweak mutants (out of 15 that compile)
+INFO:Slither-Mutate:Mutator MWA found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 15 caught tweak mutants (out of 15 that compile)
+INFO:Slither-Mutate:[ROR] Line 63: 'status > MarketTypes.HALTED' ==> 'status < MarketTypes.HALTED' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 63: 'status > MarketTypes.HALTED' ==> 'status <= MarketTypes.HALTED' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 63: 'status > MarketTypes.HALTED' ==> 'status >= MarketTypes.HALTED' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 63: 'status > MarketTypes.HALTED' ==> 'status == MarketTypes.HALTED' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 63: 'status > MarketTypes.HALTED' ==> 'status != MarketTypes.HALTED' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 64: 'price == 0' ==> 'price < 0' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 64: 'price == 0' ==> 'price > 0' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 64: 'price == 0' ==> 'price <= 0' --> UNCAUGHT
+INFO:Slither-Mutate:[ROR] Line 64: 'price == 0' ==> 'price >= 0' --> CAUGHT
+INFO:Slither-Mutate:[ROR] Line 64: 'price == 0' ==> 'price != 0' --> CAUGHT
+INFO:Slither-Mutate:Mutator ROR found 9 caught tweak mutants (out of 10 that compile)
+INFO:Slither-Mutate:Running total: found 24 caught tweak mutants (out of 25 that compile)
+INFO:Slither-Mutate:[SBR] Line 41: 'owner = msg.sender' ==> 'owner = tx.origin' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 46: 'msg.sender != owner' ==> 'tx.origin != owner' --> CAUGHT
+ERROR:CryticCompile:'forge' returned non-zero exit code 1
+ERROR:CryticCompile:Compiling 2 files with Solc 0.8.30
+stdout: Solc 0.8.30 finished in 4.04ms
+ERROR:CryticCompile:Error: Compiler run failed:
+stderr: Error (7407): Type uint64 is not implicitly convertible to expected type uint32.
+stderr:   --> src/origin/MarketFeed.sol:67:15:
+stderr:    |
+stderr: 67 |         seq = m.seq + 1;
+stderr:    |               ^^^^^^^^^
+INFO:Slither-Mutate:[SBR] Line 61: '(uint64 seq)' ==> '(uint32 seq)' --> COMPILATION FAILURE
+INFO:Slither-Mutate:[SBR] Line 62: '!publishers[msg.sender]' ==> '!publishers[tx.origin]' --> CAUGHT
+INFO:Slither-Mutate:[SBR] Line 66: 'Market storage m = markets[marketId]' ==> 'Market memory m = markets[marketId]' --> CAUGHT
+INFO:Slither-Mutate:Mutator SBR found 4 caught tweak mutants (out of 4 that compile)
+INFO:Slither-Mutate:Running total: found 28 caught tweak mutants (out of 29 that compile)
+INFO:Slither-Mutate:Mutator UOR found 0 caught tweak mutants (out of 0 that compile)
+INFO:Slither-Mutate:Running total: found 28 caught tweak mutants (out of 29 that compile)
+INFO:Slither-Mutate:Done mutating MarketFeed.
