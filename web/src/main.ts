@@ -1358,7 +1358,32 @@ function renderContracts(): void {
 // Start
 // -------------------------------------------------------------------------------------------------
 
+// --- The demo video ----------------------------------------------------------------------------------
+
+const VIDEO_EMBED = "https://www.youtube-nocookie.com/embed/8YB6nJwq09I?autoplay=1&rel=0";
+
+/** The video plays in a box on the page; the plain YouTube link stays as the fallback. */
+function setupVideo(): void {
+  const box = $<HTMLDialogElement>("video");
+  const player = $<HTMLIFrameElement>("video-player");
+  if (typeof box.showModal !== "function") return;
+  // The player only loads when asked for, and is emptied on close so the sound stops.
+  box.addEventListener("close", () => player.removeAttribute("src"));
+  box.addEventListener("click", (e) => {
+    if (e.target === box) box.close();
+  });
+  $("video-close").addEventListener("click", () => box.close());
+  document.querySelectorAll<HTMLAnchorElement>("a.open-video").forEach((a) =>
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      player.src = VIDEO_EMBED;
+      box.showModal();
+    }),
+  );
+}
+
 async function main(): Promise<void> {
+  setupVideo();
   try {
     config = await loadConfig();
   } catch (error) {

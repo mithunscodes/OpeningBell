@@ -18,6 +18,7 @@
     </a>
     <div class="top-right">
       <span id="mode" class="mode" hidden>Local forks</span>
+      <a class="top-link open-video" href="https://youtu.be/8YB6nJwq09I" target="_blank" rel="noopener">Video</a>
       <a class="top-link" href="https://github.com/mithunscodes/OpeningBell" target="_blank" rel="noopener">GitHub</a>
       <button id="connect" type="button" class="connect">Connect wallet</button>
     </div>
@@ -32,7 +33,10 @@
         <h1>A stock token that knows when the market is shut.</h1>
         <p>NVIDIA stops trading at 4pm. Its token never does. One <strong>Reactive</strong> contract switches its
           pools on <strong>Base</strong> and <strong>Unichain</strong> in about two seconds.</p>
-        <a id="night-link" class="night-link" href="#real" hidden></a>
+        <div class="hero-links">
+          <a class="video-link open-video" href="https://youtu.be/8YB6nJwq09I" target="_blank" rel="noopener">▶ Watch the 3-minute demo</a>
+          <a id="night-link" class="night-link" href="#real" hidden></a>
+        </div>
       </div>
 
       <aside class="proof" aria-labelledby="proof-title">
@@ -154,6 +158,11 @@
       <a href="https://app.optimism.io/faucet" target="_blank" rel="noopener">Need test ETH? Superchain faucet</a>
     </footer>
   </main>
+
+  <dialog id="video" class="video-box" aria-label="OpeningBell demo video">
+    <button id="video-close" type="button" class="video-close" aria-label="Close video">×</button>
+    <div class="video-frame"><iframe id="video-player" title="OpeningBell demo video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+  </dialog>
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
   <script type="module" src="main.js"></script>
