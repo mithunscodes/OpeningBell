@@ -125,6 +125,17 @@
       <div id="venues" class="venues"></div>
     </section>
 
+    <section class="panel bell-live" id="bell-live" hidden>
+      <h2>The real bell <span id="bell-state" class="tag"></span></h2>
+      <p class="night-lead">Every trading day a scheduled job posts NVIDIA's real closing bell (4:00 pm New York) and
+        real opening bell (9:30 am) to the exchange feed, at NVIDIA's real price. From there the loop is the same one
+        you can play above: nobody presses anything. <span id="bell-next"></span></p>
+      <ol id="bell-list" class="bell-list"></ol>
+      <p class="proof-note">Prices from Yahoo Finance. "Posted" is the job's own delay after the real bell; the
+        switch times run from the exchange event, as everywhere on this page.
+        <a href="https://github.com/mithunscodes/OpeningBell#the-real-bell" target="_blank" rel="noopener">How it works</a></p>
+    </section>
+
     <section class="panel night" id="night" hidden>
       <h2>A real night, replayed <span id="night-tag" class="tag"></span></h2>
       <p id="night-lead" class="night-lead"></p>

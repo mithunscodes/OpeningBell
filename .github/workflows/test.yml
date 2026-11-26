@@ -2,6 +2,7 @@ name: test
 
 on:
   push:
+    branches-ignore: [live-log]
   pull_request:
 
 jobs:

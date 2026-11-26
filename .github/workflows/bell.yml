@@ -1,0 +1,64 @@
+name: bell
+
+# Posts NVIDIA's real closing and opening bell to the exchange feed on Base Sepolia, at NVIDIA's real
+# price, and records how fast both pools switched (tools/src/bell.ts). GitHub can start scheduled
+# runs late, so it runs every 10 minutes around the US session; the script itself knows which bell
+# is due and never posts one twice. The log of every bell lives on the `live-log` branch, which the
+# demo page reads.
+#
+# Needs one repository secret, BELL_PRIVATE_KEY: a testnet account that is a publisher on the feed
+# and holds a little Base Sepolia ETH.
+on:
+  schedule:
+    - cron: "*/10 13-23 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bell
+  cancel-in-progress: false
+
+jobs:
+  bell:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check out the bell log
+        run: |
+          if git ls-remote --exit-code origin live-log >/dev/null; then
+            git fetch --depth 1 origin live-log
+            git worktree add live-log FETCH_HEAD
+          else
+            git worktree add --orphan -b live-log live-log
+            printf '{ "git": { "deploymentEnabled": false } }\n' > live-log/vercel.json
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: tools/package-lock.json
+
+      - run: npm ci
+        working-directory: tools
+
+      - name: Post the latest real bell if it is missing
+        working-directory: tools
+        env:
+          BELL_PRIVATE_KEY: ${{ secrets.BELL_PRIVATE_KEY }}
+          BELL_LOG: ${{ github.workspace }}/live-log/bells.json
+        run: npx tsx src/bell.ts
+
+      - name: Save the bell log
+        if: success() || failure()
+        working-directory: live-log
+        run: |
+          git add -A
+          if git diff --cached --quiet; then exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -qm "Real bell $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push origin HEAD:live-log

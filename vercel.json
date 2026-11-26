@@ -3,5 +3,6 @@
   "framework": null,
   "installCommand": "npm ci --prefix web",
   "buildCommand": "npm run build --prefix web",
-  "outputDirectory": "web/dist"
+  "outputDirectory": "web/dist",
+  "git": { "deploymentEnabled": { "live-log": false } }
 }

@@ -34,6 +34,10 @@ Fed the real prices of NVIDIA's night of 11 to 12 November 2026, when the share 
 the pools that ignore market hours lost **$54,908.76** to one raid each and the protected pools lost
 **nothing**. See [A real night, replayed](#a-real-night-replayed).
 
+And it rings on the real market: every trading day a scheduled job posts NVIDIA's real closing bell
+and real opening bell, at the real price, and the pools on both chains follow on their own. See
+[The real bell](#the-real-bell).
+
 Don't take these numbers on trust: [`docs/CLAIMS.md`](docs/CLAIMS.md) links every one of them to the file,
 transaction or test behind it, and `tools/src/claims.ts` re-checks them, read-only, against the raw data,
 the chains and Sourcify.
@@ -167,6 +171,30 @@ The scenario is [`bench/replay/nvda-2026-11-12.json`](bench/replay/nvda-2026-11-
 transaction of the run, lead-in included, is in
 [`bench/replay/results/nvda-2026-11-12.json`](bench/replay/results/nvda-2026-11-12.json). The demo
 page shows the same night, and each of its three updates replays on the stopwatch.
+
+## The real bell
+
+The system follows the real market every trading day. A scheduled GitHub
+workflow ([`.github/workflows/bell.yml`](.github/workflows/bell.yml)) runs
+[`tools/src/bell.ts`](tools/src/bell.ts), which:
+
+1. asks Yahoo Finance for NVDA's regular session (Stooq as a fallback). That gives the real opening
+   and closing time of the day, so weekends, holidays and early closes need no calendar of ours;
+2. picks the latest real bell: the 9:30 am open at the first regular minute's opening price, or the
+   4:00 pm close at the closing price;
+3. reads the feed, and posts the bell only if the feed has nothing as new. The update carries the
+   bell's own time as its source time, so a second run finds nothing to do, and an exchange button
+   pressed on the demo page after the bell is left alone until the next one;
+4. times the loop on both chains, as the benchmark does, and adds the bell with every transaction
+   to a log on the [`live-log`](https://github.com/mithunscodes/OpeningBell/tree/live-log) branch,
+   which the demo page shows under "The real bell".
+
+The job is an ordinary publisher on `MarketFeed`, with its own key holding a little Base Sepolia
+ETH; everything after the exchange event is the same reactive loop as everywhere else. It is the
+stand-in for a licensed exchange feed, not a keeper: it never touches a pool. GitHub starts
+scheduled runs a few minutes late, so the log says how long after the real bell each update was
+posted; the switch times are measured from the exchange event, like every other number here.
+Rehearse it on forks with `tools/bell-rehearse.sh`.
 
 ## Speed
 
@@ -336,7 +364,8 @@ address up at `https://repo.sourcify.dev/<chain id>/<address>` (Base Sepolia 845
   that line falls. The after-hours fee and wide band make a closed market a poor place to bet on
   overnight news, which is where the largest gaps happen.
 - **The feed is a stand-in.** In the demo, prices are set by whoever plays the exchange, not by a
-  licensed exchange feed. The replayed night used NVIDIA's real prices, but we published them.
+  licensed exchange feed. The replayed night and [the real bell](#the-real-bell) use NVIDIA's real
+  prices, but we publish them, and the real bell lands a few minutes after the real one.
 - **Testnets and play money only.** The stock token is a mock with no value.
 - **One owner rule the watchdog does not enforce.** Mutation testing showed that lowering the
   watchdog's `maxRetries` while a watch already has more rounds would make it re-send to a venue
@@ -352,11 +381,11 @@ address up at `https://repo.sourcify.dev/<chain id>/<address>` (Base Sepolia 845
 | `src/venue/` | `BellGuard`, `BellHook`, `BellVault`, `Arena`, `MockToken` and the price maths |
 | `script/` | Deployment scripts, the same ones the local rehearsal uses |
 | `test/` | Foundry tests (195, including fuzz tests), with a local simulator of Reactive Omni and the real Uniswap v4 PoolManager bytecode from Base Sepolia |
-| `tools/` | Fork rehearsal, latency benchmark, real-night replay, the raider-speed sweep ("Beat the bell"), the claims checker, mutation testing, loop watcher, and a local relay for trying the demo offline |
+| `tools/` | Fork rehearsal, latency benchmark, real-night replay, the raider-speed sweep ("Beat the bell"), the real-bell job, the claims checker, mutation testing, loop watcher, and a local relay for trying the demo offline |
 | `bench/` | The benchmark's results, the replayed night with its sources and transactions, the raider-speed sweep, and the mutation testing results |
 | `web/` | The demo page, a static build that Vercel deploys using `vercel.json` |
 | `docs/` | Every claim with its evidence (`CLAIMS.md`), the mutation testing report, the static analysis report and the page screenshot |
-| `.github/workflows/` | CI: tests, coverage, Slither, demo page build |
+| `.github/workflows/` | CI (tests, coverage, Slither, demo page build) and the daily real bell |
 
 ## Build, test and run
 
@@ -435,6 +464,14 @@ Rehearse it on forks first, then add the race pools on Base Sepolia once and run
 tools/race-rehearse.sh                                                   # on forks, five attempts
 forge script script/DeployRace.s.sol:DeployRace --rpc-url https://sepolia.base.org --broadcast
 cd tools && RACE_PRIVATE_KEY=0x... npx tsx src/race.ts                   # 32 attempts, 0.0 to 3.0 s
+```
+
+The real bell, with a key that may publish on the feed. The workflow runs it on a schedule; by hand:
+
+```sh
+tools/bell-rehearse.sh                                   # on forks: open, a repeat that does nothing, close
+cd tools && npx tsx src/bell.ts --dry                    # which bell is due right now, sends nothing
+BELL_PRIVATE_KEY=0x... npx tsx src/bell.ts               # post it if the feed does not have it yet
 ```
 
 ## Costs

@@ -1162,6 +1162,94 @@ async function loadNight(): Promise<void> {
   $("night").hidden = false;
 }
 
+// --- The real bell -----------------------------------------------------------------------------------
+
+/** One real bell as tools/src/bell.ts records it; the scheduled job keeps the list on the live-log branch. */
+interface RealBell {
+  bell: "open" | "close";
+  at: string;
+  price: string;
+  posted: { tx: Hash; afterBellS: number };
+  switched: Partial<Record<VenueKey, { tx: Hash; seconds: number; exact: boolean }>>;
+}
+
+const BELL_LOG = "https://raw.githubusercontent.com/mithunscodes/OpeningBell/live-log/bells.json";
+
+/** NYSE days off and early closes (1 pm) until the end of 2027, New York dates. */
+const NYSE_HOLIDAYS = new Set([
+  "2026-11-26", "2026-12-25",
+  "2027-01-01", "2027-01-18", "2027-02-15", "2027-03-26", "2027-05-31", "2027-06-18", "2027-07-05", "2027-09-06", "2027-11-25", "2027-12-24",
+]);
+const NYSE_EARLY = new Set(["2026-11-27", "2026-12-24", "2027-11-26"]);
+
+/** New York calendar date and minutes after midnight for a moment. */
+function newYork(ms: number): { date: string; minutes: number; weekday: number } {
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat("en-CA", { timeZone: NEW_YORK, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", weekday: "short", hourCycle: "h23" })
+      .formatToParts(new Date(ms))
+      .map((p) => [p.type, p.value]),
+  );
+  const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(parts.weekday);
+  return { date: `${parts.year}-${parts.month}-${parts.day}`, minutes: Number(parts.hour) * 60 + Number(parts.minute), weekday };
+}
+
+/** Whether the real market is open now, and the next bell (searched minute by minute in 15-minute steps). */
+function realMarket(now: number): { open: boolean; next?: { bell: "open" | "close"; ms: number } } {
+  const state = (ms: number) => {
+    const t = newYork(ms);
+    if (t.weekday === 0 || t.weekday === 6 || NYSE_HOLIDAYS.has(t.date)) return false;
+    const close = NYSE_EARLY.has(t.date) ? 13 * 60 : 16 * 60;
+    return t.minutes >= 9 * 60 + 30 && t.minutes < close;
+  };
+  const open = state(now);
+  const step = 15 * 60_000;
+  for (let ms = Math.ceil(now / step) * step; ms < now + 6 * 86_400_000; ms += step) {
+    if (state(ms) !== open) return { open, next: { bell: open ? "close" : "open", ms } };
+  }
+  return { open };
+}
+
+async function loadRealBell(): Promise<void> {
+  if (config.mode !== "testnet") return;
+  let bells: RealBell[] = [];
+  try {
+    const response = await fetch(BELL_LOG, { cache: "no-store" });
+    if (response.ok) bells = (await response.json()) as RealBell[];
+  } catch {
+    // No log yet: the panel still says when the first real bell rings.
+  }
+  const market = realMarket(Date.now());
+  $("bell-state").textContent = "NYSE is " + (market.open ? "open" : "closed") + " right now";
+  const when = (ms: number) =>
+    new Date(ms).toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit", hour12: true, timeZone: NEW_YORK }).replace(/\b(AM|PM)\b/i, (m) => m.toLowerCase());
+  $("bell-next").textContent = market.next
+    ? (bells.length ? "Next" : "The first") + " real bell: the " + market.next.bell + ", " + when(market.next.ms) + " New York."
+    : "";
+
+  $("bell-list").replaceChildren(
+    ...bells
+      .slice(-10)
+      .reverse()
+      .map((b) => {
+        const parts: (Node | string)[] = ["Posted " + Math.max(0, Math.round(b.posted.afterBellS / 60)) + " min after the bell: ", link("base", b.posted.tx, "exchange event")];
+        for (const v of VENUES) {
+          const s = b.switched[v];
+          if (!s) continue;
+          parts.push(" · " + config.chains[v].short + " switched ", link(v, s.tx, (s.exact ? s.seconds.toFixed(1) : "≈ " + Math.round(s.seconds)) + " s"), " later");
+        }
+        return el(
+          "li",
+          { class: "bell-row" },
+          el("span", { class: "night-when" }, when(Date.parse(b.at))),
+          el("span", { class: "bell-what", "data-bell": b.bell }, b.bell === "open" ? "Opening bell" : "Closing bell"),
+          el("span", { class: "bell-price" }, "$" + b.price),
+          el("span", { class: "bell-proof" }, ...parts),
+        );
+      }),
+  );
+  $("bell-live").hidden = false;
+}
+
 // --- The three steps ---------------------------------------------------------------------------------
 
 function isStale(view: PoolView): boolean {
@@ -1366,6 +1454,7 @@ async function main(): Promise<void> {
   };
   await tick();
   void loadRecorded().then(loadNight);
+  void loadRealBell();
   clients.base
     .readContract({ address: config.origin.stage, abi: stageAbi, functionName: "owner" })
     .then((owner) => {

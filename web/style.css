@@ -260,6 +260,13 @@ h4 { font-size: 14px; }
 .night-link { display: inline-block; margin-top: 14px; font-size: 14px; font-weight: 600; color: var(--accent); text-decoration: none; }
 .night-link:hover { text-decoration: underline; }
 .night { scroll-margin-top: 16px; }
+.bell-list { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 8px; }
+.bell-list:empty { display: none; }
+.bell-row { display: grid; grid-template-columns: 11rem 8rem 6rem minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 10px 14px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--raise); }
+.bell-what { font-weight: 650; }
+.bell-price { font: 700 18px/1.2 var(--mono); font-variant-numeric: tabular-nums; }
+.bell-proof { font-size: 13px; color: var(--muted); }
+@media (max-width: 720px) { .bell-row { grid-template-columns: minmax(0, 1fr); gap: 2px; } }
 .night-lead { color: var(--muted); font-size: 14px; max-width: 86ch; margin-bottom: 14px; }
 .night-prints { list-style: none; margin: 0 0 12px; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .night-print { width: 100%; height: 100%; text-align: left; display: grid; gap: 3px; align-content: start; padding: 14px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--raise); transition: border-color .12s, transform .12s; }
