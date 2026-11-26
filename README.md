@@ -208,7 +208,7 @@ workflow ([`.github/workflows/bell.yml`](.github/workflows/bell.yml)) runs
    pressed on the demo page after the bell is left alone until the next one;
 4. times the loop on both chains, as the benchmark does, and adds the bell with every transaction
    to a log on the [`live-log`](https://github.com/mithunscodes/OpeningBell/tree/live-log) branch,
-   which the demo page shows under "The real bell".
+   which the demo page lists, bell by bell with every transaction, under "On the real market".
 
 The job is an ordinary publisher on `MarketFeed`, with its own key holding a little Base Sepolia
 ETH; everything after the exchange event is the same reactive loop as everywhere else. It is the

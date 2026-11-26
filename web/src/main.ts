@@ -1139,6 +1139,38 @@ async function loadNight(): Promise<void> {
   $("real").hidden = false;
 }
 
+/** The whole real-market record, newest first: one row per real bell, with every transaction. */
+function renderBellLog(bells: RealBell[], next?: string): void {
+  const day = (ms: number) =>
+    new Date(ms).toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit", hour12: true, timeZone: NEW_YORK }).replace(/\b(AM|PM)\b/i, (m) => m.toLowerCase());
+  const secs = (s: { seconds: number; exact: boolean }) => (s.exact ? s.seconds.toFixed(1) : "≈ " + Math.round(s.seconds)) + " s";
+  const rows = [...bells].reverse().map((b) =>
+    el("tr", {},
+      el("td", {}, (b.bell === "open" ? "Open, " : "Close, ") + day(Date.parse(b.at))),
+      el("td", {}, "$" + b.price),
+      el("td", {}, link("base", b.posted.tx, "+" + Math.round(b.posted.afterBellS) + " s")),
+      ...VENUES.map((v) => {
+        const s = b.switched[v];
+        return el("td", {}, s ? link(v, s.tx, secs(s)) : "—");
+      }),
+    ),
+  );
+  if (rows.length === 0) {
+    rows.push(el("tr", {}, el("td", { colspan: "5", class: "empty" }, "No real bell yet." + (next ? " The first one is " + next + ", and every bell after it is added here by itself." : ""))));
+  }
+  $("bell-rows").replaceChildren(...rows);
+  const both = bells.filter((b) => VENUES.every((v) => b.switched[v]));
+  const base = bells.map((b) => b.switched.base?.seconds).filter((x): x is number => x !== undefined).sort((a, b) => a - b);
+  const median = base.length ? base[Math.floor((base.length - 1) / 2)] : undefined;
+  $("bell-log-tag").textContent = bells.length + (bells.length === 1 ? " real bell" : " real bells");
+  $("bell-log-sum").replaceChildren(
+    ...(bells.length === 0
+      ? ["Waiting for the first real bell."]
+      : [el("strong", {}, both.length + " of " + bells.length), " real bells switched the pools on both chains", ...(median !== undefined ? [", Base median ", el("strong", {}, median.toFixed(1) + " s")] : []), " after the bell's exchange event."]),
+  );
+  $("bell-log").hidden = false;
+}
+
 // --- The real bell -----------------------------------------------------------------------------------
 
 /** One real bell as tools/src/bell.ts records it; the scheduled job keeps the list on the live-log branch. */
@@ -1216,6 +1248,7 @@ async function loadRealBell(): Promise<void> {
     $("bell-proof").replaceChildren(...parts);
   }
   $("real").hidden = false;
+  renderBellLog(bells, market.next ? "the " + market.next.bell + ", " + when(market.next.ms) + " New York" : undefined);
 }
 
 // --- The three steps ---------------------------------------------------------------------------------
@@ -1403,6 +1436,7 @@ async function main(): Promise<void> {
   await tick();
   void loadRecorded().then(loadNight);
   void loadRealBell();
+  window.setInterval(() => void loadRealBell(), 5 * 60_000);
   clients.base
     .readContract({ address: config.origin.stage, abi: stageAbi, functionName: "owner" })
     .then((owner) => {

@@ -145,6 +145,18 @@
       </div>
     </section>
 
+    <section class="panel bell-log" id="bell-log" hidden>
+      <h2>On the real market <span id="bell-log-tag" class="tag"></span></h2>
+      <p id="bell-log-sum" class="bell-log-sum"></p>
+      <div class="bell-log-wrap">
+        <table class="bell-table">
+          <thead><tr><th>Bell (New York)</th><th>Real price</th><th>Posted</th><th>Base switched</th><th>Unichain switched</th></tr></thead>
+          <tbody id="bell-rows"></tbody>
+        </table>
+      </div>
+      <p class="note">Every real NYSE open and close since 27 Nov 2026, posted by a scheduled job at NVIDIA's real price (Yahoo Finance). Switch times are counted from the bell's exchange event, on each chain's own clock. Full log: <a href="https://github.com/mithunscodes/OpeningBell/blob/live-log/bells.json" target="_blank" rel="noopener">bells.json</a>.</p>
+    </section>
+
     <section class="panel video" id="video">
       <h2>The demo video <span class="tag">3 min</span></h2>
       <div class="video-frame">
