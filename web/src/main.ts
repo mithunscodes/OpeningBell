@@ -647,7 +647,6 @@ function render(): void {
   renderExchange();
   renderStopwatch();
   renderPools();
-  renderHistory();
   renderSteps();
 }
 
@@ -1106,60 +1105,38 @@ async function loadNight(): Promise<void> {
     return;
   }
   const close = Number(night.prints[0].price);
-  const open = Number(night.prints[night.prints.length - 1].price);
-  const drop = ((open / close - 1) * 100).toFixed(1).replace("-", "−") + "%";
+  const last = night.prints[night.prints.length - 1];
+  const drop = ((Number(last.price) / close - 1) * 100).toFixed(1).replace("-", "") + "%";
 
-  $("night-tag").textContent = night.title;
-  $("night-lead").textContent =
-    night.summary + " On " + recordedDate(Date.parse(night.played)) + " we played that night's real prices through the live system. Times are New York's.";
   const teaser = $("night-link");
-  teaser.textContent = "See a real night replayed: " + night.title.split(",")[0] + " opened " + drop.slice(1) + " lower ↓";
+  teaser.textContent = "See a real night replayed: " + night.title.split(",")[0] + " opened " + drop + " lower ↓";
   teaser.hidden = false;
-
-  $("night-prints").replaceChildren(
-    ...night.prints.map((p, i) => {
-      const at = new Date(p.when);
-      const time = at.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: NEW_YORK }).toLowerCase();
-      const day = at.toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: NEW_YORK });
-      const move = i === 0 ? "" : ((Number(p.price) / close - 1) * 100).toFixed(1).replace("-", "−") + "% from the close";
-      const speed =
-        p.loop.baseMs === undefined || p.loop.unichainMs === undefined
-          ? ""
-          : "Base " + (p.loop.baseMs / 1000).toFixed(2) + " s · Unichain ≈ " + Math.round(p.loop.unichainMs / 1000) + " s";
-      const button = el(
-        "button",
-        { class: "night-print", type: "button", "aria-label": p.label + ", " + day + " " + time + ". Replay this update on the stopwatch." },
-        el("span", { class: "night-when" }, day + " · " + time),
-        el("span", { class: "night-label" }, p.label),
-        el("span", { class: "night-price" }, "$" + p.price),
-        el("span", { class: "night-move" }, move || "the last price of the day"),
-        el("span", { class: "night-speed" }, "Pools switched: " + speed),
-        el("span", { class: "night-play" }, "▶ Replay"),
-      );
-      button.addEventListener("click", () => {
-        startReplay(p.loop);
-        $("step-2").scrollIntoView({ behavior: "smooth", block: "center" });
-      });
-      return el("li", {}, button);
-    }),
-  );
 
   const venuesIn = VENUES.filter((v) => night.twins[v] && night.safe[v]);
   // Each chain's figure is shown to the cent, so the total adds up the cents that are shown.
   const cent = 10n ** 16n;
   const total = venuesIn.reduce((sum, v) => sum + ((BigInt(night.twins[v]!.taken) + cent / 2n) / cent) * cent, 0n);
-  $("night-twin").textContent = usd(total) + " taken";
-  const twinLinks: (Node | string)[] = ["Still quoting $" + night.prints[0].price + " at the open. "];
-  const safeLinks: (Node | string)[] = ["Already at $" + night.prints[night.prints.length - 1].price + ". The same raid found nothing: "];
+  $("night-tag").textContent = night.title + ", replayed";
+  $("night-headline").replaceChildren(
+    "Opened " + drop + " lower: ",
+    el("span", { class: "bad" }, usd(total) + " taken"),
+    " from pools that ignored the bell, ",
+    el("span", { class: "good" }, "$0"),
+    " from ours.",
+  );
+  const proof: (Node | string)[] = ["Real NVIDIA prices, play money on testnets. Raids: "];
   venuesIn.forEach((v, i) => {
     const name = config.chains[v].short;
-    if (i) twinLinks.push(" · "), safeLinks.push(" · ");
-    twinLinks.push(link(v, night.twins[v]!.tx, name + " " + usd(BigInt(night.twins[v]!.taken))));
-    safeLinks.push(link(v, night.safe[v]!.tx, name));
+    if (i) proof.push(" · ");
+    proof.push(link(v, night.twins[v]!.tx, name + " twin"), ", ", link(v, night.safe[v]!.tx, name + " ours"));
   });
-  $("night-twin-tx").replaceChildren(...twinLinks);
-  $("night-safe-tx").replaceChildren(...safeLinks);
-  $("night").hidden = false;
+  $("night-proof").replaceChildren(...proof);
+  $("night-replay").onclick = () => {
+    startReplay(last.loop);
+    $("step-2").scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+  $("real-night").hidden = false;
+  $("real").hidden = false;
 }
 
 // --- The real bell -----------------------------------------------------------------------------------
@@ -1222,32 +1199,23 @@ async function loadRealBell(): Promise<void> {
   $("bell-state").textContent = "NYSE is " + (market.open ? "open" : "closed") + " right now";
   const when = (ms: number) =>
     new Date(ms).toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit", hour12: true, timeZone: NEW_YORK }).replace(/\b(AM|PM)\b/i, (m) => m.toLowerCase());
-  $("bell-next").textContent = market.next
-    ? (bells.length ? "Next" : "The first") + " real bell: the " + market.next.bell + ", " + when(market.next.ms) + " New York."
-    : "";
-
-  $("bell-list").replaceChildren(
-    ...bells
-      .slice(-10)
-      .reverse()
-      .map((b) => {
-        const parts: (Node | string)[] = ["Posted " + Math.max(0, Math.round(b.posted.afterBellS / 60)) + " min after the bell: ", link("base", b.posted.tx, "exchange event")];
-        for (const v of VENUES) {
-          const s = b.switched[v];
-          if (!s) continue;
-          parts.push(" · " + config.chains[v].short + " switched ", link(v, s.tx, (s.exact ? s.seconds.toFixed(1) : "≈ " + Math.round(s.seconds)) + " s"), " later");
-        }
-        return el(
-          "li",
-          { class: "bell-row" },
-          el("span", { class: "night-when" }, when(Date.parse(b.at))),
-          el("span", { class: "bell-what", "data-bell": b.bell }, b.bell === "open" ? "Opening bell" : "Closing bell"),
-          el("span", { class: "bell-price" }, "$" + b.price),
-          el("span", { class: "bell-proof" }, ...parts),
-        );
-      }),
-  );
-  $("bell-live").hidden = false;
+  const next = market.next ? "Next: the " + market.next.bell + ", " + when(market.next.ms) + " New York." : "";
+  const b = bells[bells.length - 1];
+  if (!b) {
+    $("bell-headline").textContent = market.next ? "First real bell: the " + market.next.bell + ", " + when(market.next.ms) + " New York" : "Waiting for the first real bell";
+    $("bell-proof").textContent = "Every trading day a scheduled job posts NVIDIA's real close and open, at the real price. Nobody presses anything.";
+  } else {
+    $("bell-headline").textContent = (b.bell === "open" ? "Opening bell" : "Closing bell") + " at $" + b.price + ", " + when(Date.parse(b.at));
+    const parts: (Node | string)[] = [link("base", b.posted.tx, "Posted")];
+    for (const v of VENUES) {
+      const s = b.switched[v];
+      if (!s) continue;
+      parts.push(" · " + config.chains[v].short + " switched ", link(v, s.tx, (s.exact ? s.seconds.toFixed(1) : "≈ " + Math.round(s.seconds)) + " s"), " later");
+    }
+    parts.push(". Real price from Yahoo Finance. " + next);
+    $("bell-proof").replaceChildren(...parts);
+  }
+  $("real").hidden = false;
 }
 
 // --- The three steps ---------------------------------------------------------------------------------
@@ -1339,26 +1307,6 @@ function renderPools(): void {
           : el("p", { class: "muted" }, "Loading…"),
       );
     }),
-  );
-}
-
-function renderHistory(): void {
-  const box = $("history");
-  if (!changed("history", [history.length, history[0]?.at])) return;
-  // The list only takes up room once there is a move to show.
-  $("moves").hidden = history.length === 0;
-  $("lower").classList.toggle("solo", history.length === 0);
-  if (history.length === 0) return;
-  box.replaceChildren(
-    ...history.slice(0, 8).map((h) =>
-      el(
-        "li",
-        { class: h.tone },
-        el("time", {}, new Date(h.at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })),
-        el("span", {}, h.text),
-        h.tx && h.chain ? link(h.chain, h.tx) : undefined,
-      ),
-    ),
   );
 }
 
