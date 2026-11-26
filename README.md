@@ -8,7 +8,9 @@ A share of NVIDIA stops trading at 4pm New York time. A token that tracks NVIDIA
 close, trading halt and overnight gap leaves the token's on-chain pools at a price that is no longer
 true, and the first bot to notice trades against them and keeps the difference. The people who
 supplied the pool pay for it. When the token trades on several chains, every chain is exposed at the
-same moment.
+same moment. Reactive names the same gap in its own
+[Robinhood Chain post](https://blog.reactive.network/reactivexrobinhood/): stock tokens trade around
+the clock, the stocks behind them do not.
 
 OpeningBell puts the stock exchange's hours on-chain. A Reactive Network contract watches the
 exchange's state and, in a single reactive transaction, switches the token's pools on Base Sepolia
@@ -17,6 +19,25 @@ during a halt, wide and expensive after hours. A second Reactive contract, the w
 every chain confirmed, and re-sends by itself to one that did not.
 
 Built for the Reactive Omni Buildathon, track **Every Second Counts**.
+
+**The reactive contract is the product, not a relay.** The trading rules live on Reactive:
+`BellReactive` holds each market's policy (the fee and liquidity band for open, closed and halted),
+decides venue by venue whether an update is worth a callback, drops stale and out-of-order feed
+events, and keeps the only record of which chain has confirmed which state. The pools hold no rules
+of their own; they apply what it sends. One market event has to reach pools on two chains within
+the same second, and be sent again if a chain misses it. That needs one place that sees every
+chain: a contract on Base cannot see Unichain, and a keeper per chain cannot prove the chains agree.
+The feed stands in for a licensed exchange feed, and it already carries the real market: every
+trading day it posts NVIDIA's real bell at the real price ([The real bell](#the-real-bell)).
+
+### For judges: where each criterion is answered
+
+| Criterion | Look here |
+| --- | --- |
+| **Execution** | [Three full loops with every hash](#on-chain-proof-three-full-loops) (origin, reactive tx, both callbacks, loop closed), all 233 loops in [`bench/results/`](bench/results/), [live contracts](#live-contracts), and the [demo](https://openingbell-two.vercel.app) to run one yourself |
+| **Integration** | [Why Reactive](#why-reactive), [`BellReactive`](src/reactive/BellReactive.sol) (rules, per-venue filter, confirmations, `LoopClosed`) and the [watchdog](#when-a-chain-misses-an-update) that re-sends by itself on a Reactive `Cron` clock |
+| **Usefulness** | [A real night, replayed](#a-real-night-replayed) ($54,908.76 lost unprotected, nothing protected), [Beat the bell](#beat-the-bell-how-fast-does-a-raider-have-to-be), [The real bell](#the-real-bell), [Speed](#speed) |
+| **Craft** | [`docs/CLAIMS.md`](docs/CLAIMS.md) (every number linked to its proof), [mutation testing](docs/mutation.md), [CI](.github/workflows/test.yml), [build, test and run](#build-test-and-run), [honest limits](#honest-limits) |
 
 Live on Base Sepolia, Unichain Sepolia and Reactive Lasna, with all 25 contracts source-verified on
 Sourcify. 195 tests cover every line of the contracts and catch 2044 of the 2238 small changes
@@ -319,6 +340,9 @@ path of the first callback, which still leaves in `BellReactive`'s own reactive 
 
 ## Why Reactive
 
+- The decision is made on Reactive. `BellReactive` holds the fee and liquidity band for each market
+  status, filters small price moves per venue, ignores stale and out-of-order feed events, and keeps
+  the ledger of which venue confirmed which update. The pools only apply what it sends.
 - A keeper bot per chain is off-chain and trusted, has to be run and funded on every chain
   separately, and leaves no on-chain proof that the chains agree.
 - A price oracle read on each swap fixes the price but not the mode: it does not halt swaps, widen
