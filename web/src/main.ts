@@ -1238,14 +1238,7 @@ async function loadRealBell(): Promise<void> {
     $("bell-proof").textContent = "Every trading day a scheduled job posts NVIDIA's real close and open, at the real price. Nobody presses anything.";
   } else {
     $("bell-headline").textContent = (b.bell === "open" ? "Opening bell" : "Closing bell") + " at $" + b.price + ", " + when(Date.parse(b.at));
-    const parts: (Node | string)[] = [link("base", b.posted.tx, "Posted")];
-    for (const v of VENUES) {
-      const s = b.switched[v];
-      if (!s) continue;
-      parts.push(" · " + config.chains[v].short + " switched ", link(v, s.tx, (s.exact ? s.seconds.toFixed(1) : "≈ " + Math.round(s.seconds)) + " s"), " later");
-    }
-    parts.push(". Real price from Yahoo Finance. " + next);
-    $("bell-proof").replaceChildren(...parts);
+    $("bell-proof").replaceChildren("Every bell with its switch times is listed ", el("a", { href: "#bell-log" }, "below"), ". " + next);
   }
   $("real").hidden = false;
   renderBellLog(bells, market.next ? "the " + market.next.bell + ", " + when(market.next.ms) + " New York" : undefined);
