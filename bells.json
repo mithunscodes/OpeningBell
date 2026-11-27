@@ -1,0 +1,29 @@
+[
+  {
+    "bell": "close",
+    "at": "2026-11-27T18:00:00Z",
+    "price": "150.49",
+    "source": "Yahoo Finance",
+    "seq": "288",
+    "posted": {
+      "tx": "0x95c0224bc73a311b2516fe1f9b5f8e67985d2682a71a0c6193594374fe4f19fb",
+      "block": "64471332",
+      "time": "2026-11-27T21:48:55.200Z",
+      "afterBellS": 13735
+    },
+    "switched": {
+      "base": {
+        "tx": "0x55918b3817b965e17609ebf37251e5175354ddcbee82c68f9ca088aa94eb17c2",
+        "seconds": 0.8,
+        "exact": true
+      },
+      "unichain": {
+        "tx": "0xbc2148806e7ab03d329e36eb33f7eebd927ad2b9cae9fb1c008ea92ae9b4ed30",
+        "seconds": 1.8,
+        "exact": false
+      }
+    },
+    "reacted": "0x7b546e992fc16849d6382063466293ab4c628e6b2aec67116fb1eb901ca9cb15",
+    "closed": "0x38662244ae1732cced96762a36c307cfe51cb0afb98bf50e7d5bab7764a295cf"
+  }
+]
