@@ -99,3 +99,13 @@ by the linked evidence but the script does not recompute it.
 | --- | --- | --- |
 | 0.046 lREACT per market update; the watchdog adds about 0.035 and paid 0.054 for the recovery | the contracts' Lasna balances before and after the 200-update run and the recovery | by hand (balances were read during the runs; not in the repo) |
 | About 0.0000022 ETH per update on Base, 0.0000005 ETH on Unichain | the guards' callback-proxy balances during the same run | by hand |
+
+## Outside figures
+
+These are other people's numbers, quoted for context. Nothing in this repo measures them.
+
+| Claim | Evidence | Checked |
+| --- | --- | --- |
+| Robinhood's stock tokens traded $15 billion in their first 100 days | [Finance Magnates, 13 Oct 2026](https://www.financemagnates.com/fintech/robinhood-puts-stock-token-trading-at-15-billion-as-its-blockchain-turns-100-days/) (figure reported via The Defiant) | by hand, 27 Nov 2026 |
+| Kraken's xStocks passed $25 billion in transaction volume | [Kraken blog, 19 Feb 2026](https://blog.kraken.com/product/xstocks/25-billion-in-total-transaction-volume) (CEX, DEX, mint and redemption combined) | by hand, 27 Nov 2026 |
+| US stock exchanges trade about 32.5 of the week's 168 hours | RedStone's COO in [crypto.news, 18 Sep 2026](https://crypto.news/tokenized-stocks-face-24-7-pricing-gap-redstone-coo/); 6.5 h × 5 days | by hand (arithmetic) |

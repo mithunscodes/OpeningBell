@@ -12,6 +12,12 @@ same moment. Reactive names the same gap in its own
 [Robinhood Chain post](https://blog.reactive.network/reactivexrobinhood/): stock tokens trade around
 the clock, the stocks behind them do not.
 
+This is already real money. Robinhood's stock tokens traded **$15 billion in their first 100 days**
+([Finance Magnates, 13 Oct 2026](https://www.financemagnates.com/fintech/robinhood-puts-stock-token-trading-at-15-billion-as-its-blockchain-turns-100-days/)) and Kraken's xStocks passed
+**$25 billion** in transaction volume ([Kraken, 19 Feb 2026](https://blog.kraken.com/product/xstocks/25-billion-in-total-transaction-volume)), while the stocks behind them trade about
+**32.5 of the week's 168 hours** ([RedStone's COO in crypto.news, 18 Sep 2026](https://crypto.news/tokenized-stocks-face-24-7-pricing-gap-redstone-coo/)). Every
+close, weekend and overnight gap in the other 135 hours is a window for the pools to be picked off.
+
 OpeningBell puts the stock exchange's hours on-chain. A Reactive Network contract watches the
 exchange's state and, in a single reactive transaction, switches the token's pools on Base Sepolia
 and Unichain Sepolia into the right mode: re-priced the moment the market reopens, refusing swaps
@@ -36,7 +42,7 @@ trading day it posts NVIDIA's real bell at the real price ([The real bell](#the-
 | --- | --- |
 | **Execution** | [Three full loops with every hash](#on-chain-proof-three-full-loops) (origin, reactive tx, both callbacks, loop closed), all 233 loops in [`bench/results/`](bench/results/), [live contracts](#live-contracts), and the [demo](https://openingbell-two.vercel.app) to run one yourself |
 | **Integration** | [Why Reactive](#why-reactive), [`BellReactive`](src/reactive/BellReactive.sol) (rules, per-venue filter, confirmations, `LoopClosed`) and the [watchdog](#when-a-chain-misses-an-update) that re-sends by itself on a Reactive `Cron` clock |
-| **Usefulness** | [A real night, replayed](#a-real-night-replayed) ($54,908.76 lost unprotected, nothing protected), [Beat the bell](#beat-the-bell-how-fast-does-a-raider-have-to-be), [The real bell](#the-real-bell), [Speed](#speed) |
+| **Usefulness** | [The money at stake](#openingbell) ($15 billion of stock-token trades in 100 days, real market open 32.5 of 168 hours), [A real night, replayed](#a-real-night-replayed) ($54,908.76 lost unprotected, nothing protected), [Beat the bell](#beat-the-bell-how-fast-does-a-raider-have-to-be), [The real bell](#the-real-bell), [Speed](#speed) |
 | **Craft** | [`docs/CLAIMS.md`](docs/CLAIMS.md) (every number linked to its proof), [mutation testing](docs/mutation.md), [CI](.github/workflows/test.yml), [build, test and run](#build-test-and-run), [honest limits](#honest-limits) |
 
 Live on Base Sepolia, Unichain Sepolia and Reactive Lasna, with all 25 contracts source-verified on
