@@ -10,7 +10,7 @@ const STOPS: Stop[] = [
   { title: "You play the villain", text: "Three moves. One minute." },
   { target: "step-1", title: "1 · Move the market", text: "You run the stock exchange. Pick a move." },
   { target: "step-2", title: "2 · Watch the clock", text: "Reactive switches both pools in ~2 s. No wallet? Press Replay." },
-  { target: "step-3", title: "3 · Raid a pool", text: "Buy at the old price. Protected pool: safe. Twin: robbed." },
+  { target: "step-3", title: "3 · Raid a pool", text: "Buy at the old price. OpeningBell pool: safe. Normal pool: robbed." },
   { target: "bell-log", title: "Real market", text: "Same contracts. Real NVIDIA bells, every trading day." },
 ];
 

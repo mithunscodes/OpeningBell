@@ -569,7 +569,7 @@ async function raid(key: VenueKey, target: 0 | 1): Promise<void> {
   busy = true;
   render();
   const pending = latestLoop && !latestLoop.applied[key];
-  const name = (target === 0 ? "protected pool" : "unprotected twin") + " on " + config.chains[key].short;
+  const name = (target === 0 ? "OpeningBell pool" : "normal pool") + " on " + config.chains[key].short;
   try {
     // The arena refuses a raid that arrives with too little gas, so the limit is set here rather than
     // left to the wallet's estimate. Unused gas is not charged.
@@ -1270,15 +1270,25 @@ function renderSteps(): void {
 
 // --- The pools ------------------------------------------------------------------------------------------
 
+/** What each pool had paid out when this visitor opened the page: the big number counts from here. */
+const takenAtOpen: Partial<Record<VenueKey, [bigint, bigint]>> = {};
+
 function poolCard(key: VenueKey, target: 0 | 1, view: PoolView, afterHours: boolean): HTMLElement {
   const isProtected = target === 0;
   const gap = gapPct(view.poolPrice, view.refPrice);
   const state = !view.tradable ? "halted" : isStale(view) ? "stale" : "fine";
-  const fee = (view.feePips / 10_000).toFixed(2).replace(/\.?0+$/, "") + "%";
-  const statusText = !view.tradable ? "Halted" : isProtected && afterHours ? "After hours · " + fee + " fee" : "Trading";
-  const lost = view.taken > 0n ? view.taken : 0n;
+  const statusText = !view.tradable
+    ? "Halted: swaps refused"
+    : !isProtected
+      ? "Ignores market hours"
+      : afterHours
+        ? "Market closed: safe mode"
+        : "Follows market hours";
+  const all = view.taken > 0n ? view.taken : 0n;
+  const base = takenAtOpen[key]?.[target] ?? all;
+  const lost = all > base ? all - base : 0n;
 
-  const button = el("button", { class: "raid", type: "button", "aria-label": isProtected ? "Raid the protected pool" : "Raid the twin" }, "Raid");
+  const button = el("button", { class: "raid", type: "button", "aria-label": isProtected ? "Raid the OpeningBell pool" : "Raid the normal pool" }, "Raid");
   button.disabled = busy;
   button.addEventListener("click", () => raid(key, target));
 
@@ -1288,14 +1298,15 @@ function poolCard(key: VenueKey, target: 0 | 1, view: PoolView, afterHours: bool
     el(
       "header",
       {},
-      el("h4", {}, isProtected ? "Protected" : "Unprotected twin"),
+      el("h4", {}, isProtected ? "With OpeningBell" : "Normal pool"),
       el("span", { class: "pool-status" }, statusText),
     ),
     el(
       "div",
       { class: "lost" },
-      el("span", {}, "Lost to raiders"),
+      el("span", {}, "Taken since you arrived"),
       el("strong", { class: lost === 0n ? "zero" : "" }, usd(lost, 0)),
+      el("small", { class: "lost-all" }, "All players so far: " + usd(all, 0)),
     ),
     el(
       "dl",
@@ -1319,6 +1330,7 @@ function renderPools(): void {
     ...VENUES.filter((k) => config.venues[k]).map((key) => {
       const view = venues[key];
       const info = config.chains[key];
+      if (view && !takenAtOpen[key]) takenAtOpen[key] = [view.protected.taken, view.twin.taken];
       return el(
         "section",
         { class: "venue", "data-chain": key },
@@ -1326,7 +1338,7 @@ function renderPools(): void {
           "header",
           {},
           el("h3", {}, info.short, el("span", { class: "chain-sub" }, info.name + " · separate chain")),
-          view && account ? el("span", { class: "loot" }, "Your loot ", el("b", {}, usd(view.loot))) : undefined,
+          view && account ? el("span", { class: "loot" }, "You took ", el("b", {}, usd(view.loot))) : undefined,
         ),
         view
           ? el("div", { class: "duel" }, poolCard(key, 0, view.protected, view.guardStatus === CLOSED), poolCard(key, 1, view.twin, false))
