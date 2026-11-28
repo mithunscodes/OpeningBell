@@ -27,7 +27,7 @@ every chain confirmed, and re-sends by itself to one that did not.
 Built for the Reactive Omni Buildathon, track **Every Second Counts**.
 
 **The reactive contract is the product, not a relay.** The trading rules live on Reactive:
-`BellReactive` holds each market's policy (the fee and liquidity band for open, closed and halted),
+[`BellReactive`](https://lasna.reactscan.net/address/0x8ddc373617e2D83348fE72eAcF8C4ffB58e9C46E) (live on Reactive Lasna) holds each market's policy (the fee and liquidity band for open, closed and halted),
 decides venue by venue whether an update is worth a callback, drops stale and out-of-order feed
 events, and keeps the only record of which chain has confirmed which state. The pools hold no rules
 of their own; they apply what it sends. One market event has to reach pools on two chains within
@@ -41,7 +41,7 @@ trading day it posts NVIDIA's real bell at the real price ([The real bell](#the-
 | Criterion | Look here |
 | --- | --- |
 | **Execution** | [Three full loops with every hash](#on-chain-proof-three-full-loops) (origin, reactive tx, both callbacks, loop closed), all 233 loops in [`bench/results/`](bench/results/), [live contracts](#live-contracts), and the [demo](https://openingbell-two.vercel.app) to run one yourself |
-| **Integration** | [Why Reactive](#why-reactive), [`BellReactive`](src/reactive/BellReactive.sol) (rules, per-venue filter, confirmations, `LoopClosed`) and the [watchdog](#when-a-chain-misses-an-update) that re-sends by itself on a Reactive `Cron` clock |
+| **Integration** | [Why Reactive](#why-reactive), `BellReactive`: [live on Reactscan](https://lasna.reactscan.net/address/0x8ddc373617e2D83348fE72eAcF8C4ffB58e9C46E), [source](src/reactive/BellReactive.sol) (rules, per-venue filter, confirmations, `LoopClosed`) and the [watchdog](#when-a-chain-misses-an-update) that re-sends by itself on a Reactive `Cron` clock |
 | **Usefulness** | [The money at stake](#openingbell) ($15 billion of stock-token trades in 100 days, real market open 32.5 of 168 hours), [A real night, replayed](#a-real-night-replayed) ($54,908.76 lost unprotected, nothing protected), [Beat the bell](#beat-the-bell-how-fast-does-a-raider-have-to-be), [The real bell](#the-real-bell), [Speed](#speed) |
 | **Craft** | [`docs/CLAIMS.md`](docs/CLAIMS.md) (every number linked to its proof), [mutation testing](docs/mutation.md), [CI](.github/workflows/test.yml), [build, test and run](#build-test-and-run), [honest limits](#honest-limits) |
 

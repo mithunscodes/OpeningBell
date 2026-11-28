@@ -12,6 +12,7 @@ import {
   ContractFunctionRevertedError,
   UserRejectedRequestError,
 } from "viem";
+import { startTour } from "./tour.ts";
 import { arenaAbi, conductorAbi, feedAbi, guardAbi, stageAbi, watchdogAbi } from "../../tools/src/abi.ts";
 import {
   MARKET_ID,
@@ -1428,6 +1429,7 @@ async function main(): Promise<void> {
   await tick();
   void loadRecorded().then(loadNight);
   void loadRealBell();
+  $("tour").onclick = startTour;
   window.setInterval(() => void loadRealBell(), 5 * 60_000);
   clients.base
     .readContract({ address: config.origin.stage, abi: stageAbi, functionName: "owner" })
