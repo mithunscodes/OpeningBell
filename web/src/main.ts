@@ -1148,7 +1148,6 @@ function renderBellLog(bells: RealBell[], next?: string): void {
     el("tr", {},
       el("td", {}, (b.bell === "open" ? "Open, " : "Close, ") + day(Date.parse(b.at))),
       el("td", {}, "$" + b.price),
-      el("td", {}, link("base", b.posted.tx, "+" + Math.round(b.posted.afterBellS) + " s")),
       ...VENUES.map((v) => {
         const s = b.switched[v];
         return el("td", {}, s ? link(v, s.tx, secs(s)) : "—");
@@ -1156,7 +1155,7 @@ function renderBellLog(bells: RealBell[], next?: string): void {
     ),
   );
   if (rows.length === 0) {
-    rows.push(el("tr", {}, el("td", { colspan: "5", class: "empty" }, "No real bell yet." + (next ? " The first one is " + next + ", and every bell after it is added here by itself." : ""))));
+    rows.push(el("tr", {}, el("td", { colspan: "4", class: "empty" }, "No real bell yet." + (next ? " The first one is " + next + ", and every bell after it is added here by itself." : ""))));
   }
   $("bell-rows").replaceChildren(...rows);
   const both = bells.filter((b) => VENUES.every((v) => b.switched[v]));
