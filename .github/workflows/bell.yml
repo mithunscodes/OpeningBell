@@ -2,15 +2,15 @@ name: bell
 
 # Posts NVIDIA's real closing and opening bell to the exchange feed on Base Sepolia, at NVIDIA's real
 # price, and records how fast both pools switched (tools/src/bell.ts). GitHub can start scheduled
-# runs late, so it runs every 10 minutes around the US session; the script itself knows which bell
-# is due and never posts one twice. The log of every bell lives on the `live-log` branch, which the
+# runs late (or drops runs at busy times, above all on the hour), so it runs every 5 minutes, off the
+# hour, around the US session; the script itself knows which bell is due and never posts one twice. The log of every bell lives on the `live-log` branch, which the
 # demo page reads.
 #
 # Needs one repository secret, BELL_PRIVATE_KEY: a testnet account that is a publisher on the feed
 # and holds a little Base Sepolia ETH.
 on:
   schedule:
-    - cron: "*/10 13-23 * * 1-5"
+    - cron: "4-59/5 13-23 * * 1-5"
   workflow_dispatch:
 
 permissions:
