@@ -1429,7 +1429,12 @@ async function main(): Promise<void> {
   await tick();
   void loadRecorded().then(loadNight);
   void loadRealBell();
-  $("tour").onclick = startTour;
+  $("tour").onclick = () => {
+    $("tour").classList.add("seen");
+    try { localStorage.setItem("ob-tour-seen", "1"); } catch { /* private mode */ }
+    startTour();
+  };
+  try { if (localStorage.getItem("ob-tour-seen")) $("tour").classList.add("seen"); } catch { /* private mode */ }
   window.setInterval(() => void loadRealBell(), 5 * 60_000);
   clients.base
     .readContract({ address: config.origin.stage, abi: stageAbi, functionName: "owner" })
